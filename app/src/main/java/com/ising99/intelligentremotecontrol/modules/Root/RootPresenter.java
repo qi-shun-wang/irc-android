@@ -9,6 +9,7 @@ import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe
 
 /**
  * Created by shun on 2018/3/27.
+ *
  */
 
 public class RootPresenter implements Presenter ,InteractorOutput{

@@ -9,8 +9,10 @@ import android.view.KeyEvent;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.View;
+
 /**
  * Created by shun on 2018/3/27.
+ *
  */
 
 public class DeviceDiscoveryActivity extends Activity implements View {

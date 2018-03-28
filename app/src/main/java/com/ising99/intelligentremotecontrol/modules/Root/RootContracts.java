@@ -5,6 +5,7 @@ import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
 /**
  * Created by shun on 2018/3/27.
+ *
  */
 
 public interface RootContracts extends BaseContracts {

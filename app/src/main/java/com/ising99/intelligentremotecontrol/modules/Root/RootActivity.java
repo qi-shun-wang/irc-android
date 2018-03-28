@@ -10,9 +10,9 @@ import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
 
-
 /**
  * Created by shun on 2018/3/27.
+ *
  */
 
 public class RootActivity extends Activity implements RootContracts.View {

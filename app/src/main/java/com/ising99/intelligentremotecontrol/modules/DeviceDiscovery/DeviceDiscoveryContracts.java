@@ -3,10 +3,9 @@ package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.core.Device;
 
-import java.io.Serializable;
-
 /**
  * Created by shun on 2018/3/27.
+ *
  */
 
 public interface DeviceDiscoveryContracts extends BaseContracts {

@@ -1,13 +1,11 @@
 package com.ising99.intelligentremotecontrol.core.CoapClient;
 
-import android.util.Log;
-
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
-import org.eclipse.californium.core.network.Endpoint;
 
 /**
  * Created by shun on 2018/3/27.
+ *
  */
 
 public final class RemoteControlCoAPService {

@@ -13,15 +13,15 @@ import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe
  */
 
 public class RootPresenter implements Presenter ,InteractorOutput{
+
     private View view;
     private Interactor interactor;
     private Wireframe router;
 
-    RootPresenter(View view) {
+    RootPresenter(View view){
         this.view = view;
         interactor = new RootInteractor(this);
         router = new RootRouter(view,this);
-
     }
 
     @Override
@@ -56,5 +56,13 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     @Override
     public void didSend(KeyCode code) {
         interactor.perform(code);
+    }
+
+    @Override
+    public void didSended() {
+    }
+
+    @Override
+    public void failure(String msg) {
     }
 }

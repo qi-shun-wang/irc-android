@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
-import com.ising99.intelligentremotecontrol.modules.Root.RootContracts;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
 
 /**

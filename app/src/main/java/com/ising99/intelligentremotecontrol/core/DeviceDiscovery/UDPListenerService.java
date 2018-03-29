@@ -12,12 +12,12 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 
-
+@Deprecated
 public final class UDPListenerService extends Service implements Serializable{
 
     private MulticastSocket socket;
     private Thread UDPBroadcastThread;
-    private UDPListenerServiceDelegate delegate;
+    private DeviceDiscoveryDelegate delegate;
     private final static int PORT = 9999;
     private final static String ADDRESS = "239.0.0.0";
     private boolean isStart = false;
@@ -49,10 +49,6 @@ public final class UDPListenerService extends Service implements Serializable{
         UDPBroadcastThread.start();
     }
 
-    private void pauseMulticastListener() {
-        isStart = false;
-        UDPBroadcastThread.interrupt();
-    }
 
     private void stopMulticastListener() {
         isStart = false;
@@ -78,7 +74,7 @@ public final class UDPListenerService extends Service implements Serializable{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         isStart = true;
-        delegate = (UDPListenerServiceDelegate) intent.getExtras().getSerializable("Delegation");
+        delegate = (DeviceDiscoveryDelegate) intent.getExtras().getParcelable("Delegation");
         startMulticastListener();
         Log.i("UDP", "Multicast Service started");
         return START_STICKY;

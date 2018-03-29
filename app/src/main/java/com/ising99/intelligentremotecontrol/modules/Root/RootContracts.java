@@ -23,6 +23,8 @@ public interface RootContracts extends BaseContracts {
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
+        void didSended();
+        void failure(String msg);
 
     }
 

@@ -23,6 +23,7 @@ public class RootInteractor implements RootContracts.Interactor {
 
     @Override
     public void perform(KeyCode code) {
-
+        output.didSended();
+        output.failure("伺服器異常");
     }
 }

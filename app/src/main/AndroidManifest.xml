@@ -24,9 +24,7 @@
 
         <activity android:name=".modules.DeviceDiscovery.DeviceDiscoveryActivity"/>
 
-        <service
-            android:name=".core.DeviceDiscovery.UDPListenerService"
-            tools:ignore="InnerclassSeparator" />
+
     </application>
 
 </manifest>

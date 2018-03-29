@@ -1,19 +1,39 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="150dp"
+    android:layout_below="@+id/seatLegendLayout"
+    android:scrollbars="none"
+    >
 
-    <TextView
-        android:id="@+id/textView"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="29dp"
-        android:text="TextView" />
-</RelativeLayout>
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/linearLayout_gridtableLayout"
+            android:layout_width="900dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <GridView
+                android:id="@+id/device_collection"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="4dp"
+                android:columnWidth="100dp"
+                android:gravity="center"
+                android:numColumns="0"
+                android:horizontalSpacing="1dp"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbars="horizontal"
+                android:stretchMode="none"
+                android:verticalSpacing="1dp">
+
+            </GridView>
+
+
+        </LinearLayout>
+    </FrameLayout>
+</HorizontalScrollView>

@@ -3,7 +3,6 @@ package com.ising99.intelligentremotecontrol.modules.Root;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.UDPListenerService;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryActivity;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
@@ -32,7 +31,6 @@ public class RootRouter implements Wireframe {
     @Override
     public void openDeviceDiscovery() {
         Intent intentToDeviceDiscoveryActivity = new Intent(activity, DeviceDiscoveryActivity.class);
-        intentToDeviceDiscoveryActivity.putExtra("DeviceDiscoveryService",UDPListenerService.class);
         activity.startActivity(intentToDeviceDiscoveryActivity);
     }
 

@@ -3,6 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.Root;
 import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
+import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.View;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.InteractorOutput;
@@ -28,12 +29,14 @@ public class RootPresenter implements Presenter ,InteractorOutput{
 
     @Override
     public void onCreate() {
-
+        view.updateNetworkStatus("尚未連接WiFi");
+        view.updateConnectedDeviceStatus("尚未連接設備");
     }
 
     @Override
     public void onResume() {
-
+        interactor.checkWiFiStatus();
+        interactor.checkLastConnectedDevice();
     }
 
     @Override
@@ -62,6 +65,21 @@ public class RootPresenter implements Presenter ,InteractorOutput{
 
     @Override
     public void didSended() {
+    }
+
+    @Override
+    public void didConnectedToWiFi(String name) {
+        view.updateNetworkStatus("目前連到Wifi " + name);
+    }
+
+    @Override
+    public void didNotConnectedToWiFi() {
+        view.updateNetworkStatus("尚未連接WiFi");
+    }
+
+    @Override
+    public void didConnectedToDevice(Device device) {
+        view.updateConnectedDeviceStatus("目前已連到設備 " + device.getName());
     }
 
     @Override

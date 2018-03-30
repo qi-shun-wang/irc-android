@@ -14,7 +14,15 @@ public enum KeyCode {
     KEYCODE_ENTER(66),
     KEYCODE_MENU(82),
     KEYCODE_BACK(4),
-    KEYCODE_POWER(26);
+    KEYCODE_POWER(26),
+    KEYCODE_VOLUME_UP(24),
+    KEYCODE_VOLUME_DOWN(25),
+    KEYCODE_VOLUME_MUTE(164),
+    KEYCODE_CHANNEL_UP(92),
+    KEYCODE_CHANNEL_DOWN(93),
+    KEYCODE_KOD_PLUS(365),
+    KEYCODE_MEDIA_PLAY_PAUSE(85),
+    KEYCODE_LANGUAGE(204);
 
     private int code;
 
@@ -26,3 +34,4 @@ public enum KeyCode {
         return code;
     }
 }
+

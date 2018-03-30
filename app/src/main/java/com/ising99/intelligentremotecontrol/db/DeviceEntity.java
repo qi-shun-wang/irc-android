@@ -19,6 +19,7 @@ public class DeviceEntity {
     @NotNull
     private String name;
     private String settings;
+    private Boolean isConnected;
 
     @NotNull
     private java.util.Date update_at;
@@ -38,10 +39,11 @@ public class DeviceEntity {
     }
 
     @Generated
-    public DeviceEntity(String address, String name, String settings, java.util.Date update_at, java.util.Date create_at) {
+    public DeviceEntity(String address, String name, String settings, Boolean isConnected, java.util.Date update_at, java.util.Date create_at) {
         this.address = address;
         this.name = name;
         this.settings = settings;
+        this.isConnected = isConnected;
         this.update_at = update_at;
         this.create_at = create_at;
     }
@@ -70,6 +72,14 @@ public class DeviceEntity {
 
     public void setSettings(String settings) {
         this.settings = settings;
+    }
+
+    public Boolean getIsConnected() {
+        return isConnected;
+    }
+
+    public void setIsConnected(Boolean isConnected) {
+        this.isConnected = isConnected;
     }
 
     @NotNull

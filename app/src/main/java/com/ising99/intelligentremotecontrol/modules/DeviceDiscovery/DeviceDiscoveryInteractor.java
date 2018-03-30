@@ -9,11 +9,8 @@ import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryTask;
 import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryDelegate;
 import com.ising99.intelligentremotecontrol.db.DeviceEntity;
-import com.ising99.intelligentremotecontrol.db.DeviceEntityDao;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.InteractorOutput;
-
-import org.greenrobot.greendao.query.Query;
 
 import java.util.Date;
 import java.util.List;
@@ -45,24 +42,26 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
     @Override
     public void persistReceived(Device device) {
         Log.v("Device model",device.toString());
+        List<DeviceEntity> devices = ((App)context).getDaoSession().getDeviceEntityDao().loadAll();
 
-        Query query = ((App)context).getDaoSession().getDeviceEntityDao().queryBuilder()
-                .where(DeviceEntityDao.Properties.Address.ge(device.getAddress()))
-                .build();
-
-        List devices = query.list();
-        if (devices.size() > 0) {
-            //TODO-update
-            DeviceEntity entity = (DeviceEntity)devices.get(0);
-            entity.setName(device.getName());
-            entity.setSettings(device.getName());
+        boolean isExist = false;
+        for (DeviceEntity entity:devices) {
+            if(entity.getIsConnected())
+            {
+                entity.setIsConnected(false);
+            }
+            if (entity.getAddress().equals(device.getAddress())) {
+                isExist = true;
+                entity.setIsConnected(true);
+            }
             entity.setUpdate_at( new Date());
             ((App)context).getDaoSession().getDeviceEntityDao().update(entity);
-            return;
+        }
+        if (!isExist) {
+            DeviceEntity entity = new DeviceEntity(device.getAddress(), device.getName(), device.getSettings(),true, new Date(), new Date());
+            ((App)context).getDaoSession().getDeviceEntityDao().insert(entity);
         }
 
-        DeviceEntity entity = new DeviceEntity(device.getAddress(), device.getName(), device.getSettings(), new Date(), new Date());
-        ((App)context).getDaoSession().getDeviceEntityDao().insert(entity);
 
     }
 
@@ -81,7 +80,13 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
 
     @Override
     public void didRecieved(String message) {
-        Device device = new Gson().fromJson(message,Device.class);
-        output.didReceived(device);
+        try {
+            Device device = new Gson().fromJson(message,Device.class);
+            output.didReceived(device);
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
+
+
     }
 }

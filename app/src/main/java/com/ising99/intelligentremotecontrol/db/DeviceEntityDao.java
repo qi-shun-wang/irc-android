@@ -25,8 +25,9 @@ public class DeviceEntityDao extends AbstractDao<DeviceEntity, String> {
         public final static Property Address = new Property(0, String.class, "address", true, "ADDRESS");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Settings = new Property(2, String.class, "settings", false, "SETTINGS");
-        public final static Property Update_at = new Property(3, java.util.Date.class, "update_at", false, "UPDATE_AT");
-        public final static Property Create_at = new Property(4, java.util.Date.class, "create_at", false, "CREATE_AT");
+        public final static Property IsConnected = new Property(3, Boolean.class, "isConnected", false, "IS_CONNECTED");
+        public final static Property Update_at = new Property(4, java.util.Date.class, "update_at", false, "UPDATE_AT");
+        public final static Property Create_at = new Property(5, java.util.Date.class, "create_at", false, "CREATE_AT");
     }
 
 
@@ -45,8 +46,9 @@ public class DeviceEntityDao extends AbstractDao<DeviceEntity, String> {
                 "\"ADDRESS\" TEXT PRIMARY KEY NOT NULL ," + // 0: address
                 "\"NAME\" TEXT NOT NULL ," + // 1: name
                 "\"SETTINGS\" TEXT," + // 2: settings
-                "\"UPDATE_AT\" INTEGER NOT NULL ," + // 3: update_at
-                "\"CREATE_AT\" INTEGER NOT NULL );"); // 4: create_at
+                "\"IS_CONNECTED\" INTEGER," + // 3: isConnected
+                "\"UPDATE_AT\" INTEGER NOT NULL ," + // 4: update_at
+                "\"CREATE_AT\" INTEGER NOT NULL );"); // 5: create_at
     }
 
     /** Drops the underlying database table. */
@@ -69,8 +71,13 @@ public class DeviceEntityDao extends AbstractDao<DeviceEntity, String> {
         if (settings != null) {
             stmt.bindString(3, settings);
         }
-        stmt.bindLong(4, entity.getUpdate_at().getTime());
-        stmt.bindLong(5, entity.getCreate_at().getTime());
+ 
+        Boolean isConnected = entity.getIsConnected();
+        if (isConnected != null) {
+            stmt.bindLong(4, isConnected ? 1L: 0L);
+        }
+        stmt.bindLong(5, entity.getUpdate_at().getTime());
+        stmt.bindLong(6, entity.getCreate_at().getTime());
     }
 
     @Override
@@ -87,8 +94,13 @@ public class DeviceEntityDao extends AbstractDao<DeviceEntity, String> {
         if (settings != null) {
             stmt.bindString(3, settings);
         }
-        stmt.bindLong(4, entity.getUpdate_at().getTime());
-        stmt.bindLong(5, entity.getCreate_at().getTime());
+ 
+        Boolean isConnected = entity.getIsConnected();
+        if (isConnected != null) {
+            stmt.bindLong(4, isConnected ? 1L: 0L);
+        }
+        stmt.bindLong(5, entity.getUpdate_at().getTime());
+        stmt.bindLong(6, entity.getCreate_at().getTime());
     }
 
     @Override
@@ -102,8 +114,9 @@ public class DeviceEntityDao extends AbstractDao<DeviceEntity, String> {
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // address
             cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // settings
-            new java.util.Date(cursor.getLong(offset + 3)), // update_at
-            new java.util.Date(cursor.getLong(offset + 4)) // create_at
+            cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0, // isConnected
+            new java.util.Date(cursor.getLong(offset + 4)), // update_at
+            new java.util.Date(cursor.getLong(offset + 5)) // create_at
         );
         return entity;
     }
@@ -113,8 +126,9 @@ public class DeviceEntityDao extends AbstractDao<DeviceEntity, String> {
         entity.setAddress(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setName(cursor.getString(offset + 1));
         entity.setSettings(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setUpdate_at(new java.util.Date(cursor.getLong(offset + 3)));
-        entity.setCreate_at(new java.util.Date(cursor.getLong(offset + 4)));
+        entity.setIsConnected(cursor.isNull(offset + 3) ? null : cursor.getShort(offset + 3) != 0);
+        entity.setUpdate_at(new java.util.Date(cursor.getLong(offset + 4)));
+        entity.setCreate_at(new java.util.Date(cursor.getLong(offset + 5)));
      }
     
     @Override

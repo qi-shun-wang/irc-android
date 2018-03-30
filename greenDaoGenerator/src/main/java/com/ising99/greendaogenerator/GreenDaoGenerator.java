@@ -29,6 +29,7 @@ public class GreenDaoGenerator {
         device.addStringProperty("address").primaryKey();
         device.addStringProperty("name").notNull();
         device.addStringProperty("settings");
+        device.addBooleanProperty("isConnected");
         device.addDateProperty("update_at").notNull();
         device.addDateProperty("create_at").notNull();
     }

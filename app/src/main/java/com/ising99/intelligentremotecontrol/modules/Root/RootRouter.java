@@ -30,6 +30,7 @@ public class RootRouter implements Wireframe {
     @Override
     public void openDeviceDiscovery() {
         Intent intentToDeviceDiscoveryActivity = new Intent(context, DeviceDiscoveryActivity.class);
+        intentToDeviceDiscoveryActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intentToDeviceDiscoveryActivity);
     }
 

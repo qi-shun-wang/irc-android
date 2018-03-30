@@ -3,7 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.core.Device;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 /**
  * Created by shun on 2018/3/27.
@@ -22,12 +22,12 @@ public interface DeviceDiscoveryContracts extends BaseContracts {
     interface Presenter extends BaseContracts.Presenter {
 
         int numberOfItem();
-        HashSet<Device> getDevices();
-
+        ArrayList<Device> getDevices();
+        void selectDeviceAt(int index);
     }
 
     interface Interactor extends BaseContracts.Interactor{
-        void cachingReceived(Device device);
+        void persistReceived(Device device);
         void startDeviceDiscoveryTask();
         void stopDeviceDiscoveryTask();
     }

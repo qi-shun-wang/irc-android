@@ -1,8 +1,8 @@
 package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 
-import android.app.Activity;
+import android.content.Context;
+
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Presenter;
-import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.View;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Wireframe;
 
 /**
@@ -12,17 +12,17 @@ import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscov
 
 class DeviceDiscoveryRouter implements Wireframe {
 
-    private Activity activity;
+    private Context context;
     private Presenter presenter;
 
-    DeviceDiscoveryRouter(View view, Presenter presenter) {
-        this.activity = (Activity) view;
+    DeviceDiscoveryRouter(Context context, Presenter presenter) {
+        this.context = context;
         this.presenter = presenter;
     }
 
     @Override
     public void decompose() {
-        activity = null;
+        context = null;
         presenter = null;
     }
 }

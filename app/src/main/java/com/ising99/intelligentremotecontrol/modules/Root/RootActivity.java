@@ -29,7 +29,7 @@ public class RootActivity extends Activity implements RootContracts.View {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
-        presenter = new RootPresenter(this);
+        presenter = new RootPresenter(getApplicationContext(), this);
         findViewById(R.id.button).setOnClickListener(showDeviceDiscoveryAction);
         findViewById(R.id.button2).setOnClickListener(tapUpAction);
         findViewById(R.id.button3).setOnClickListener(tapDownAction);

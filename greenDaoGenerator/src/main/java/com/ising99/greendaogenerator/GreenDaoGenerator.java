@@ -25,7 +25,7 @@ public class GreenDaoGenerator {
 
     // This is use to describe the colums of your table
     private static void addDeviceEntities(final Schema schema) {
-        Entity device = schema.addEntity("Device");
+        Entity device = schema.addEntity("DeviceEntity");
         device.addStringProperty("address").primaryKey();
         device.addStringProperty("name").notNull();
         device.addStringProperty("settings");

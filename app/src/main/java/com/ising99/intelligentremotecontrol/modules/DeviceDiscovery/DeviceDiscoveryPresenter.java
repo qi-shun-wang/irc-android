@@ -1,5 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.ising99.intelligentremotecontrol.core.Device;
@@ -9,7 +10,7 @@ import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscov
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.InteractorOutput;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Wireframe;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 /**
  * Created by shun on 2018/3/27.
@@ -18,15 +19,17 @@ import java.util.HashSet;
 
 public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
 
+    private Context context;
     private View view;
     private Interactor interactor;
     private Wireframe router;
-    private HashSet<Device> devices = new HashSet<>();
+    private ArrayList<Device> devices = new ArrayList<>();
 
-    DeviceDiscoveryPresenter(View view) {
+    DeviceDiscoveryPresenter(Context context, View view) {
+        this.context = context;
         this.view = view;
-        interactor = new DeviceDiscoveryInteractor(this);
-        router = new DeviceDiscoveryRouter(view, this);
+        interactor = new DeviceDiscoveryInteractor(context,this);
+        router = new DeviceDiscoveryRouter(context, this);
 
     }
 
@@ -53,6 +56,7 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         view = null;
         router = null;
         interactor = null;
+        context = null;
     }
 
     @Override
@@ -62,9 +66,11 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         if (devices.contains(device)) {
             return;
         }
+        Log.d("=didRecieved=Name=>",device.getName());
+        Log.d("=didRecieved=Address=>",device.getAddress());
+        Log.d("=didRecieved=Settings=>",device.getSettings());
         devices.add(device);
         Log.d("Device HashSet", "====>" + devices.size());
-        interactor.cachingReceived(device);
         view.reloadDeviceCollection();
 
     }
@@ -75,8 +81,12 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
     }
 
     @Override
-    public HashSet<Device> getDevices() {
+    public ArrayList<Device> getDevices() {
         return devices;
     }
 
+    @Override
+    public void selectDeviceAt(int index) {
+        interactor.persistReceived(devices.get(index));
+    }
 }

@@ -1,5 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.Root;
 
+import android.content.Context;
+
 import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.InteractorOutput;
 
@@ -11,14 +13,17 @@ import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Interacto
 public class RootInteractor implements RootContracts.Interactor {
 
     private InteractorOutput output;
+    private Context context;
 
-    RootInteractor(InteractorOutput output){
+    RootInteractor(Context context, InteractorOutput output){
         this.output = output;
+        this.context = context;
     }
 
     @Override
     public void decompose() {
         output = null;
+        context = null;
     }
 
     @Override

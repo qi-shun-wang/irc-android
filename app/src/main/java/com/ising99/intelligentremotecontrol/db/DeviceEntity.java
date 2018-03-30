@@ -8,10 +8,10 @@ import org.greenrobot.greendao.annotation.*;
 // KEEP INCLUDES END
 
 /**
- * Entity mapped to table "DEVICE".
+ * Entity mapped to table "DEVICE_ENTITY".
  */
 @Entity
-public class Device {
+public class DeviceEntity {
 
     @Id
     private String address;
@@ -30,15 +30,15 @@ public class Device {
     // KEEP FIELDS END
 
     @Generated
-    public Device() {
+    public DeviceEntity() {
     }
 
-    public Device(String address) {
+    public DeviceEntity(String address) {
         this.address = address;
     }
 
     @Generated
-    public Device(String address, String name, String settings, java.util.Date update_at, java.util.Date create_at) {
+    public DeviceEntity(String address, String name, String settings, java.util.Date update_at, java.util.Date create_at) {
         this.address = address;
         this.name = name;
         this.settings = settings;

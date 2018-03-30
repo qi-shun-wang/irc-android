@@ -31,7 +31,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_discovery);
 
-        presenter = new DeviceDiscoveryPresenter(this);
+        presenter = new DeviceDiscoveryPresenter(getApplicationContext(),this);
         presenter.onCreate();
     }
 
@@ -87,8 +87,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
         gridView.setNumColumns(presenter.numberOfItem());
         bitmap= BitmapFactory.decodeResource(getResources(), R.drawable.kodpluswhite);
         gridView.setOnItemClickListener((parent, view, position, id) -> {
-            //TODO-Device Persistence
-
+            presenter.selectDeviceAt(position);
         });
     }
 

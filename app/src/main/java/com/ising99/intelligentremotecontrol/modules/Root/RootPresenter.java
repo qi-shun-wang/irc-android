@@ -1,5 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.Root;
 
+import android.content.Context;
+
 import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.View;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Interactor;
@@ -18,10 +20,10 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     private Interactor interactor;
     private Wireframe router;
 
-    RootPresenter(View view){
+    RootPresenter(Context context, View view){
         this.view = view;
-        interactor = new RootInteractor(this);
-        router = new RootRouter(view,this);
+        interactor = new RootInteractor(context,this);
+        router = new RootRouter(context,this);
     }
 
     @Override

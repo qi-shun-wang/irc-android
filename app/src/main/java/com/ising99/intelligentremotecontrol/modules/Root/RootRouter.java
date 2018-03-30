@@ -1,12 +1,11 @@
 package com.ising99.intelligentremotecontrol.modules.Root;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryActivity;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
-import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.View;
 
 /**
  * Created by shun on 2018/3/27.
@@ -15,23 +14,23 @@ import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.View;
 
 public class RootRouter implements Wireframe {
 
-    private Activity activity;
+    private Context context;
     private Presenter presenter;
 
-    RootRouter(View view, Presenter  presenter) {
-        this.activity = (Activity) view;
+    RootRouter(Context context, Presenter  presenter) {
+        this.context = context;
         this.presenter = presenter;
     }
     @Override
     public void decompose() {
-        activity = null;
+        context = null;
         presenter = null;
     }
 
     @Override
     public void openDeviceDiscovery() {
-        Intent intentToDeviceDiscoveryActivity = new Intent(activity, DeviceDiscoveryActivity.class);
-        activity.startActivity(intentToDeviceDiscoveryActivity);
+        Intent intentToDeviceDiscoveryActivity = new Intent(context, DeviceDiscoveryActivity.class);
+        context.startActivity(intentToDeviceDiscoveryActivity);
     }
 
 }

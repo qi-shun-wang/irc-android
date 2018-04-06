@@ -25,4 +25,5 @@ class DeviceDiscoveryRouter implements Wireframe {
         context = null;
         presenter = null;
     }
+
 }

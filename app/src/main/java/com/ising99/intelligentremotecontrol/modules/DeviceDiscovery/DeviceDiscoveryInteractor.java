@@ -61,7 +61,7 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
             DeviceEntity entity = new DeviceEntity(device.getAddress(), device.getName(), device.getSettings(),true, new Date(), new Date());
             ((App)context).getDaoSession().getDeviceEntityDao().insert(entity);
         }
-
+        output.didPersisted(device);
 
     }
 
@@ -73,6 +73,7 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
 
     @Override
     public void stopDeviceDiscoveryTask() {
+        if (task == null) return;
         if (!task.isCancelled()) {
             task.cancel(true);
         }

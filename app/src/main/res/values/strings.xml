@@ -21,4 +21,17 @@
         <item>@drawable/image_8</item>
         <item>@drawable/image_9</item>
     </string-array>
+
+
+    <array name="scan_list">
+        <item>@drawable/scan1</item>
+        <item>@drawable/scan2</item>
+        <item>@drawable/scan3</item>
+        <item>@drawable/scan4</item>
+        <item>@drawable/scan5</item>
+        <item>@drawable/scan6</item>
+        <item>@drawable/scan7</item>
+        <item>@drawable/scan8</item>
+
+    </array>
 </resources>

@@ -238,7 +238,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
         runOnUiThread(()->{
             textConnectMessage.animate().alpha(1);
             textKodName.animate().alpha(1);
-            Blurry.with(getApplicationContext()).onto((ViewGroup)blur);
+            Blurry.with(getApplicationContext()).sampling(8).onto((ViewGroup)blur);
         });
 
     }

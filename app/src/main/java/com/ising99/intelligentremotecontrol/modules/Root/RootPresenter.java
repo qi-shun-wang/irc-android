@@ -24,11 +24,13 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     RootPresenter(Context context, View view){
         this.view = view;
         interactor = new RootInteractor(context,this);
-        router = new RootRouter(context,this);
+        router = new RootRouter(context);
     }
 
     @Override
     public void onCreate() {
+        view.setupActionBinding();
+        view.showLaunchScreen();
         view.updateNetworkStatus("尚未連接WiFi");
         view.updateConnectedDeviceStatus("尚未連接設備");
     }

@@ -12,6 +12,8 @@ import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 public interface RootContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
+        void setupActionBinding();
+        void showLaunchScreen();
         void updateNetworkStatus(String text);
         void updateConnectedDeviceStatus(String text);
     }
@@ -33,7 +35,6 @@ public interface RootContracts extends BaseContracts {
         void didNotConnectedToWiFi();
         void didConnectedToDevice(Device device);
         void failure(String msg);
-
     }
 
     interface Wireframe extends BaseContracts.Wireframe {

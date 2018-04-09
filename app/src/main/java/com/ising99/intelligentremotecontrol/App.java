@@ -9,6 +9,7 @@ import org.greenrobot.greendao.database.Database;
 
 /**
  * Created by shun on 2018/3/28.
+ *
  */
 
 public class App extends Application {

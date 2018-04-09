@@ -5,7 +5,6 @@ import android.content.Intent;
 
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryActivity;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
-import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
 
 /**
  * Created by shun on 2018/3/27.
@@ -15,16 +14,13 @@ import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter
 public class RootRouter implements Wireframe {
 
     private Context context;
-    private Presenter presenter;
 
-    RootRouter(Context context, Presenter  presenter) {
+    RootRouter(Context context) {
         this.context = context;
-        this.presenter = presenter;
     }
     @Override
     public void decompose() {
         context = null;
-        presenter = null;
     }
 
     @Override

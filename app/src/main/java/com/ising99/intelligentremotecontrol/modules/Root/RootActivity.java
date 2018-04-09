@@ -2,8 +2,10 @@ package com.ising99.intelligentremotecontrol.modules.Root;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
@@ -42,6 +44,11 @@ public class RootActivity extends Activity implements RootContracts.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
         presenter = new RootPresenter(getApplicationContext(), this);
+        presenter.onCreate();
+    }
+
+    @Override
+    public void setupActionBinding() {
         findViewById(R.id.button).setOnClickListener(showDeviceDiscoveryAction);
         findViewById(R.id.button_up).setOnClickListener(tapUpAction);
         findViewById(R.id.button_down).setOnClickListener(tapDownAction);
@@ -61,8 +68,17 @@ public class RootActivity extends Activity implements RootContracts.View {
         findViewById(R.id.button_channel_decrease).setOnClickListener(tapChannelDownAction);
         findViewById(R.id.button_language).setOnClickListener(tapLanguageAction);
         findViewById(R.id.button_playback).setOnClickListener(tapPlaybackAction);
+    }
 
-        presenter.onCreate();
+    @Override
+    public void showLaunchScreen() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        int secondsDelayed = 1;
+        new Handler().postDelayed(() -> {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            findViewById(R.id.launch_screen).setVisibility(View.GONE);
+        }, secondsDelayed * 2000);
     }
 
     @Override

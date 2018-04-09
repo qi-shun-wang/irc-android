@@ -235,6 +235,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     @Override
     public void showDeviceNotFound() {
         runOnUiThread(()->{
+            findViewById(R.id.device_not_found_container).setVisibility(android.view.View.VISIBLE);
             findViewById(R.id.device_not_found_container).animate().alpha(1);
             Blurry.with(getApplicationContext()).onto((ViewGroup)blur);
         });
@@ -244,6 +245,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     public void hideDeviceNotFound() {
         runOnUiThread(()->{
             findViewById(R.id.device_not_found_container).animate().alpha(0);
+            findViewById(R.id.device_not_found_container).setVisibility(android.view.View.GONE);
             Blurry.delete((ViewGroup)blur);
         });
     }
@@ -251,6 +253,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     @Override
     public void showConnectionFailed() {
         runOnUiThread(()->{
+            findViewById(R.id.wifi_unavailable_container).setVisibility(android.view.View.VISIBLE);
             findViewById(R.id.wifi_unavailable_container).animate().alpha(1);
             Blurry.with(getApplicationContext()).onto((ViewGroup)blur);
         });
@@ -260,6 +263,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     public void hideConnectionFailed() {
         runOnUiThread(()->{
             findViewById(R.id.wifi_unavailable_container).animate().alpha(0);
+            findViewById(R.id.wifi_unavailable_container).setVisibility(android.view.View.GONE);
             Blurry.delete((ViewGroup)blur);
         });
     }

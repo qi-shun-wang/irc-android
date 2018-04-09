@@ -26,7 +26,6 @@
 
         <activity android:name=".modules.DeviceDiscovery.DeviceDiscoveryActivity"/>
 
-
     </application>
 
 </manifest>

@@ -27,6 +27,7 @@ public class RootInteractor implements RootContracts.Interactor {
     private InteractorOutput output;
     private Context context;
     private RemoteControlCoAPService service;
+
     RootInteractor(Context context, InteractorOutput output){
         this.output = output;
         this.context = context;

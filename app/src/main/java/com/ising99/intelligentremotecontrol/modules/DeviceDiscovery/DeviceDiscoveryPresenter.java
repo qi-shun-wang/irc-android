@@ -22,7 +22,6 @@ import java.util.TimerTask;
 
 public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
 
-    private Context context;
     private View view;
     private Interactor interactor;
     private Wireframe router;
@@ -57,10 +56,9 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
     };
 
     DeviceDiscoveryPresenter(Context context, View view) {
-        this.context = context;
         this.view = view;
         interactor = new DeviceDiscoveryInteractor(context,this);
-        router = new DeviceDiscoveryRouter(context, this);
+        router = new DeviceDiscoveryRouter(context);
     }
 
     @Override
@@ -91,7 +89,6 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         view = null;
         router = null;
         interactor = null;
-        context = null;
     }
 
     @Override
@@ -162,6 +159,8 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
     }
 
     private void searchDevice(){
+        view.hideConnectionFailed();
+        view.hideDeviceNotFound();
         view.startScanAnimation();
         interactor.startDeviceDiscoveryTask();
         new Timer().schedule(new TimerTask() {
@@ -175,17 +174,23 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         }, 5000);
     }
 
-    private void check(){
-
+    private void check() {
         view.stopScanAnimation();
         interactor.stopDeviceDiscoveryTask();
-
-        if (devices.size()>0){
-            view.reloadDeviceCollection();
-        }else {
-            view.showDeviceNotFound();
-            //TODO device not found
+        boolean isWiFiConnected = interactor.checkWiFiStatus();
+        if (isWiFiConnected){
+            if (devices.size()>0){
+                view.reloadDeviceCollection();
+            } else {
+                view.showDeviceNotFound();
+            }
+        } else {
+            view.showConnectionFailed();
         }
     }
 
+    @Override
+    public void openSetting() {
+        router.openWifiSetting();
+    }
 }

@@ -1,8 +1,9 @@
 package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 
 import android.content.Context;
+import android.content.Intent;
+import android.provider.Settings;
 
-import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Wireframe;
 
 /**
@@ -13,17 +14,20 @@ import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscov
 class DeviceDiscoveryRouter implements Wireframe {
 
     private Context context;
-    private Presenter presenter;
 
-    DeviceDiscoveryRouter(Context context, Presenter presenter) {
+    DeviceDiscoveryRouter(Context context) {
         this.context = context;
-        this.presenter = presenter;
     }
 
     @Override
     public void decompose() {
         context = null;
-        presenter = null;
     }
 
+    @Override
+    public void openWifiSetting() {
+        Intent intentToWifiSetting = new Intent(Settings.ACTION_WIFI_SETTINGS);
+        intentToWifiSetting.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intentToWifiSetting);
+    }
 }

@@ -1,6 +1,8 @@
 package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -84,10 +86,30 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
         try {
             Device device = new Gson().fromJson(message,Device.class);
             output.didReceived(device);
-        }catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             e.printStackTrace();
         }
+    }
 
+    private boolean checkWiFiConnectionStatus(Context context){
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = null;
+        if (manager != null) {
+            info = manager.getActiveNetworkInfo();
+        }
+        if (info != null && info.getType() == ConnectivityManager.TYPE_WIFI)
+        {
+            Log.d("NetworkInfo",info.toString());
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
+    @Override
+    public boolean checkWiFiStatus() {
+        return checkWiFiConnectionStatus(context);
     }
 }

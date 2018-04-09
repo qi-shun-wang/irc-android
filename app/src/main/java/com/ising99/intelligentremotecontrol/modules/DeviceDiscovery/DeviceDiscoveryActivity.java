@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-//import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscov
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.View;
 
 import jp.wasabeef.blurry.Blurry;
-
 
 /**
  * Created by shun on 2018/3/27.
@@ -64,14 +62,10 @@ public class DeviceDiscoveryActivity extends Activity implements View {
         image_line = findViewById(R.id.image_line);
         textKodName = findViewById(R.id.text_kod_name);
         textConnectMessage = findViewById(R.id.text_connect_message);
+        findViewById(R.id.setting_btn).setOnClickListener((v)->presenter.openSetting());
         findViewById(R.id.cancel_btn).setOnClickListener((v)->finish());
         findViewById(R.id.search_btn).setOnClickListener((v -> presenter.searchAgain()));
         image_kod.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kodpluswhite));
-//        DisplayMetrics dm = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(dm);
-//        int ScreenWidth = dm.widthPixels;   //螢幕的寬
-//        int ScreenHeight = dm.heightPixels;  //螢幕的高
-
 
         image_scan.post(() -> {
             ViewGroup.LayoutParams params = image_kod.getLayoutParams();
@@ -130,10 +124,8 @@ public class DeviceDiscoveryActivity extends Activity implements View {
         }
 
         runOnUiThread(() -> {
-
             gridView.setNumColumns(presenter.numberOfItem());
             adapter.notifyDataSetChanged();
-
         });
 
     }
@@ -228,19 +220,16 @@ public class DeviceDiscoveryActivity extends Activity implements View {
 
     @Override
     public void setupKodName(String text) {
-
         runOnUiThread(()-> textKodName.setText(text));
     }
 
     @Override
     public void showConnectionSuccess() {
-
         runOnUiThread(()->{
             textConnectMessage.animate().alpha(1);
             textKodName.animate().alpha(1);
             Blurry.with(getApplicationContext()).sampling(8).onto((ViewGroup)blur);
         });
-
     }
 
     @Override
@@ -255,6 +244,22 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     public void hideDeviceNotFound() {
         runOnUiThread(()->{
             findViewById(R.id.device_not_found_container).animate().alpha(0);
+            Blurry.delete((ViewGroup)blur);
+        });
+    }
+
+    @Override
+    public void showConnectionFailed() {
+        runOnUiThread(()->{
+            findViewById(R.id.wifi_unavailable_container).animate().alpha(1);
+            Blurry.with(getApplicationContext()).onto((ViewGroup)blur);
+        });
+    }
+
+    @Override
+    public void hideConnectionFailed() {
+        runOnUiThread(()->{
+            findViewById(R.id.wifi_unavailable_container).animate().alpha(0);
             Blurry.delete((ViewGroup)blur);
         });
     }

@@ -31,21 +31,23 @@ public interface DeviceDiscoveryContracts extends BaseContracts {
         void finishActivity();
         void showDeviceNotFound();
         void hideDeviceNotFound();
-
+        void showConnectionFailed();
+        void hideConnectionFailed();
     }
 
     interface Presenter extends BaseContracts.Presenter  {
-
         int numberOfItem();
         ArrayList<Device> getDevices();
         void selectDeviceAt(int index,float x, float y, int width, int height);
         void searchAgain();
+        void openSetting();
     }
 
-    interface Interactor extends BaseContracts.Interactor{
+    interface Interactor extends BaseContracts.Interactor {
         void persistReceived(Device device);
         void startDeviceDiscoveryTask();
         void stopDeviceDiscoveryTask();
+        boolean checkWiFiStatus();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput{
@@ -54,7 +56,7 @@ public interface DeviceDiscoveryContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-
+        void openWifiSetting();
     }
 
 }

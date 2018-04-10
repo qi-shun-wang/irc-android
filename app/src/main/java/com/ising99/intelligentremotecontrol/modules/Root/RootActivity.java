@@ -1,6 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.Root;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -10,17 +11,22 @@ import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
+import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragment;
+import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
+
+import jp.wasabeef.blurry.Blurry;
+
 
 /**
  * Created by shun on 2018/3/27.
  *
  */
 
-public class RootActivity extends Activity implements RootContracts.View {
+public class RootActivity extends Activity implements RootContracts.View, MediaShareDMRListFragmentDelegate {
 
     private Presenter presenter;
-
+    private MediaShareDMRListFragment dmrListFragment;
     View.OnClickListener showDeviceDiscoveryAction = (v) -> presenter.didTapOnDeviceDiscovery();
     View.OnClickListener tapUpAction = (v) -> presenter.didSend(KeyCode.KEYCODE_DPAD_UP);
     View.OnClickListener tapDownAction = (v) -> presenter.didSend(KeyCode.KEYCODE_DPAD_DOWN);
@@ -38,6 +44,18 @@ public class RootActivity extends Activity implements RootContracts.View {
     View.OnClickListener tapKODPlusAction = (v) -> presenter.didSend(KeyCode.KEYCODE_KOD_PLUS);
     View.OnClickListener tapLanguageAction = (v) -> presenter.didSend(KeyCode.KEYCODE_LANGUAGE);
     View.OnClickListener tapPlaybackAction = (v) -> presenter.didSend(KeyCode.KEYCODE_MEDIA_PLAY_PAUSE);
+
+    View.OnClickListener tapCastAction = (v) -> {
+        dmrListFragment = new MediaShareDMRListFragment();
+        dmrListFragment.setDelegate(this);
+        findViewById(R.id.fragment_container).setVisibility(View.VISIBLE);
+        Blurry.with(getApplicationContext()).sampling(8).onto(findViewById(R.id.irc_container));
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.animator.slide_in_up,R.animator.slide_out_down);
+        fragmentTransaction.replace(R.id.fragment_container, dmrListFragment, "MediaShareDMRListFragment");
+        fragmentTransaction.commit();
+    };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +86,9 @@ public class RootActivity extends Activity implements RootContracts.View {
         findViewById(R.id.button_channel_decrease).setOnClickListener(tapChannelDownAction);
         findViewById(R.id.button_language).setOnClickListener(tapLanguageAction);
         findViewById(R.id.button_playback).setOnClickListener(tapPlaybackAction);
+        findViewById(R.id.button_cast).setOnClickListener(tapCastAction);
+
+
     }
 
     @Override
@@ -104,4 +125,17 @@ public class RootActivity extends Activity implements RootContracts.View {
         ((TextView)findViewById(R.id.textView)).setText(text);
     }
 
+    @Override
+    public void didClosed() {
+        getFragmentManager().beginTransaction().remove(dmrListFragment).commit();
+        Blurry.delete(findViewById(R.id.irc_container));
+        findViewById(R.id.fragment_container).setVisibility(View.GONE);
+        dmrListFragment = null;
+
+    }
+
+    @Override
+    public void didSelected() {
+
+    }
 }

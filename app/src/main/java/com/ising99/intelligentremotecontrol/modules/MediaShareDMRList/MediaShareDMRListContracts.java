@@ -17,7 +17,7 @@ public interface MediaShareDMRListContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
-
+        void prepareCastDeviceAt(int index);
     }
 
     interface Interactor extends BaseContracts.Interactor {

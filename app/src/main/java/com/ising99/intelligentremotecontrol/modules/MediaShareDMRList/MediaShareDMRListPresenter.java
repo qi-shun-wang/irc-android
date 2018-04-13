@@ -9,6 +9,8 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShare
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Wireframe;
 
+import org.fourthline.cling.model.meta.RemoteDevice;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -71,4 +73,11 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
     }
 
 
+    @Override
+    public void prepareCastDeviceAt(int index) {
+
+        RemoteDevice device = interactor.getCurrentDevices().get(index);
+
+        Log.v("prepareCastDeviceAt","==prepareCastDeviceAt==>"+device.getDetails().getFriendlyName());
+    }
 }

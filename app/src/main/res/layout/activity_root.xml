@@ -1,171 +1,10 @@
-<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/irc_container">
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="search" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_channel_decrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="channel-" />
-
-                <Button
-                    android:id="@+id/button_channel_increase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Channel+" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_volume_increase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Volume+" />
-
-                <Button
-                    android:id="@+id/button_volume_decrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="volume-" />
-                <Button
-                    android:id="@+id/button_mute"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mute" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="left" />
-                <Button
-                    android:id="@+id/button_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="right" />
-
-                <Button
-                    android:id="@+id/button_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="up" />
-                <Button
-                    android:id="@+id/button_down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="down" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button_enter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="enter" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="menu" />
-
-                <Button
-                    android:id="@+id/button_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="back" />
-                <Button
-                    android:id="@+id/button_kod_plus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="KOD+" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_language"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="language" />
-                <Button
-                    android:id="@+id/button_playback"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="play/pause" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button_power"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Power" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-            <Button
-                android:id="@+id/button_cast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cast" />
-        </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
-
-
-    <ImageView
-        android:id="@+id/launch_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/launch_screen"
-        android:scaleType="centerCrop" />
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -181,4 +20,82 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/root_header_container"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/spaceGray"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/root_scan_qrcode_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:background="@color/clear"
+            android:scaleType="fitCenter"
+            android:src="@drawable/root_scan_qrcode_icon" />
+
+        <Button
+            android:id="@+id/root_wifi_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/root_wifi_icon"
+            android:layout_toStartOf="@+id/root_scan_qrcode_btn"
+            android:gravity="fill"
+            android:background="@color/clear"
+            android:text="@string/root_wifi_text"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/root_wifi_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@drawable/root_wifi_icon" />
+
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/root_content_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@+id/root_header_container">
+
+    </FrameLayout>
+
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/black"
+        app:itemIconTint="@color/selector_item_selected_color"
+        app:itemTextColor="@color/selector_item_selected_color"
+        app:menu="@menu/root_bottom_navigation" />
+
+
 </android.support.constraint.ConstraintLayout>

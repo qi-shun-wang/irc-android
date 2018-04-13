@@ -20,21 +20,21 @@ public interface RootContracts extends BaseContracts {
 
     interface Presenter extends BaseContracts.Presenter {
         void didTapOnDeviceDiscovery();
-        void didSend(KeyCode code);
+        void didSelectedTabAt(String position);
+
     }
 
     interface Interactor extends BaseContracts.Interactor {
-        void perform(KeyCode code);
         void checkWiFiStatus();
         void checkLastConnectedDevice();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
-        void didSended();
+
         void didConnectedToWiFi(String name);
         void didNotConnectedToWiFi();
         void didConnectedToDevice(Device device);
-        void failure(String msg);
+
     }
 
     interface Wireframe extends BaseContracts.Wireframe {

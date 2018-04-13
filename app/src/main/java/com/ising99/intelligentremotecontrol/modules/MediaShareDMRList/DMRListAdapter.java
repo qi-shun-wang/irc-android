@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,27 +17,37 @@ import java.util.List;
 
 /**
  * Created by shun on 2018/4/10.
+ * .
  */
 
-public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHolder>  {
+interface DMRListAdapterDelegate {
+    void onItemClick(View view , int position);
+}
 
-    private List<RemoteDevice> devices = new ArrayList<RemoteDevice>();
+public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHolder> implements View.OnClickListener {
 
+    private List<RemoteDevice> devices = new ArrayList<>();
+
+    void setupDelegate(DMRListAdapterDelegate delegate) {
+        this.delegate = delegate;
+    }
+
+    private DMRListAdapterDelegate delegate ;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // create a new view
-
-        ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext())
+        ViewGroup view = (ViewGroup) LayoutInflater
+                .from(parent.getContext())
                 .inflate(R.layout.list_item_dmr, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        view.setOnClickListener(this);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.title.setText(devices.get(position).getDetails().getFriendlyName());
         holder.icon.setImageResource(R.drawable.kodpluswhite);
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -46,8 +55,15 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
         return devices.size();
     }
 
-    public void setDevices(List<RemoteDevice> devices) {
+    void setDevices(List<RemoteDevice> devices) {
         this.devices = devices;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(delegate!=null){
+            delegate.onItemClick(view,(int)view.getTag());
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,7 +71,7 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
         public TextView title;
         public ImageView icon;
 
-        public ViewHolder(ViewGroup v) {
+        ViewHolder(ViewGroup v) {
             super(v);
             this.title = v.findViewById(R.id.textView_dmr_title);
             this.icon = v.findViewById(R.id.imageView_dmr_icon);

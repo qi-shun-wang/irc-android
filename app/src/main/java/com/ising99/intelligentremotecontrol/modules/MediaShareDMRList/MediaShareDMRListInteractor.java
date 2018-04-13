@@ -49,13 +49,10 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
 
     @Override
     public void stopSearchDMR() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (service != null)
-                {
-                    service.shutdown();
-                }
+        new Thread(() -> {
+            if (service != null)
+            {
+                service.shutdown();
             }
         });
 

@@ -3,7 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.core.Device;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shun on 2018/3/27.
@@ -13,10 +13,9 @@ import java.util.ArrayList;
 public interface DeviceDiscoveryContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
-        void reloadDeviceCollection();
+        void reloadDeviceCollection(List<Device> devices);
         void performInitView();
-        void setupAdapter();
-        void setupGridView();
+        void setupListView();
         void setupScanAnimation(int[] res_IDs);
         void setupLineAnimation(int[] res_IDs);
         void startScanAnimation();
@@ -36,8 +35,6 @@ public interface DeviceDiscoveryContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter  {
-        int numberOfItem();
-        ArrayList<Device> getDevices();
         void selectDeviceAt(int index,float x, float y, int width, int height);
         void searchAgain();
         void openSetting();

@@ -19,19 +19,17 @@ import java.util.List;
 
 /**
  * Created by shun on 2018/4/10.
+ * .
  */
 
-public class MediaShareDMRListFragment extends Fragment implements MediaShareDMRListContracts.View {
+public class MediaShareDMRListFragment extends Fragment implements MediaShareDMRListContracts.View ,DMRListAdapterDelegate {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private DMRListAdapter adapter;
     private Presenter presenter;
     private MediaShareDMRListFragmentDelegate delegate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_media_share_dmr_list, container, false);
     }
 
@@ -53,20 +51,13 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
         super.onViewCreated(view, savedInstanceState);
         presenter = new MediaShareDMRListPresenter(getActivity().getApplicationContext(),this);
         view.findViewById(R.id.fragment_media_share_dmr_list_container).setOnClickListener((v)->delegate.didClosed());
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_dmr);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new DMRListAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_dmr);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new DMRListAdapter();
+        adapter.setupDelegate(this);
+        recyclerView.setAdapter(adapter);
         presenter.onCreate();
     }
 
@@ -97,13 +88,14 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
 
     @Override
     public void reloadDMRList(List<RemoteDevice> devices) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ((DMRListAdapter)mAdapter).setDevices(devices);
-                mAdapter.notifyDataSetChanged();
-            }
+        getActivity().runOnUiThread(() -> {
+            adapter.setDevices(devices);
+            adapter.notifyDataSetChanged();
         });
+    }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        presenter.prepareCastDeviceAt(position);
     }
 }

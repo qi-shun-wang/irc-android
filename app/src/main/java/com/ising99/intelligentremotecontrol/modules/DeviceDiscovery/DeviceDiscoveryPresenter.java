@@ -12,6 +12,7 @@ import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscov
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Wireframe;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -64,8 +65,8 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
     @Override
     public void onCreate() {
         view.performInitView();
-        view.setupGridView();
-        view.setupAdapter();
+        view.setupListView();
+
         view.setupLineAnimation(res_line_id);
         view.setupScanAnimation(res_scan_id);
     }
@@ -101,19 +102,15 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         Log.d("=didRecieved=Name=>",device.getName());
         Log.d("=didRecieved=Address=>",device.getAddress());
         Log.d("=didRecieved=Settings=>",device.getSettings());
+        if (device.getName() == null || device.getAddress() == null || device.getBackupAddress() == null){
+            return;
+        }
+        if (Objects.equals(device.getName(), "") || Objects.equals(device.getBackupAddress(), "")){
+            return;
+        }
         devices.add(device);
         Log.d("Device HashSet", "====>" + devices.size());
 
-    }
-
-    @Override
-    public int numberOfItem() {
-        return devices.size();
-    }
-
-    @Override
-    public ArrayList<Device> getDevices() {
-        return devices;
     }
 
     @Override
@@ -180,7 +177,7 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         boolean isWiFiConnected = interactor.checkWiFiStatus();
         if (isWiFiConnected){
             if (devices.size()>0){
-                view.reloadDeviceCollection();
+                view.reloadDeviceCollection(devices);
             } else {
                 view.showDeviceNotFound();
             }

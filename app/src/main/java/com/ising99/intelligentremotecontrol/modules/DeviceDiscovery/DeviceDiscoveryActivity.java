@@ -6,10 +6,11 @@ import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ import com.ising99.intelligentremotecontrol.component.FramesSequenceAnimation;
 import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.View;
+
+import java.util.List;
 
 import jp.wasabeef.blurry.Blurry;
 
@@ -28,8 +31,8 @@ import jp.wasabeef.blurry.Blurry;
 
 public class DeviceDiscoveryActivity extends Activity implements View {
 
-    private GridView gridView;
-    private GridViewAdapter adapter;
+    private RecyclerView recyclerView;
+    private ListViewAdapter adapter;
     private Presenter presenter;
     private ImageView image_scan;
     private ImageView image_kod;
@@ -37,7 +40,6 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     private TextView textKodName;
     private TextView textConnectMessage;
     private android.view.View blur;
-
     private FramesSequenceAnimation anim_line;
     private FramesSequenceAnimation anim_scan;
 
@@ -56,7 +58,8 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     public void performInitView() {
         root = findViewById(R.id.root);
         blur = findViewById(R.id.blurView);
-        gridView = findViewById(R.id.device_collection);
+        recyclerView = findViewById(R.id.device_collection);
+        recyclerView.setHasFixedSize(true);
         image_kod = findViewById(R.id.image_kod);
         image_scan = findViewById(R.id.scan);
         image_line = findViewById(R.id.image_line);
@@ -103,7 +106,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
         presenter.onDestroy();
         presenter = null;
         image_scan = null;
-        gridView = null;
+        recyclerView = null;
         Runtime.getRuntime().gc();
     }
 
@@ -116,33 +119,31 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     }
 
     @Override
-    public void reloadDeviceCollection() {
-        adapter.removeAll();
-
-        for (Device device : presenter.getDevices()) {
-            adapter.append(new ImageItem(BitmapFactory.decodeResource(getResources(), R.drawable.kodpluswhite), device.getName()));
-        }
+    public void reloadDeviceCollection(List<Device> devices) {
 
         runOnUiThread(() -> {
-            gridView.setNumColumns(presenter.numberOfItem());
+            adapter.setDevices(devices);
             adapter.notifyDataSetChanged();
         });
 
     }
 
     @Override
-    public void setupGridView() {
+    public void setupListView() {
 
-        gridView.setNumColumns(presenter.numberOfItem());
-
-        gridView.setOnItemClickListener((parent, view, position, id) -> presenter.selectDeviceAt
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new ListViewAdapter();
+        adapter.setupDelegate((item,position)-> presenter.selectDeviceAt
                 (
                         position,
-                        view.getX(),
-                        view.getY(),
-                        view.getWidth(),
-                        view.getHeight()
+                        item.getX(),
+                        item.getY(),
+                        item.getWidth(),
+                        item.getHeight()
                 ));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -166,11 +167,6 @@ public class DeviceDiscoveryActivity extends Activity implements View {
         runOnUiThread(() -> image_scan.setImageBitmap( BitmapFactory.decodeResource(getResources(), R.drawable.scan1)));
     }
 
-    @Override
-    public void setupAdapter() {
-        adapter = new GridViewAdapter(this,R.layout.grid_item_device);
-        gridView.setAdapter(adapter);
-    }
 
     @Override
     public void updateKODImagePosition(float x, float y, int width, int height) {

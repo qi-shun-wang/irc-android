@@ -52,7 +52,7 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
             {
                 entity.setIsConnected(false);
             }
-            if (entity.getAddress().equals(device.getAddress())) {
+            if (entity.getAddress().equals(device.getBackupAddress())) {
                 isExist = true;
                 entity.setIsConnected(true);
             }
@@ -60,7 +60,7 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
             ((App)context).getDaoSession().getDeviceEntityDao().update(entity);
         }
         if (!isExist) {
-            DeviceEntity entity = new DeviceEntity(device.getAddress(), device.getName(), device.getSettings(),true, new Date(), new Date());
+            DeviceEntity entity = new DeviceEntity(device.getBackupAddress(), device.getName(), device.getSettings(),true, new Date(), new Date());
             ((App)context).getDaoSession().getDeviceEntityDao().insert(entity);
         }
         output.didPersisted(device);

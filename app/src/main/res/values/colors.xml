@@ -5,7 +5,13 @@
     <color name="colorAccent">#ff4081</color>
     <color name="blue">#00abea</color>
     <color name="white">#ffffff</color>
-    <color name="clear">#00E1BEE7</color>
+    <color name="clear">#00ffffff</color>
     <color name="purple">#eba8f5</color>
+    <color name="spaceGray">#5a5a5a</color>
+    <color name="black">#000000</color>
 
+    <color name="ns_primary">#F5F5F5</color>
+    <color name="ns_primaryDark">#757575</color>
+    <color name="ns_accent">#33B5E5</color>
+    <color name="ns_blue">#272734</color>
 </resources>

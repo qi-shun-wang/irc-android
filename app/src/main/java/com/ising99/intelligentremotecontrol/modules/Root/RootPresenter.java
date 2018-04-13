@@ -61,13 +61,10 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     }
 
     @Override
-    public void didSend(KeyCode code) {
-        interactor.perform(code);
+    public void didSelectedTabAt(String position) {
+
     }
 
-    @Override
-    public void didSended() {
-    }
 
     @Override
     public void didConnectedToWiFi(String name) {
@@ -84,7 +81,4 @@ public class RootPresenter implements Presenter ,InteractorOutput{
         view.updateConnectedDeviceStatus("目前已連到設備 " + device.getName());
     }
 
-    @Override
-    public void failure(String msg) {
-    }
 }

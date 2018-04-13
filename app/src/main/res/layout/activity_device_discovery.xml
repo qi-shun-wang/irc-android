@@ -128,52 +128,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/device_collection"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:scrollbars="none"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_container">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/linearLayout_gridtableLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <GridView
-                    android:id="@+id/device_collection"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_margin="4dp"
-                    android:columnWidth="200dp"
-                    android:gravity="center"
-                    android:horizontalSpacing="1dp"
-                    android:listSelector="@android:color/transparent"
-                    android:numColumns="0"
-                    android:scrollbarAlwaysDrawHorizontalTrack="true"
-                    android:scrollbarAlwaysDrawVerticalTrack="true"
-                    android:scrollbars="horizontal"
-                    android:stretchMode="none"
-                    android:verticalSpacing="1dp">
-
-                </GridView>
-
-
-            </LinearLayout>
-        </FrameLayout>
-    </HorizontalScrollView>
-
+        app:layout_constraintTop_toBottomOf="@+id/header_container"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/device_not_found_container"
@@ -333,6 +299,7 @@
 
 
     </android.support.constraint.ConstraintLayout>
+
 
 
 </android.support.constraint.ConstraintLayout>

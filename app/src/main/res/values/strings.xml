@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">IntelligentRemoteControl</string>
+    <string name="app_name">智慧遙控器</string>
+    <string name="root_tab_irc_text">遙控器</string>
+    <string name="root_tab_kod_text">愛唱點歌</string>
+    <string name="root_tab_web_text">網址導航</string>
+    <string name="root_tab_mod_text">Hami影視</string>
+    <string name="root_tab_more_text">更多</string>
+    <string name="root_wifi_text">尚未連線</string>
 
     <string-array name="device_">
         <!--<item>@d</item>-->

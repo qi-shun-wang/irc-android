@@ -31,11 +31,20 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    //used for text view auto size
+    implementation "com.android.support:support-core-ui:27.1.1"
+    //used for bottom navi
+    implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    implementation "com.android.support:design:27.1.1"
+
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    //used for coap protocol
     implementation 'org.eclipse.californium:californium-core:2.0.0-M9'
+    //used for data persist
     implementation 'org.greenrobot:greendao:3.2.2'
-    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'net.zetetic:android-database-sqlcipher:3.5.7@aar'
+
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation("com.github.bumptech.glide:glide:4.6.1") {
         exclude group: "com.android.support"
     }
@@ -48,8 +57,8 @@ dependencies {
     implementation group: 'org.eclipse.jetty', name: 'jetty-client', version: '8.1.8.v20121106'
     implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.1.8.v20121106'
     implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '8.1.8.v20121106'
-
-
+    implementation group: 'org.slf4j', name: 'slf4j-jdk14', version:'1.7.14'
+    implementation group: 'org.nanohttpd', name: 'nanohttpd-webserver', version:'2.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

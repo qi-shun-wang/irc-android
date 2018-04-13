@@ -29,8 +29,8 @@ public class RootPresenter implements Presenter ,InteractorOutput{
 
     @Override
     public void onCreate() {
+        view.prepareTabs();
         view.setupActionBinding();
-        view.showLaunchScreen();
         view.updateNetworkStatus("尚未連接WiFi");
         view.updateConnectedDeviceStatus("尚未連接設備");
     }
@@ -61,10 +61,10 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     }
 
     @Override
-    public void didSelectedTabAt(String position) {
-
+    public boolean didSelectedTabAt(int position) {
+        view.replaceCurrentTab(position);
+        return true;
     }
-
 
     @Override
     public void didConnectedToWiFi(String name) {

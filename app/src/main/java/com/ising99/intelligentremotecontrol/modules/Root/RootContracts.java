@@ -1,6 +1,5 @@
 package com.ising99.intelligentremotecontrol.modules.Root;
 
-import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
 import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
@@ -12,15 +11,16 @@ import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 public interface RootContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
+        void prepareTabs();
         void setupActionBinding();
-        void showLaunchScreen();
         void updateNetworkStatus(String text);
         void updateConnectedDeviceStatus(String text);
+        void replaceCurrentTab(int order);
     }
 
     interface Presenter extends BaseContracts.Presenter {
         void didTapOnDeviceDiscovery();
-        void didSelectedTabAt(String position);
+        boolean didSelectedTabAt(int position);
 
     }
 

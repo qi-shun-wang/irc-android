@@ -1,21 +1,24 @@
 package com.ising99.intelligentremotecontrol.modules.Root;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCFragment;
+import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
+import com.ising99.intelligentremotecontrol.modules.More.MoreFragment;
+import com.ising99.intelligentremotecontrol.modules.Movie.MovieFragment;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
+import com.ising99.intelligentremotecontrol.modules.WebBrowser.WebBrowserFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
-import jp.wasabeef.blurry.Blurry;
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shun on 2018/3/27.
@@ -26,26 +29,43 @@ public class RootActivity extends Activity implements RootContracts.View, MediaS
 
     private Presenter presenter;
     View.OnClickListener showDeviceDiscoveryAction = (v) -> presenter.didTapOnDeviceDiscovery();
-
+    IRCFragment irc;
+    KaraokeFragment karaoke;
+    MoreFragment more;
+    WebBrowserFragment web;
+    MovieFragment movie;
+    List<Fragment> tabs = new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
+        presenter = new RootPresenter(getApplicationContext(), this);
+        presenter.onCreate();
+    }
+
+    @Override
+    public void prepareTabs() {
         BottomNavigationViewEx bottom = findViewById(R.id.bottom_navigation);
         bottom.enableAnimation(false);
         bottom.enableShiftingMode(false);
         bottom.enableItemShiftingMode(false);
         bottom.setTextSize(6);
-        bottom.setOnNavigationItemSelectedListener((item)-> {
-            Log.v("ITEM",item.getTitle().toString());
-            return true;
-        });
+        bottom.setOnNavigationItemSelectedListener((item)-> presenter.didSelectedTabAt(item.getOrder()));
 
-        IRCFragment irc = new IRCFragment();
+        irc = new IRCFragment();
+        karaoke = new KaraokeFragment();
+        more = new MoreFragment();
+        web = new WebBrowserFragment();
+        movie = new MovieFragment();
+
+        tabs.add(irc);
+        tabs.add(karaoke);
+        tabs.add(movie);
+        tabs.add(web);
+        tabs.add(more);
+
         getFragmentManager().beginTransaction().add(R.id.root_content_container,irc).commit();
-        presenter = new RootPresenter(getApplicationContext(), this);
-        presenter.onCreate();
     }
 
     @Override
@@ -54,11 +74,6 @@ public class RootActivity extends Activity implements RootContracts.View, MediaS
 
     }
 
-
-    @Override
-    public void showLaunchScreen() {
-
-    }
 
     @Override
     protected void onResume() {
@@ -87,6 +102,11 @@ public class RootActivity extends Activity implements RootContracts.View, MediaS
     public void didClosed() {
 
 
+    }
+
+    @Override
+    public void replaceCurrentTab(int order){
+        getFragmentManager().beginTransaction().replace(R.id.root_content_container,tabs.get(order)).commit();
     }
 
     @Override

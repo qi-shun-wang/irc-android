@@ -6,28 +6,7 @@
     <string name="root_tab_mod_text">Hami影視</string>
     <string name="root_tab_more_text">更多</string>
     <string name="root_wifi_text">尚未連線</string>
-
-    <string-array name="device_">
-        <!--<item>@d</item>-->
-        <!--<item>@line</item>-->
-        <!--<item>@drawable.scan/</item>-->
-        <item>@drawable/image_4</item>
-        <item>@drawable/image_5</item>
-        <item>@drawable/image_6</item>
-        <item>@drawable/image_7</item>
-        <item>@drawable/image_8</item>
-        <item>@drawable/image_9</item>
-        <item>@drawable/image_1</item>
-        <item>@drawable/image_2</item>
-        <item>@drawable/image_3</item>
-        <item>@drawable/image_4</item>
-        <item>@drawable/image_5</item>
-        <item>@drawable/image_6</item>
-        <item>@drawable/image_7</item>
-        <item>@drawable/image_8</item>
-        <item>@drawable/image_9</item>
-    </string-array>
-
+    <string name="irc_texting_edit_text_hint">點擊這裡，開始輸入文字…</string>
 
     <array name="scan_list">
         <item>@drawable/scan1</item>

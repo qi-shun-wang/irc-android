@@ -17,26 +17,22 @@ import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCSelectModeDelega
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCTextingFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCTouchFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.panel.ModePanelFragment;
-import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragment;
-import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
-
-import jp.wasabeef.blurry.Blurry;
+import com.ising99.intelligentremotecontrol.modules.IRC.panel.NumberPanelFragment;
 
 public class IRCFragment extends Fragment
         implements
         IRCContracts.View,
-        MediaShareDMRListFragmentDelegate,
         IRCActionDelegate,
         IRCSelectModeDelegate
 {
 
     private Presenter presenter;
-    private MediaShareDMRListFragment dmrListFragment;
     private IRCDefaultFragment default_mode;
     private IRCNormalFragment normal_mode;
     private IRCTextingFragment input_mode;
     private IRCTouchFragment touch_mode;
     private ModePanelFragment modePanel;
+    private NumberPanelFragment numPanel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_irc, container, false);
@@ -63,8 +59,16 @@ public class IRCFragment extends Fragment
         touch_mode = new IRCTouchFragment();
 
         default_mode.setDelegate(this);
+        normal_mode.setDelegate(this);
+        input_mode.setDelegate(this);
+        touch_mode.setDelegate(this);
 
         getFragmentManager().beginTransaction().add(R.id.fragment_mode_content_container,default_mode).commit();
+
+
+        numPanel = new NumberPanelFragment();
+        getFragmentManager().beginTransaction().add(R.id.fragment_num_content_container,numPanel).commit();
+        getFragmentManager().beginTransaction().hide(numPanel).commit();
 
         modePanel = new ModePanelFragment();
         modePanel.setDelegate(this);
@@ -94,16 +98,8 @@ public class IRCFragment extends Fragment
     }
 
     @Override
-    public void didClosed() {
-        getFragmentManager().beginTransaction().remove(dmrListFragment).commit();
-        Blurry.delete(getActivity().findViewById(R.id.irc_container));
-        getActivity().findViewById(R.id.fragment_container).setVisibility(View.GONE);
-        dmrListFragment = null;
-    }
-
-    @Override
-    public void didSelected() {
-
+    public void dispatchTextAction(String message) {
+        presenter.didSend(message);
     }
 
     @Override
@@ -138,7 +134,7 @@ public class IRCFragment extends Fragment
 
     @Override
     public void dispatchNumPanelAction() {
-
+        getFragmentManager().beginTransaction().show(numPanel).commit();
     }
 
     @Override
@@ -232,5 +228,6 @@ public class IRCFragment extends Fragment
     @Override
     public void didCanceledSelection() {
         getFragmentManager().beginTransaction().hide(modePanel).commit();
+        getFragmentManager().beginTransaction().hide(numPanel).commit();
     }
 }

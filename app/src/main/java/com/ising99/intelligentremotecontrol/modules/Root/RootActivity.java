@@ -10,7 +10,6 @@ import android.widget.Button;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCFragment;
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeFragment;
-import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
 import com.ising99.intelligentremotecontrol.modules.More.MoreFragment;
 import com.ising99.intelligentremotecontrol.modules.Movie.MovieFragment;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
@@ -25,7 +24,7 @@ import java.util.List;
  *
  */
 
-public class RootActivity extends Activity implements RootContracts.View, MediaShareDMRListFragmentDelegate {
+public class RootActivity extends Activity implements RootContracts.View {
 
     private Presenter presenter;
     View.OnClickListener showDeviceDiscoveryAction = (v) -> presenter.didTapOnDeviceDiscovery();
@@ -35,6 +34,7 @@ public class RootActivity extends Activity implements RootContracts.View, MediaS
     WebBrowserFragment web;
     MovieFragment movie;
     List<Fragment> tabs = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -71,9 +71,7 @@ public class RootActivity extends Activity implements RootContracts.View, MediaS
     @Override
     public void setupActionBinding() {
         findViewById(R.id.root_wifi_btn).setOnClickListener(showDeviceDiscoveryAction);
-
     }
-
 
     @Override
     protected void onResume() {
@@ -99,18 +97,8 @@ public class RootActivity extends Activity implements RootContracts.View, MediaS
     }
 
     @Override
-    public void didClosed() {
-
-
-    }
-
-    @Override
     public void replaceCurrentTab(int order){
         getFragmentManager().beginTransaction().replace(R.id.root_content_container,tabs.get(order)).commit();
     }
 
-    @Override
-    public void didSelected() {
-
-    }
 }

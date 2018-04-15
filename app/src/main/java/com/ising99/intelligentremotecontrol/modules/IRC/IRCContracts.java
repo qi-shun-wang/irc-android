@@ -1,6 +1,5 @@
 package com.ising99.intelligentremotecontrol.modules.IRC;
 
-import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
@@ -17,10 +16,12 @@ public interface IRCContracts extends BaseContracts {
 
     interface Presenter extends BaseContracts.Presenter {
         void didSend(SendCode code);
+        void didSend(String text);
     }
 
     interface Interactor extends BaseContracts.Interactor {
         void perform(SendCode code);
+        void perform(String  text);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

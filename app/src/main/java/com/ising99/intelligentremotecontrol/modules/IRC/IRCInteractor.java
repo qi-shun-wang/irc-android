@@ -3,12 +3,10 @@ package com.ising99.intelligentremotecontrol.modules.IRC;
 import android.content.Context;
 import android.util.Log;
 
-import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.InteractorOutput;
 import com.ising99.intelligentremotecontrol.App;
-import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.db.DeviceEntity;
 import com.ising99.intelligentremotecontrol.db.DeviceEntityDao;
 
@@ -49,6 +47,11 @@ public class IRCInteractor implements IRCContracts.Interactor {
         service.send(code);
         output.didSended();
         output.failure("伺服器異常");
+    }
+
+    @Override
+    public void perform(String text) {
+        service.send(text);
     }
 
     @Override

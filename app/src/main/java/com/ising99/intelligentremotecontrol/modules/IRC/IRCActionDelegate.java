@@ -7,6 +7,7 @@ package com.ising99.intelligentremotecontrol.modules.IRC;
 
 
 public interface IRCActionDelegate {
+    void dispatchTextAction(String message);
     void dispatchUpAction();
     void dispatchDownAction();
     void dispatchLeftAction();

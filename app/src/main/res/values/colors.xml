@@ -9,10 +9,11 @@
     <color name="purple">#eba8f5</color>
     <color name="spaceGray">#5a5a5a</color>
     <color name="black">#000000</color>
-
+    <color name="main_black">#393939</color>
     <color name="ns_primary">#F5F5F5</color>
     <color name="ns_primaryDark">#757575</color>
     <color name="ns_accent">#33B5E5</color>
     <color name="ns_blue">#272734</color>
     <color name="red">#e71616</color>
+    <color name="lightGray">#3f515151</color>
 </resources>

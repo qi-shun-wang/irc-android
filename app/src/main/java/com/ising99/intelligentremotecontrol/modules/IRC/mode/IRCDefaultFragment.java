@@ -36,6 +36,8 @@ public class IRCDefaultFragment extends Fragment {
 
         ((CircularButton)v.findViewById(R.id.irc_default_dpad)).setDelegate((action) ->
         {
+            if (delegate == null) return;
+
             switch (action)
             {
                 case up:    delegate.dispatchUpAction();break;

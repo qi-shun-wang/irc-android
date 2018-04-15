@@ -1,163 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/irc_container"
-        android:alpha="0">
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_channel_decrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="channel-" />
-
-                <Button
-                    android:id="@+id/button_channel_increase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Channel+" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_volume_increase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Volume+" />
-
-                <Button
-                    android:id="@+id/button_volume_decrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="volume-" />
-                <Button
-                    android:id="@+id/button_mute"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mute" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="left" />
-                <Button
-                    android:id="@+id/button_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="right" />
-
-                <Button
-                    android:id="@+id/button_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="up" />
-                <Button
-                    android:id="@+id/button_down"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="down" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button_enter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="enter" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="menu" />
-
-                <Button
-                    android:id="@+id/button_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="back" />
-                <Button
-                    android:id="@+id/button_kod_plus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="KOD+" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                    android:id="@+id/button_language"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="language" />
-                <Button
-                    android:id="@+id/button_playback"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="play/pause" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button_power"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Power" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
-            <Button
-                android:id="@+id/button_cast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cast" />
-        </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
-
+    android:layout_height="match_parent"
+    >
     <FrameLayout
         android:id="@+id/fragment_mode_content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/spaceGray">
+        android:background="@color/main_black">
     </FrameLayout>
 
     <FrameLayout
@@ -166,6 +16,14 @@
         android:layout_height="match_parent"
         android:background="@color/clear">
     </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_num_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightGray">
+    </FrameLayout>
+
 
 </RelativeLayout>
 

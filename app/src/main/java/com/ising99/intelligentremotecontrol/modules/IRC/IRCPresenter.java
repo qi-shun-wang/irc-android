@@ -61,6 +61,11 @@ public class IRCPresenter implements Presenter, InteractorOutput {
     }
 
     @Override
+    public void didSend(String text) {
+        interactor.perform(text);
+    }
+
+    @Override
     public void didSended() {
 
     }

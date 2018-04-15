@@ -21,23 +21,8 @@ public class DoubleSideButton extends ViewGroup {
         this.delegate = delegate;
     }
 
-    public enum Action {
-        up("up"),
-        down("down");
-
-        private final String value;
-
-        Action(String s) {
-            value = s;
-        }
-        @Override
-        public String toString() {
-            return value;
-        }
-    }
-
     public interface DoubleSideButtonDelegate {
-        void didTapOn(Action action);
+        void dispatchAction(boolean isUpSide);
     }
 
     private DoubleSideButtonDelegate delegate;
@@ -90,12 +75,12 @@ public class DoubleSideButton extends ViewGroup {
             if ((int)event.getY() > centerY)
             {
                 image.setBackgroundResource(down_resId);
-                delegate.didTapOn(Action.down);
+                delegate.dispatchAction(false);
             }
             else
             {
                 image.setBackgroundResource(up_resId);
-                delegate.didTapOn(Action.up);
+                delegate.dispatchAction(true);
             }
         }
         else if(event.getAction() == MotionEvent.ACTION_UP)

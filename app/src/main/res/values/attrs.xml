@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CircularButton">
+        <attr name="dpad_down_icon" format="reference" />
+        <attr name="dpad_up_icon" format="reference" />
+        <attr name="dpad_right_icon" format="reference" />
+        <attr name="dpad_left_icon" format="reference" />
+        <attr name="dpad_ok_icon" format="reference" />
+        <attr name="dpad_default_icon" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="DoubleSideButton">
+        <attr name="up_icon" format="reference" />
+        <attr name="down_icon" format="reference" />
+        <attr name="default_icon" format="reference" />
+    </declare-styleable>
+
+
+</resources>
+
+
+    <!--//https://github.com/aosp-mirror/platform_frameworks_base/blob/master/core/res/res/values/attrs.xml-->

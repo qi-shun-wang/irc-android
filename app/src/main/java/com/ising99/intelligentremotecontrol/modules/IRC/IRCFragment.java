@@ -13,6 +13,7 @@ import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Presenter;
+import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCDefaultFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
 
@@ -78,6 +79,9 @@ public class IRCFragment extends Fragment implements IRCContracts.View ,MediaSha
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        IRCDefaultFragment default_mode = new IRCDefaultFragment();
+        getFragmentManager().beginTransaction().add(R.id.fragment_mode_content_container,default_mode).commit();
+
         presenter = new IRCPresenter(getActivity().getApplicationContext(), this);
         view.findViewById(R.id.button_up).setOnClickListener(tapUpAction);
         view.findViewById(R.id.button_down).setOnClickListener(tapDownAction);

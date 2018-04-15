@@ -5,7 +5,8 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/irc_container">
+        android:id="@+id/irc_container"
+        android:alpha="0">
         <LinearLayout
             android:gravity="center"
             android:orientation="vertical"
@@ -151,5 +152,14 @@
                 android:text="Cast" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_mode_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/spaceGray">
+
+
+    </FrameLayout>
 </RelativeLayout>
 

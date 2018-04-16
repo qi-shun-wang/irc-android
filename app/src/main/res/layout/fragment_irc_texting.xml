@@ -25,7 +25,7 @@
                 android:id="@+id/irc_normal_power_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/irc_normal_power_icon"
+                android:background="@drawable/irc_normal_power"
                 android:scaleType="fitCenter" />
         </RelativeLayout>
 
@@ -40,7 +40,7 @@
                 android:id="@+id/irc_normal_volume_p_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/irc_normal_volume_p_icon"
+                android:background="@drawable/irc_normal_volume_p"
                 android:scaleType="fitCenter" />
         </RelativeLayout>
 
@@ -55,7 +55,7 @@
                 android:id="@+id/irc_normal_volume_m_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/irc_normal_volume_m_icon"
+                android:background="@drawable/irc_normal_volume_m"
                 android:scaleType="fitCenter" />
         </RelativeLayout>
 
@@ -70,7 +70,7 @@
                 android:id="@+id/irc_normal_mode_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/irc_normal_mode_icon"
+                android:background="@drawable/irc_normal_mode"
                 android:scaleType="fitCenter" />
         </RelativeLayout>
     </LinearLayout>
@@ -92,7 +92,7 @@
             android:lines="16"
             android:minLines="8"
             android:scrollbars="vertical"
-            android:inputType="textMultiLine"
+            android:inputType="textCapCharacters"
             android:textColorHint="@color/spaceGray"
             android:textColor="@color/white"
             android:textCursorDrawable="@drawable/color_cursor"
@@ -120,7 +120,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/irc_normal_menu_icon" />
+                android:src="@drawable/irc_normal_menu" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -138,7 +138,7 @@
                 android:layout_gravity="center"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/irc_normal_home_icon" />
+                android:src="@drawable/irc_normal_home" />
 
         </RelativeLayout>
 
@@ -154,7 +154,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/irc_normal_back_icon" />
+                android:src="@drawable/irc_normal_back" />
         </RelativeLayout>
     </LinearLayout>
 

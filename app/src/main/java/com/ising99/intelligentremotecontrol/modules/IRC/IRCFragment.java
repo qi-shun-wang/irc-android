@@ -16,6 +16,7 @@ import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCNormalFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCSelectModeDelegate;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCTextingFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCTouchFragment;
+import com.ising99.intelligentremotecontrol.modules.IRC.panel.MediaPanelFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.panel.ModePanelFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.panel.NumberPanelFragment;
 
@@ -33,6 +34,8 @@ public class IRCFragment extends Fragment
     private IRCTouchFragment touch_mode;
     private ModePanelFragment modePanel;
     private NumberPanelFragment numPanel;
+    private MediaPanelFragment mediaPanel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_irc, container, false);
@@ -65,10 +68,15 @@ public class IRCFragment extends Fragment
 
         getFragmentManager().beginTransaction().add(R.id.fragment_mode_content_container,default_mode).commit();
 
-
         numPanel = new NumberPanelFragment();
+        numPanel.setDelegate(this);
         getFragmentManager().beginTransaction().add(R.id.fragment_num_content_container,numPanel).commit();
         getFragmentManager().beginTransaction().hide(numPanel).commit();
+
+        mediaPanel = new MediaPanelFragment();
+        mediaPanel.setDelegate(this);
+        getFragmentManager().beginTransaction().add(R.id.fragment_media_content_container,mediaPanel).commit();
+        getFragmentManager().beginTransaction().hide(mediaPanel).commit();
 
         modePanel = new ModePanelFragment();
         modePanel.setDelegate(this);
@@ -81,7 +89,6 @@ public class IRCFragment extends Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
@@ -139,7 +146,7 @@ public class IRCFragment extends Fragment
 
     @Override
     public void dispatchMediaPanelAction() {
-
+        getFragmentManager().beginTransaction().show(mediaPanel).commit();
     }
 
     @Override
@@ -189,6 +196,61 @@ public class IRCFragment extends Fragment
     @Override
     public void dispatchKodAction() {
         presenter.didSend(SendCode.KEYCODE_KOD_PLUS);
+    }
+
+    @Override
+    public void dismissNumPadAction() {
+        getFragmentManager().beginTransaction().hide(numPanel).commit();
+    }
+
+    @Override
+    public void dismissMediaPadAction() {
+        getFragmentManager().beginTransaction().hide(mediaPanel).commit();
+    }
+
+    @Override
+    public void dispatchNumPadAction(int number) {
+        presenter.didSend(number);
+    }
+
+    @Override
+    public void dispatchMuteAction() {
+        presenter.didSend(SendCode.KEYCODE_VOLUME_MUTE);
+    }
+
+    @Override
+    public void dispatchInsertAction() {
+        presenter.didSend(SendCode.SendCode_INSERT_SONG);
+    }
+
+    @Override
+    public void dispatchTerminateAction() {
+        presenter.didSend(SendCode.SendCode_PASS_SONG);
+    }
+
+    @Override
+    public void dispatchTuningAction() {
+        presenter.didSend(SendCode.SendCode_TUNING);
+    }
+
+    @Override
+    public void dispatchPlayerAction() {
+        presenter.didSend(SendCode.SendCode_PLAY_CONTROL);
+    }
+
+    @Override
+    public void dispatchVocalAction() {
+        presenter.didSend(SendCode.SendCode_MAN_WOMEN);
+    }
+
+    @Override
+    public void dispatchRecordAction() {
+        presenter.didSend(SendCode.SendCode_RECORD);
+    }
+
+    @Override
+    public void dispatchReviewAction() {
+        presenter.didSend(SendCode.SendCode_APPRECIATE);
     }
 
     @Override

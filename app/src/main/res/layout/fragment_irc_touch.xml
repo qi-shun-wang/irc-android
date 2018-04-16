@@ -28,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:background="@drawable/irc_normal_power_icon" />
+                android:background="@drawable/irc_normal_power" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:background="@drawable/irc_normal_volume_p_icon" />
+                android:background="@drawable/irc_normal_volume_p" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:background="@drawable/irc_normal_volume_m_icon" />
+                android:background="@drawable/irc_normal_volume_m" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:background="@drawable/irc_normal_mode_icon" />
+                android:background="@drawable/irc_normal_mode" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -106,7 +106,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/irc_normal_menu_icon" />
+                android:src="@drawable/irc_normal_menu" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -123,7 +123,7 @@
                 android:layout_gravity="center"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/irc_normal_home_icon" />
+                android:src="@drawable/irc_normal_home" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -137,7 +137,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/irc_normal_back_icon" />
+                android:src="@drawable/irc_normal_back" />
         </RelativeLayout>
     </LinearLayout>
 

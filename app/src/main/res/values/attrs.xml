@@ -16,6 +16,10 @@
         <attr name="default_icon" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="DirectionTouchPad">
+        <attr name="arrow_icon" format="reference" />
+        <attr name="dot_icon" format="reference" />
+    </declare-styleable>
 
 </resources>
 

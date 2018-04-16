@@ -68,7 +68,6 @@ public class DoubleSideButton extends ViewGroup {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-
         if(event.getAction() == MotionEvent.ACTION_DOWN && delegate!=null)
         {
             performClick();

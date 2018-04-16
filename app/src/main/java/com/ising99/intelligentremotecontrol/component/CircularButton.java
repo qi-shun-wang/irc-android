@@ -128,7 +128,6 @@ public class CircularButton extends ViewGroup {
         point.y = (int) event.getY();
         if(event.getAction() == MotionEvent.ACTION_DOWN && (delegate != null))
         {
-            performClick();
             if (!outerRegion.contains(point.x, point.y)) return true;
 
             if(centerRegion.contains(point.x, point.y))
@@ -162,6 +161,7 @@ public class CircularButton extends ViewGroup {
         {
             image.setBackgroundResource(dpad_default_resId);
         }
+        performClick();
         return true;
     }
 

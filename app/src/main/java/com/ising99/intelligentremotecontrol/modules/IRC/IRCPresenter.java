@@ -61,6 +61,23 @@ public class IRCPresenter implements Presenter, InteractorOutput {
     }
 
     @Override
+    public void didSend(int number) {
+        switch (number)
+        {
+            case 0:interactor.perform(SendCode.KEYCODE_0);break;
+            case 1:interactor.perform(SendCode.KEYCODE_1);break;
+            case 2:interactor.perform(SendCode.KEYCODE_2);break;
+            case 3:interactor.perform(SendCode.KEYCODE_3);break;
+            case 4:interactor.perform(SendCode.KEYCODE_4);break;
+            case 5:interactor.perform(SendCode.KEYCODE_5);break;
+            case 6:interactor.perform(SendCode.KEYCODE_6);break;
+            case 7:interactor.perform(SendCode.KEYCODE_7);break;
+            case 8:interactor.perform(SendCode.KEYCODE_8);break;
+            case 9:interactor.perform(SendCode.KEYCODE_9);break;
+        }
+    }
+
+    @Override
     public void didSend(String text) {
         interactor.perform(text);
     }
@@ -74,8 +91,5 @@ public class IRCPresenter implements Presenter, InteractorOutput {
     public void failure(String msg) {
 
     }
-    //TODO: Implement your Presenter methods here
-
-    //TODO: Implement your InteractorOutput methods here
 
 }

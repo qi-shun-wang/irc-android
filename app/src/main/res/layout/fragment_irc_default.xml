@@ -14,7 +14,8 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="horizontal"
-        android:background="@color/clear">
+        android:background="@color/clear"
+        android:baselineAligned="false">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -26,7 +27,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:background="@drawable/irc_default_power_icon" />
+                android:scaleType="fitCenter"
+                android:background="@color/clear"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/irc_default_power_icon" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -38,7 +42,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:background="@drawable/irc_default_num_icon" />
+                android:scaleType="fitCenter"
+                android:background="@color/clear"
+                android:src="@drawable/irc_default_num_icon" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -50,7 +56,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:background="@drawable/irc_default_media_icon" />
+                android:scaleType="fitCenter"
+                android:background="@color/clear"
+                android:src="@drawable/irc_default_media_icon" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -63,7 +71,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
-                android:background="@drawable/irc_default_mode_icon" />
+                android:scaleType="fitCenter"
+                android:background="@color/clear"
+                android:src="@drawable/irc_default_mode_icon" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -91,7 +101,8 @@
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="horizontal"
-        android:background="@color/clear">
+        android:background="@color/clear"
+        android:baselineAligned="false">
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -102,8 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
-                android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
+                android:background="@color/clear"
                 android:src="@drawable/irc_default_menu_icon" />
         </RelativeLayout>
 
@@ -120,8 +131,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
+                android:background="@color/clear"
                 android:src="@drawable/irc_default_playback_icon" />
 
         </RelativeLayout>
@@ -135,8 +146,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
-                android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
+                android:background="@color/clear"
                 android:src="@drawable/irc_default_back_icon" />
         </RelativeLayout>
     </LinearLayout>
@@ -157,9 +168,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:default_icon="@drawable/irc_default_volume_icon"
+                app:default_icon="@drawable/irc_default_ds_icon"
                 app:down_icon="@drawable/irc_default_ds_minus_icon"
                 app:up_icon="@drawable/irc_default_ds_plus_icon"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/irc_default_volume_text"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -172,7 +188,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:background="@drawable/irc_default_kod_icon" />
+                android:scaleType="fitCenter"
+                android:background="@color/clear"
+                android:src="@drawable/irc_default_kod_icon" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -184,9 +202,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:default_icon="@drawable/irc_default_channel_icon"
+                app:default_icon="@drawable/irc_default_ds_icon"
                 app:down_icon="@drawable/irc_default_ds_minus_icon"
                 app:up_icon="@drawable/irc_default_ds_plus_icon"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/irc_default_channel_text"/>
         </RelativeLayout>
     </LinearLayout>
 

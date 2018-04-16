@@ -5,7 +5,6 @@ package com.ising99.intelligentremotecontrol.modules.IRC;
  * .
  */
 
-
 public interface IRCActionDelegate {
     void dispatchTextAction(String message);
     void dispatchUpAction();
@@ -23,4 +22,15 @@ public interface IRCActionDelegate {
     void dispatchVolumeAction(boolean isIncrease);
     void dispatchChannelAction(boolean isIncrease);
     void dispatchKodAction();
+    void dismissNumPadAction();
+    void dismissMediaPadAction();
+    void dispatchNumPadAction(int number);
+    void dispatchMuteAction();
+    void dispatchInsertAction();
+    void dispatchTerminateAction();
+    void dispatchTuningAction();
+    void dispatchPlayerAction();
+    void dispatchVocalAction();
+    void dispatchRecordAction();
+    void dispatchReviewAction();
 }

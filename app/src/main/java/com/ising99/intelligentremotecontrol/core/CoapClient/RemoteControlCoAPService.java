@@ -7,6 +7,8 @@ import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by shun on 2018/3/27.
  *
@@ -50,8 +52,12 @@ public final class RemoteControlCoAPService {
     }
 
     public void send(String text){
-        client.setURI("coap://"+address+":"+port+"/textInput");
-        client.useNONs().post(handler,text, MediaTypeRegistry.TEXT_PLAIN);
+        try {
+            client.setURI("coap://"+address+":"+port+"/textInput");
+            client.useNONs().post(handler,"Shun\\'s\\ Kod".getBytes("UTF-8"),MediaTypeRegistry.TEXT_PLAIN);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setAddress(String address) {

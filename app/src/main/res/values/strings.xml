@@ -7,6 +7,8 @@
     <string name="root_tab_more_text">更多</string>
     <string name="root_wifi_text">尚未連線</string>
     <string name="irc_texting_edit_text_hint">點擊這裡，開始輸入文字…</string>
+    <string name="irc_default_channel_text">頻道</string>
+    <string name="irc_default_volume_text">音量</string>
 
     <array name="scan_list">
         <item>@drawable/scan1</item>

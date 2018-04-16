@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/spaceGray">
 
         <LinearLayout
             android:id="@+id/number_pad"
@@ -19,26 +20,37 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/Number1"
+                android:id="@+id/irc_media_panel_terminate_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="1" />
+                android:text="切歌"
+                android:background="@drawable/purple_round_corner"
+                android:textColor="@color/white"
+                android:layout_margin="8dp"
+                android:textSize="24sp" />
 
             <Button
-                android:id="@+id/Number2"
+                android:id="@+id/irc_media_panel_mute_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="2"
-                />
+                android:text="靜音"
+                android:background="@drawable/purple_round_corner"
+                android:textColor="@color/white"
+                android:layout_margin="8dp"
+                android:textSize="24sp" />
 
             <Button
-                android:id="@+id/Number3"
+                android:id="@+id/irc_media_panel_insert_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="3" />
+                android:text="插歌"
+                android:background="@drawable/purple_round_corner"
+                android:textColor="@color/white"
+                android:layout_margin="8dp"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -47,25 +59,37 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/Number4"
+                android:id="@+id/irc_media_panel_tuning_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="4" />
+                android:text="調音"
+                android:background="@drawable/purple_round_corner"
+                android:textColor="@color/white"
+                android:layout_margin="8dp"
+                android:textSize="24sp" />
 
             <Button
-                android:id="@+id/Number5"
+                android:id="@+id/irc_media_panel_player_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="5" />
+                android:text="播控"
+                android:background="@drawable/purple_round_corner"
+                android:textColor="@color/white"
+                android:layout_margin="8dp"
+                android:textSize="24sp" />
 
             <Button
-                android:id="@+id/Number6"
+                android:id="@+id/irc_media_panel_vocal_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="6" />
+                android:text="男/女"
+                android:background="@drawable/purple_round_corner"
+                android:textColor="@color/white"
+                android:layout_margin="8dp"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,53 +98,47 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/Number7"
+                android:id="@+id/irc_media_panel_record_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="7" />
+                android:text="錄唱"
+                android:background="@drawable/red_round_corner"
+                android:textColor="@color/white"
+                android:layout_margin="8dp"
+                android:textSize="24sp" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="1">
+                <ImageButton
+                    android:id="@+id/irc_media_panel_close_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:padding="8dp"
+                    android:scaleType="fitCenter"
+                    android:background="@color/clear"
+                    android:src="@drawable/irc_panel_up_icon"
+                    />
+
+            </RelativeLayout>
 
             <Button
-                android:id="@+id/Number8"
+                android:id="@+id/irc_media_panel_review_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="8" />
-
-            <Button
-                android:id="@+id/Number9"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="9" />
+                android:background="@drawable/orange_round_coner"
+                android:text="欣賞"
+                android:textColor="@color/white"
+                android:layout_margin="8dp"
+                android:textSize="24sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/Delete"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="delete" />
-
-            <Button
-                android:id="@+id/Backup"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="close" />
-
-            <Button
-                android:id="@+id/Number0"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="0" />
-        </LinearLayout>
     </LinearLayout>
 
     <View

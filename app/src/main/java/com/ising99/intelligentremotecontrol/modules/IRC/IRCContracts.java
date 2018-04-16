@@ -16,6 +16,7 @@ public interface IRCContracts extends BaseContracts {
 
     interface Presenter extends BaseContracts.Presenter {
         void didSend(SendCode code);
+        void didSend(int number);
         void didSend(String text);
     }
 

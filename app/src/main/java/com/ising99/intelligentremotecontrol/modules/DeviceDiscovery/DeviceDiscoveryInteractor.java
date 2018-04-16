@@ -82,7 +82,7 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
     }
 
     @Override
-    public void didRecieved(String message) {
+    public void didReceived(String message) {
         try {
             Device device = new Gson().fromJson(message,Device.class);
             output.didReceived(device);

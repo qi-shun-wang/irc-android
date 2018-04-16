@@ -6,6 +6,7 @@ package com.ising99.intelligentremotecontrol.modules.IRC.panel;
  */
 
 class ModeItem {
+
     private int tag;
     private int imageResId;
     private String title;
@@ -20,11 +21,11 @@ class ModeItem {
         return title;
     }
 
-    public int getImageResId() {
+    int getImageResId() {
         return imageResId;
     }
 
-    public int getTag() {
+    int getTag() {
         return tag;
     }
 }

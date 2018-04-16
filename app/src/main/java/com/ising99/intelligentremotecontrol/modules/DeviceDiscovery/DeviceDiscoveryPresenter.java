@@ -99,9 +99,9 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         if (devices.contains(device)) {
             return;
         }
-        Log.d("=didRecieved=Name=>",device.getName());
-        Log.d("=didRecieved=Address=>",device.getAddress());
-        Log.d("=didRecieved=Settings=>",device.getSettings());
+        Log.d("=didReceived=Name=>",device.getName());
+        Log.d("=didReceived=Address=>",device.getAddress());
+        Log.d("=didReceived=Settings=>",device.getSettings());
         if (device.getName() == null || device.getAddress() == null || device.getBackupAddress() == null){
             return;
         }
@@ -133,7 +133,6 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                //Todo view show success
                 view.stopKODAnimation();
                 view.stopLineAnimation();
                 view.showConnectionSuccess();
@@ -143,7 +142,6 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                //Todo finish activity
                 view.finishActivity();
             }
         }, 8000);

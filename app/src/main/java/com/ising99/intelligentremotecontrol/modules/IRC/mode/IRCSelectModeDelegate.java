@@ -9,7 +9,6 @@ public interface IRCSelectModeDelegate {
     void didSelectedDefaultMode();
     void didSelectedNormalMode();
     void didSelectedTouchMode();
-    void didSelectedMouseMode();
     void didSelectedTextingMode();
     void didSelectedGameMode();
     void didCanceledSelection();

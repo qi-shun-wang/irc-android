@@ -1,7 +1,6 @@
 package com.ising99.intelligentremotecontrol.component;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -137,7 +136,13 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
     }
 
     @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
+        performClick();
         return gesture.onTouchEvent(event);
     }
 }

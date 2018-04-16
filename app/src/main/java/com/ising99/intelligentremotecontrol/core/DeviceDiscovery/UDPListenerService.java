@@ -1,17 +1,18 @@
 package com.ising99.intelligentremotecontrol.core.DeviceDiscovery;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import java.io.InterruptedIOException;
 import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 
+@SuppressLint("Registered")
 @Deprecated
 public final class UDPListenerService extends Service implements Serializable{
 
@@ -36,21 +37,18 @@ public final class UDPListenerService extends Service implements Serializable{
                     socket.receive(packet);
                     String msg = new String(packet.getData(), packet.getOffset(), packet.getLength());
                     if (delegate != null) {
-                        delegate.didRecieved(msg);
+                        delegate.didReceived(msg);
                     }
                     Log.v("====packet===>", msg);
                 }
-            }catch(InterruptedIOException e){
-                e.printStackTrace();
-            }catch (Exception e ){
+            } catch (Exception e ){
                 e.printStackTrace();
             }
         });
         UDPBroadcastThread.start();
     }
 
-
-    private void stopMulticastListener() {
+    private void stopMultiCastListener() {
         isStart = false;
         socket.close();
         UDPBroadcastThread.interrupt();
@@ -68,13 +66,18 @@ public final class UDPListenerService extends Service implements Serializable{
 
     @Override
     public void onDestroy() {
-        stopMulticastListener();
+        stopMultiCastListener();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         isStart = true;
-        delegate = (DeviceDiscoveryDelegate) intent.getExtras().getParcelable("Delegation");
+        try {
+            delegate = intent.getExtras().getParcelable("Delegation");
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
         startMulticastListener();
         Log.i("UDP", "Multicast Service started");
         return START_STICKY;

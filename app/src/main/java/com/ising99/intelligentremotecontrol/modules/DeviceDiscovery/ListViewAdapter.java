@@ -27,7 +27,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
     private List<Device> devices = new ArrayList<>();
     private Handler handler = new Handler();
 
-    // inflates the row layout from xml when needed
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,8 +36,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         return new ViewHolder(view);
 
     }
-
-    // binds the data to the view and textview in each row
+    
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -56,19 +54,18 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         });
     }
 
-    // total number of rows
     @Override
     public int getItemCount() {
         return devices.size();
     }
 
-    // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView imageTitle;
         ImageView image;
         ImageView finger;
         ImageView ring;
+
         ViewHolder(View itemView) {
             super(itemView);
 
@@ -78,7 +75,6 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
             ring = itemView.findViewById(R.id.ring);
 
             itemView.setOnClickListener(this);
-
         }
 
         @Override
@@ -87,16 +83,12 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         }
     }
 
-
-
     void setupDelegate(DMRListAdapterDelegate delegate) {
         this.delegate = delegate;
     }
     void setDevices(List<Device> devices) {
         this.devices = devices;
     }
-
-
 }
 
 interface DMRListAdapterDelegate {

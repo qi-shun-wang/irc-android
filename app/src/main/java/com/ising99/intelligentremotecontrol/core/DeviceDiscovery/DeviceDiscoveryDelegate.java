@@ -8,5 +8,5 @@ import java.io.Serializable;
  */
 
 public interface DeviceDiscoveryDelegate extends Serializable {
-    void didRecieved(String message);
+    void didReceived(String message);
 }

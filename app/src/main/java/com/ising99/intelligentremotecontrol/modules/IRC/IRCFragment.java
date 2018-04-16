@@ -106,37 +106,37 @@ public class IRCFragment extends Fragment
 
     @Override
     public void dispatchTextAction(String message) {
-        presenter.didSend(message);
+        presenter.didSent(message);
     }
 
     @Override
     public void dispatchUpAction() {
-        presenter.didSend(SendCode.KEYCODE_DPAD_UP);
+        presenter.didSent(SendCode.KEYCODE_DPAD_UP);
     }
 
     @Override
     public void dispatchDownAction() {
-        presenter.didSend(SendCode.KEYCODE_DPAD_DOWN);
+        presenter.didSent(SendCode.KEYCODE_DPAD_DOWN);
     }
 
     @Override
     public void dispatchLeftAction() {
-        presenter.didSend(SendCode.KEYCODE_DPAD_LEFT);
+        presenter.didSent(SendCode.KEYCODE_DPAD_LEFT);
     }
 
     @Override
     public void dispatchRightAction() {
-        presenter.didSend(SendCode.KEYCODE_DPAD_RIGHT);
+        presenter.didSent(SendCode.KEYCODE_DPAD_RIGHT);
     }
 
     @Override
     public void dispatchEnterAction() {
-        presenter.didSend(SendCode.KEYCODE_ENTER);
+        presenter.didSent(SendCode.KEYCODE_ENTER);
     }
 
     @Override
     public void dispatchPowerAction() {
-        presenter.didSend(SendCode.KEYCODE_POWER);
+        presenter.didSent(SendCode.KEYCODE_POWER);
     }
 
     @Override
@@ -156,28 +156,28 @@ public class IRCFragment extends Fragment
 
     @Override
     public void dispatchMenuAction() {
-        presenter.didSend(SendCode.KEYCODE_MENU);
+        presenter.didSent(SendCode.KEYCODE_MENU);
     }
 
     @Override
     public void dispatchPlaybackAction() {
-        presenter.didSend(SendCode.KEYCODE_MEDIA_PLAY_PAUSE);
+        presenter.didSent(SendCode.KEYCODE_MEDIA_PLAY_PAUSE);
     }
 
     @Override
     public void dispatchBackAction() {
-        presenter.didSend(SendCode.KEYCODE_BACK);
+        presenter.didSent(SendCode.KEYCODE_BACK);
     }
 
     @Override
     public void dispatchVolumeAction(boolean isIncrease) {
         if (isIncrease)
         {
-            presenter.didSend(SendCode.KEYCODE_VOLUME_UP);
+            presenter.didSent(SendCode.KEYCODE_VOLUME_UP);
         }
         else
         {
-            presenter.didSend(SendCode.KEYCODE_VOLUME_DOWN);
+            presenter.didSent(SendCode.KEYCODE_VOLUME_DOWN);
         }
     }
 
@@ -185,17 +185,17 @@ public class IRCFragment extends Fragment
     public void dispatchChannelAction(boolean isIncrease) {
         if (isIncrease)
         {
-            presenter.didSend(SendCode.KEYCODE_CHANNEL_UP);
+            presenter.didSent(SendCode.KEYCODE_CHANNEL_UP);
         }
         else
         {
-            presenter.didSend(SendCode.KEYCODE_CHANNEL_DOWN);
+            presenter.didSent(SendCode.KEYCODE_CHANNEL_DOWN);
         }
     }
 
     @Override
     public void dispatchKodAction() {
-        presenter.didSend(SendCode.KEYCODE_KOD_PLUS);
+        presenter.didSent(SendCode.KEYCODE_KOD_PLUS);
     }
 
     @Override
@@ -210,47 +210,47 @@ public class IRCFragment extends Fragment
 
     @Override
     public void dispatchNumPadAction(int number) {
-        presenter.didSend(number);
+        presenter.didSent(number);
     }
 
     @Override
     public void dispatchMuteAction() {
-        presenter.didSend(SendCode.KEYCODE_VOLUME_MUTE);
+        presenter.didSent(SendCode.KEYCODE_VOLUME_MUTE);
     }
 
     @Override
     public void dispatchInsertAction() {
-        presenter.didSend(SendCode.SendCode_INSERT_SONG);
+        presenter.didSent(SendCode.SendCode_INSERT_SONG);
     }
 
     @Override
     public void dispatchTerminateAction() {
-        presenter.didSend(SendCode.SendCode_PASS_SONG);
+        presenter.didSent(SendCode.SendCode_PASS_SONG);
     }
 
     @Override
     public void dispatchTuningAction() {
-        presenter.didSend(SendCode.SendCode_TUNING);
+        presenter.didSent(SendCode.SendCode_TUNING);
     }
 
     @Override
     public void dispatchPlayerAction() {
-        presenter.didSend(SendCode.SendCode_PLAY_CONTROL);
+        presenter.didSent(SendCode.SendCode_PLAY_CONTROL);
     }
 
     @Override
     public void dispatchVocalAction() {
-        presenter.didSend(SendCode.SendCode_MAN_WOMEN);
+        presenter.didSent(SendCode.SendCode_MAN_WOMEN);
     }
 
     @Override
     public void dispatchRecordAction() {
-        presenter.didSend(SendCode.SendCode_RECORD);
+        presenter.didSent(SendCode.SendCode_RECORD);
     }
 
     @Override
     public void dispatchReviewAction() {
-        presenter.didSend(SendCode.SendCode_APPRECIATE);
+        presenter.didSent(SendCode.SendCode_APPRECIATE);
     }
 
     @Override
@@ -268,11 +268,6 @@ public class IRCFragment extends Fragment
     @Override
     public void didSelectedTouchMode() {
         getFragmentManager().beginTransaction().replace(R.id.fragment_mode_content_container,touch_mode).commit();
-        getFragmentManager().beginTransaction().hide(modePanel).commit();
-    }
-
-    @Override
-    public void didSelectedMouseMode() {
         getFragmentManager().beginTransaction().hide(modePanel).commit();
     }
 

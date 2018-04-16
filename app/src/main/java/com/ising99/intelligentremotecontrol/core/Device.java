@@ -39,12 +39,7 @@ public class Device {
 
         Device device = (Device) o;
 
-        if (Address != null ? !Address.equals(device.Address) : device.Address != null)
-            return false;
-        if (BackupAddress != null ? !BackupAddress.equals(device.BackupAddress) : device.BackupAddress != null)
-            return false;
-        if (Name != null ? !Name.equals(device.Name) : device.Name != null) return false;
-        return Settings != null ? Settings.equals(device.Settings) : device.Settings == null;
+        return (Address != null ? Address.equals(device.Address) : device.Address == null) && (BackupAddress != null ? BackupAddress.equals(device.BackupAddress) : device.BackupAddress == null) && (Name != null ? Name.equals(device.Name) : device.Name == null) && (Settings != null ? Settings.equals(device.Settings) : device.Settings == null);
     }
 
     @Override

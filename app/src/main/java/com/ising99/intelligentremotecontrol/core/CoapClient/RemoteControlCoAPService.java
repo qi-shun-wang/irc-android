@@ -1,7 +1,5 @@
 package com.ising99.intelligentremotecontrol.core.CoapClient;
 
-import android.util.Log;
-
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapResponse;
@@ -19,31 +17,18 @@ public final class RemoteControlCoAPService {
     private CoapClient client ;
     private String address;
     private int port;
-    CoapHandler handler = new CoapHandler() {
+    private CoapHandler handler = new CoapHandler() {
         @Override
-        public void onLoad(CoapResponse response) {
-
-            Log.d("CoapResponse","====>" + response.toString());
-
-        }
+        public void onLoad(CoapResponse response) { }
 
         @Override
-        public void onError() {
-
-        }
+        public void onError() {}
     };
 
     public RemoteControlCoAPService(String address, int port){
         this.address = address;
         this.port = port;
         client = new CoapClient();
-
-
-    }
-
-    public void send(KeyCode code){
-        client.setURI("coap://"+address+":"+port+"/keyEvent");
-        client.useNONs().post(handler,String.valueOf(code.getCode()), MediaTypeRegistry.TEXT_PLAIN);
     }
 
     public void send(SendCode code){
@@ -54,7 +39,7 @@ public final class RemoteControlCoAPService {
     public void send(String text){
         try {
             client.setURI("coap://"+address+":"+port+"/textInput");
-            client.useNONs().post(handler,"Shun\\'s\\ Kod".getBytes("UTF-8"),MediaTypeRegistry.TEXT_PLAIN);
+            client.useNONs().post(handler,text.getBytes("UTF-8"),MediaTypeRegistry.TEXT_PLAIN);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,6 @@ package com.ising99.intelligentremotecontrol.core.DeviceDiscovery;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -20,7 +19,7 @@ public class DeviceDiscoveryTask extends AsyncTask<DeviceDiscoveryDelegate, Void
     private final static String ADDRESS = "239.0.0.0";
     private boolean isStart = false;
 
-    private void startMulticastListener() {
+    private void startMultiCastListener() {
 
         try {
             InetAddress address = InetAddress.getByName(ADDRESS);
@@ -35,13 +34,11 @@ public class DeviceDiscoveryTask extends AsyncTask<DeviceDiscoveryDelegate, Void
                 String msg = new String(packet.getData(), packet.getOffset(), packet.getLength());
                 Log.d("====packet===>", msg);
                 if (delegate != null) {
-                    Log.d("Delegate.didRecieved", msg);
-                    delegate.didRecieved(msg);
+                    Log.d("Delegate.didReceived", msg);
+                    delegate.didReceived(msg);
                 }
             }
-        }catch(InterruptedIOException e){
-            e.printStackTrace();
-        }catch (Exception e ){
+        } catch (Exception e ){
             e.printStackTrace();
         }
     }
@@ -56,7 +53,7 @@ public class DeviceDiscoveryTask extends AsyncTask<DeviceDiscoveryDelegate, Void
     protected Void doInBackground(DeviceDiscoveryDelegate... deviceDiscoveryDelegates) {
         isStart = true;
         delegate = deviceDiscoveryDelegates[0];
-        startMulticastListener();
+        startMultiCastListener();
         return null;
     }
 }

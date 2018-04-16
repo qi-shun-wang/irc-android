@@ -4,7 +4,8 @@ package com.ising99.intelligentremotecontrol.core.CoapClient;
  * Created by shun on 2018/3/27.
  *
  */
-
+@Deprecated
+@SuppressWarnings("Unused enumerations")
 public enum KeyCode {
 
     KEYCODE_DPAD_UP(19),

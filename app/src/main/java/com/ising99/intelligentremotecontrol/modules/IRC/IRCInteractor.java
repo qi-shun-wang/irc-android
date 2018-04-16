@@ -45,7 +45,7 @@ public class IRCInteractor implements IRCContracts.Interactor {
 //            output.didConnectedToDevice(new Device(device.getAddress(),device.getName(),device.getSettings()));
         }
         service.send(code);
-        output.didSended();
+        output.didSent();
         output.failure("伺服器異常");
     }
 

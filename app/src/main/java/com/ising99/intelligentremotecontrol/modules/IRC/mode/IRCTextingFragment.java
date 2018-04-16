@@ -3,7 +3,6 @@ package com.ising99.intelligentremotecontrol.modules.IRC.mode;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;

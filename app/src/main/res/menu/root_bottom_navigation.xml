@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
+
     <item
         android:id="@+id/action_irc"
         android:enabled="true"
@@ -10,6 +11,7 @@
         android:title="@string/root_tab_irc_text"
         android:orderInCategory="0"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_kod"
         android:enabled="true"
@@ -17,6 +19,7 @@
         android:title="@string/root_tab_kod_text"
         android:orderInCategory="1"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_mod"
         android:enabled="true"
@@ -24,6 +27,7 @@
         android:title="@string/root_tab_mod_text"
         android:orderInCategory="2"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_web"
         android:enabled="true"
@@ -31,6 +35,7 @@
         android:title="@string/root_tab_web_text"
         android:orderInCategory="3"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_more"
         android:enabled="true"
@@ -38,4 +43,5 @@
         android:title="@string/root_tab_more_text"
         android:orderInCategory="4"
         app:showAsAction="ifRoom" />
+
 </menu>

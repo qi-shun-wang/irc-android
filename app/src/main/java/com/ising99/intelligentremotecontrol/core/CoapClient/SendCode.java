@@ -20,7 +20,7 @@ public enum SendCode {
     KEYCODE_MEDIA_PLAY_PAUSE(207),
 
     KEYCODE_KOD_PLUS(365),
-    KEYCODE_LANGUAGE(368),
+//    KEYCODE_LANGUAGE(368),
 
     KEYCODE_0(11),
     KEYCODE_1(2) ,
@@ -43,7 +43,7 @@ public enum SendCode {
 
 //    SendCode_DELETE(165),
 
-    public SendCode numberConvert(int number){
+    public static SendCode numberConvert(int number){
         switch (number){
             case 0:return SendCode.KEYCODE_0;
             case 1:return SendCode.KEYCODE_1;

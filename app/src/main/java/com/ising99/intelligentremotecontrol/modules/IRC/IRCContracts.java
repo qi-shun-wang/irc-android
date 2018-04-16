@@ -15,9 +15,9 @@ public interface IRCContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        void didSend(SendCode code);
-        void didSend(int number);
-        void didSend(String text);
+        void didSent(SendCode code);
+        void didSent(int number);
+        void didSent(String text);
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -26,7 +26,7 @@ public interface IRCContracts extends BaseContracts {
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
-        void didSended();
+        void didSent();
         void failure(String msg);
     }
 

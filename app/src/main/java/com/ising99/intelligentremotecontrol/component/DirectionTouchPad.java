@@ -19,8 +19,8 @@ import com.ising99.intelligentremotecontrol.R;
 
 public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGestureListener{
 
-    private static final float SWIPE_THRESHOLD = 100;
-    private static final float SWIPE_VELOCITY_THRESHOLD = 100;
+    private static final float SWIPE_THRESHOLD = 50;
+    private static final float SWIPE_VELOCITY_THRESHOLD = 50;
     private ImageView image;
     private int dX = 0;
     private int dY = 0;

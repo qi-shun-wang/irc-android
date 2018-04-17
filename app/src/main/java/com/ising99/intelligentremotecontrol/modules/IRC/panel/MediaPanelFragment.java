@@ -22,14 +22,15 @@ public class MediaPanelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_media_panel, container, false);
         v.findViewById(R.id.irc_media_panel_close_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dismissMediaPadAction();});
-        v.findViewById(R.id.irc_media_panel_terminate_btn).setOnClickListener((view)-> {if(delegate != null) delegate.dispatchTerminateAction();});
-        v.findViewById(R.id.irc_media_panel_mute_btn).setOnClickListener((view)-> {if(delegate != null) delegate.dispatchMuteAction();});
-        v.findViewById(R.id.irc_media_panel_insert_btn).setOnClickListener((view)-> {if(delegate != null) delegate.dispatchInsertAction();});
-        v.findViewById(R.id.irc_media_panel_tuning_btn).setOnClickListener((view)-> {if(delegate != null) delegate.dispatchTuningAction();});
-        v.findViewById(R.id.irc_media_panel_player_btn).setOnClickListener((view)-> {if(delegate != null) delegate.dispatchPlayerAction();});
-        v.findViewById(R.id.irc_media_panel_vocal_btn).setOnClickListener((view)-> {if(delegate != null) delegate.dispatchVocalAction();});
-        v.findViewById(R.id.irc_media_panel_record_btn).setOnClickListener((view)-> {if(delegate != null) delegate.dispatchRecordAction();});
-        v.findViewById(R.id.irc_media_panel_review_btn).setOnClickListener((view)-> {if(delegate != null) delegate.dispatchReviewAction();});
+        v.findViewById(R.id.irc_media_panel_terminate_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchTerminateAction();});
+        v.findViewById(R.id.irc_media_panel_mute_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchMuteAction();});
+        v.findViewById(R.id.irc_media_panel_insert_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchInsertAction();});
+        v.findViewById(R.id.irc_media_panel_tuning_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchTuningAction();});
+        v.findViewById(R.id.irc_media_panel_player_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchPlayerAction();});
+        v.findViewById(R.id.irc_media_panel_vocal_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchVocalAction();});
+        v.findViewById(R.id.irc_media_panel_record_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchRecordAction();});
+        v.findViewById(R.id.irc_media_panel_review_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchReviewAction();});
+        v.findViewById(R.id.irc_media_panel_outside_view).setOnClickListener((view) -> {if(delegate != null) delegate.dismissMediaPadAction();});
         return v;
     }
 

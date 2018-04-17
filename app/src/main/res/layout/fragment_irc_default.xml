@@ -29,8 +29,7 @@
                 android:layout_margin="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/irc_default_power_icon" />
+                android:src="@drawable/irc_default_power" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -115,7 +114,7 @@
                 android:layout_marginBottom="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
-                android:src="@drawable/irc_default_menu_icon" />
+                android:src="@drawable/irc_default_menu" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -133,7 +132,7 @@
                 android:layout_marginTop="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
-                android:src="@drawable/irc_default_playback_icon" />
+                android:src="@drawable/irc_default_playback" />
 
         </RelativeLayout>
         <RelativeLayout
@@ -148,7 +147,7 @@
                 android:layout_marginBottom="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
-                android:src="@drawable/irc_default_back_icon" />
+                android:src="@drawable/irc_default_back" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -190,7 +189,7 @@
                 android:layout_margin="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
-                android:src="@drawable/irc_default_kod_icon" />
+                android:src="@drawable/irc_default_kod" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"

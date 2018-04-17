@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.component.FramesSequenceAnimation;
 import com.ising99.intelligentremotecontrol.core.Device;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.View;
 
@@ -104,9 +105,7 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     protected void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-        presenter = null;
-        image_scan = null;
-        recyclerView = null;
+
         Runtime.getRuntime().gc();
     }
 
@@ -267,5 +266,15 @@ public class DeviceDiscoveryActivity extends Activity implements View {
     @Override
     public void finishActivity() {
         finish();
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.Presenter presenter) {
+
+    }
+
+    @Override
+    public void decompose() {
+
     }
 }

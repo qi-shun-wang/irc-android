@@ -5,6 +5,8 @@ import java.io.Serializable;
 public interface  BaseContracts {
 
     interface View extends Serializable {
+        void setupPresenter(Presenter presenter);
+        void decompose();
     }
 
     interface Presenter extends Serializable {
@@ -12,9 +14,15 @@ public interface  BaseContracts {
         void onPause();
         void onResume();
         void onDestroy();
+
+        void setupView(View view);
+        void setupInteractor(Interactor interactor);
+        void setupWireframe(Wireframe router);
+        void decompose();
     }
 
     interface Interactor extends Serializable {
+        void setupPresenter(InteractorOutput output);
         void decompose();
     }
 
@@ -23,6 +31,5 @@ public interface  BaseContracts {
     }
 
     interface Wireframe extends Serializable {
-        void decompose();
     }
 }

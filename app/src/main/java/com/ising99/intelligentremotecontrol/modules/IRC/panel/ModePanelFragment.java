@@ -27,22 +27,23 @@ public class ModePanelFragment extends Fragment implements ModeListAdapterDelega
     private final int GAME_MODE_TAG = 5;
 
     private IRCSelectModeDelegate delegate;
-    public ModePanelFragment() {}
-
     private List<ModeItem> modes = new ArrayList<>();
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_mode_panel, container, false);
-        RecyclerView listView = view.findViewById(R.id.irc_mode_pannel_list);
-        view.findViewById(R.id.irc_mode_container).setOnClickListener((v)-> delegate.didCanceledSelection());
-
+    public ModePanelFragment() {
         modes.add(new ModeItem(DEFAULT_MODE_TAG, R.drawable.irc_mode_normal_icon,"預設模式"));
         modes.add(new ModeItem(NORMAL_MODE_TAG, R.drawable.irc_mode_normal_icon,"精簡模式"));
         modes.add(new ModeItem(TOUCH_MODE_TAG, R.drawable.irc_mode_touch_icon,"滑動模式"));
 //        modes.add(new ModeItem(MOUSE_MODE_TAG, R.drawable.irc_mode_mouse_icon,"滑鼠模式"));
         modes.add(new ModeItem(INPUT_MODE_TAG, R.drawable.irc_mode_keyboard_icon,"輸入模式"));
         modes.add(new ModeItem(GAME_MODE_TAG, R.drawable.irc_mode_game_icon,"遊戲模式"));
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_mode_panel, container, false);
+        RecyclerView listView = view.findViewById(R.id.irc_mode_pannel_list);
+        view.findViewById(R.id.irc_mode_container).setOnClickListener((v)-> delegate.didCanceledSelection());
 
         ListViewAdapter adapter = new ListViewAdapter();
         adapter.setupDelegate(this);

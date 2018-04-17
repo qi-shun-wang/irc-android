@@ -3,6 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareDMRList;
 import android.content.Context;
 import android.util.Log;
 
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.InteractorOutput;
 
 import org.fourthline.cling.UpnpService;
@@ -61,6 +62,11 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
     @Override
     public ArrayList<RemoteDevice> getCurrentDevices() {
         return devices;
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.InteractorOutput output) {
+
     }
 
     @Override

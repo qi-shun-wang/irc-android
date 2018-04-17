@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.InteractorOutput;
 import com.ising99.intelligentremotecontrol.App;
 import com.ising99.intelligentremotecontrol.db.DeviceEntity;
@@ -23,9 +24,26 @@ public class IRCInteractor implements IRCContracts.Interactor {
     private Context context;
     private InteractorOutput output;
     private RemoteControlCoAPService service;
-    IRCInteractor(Context context, InteractorOutput output) {
+
+    IRCInteractor(Context context,RemoteControlCoAPService service){
+        this(context);
+        this.service = service;
+
+    }
+
+    IRCInteractor(Context context){
         this.context = context;
-        this.output = output;
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.InteractorOutput output) {
+        this.output = (IRCContracts.InteractorOutput)output;
+    }
+
+    @Override
+    public void decompose() {
+        context = null;
+        output = null;
     }
 
     @Override
@@ -37,9 +55,6 @@ public class IRCInteractor implements IRCContracts.Interactor {
         for (Object entity:devices) {
             DeviceEntity device = (DeviceEntity) entity;
             Log.d("Device is Connected",device.getName());
-            if (service == null ){
-                service = new RemoteControlCoAPService(device.getAddress(),5683);
-            }
             service.setAddress(device.getAddress());
 
 //            output.didConnectedToDevice(new Device(device.getAddress(),device.getName(),device.getSettings()));
@@ -68,10 +83,5 @@ public class IRCInteractor implements IRCContracts.Interactor {
         service.send(text);
     }
 
-    @Override
-    public void decompose() {
-        context = null;
-        output = null;
-    }
 }
 

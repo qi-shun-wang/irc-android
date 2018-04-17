@@ -1,7 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.More;
 
-import android.content.Context;
-
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.View;
 import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.InteractorOutput;
@@ -9,23 +8,41 @@ import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Presenter
 import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Wireframe;
 
 /**
- * Created by shun on 2018/4/13 下午 05:17:20.
+ * Created by shun on 2018/4/17 下午 10:04:17.
  * .
  */
 
 public class MorePresenter implements Presenter, InteractorOutput {
 
-    private Context context;
     private View view;
     private Interactor interactor;
     private Wireframe router;
 
-    MorePresenter(Context context, View view) {
-        this.context = context;
-        this.view = view;
-        interactor = new MoreInteractor(context, this);
-        router = new MoreRouter(context, this);
+    MorePresenter() {
+    }
 
+    @Override
+    public void setupView(BaseContracts.View view) {
+        this.view = (View) view;
+    }
+
+    @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+        this.interactor = (Interactor) interactor;
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+        this.router = (Wireframe) router;
+    }
+
+    @Override
+    public void decompose() {
+        interactor.decompose();
+        view.decompose();
+        interactor = null;
+        view = null;
+        router = null;
     }
 
     @Override
@@ -45,17 +62,6 @@ public class MorePresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onDestroy() {
-        interactor.decompose();
-        router.decompose();
-        context = null;
-        view = null;
-        interactor = null;
-        router = null;
     }
-
-
-    //TODO: Implement your Presenter methods here
-
-    //TODO: Implement your InteractorOutput methods here
 
 }

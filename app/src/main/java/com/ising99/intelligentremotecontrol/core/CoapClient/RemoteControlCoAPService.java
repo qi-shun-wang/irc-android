@@ -17,6 +17,7 @@ public final class RemoteControlCoAPService {
     private CoapClient client ;
     private String address;
     private int port;
+
     private CoapHandler handler = new CoapHandler() {
         @Override
         public void onLoad(CoapResponse response) { }
@@ -29,6 +30,10 @@ public final class RemoteControlCoAPService {
         this.address = address;
         this.port = port;
         client = new CoapClient();
+    }
+
+    public RemoteControlCoAPService() {
+        this("192.168.1.74",5683);
     }
 
     public void send(SendCode code){

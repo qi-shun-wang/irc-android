@@ -3,6 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareDMRList;
 import android.content.Context;
 import android.util.Log;
 
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.InteractorOutput;
@@ -65,11 +66,30 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
     @Override
     public void onDestroy() {
         interactor.decompose();
-        router.decompose();
         context = null;
         view = null;
         interactor = null;
         router = null;
+    }
+
+    @Override
+    public void setupView(BaseContracts.View view) {
+
+    }
+
+    @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+
+    }
+
+    @Override
+    public void decompose() {
+
     }
 
 

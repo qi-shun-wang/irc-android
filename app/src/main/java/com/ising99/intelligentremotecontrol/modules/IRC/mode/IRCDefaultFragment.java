@@ -27,7 +27,7 @@ public class IRCDefaultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.fragment_irc_default, container, false);
+        View v = inflater.inflate(R.layout.fragment_irc_default, container, false);
 
         v.findViewById(R.id.irc_default_power_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchPowerAction();});
         v.findViewById(R.id.irc_default_number_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchNumPanelAction();});

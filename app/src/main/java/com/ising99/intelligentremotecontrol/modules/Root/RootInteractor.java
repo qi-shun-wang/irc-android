@@ -5,10 +5,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.InteractorOutput;
-
-
 
 /**
  * Created by shun on 2018/3/27.
@@ -20,11 +18,13 @@ public class RootInteractor implements RootContracts.Interactor {
     private InteractorOutput output;
     private Context context;
 
-
-    RootInteractor(Context context, InteractorOutput output){
-        this.output = output;
+    RootInteractor(Context context){
         this.context = context;
+    }
 
+    @Override
+    public void setupPresenter(BaseContracts.InteractorOutput output) {
+        this.output = (InteractorOutput)output;
     }
 
     @Override

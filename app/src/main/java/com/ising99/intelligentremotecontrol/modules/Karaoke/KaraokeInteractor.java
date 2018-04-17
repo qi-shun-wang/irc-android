@@ -2,27 +2,33 @@ package com.ising99.intelligentremotecontrol.modules.Karaoke;
 
 import android.content.Context;
 
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeContracts.InteractorOutput;
 
 /**
- * Created by shun on 2018/4/13 下午 05:16:29.
+ * Created by shun on 2018/4/17 下午 10:03:05.
  * .
  */
 
 public class KaraokeInteractor implements KaraokeContracts.Interactor {
 
-    private Context context;
     private InteractorOutput output;
+    private Context context;
 
-    KaraokeInteractor(Context context, InteractorOutput output) {
+    KaraokeInteractor(Context context) {
         this.context = context;
-        this.output = output;
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.InteractorOutput output) {
+        this.output = (InteractorOutput) output;
     }
 
     @Override
     public void decompose() {
-        context = null;
         output = null;
+        context = null;
     }
+
 }
 

@@ -2,28 +2,45 @@ package com.ising99.intelligentremotecontrol.modules.Movie;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Movie.MovieContracts.Presenter;
 
 /**
- * Created by Shun on 2018/4/13 下午 05:18:02.
+ * Created by Shun on 2018/4/17 下午 10:05:13.
  * .
  */
 
 public class MovieFragment extends Fragment implements MovieContracts.View {
 
     private Presenter presenter;
+    private ViewGroup view;
+
+    public MovieFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.Presenter presenter) {
+        this.presenter = (Presenter) presenter;
+    }
+
+    @Override
+    public void decompose() {
+        presenter = null;
+        view = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_movie, container, false);
+        presenter.onCreate();
+        return view;
     }
 
     @Override
@@ -38,18 +55,9 @@ public class MovieFragment extends Fragment implements MovieContracts.View {
         presenter.onPause();
     }
 
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        presenter = new MoviePresenter(getActivity().getApplicationContext(), this);
-        presenter.onCreate();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        //TODO Setup OnFragmentInteractionListener
 
     }
 
@@ -62,7 +70,5 @@ public class MovieFragment extends Fragment implements MovieContracts.View {
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-        presenter = null;
-        Runtime.getRuntime().gc();
     }
 }

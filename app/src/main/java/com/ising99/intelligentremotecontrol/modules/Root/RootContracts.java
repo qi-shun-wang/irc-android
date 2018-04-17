@@ -11,11 +11,10 @@ import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 public interface RootContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
-        void prepareTabs();
+        void prepareTabBar();
         void setupActionBinding();
         void updateNetworkStatus(String text);
         void updateConnectedDeviceStatus(String text);
-        void replaceCurrentTab(int order);
     }
 
     interface Presenter extends BaseContracts.Presenter {
@@ -39,5 +38,6 @@ public interface RootContracts extends BaseContracts {
 
     interface Wireframe extends BaseContracts.Wireframe {
         void openDeviceDiscovery();
+        void presentTabAt(int index);
     }
 }

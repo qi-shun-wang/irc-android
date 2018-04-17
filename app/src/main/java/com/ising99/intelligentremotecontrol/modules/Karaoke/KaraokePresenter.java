@@ -1,7 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.Karaoke;
 
-import android.content.Context;
-
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeContracts.View;
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeContracts.InteractorOutput;
@@ -9,23 +8,41 @@ import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeContracts.Pre
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeContracts.Wireframe;
 
 /**
- * Created by shun on 2018/4/13 下午 05:16:29.
+ * Created by shun on 2018/4/17 下午 10:03:05.
  * .
  */
 
 public class KaraokePresenter implements Presenter, InteractorOutput {
 
-    private Context context;
     private View view;
     private Interactor interactor;
     private Wireframe router;
 
-    KaraokePresenter(Context context, View view) {
-        this.context = context;
-        this.view = view;
-        interactor = new KaraokeInteractor(context, this);
-        router = new KaraokeRouter(context, this);
+    KaraokePresenter() {
+    }
 
+    @Override
+    public void setupView(BaseContracts.View view) {
+        this.view = (View) view;
+    }
+
+    @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+        this.interactor = (Interactor) interactor;
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+        this.router = (Wireframe) router;
+    }
+
+    @Override
+    public void decompose() {
+        interactor.decompose();
+        view.decompose();
+        interactor = null;
+        view = null;
+        router = null;
     }
 
     @Override
@@ -45,17 +62,6 @@ public class KaraokePresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onDestroy() {
-        interactor.decompose();
-        router.decompose();
-        context = null;
-        view = null;
-        interactor = null;
-        router = null;
     }
-
-
-    //TODO: Implement your Presenter methods here
-
-    //TODO: Implement your InteractorOutput methods here
 
 }

@@ -20,11 +20,6 @@ class DeviceDiscoveryRouter implements Wireframe {
     }
 
     @Override
-    public void decompose() {
-        context = null;
-    }
-
-    @Override
     public void openWifiSetting() {
         Intent intentToWifiSetting = new Intent(Settings.ACTION_WIFI_SETTINGS);
         intentToWifiSetting.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

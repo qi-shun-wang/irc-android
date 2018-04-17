@@ -11,6 +11,7 @@ import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryTask;
 import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryDelegate;
 import com.ising99.intelligentremotecontrol.db.DeviceEntity;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.InteractorOutput;
 
@@ -31,6 +32,11 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
     DeviceDiscoveryInteractor(Context context, InteractorOutput output){
         this.output = output;
         this.context = context;
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.InteractorOutput output) {
+
     }
 
     @Override

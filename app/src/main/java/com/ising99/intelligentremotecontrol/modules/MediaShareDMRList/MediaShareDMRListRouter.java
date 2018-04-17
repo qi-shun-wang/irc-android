@@ -21,10 +21,6 @@ public class MediaShareDMRListRouter implements Wireframe {
         this.presenter = presenter;
     }
 
-    @Override
-    public void decompose() {
-        context = null;
-        presenter = null;
-    }
+
 }
 

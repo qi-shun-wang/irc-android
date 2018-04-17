@@ -1,14 +1,13 @@
 package com.ising99.intelligentremotecontrol.modules.Root;
 
-import android.content.Context;
-
-import com.ising99.intelligentremotecontrol.core.CoapClient.KeyCode;
 import com.ising99.intelligentremotecontrol.core.Device;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.View;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.InteractorOutput;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
+
 
 /**
  * Created by shun on 2018/3/27.
@@ -21,15 +20,37 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     private Interactor interactor;
     private Wireframe router;
 
-    RootPresenter(Context context, View view){
-        this.view = view;
-        interactor = new RootInteractor(context,this);
-        router = new RootRouter(context);
+    RootPresenter(){}
+
+    @Override
+    public void setupView(BaseContracts.View view) {
+        this.view = (View)view;
     }
 
     @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+        this.interactor = (Interactor)interactor;
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+        this.router = (Wireframe)router;
+    }
+
+    @Override
+    public void decompose() {
+        interactor.decompose();
+        view.decompose();
+        interactor = null;
+        view = null;
+        router = null;
+    }
+
+
+    @Override
     public void onCreate() {
-        view.prepareTabs();
+        view.prepareTabBar();
+        router.presentTabAt(0);
         view.setupActionBinding();
         view.updateNetworkStatus("尚未連接WiFi");
         view.updateConnectedDeviceStatus("尚未連接設備");
@@ -48,11 +69,6 @@ public class RootPresenter implements Presenter ,InteractorOutput{
 
     @Override
     public void onDestroy() {
-        interactor.decompose();
-        router.decompose();
-        view = null;
-        interactor = null;
-        router = null;
     }
 
     @Override
@@ -62,7 +78,7 @@ public class RootPresenter implements Presenter ,InteractorOutput{
 
     @Override
     public boolean didSelectedTabAt(int position) {
-        view.replaceCurrentTab(position);
+        router.presentTabAt(position);
         return true;
     }
 

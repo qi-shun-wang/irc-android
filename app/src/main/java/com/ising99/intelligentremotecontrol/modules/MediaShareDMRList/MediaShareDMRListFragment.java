@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Presenter;
 
 import org.fourthline.cling.model.meta.RemoteDevice;
@@ -97,5 +98,15 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
     @Override
     public void onItemClick(View view, int position) {
         presenter.prepareCastDeviceAt(position);
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.Presenter presenter) {
+
+    }
+
+    @Override
+    public void decompose() {
+
     }
 }

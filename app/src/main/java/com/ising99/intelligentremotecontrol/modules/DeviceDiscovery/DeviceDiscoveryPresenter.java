@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.Device;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.View;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Interactor;
@@ -85,7 +86,25 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
 
     @Override
     public void onDestroy() {
-        router.decompose();
+    }
+
+    @Override
+    public void setupView(BaseContracts.View view) {
+
+    }
+
+    @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+
+    }
+
+    @Override
+    public void decompose() {
         interactor.decompose();
         view = null;
         router = null;

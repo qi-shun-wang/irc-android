@@ -1,8 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.IRC;
 
-import android.content.Context;
-
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.View;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.InteractorOutput;
@@ -16,16 +15,29 @@ import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Wireframe;
 
 public class IRCPresenter implements Presenter, InteractorOutput {
 
-    private Context context;
     private View view;
     private Interactor interactor;
     private Wireframe router;
 
-    IRCPresenter(Context context, View view) {
-        this.context = context;
-        this.view = view;
-        interactor = new IRCInteractor(context, this);
-        router = new IRCRouter(context, this);
+    IRCPresenter(){}
+
+    @Override
+    public void setupView(BaseContracts.View view) {
+        this.view = (IRCContracts.View)view;
+    }
+
+    @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+        this.interactor = (IRCContracts.Interactor)interactor;
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+        this.router = (IRCContracts.Wireframe)router;
+    }
+
+    @Override
+    public void decompose() {
 
     }
 
@@ -46,12 +58,6 @@ public class IRCPresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onDestroy() {
-        interactor.decompose();
-        router.decompose();
-        context = null;
-        view = null;
-        interactor = null;
-        router = null;
     }
 
     @Override

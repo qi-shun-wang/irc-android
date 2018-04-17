@@ -1,7 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.WebBrowser;
 
-import android.content.Context;
-
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.WebBrowser.WebBrowserContracts.View;
 import com.ising99.intelligentremotecontrol.modules.WebBrowser.WebBrowserContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.WebBrowser.WebBrowserContracts.InteractorOutput;
@@ -9,23 +8,41 @@ import com.ising99.intelligentremotecontrol.modules.WebBrowser.WebBrowserContrac
 import com.ising99.intelligentremotecontrol.modules.WebBrowser.WebBrowserContracts.Wireframe;
 
 /**
- * Created by shun on 2018/4/13 下午 05:15:24.
+ * Created by shun on 2018/4/17 下午 10:05:57.
  * .
  */
 
 public class WebBrowserPresenter implements Presenter, InteractorOutput {
 
-    private Context context;
     private View view;
     private Interactor interactor;
     private Wireframe router;
 
-    WebBrowserPresenter(Context context, View view) {
-        this.context = context;
-        this.view = view;
-        interactor = new WebBrowserInteractor(context, this);
-        router = new WebBrowserRouter(context, this);
+    WebBrowserPresenter() {
+    }
 
+    @Override
+    public void setupView(BaseContracts.View view) {
+        this.view = (View) view;
+    }
+
+    @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+        this.interactor = (Interactor) interactor;
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+        this.router = (Wireframe) router;
+    }
+
+    @Override
+    public void decompose() {
+        interactor.decompose();
+        view.decompose();
+        interactor = null;
+        view = null;
+        router = null;
     }
 
     @Override
@@ -45,17 +62,6 @@ public class WebBrowserPresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onDestroy() {
-        interactor.decompose();
-        router.decompose();
-        context = null;
-        view = null;
-        interactor = null;
-        router = null;
     }
-
-
-    //TODO: Implement your Presenter methods here
-
-    //TODO: Implement your InteractorOutput methods here
 
 }

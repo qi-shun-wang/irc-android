@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCDefaultFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCNormalFragment;
@@ -28,17 +29,62 @@ public class IRCFragment extends Fragment
 {
 
     private Presenter presenter;
-    private IRCDefaultFragment default_mode;
-    private IRCNormalFragment normal_mode;
-    private IRCTextingFragment input_mode;
-    private IRCTouchFragment touch_mode;
-    private ModePanelFragment modePanel;
-    private NumberPanelFragment numPanel;
-    private MediaPanelFragment mediaPanel;
+
+    private IRCDefaultFragment default_mode = new IRCDefaultFragment();
+    private IRCNormalFragment normal_mode = new IRCNormalFragment();
+    private IRCTextingFragment input_mode = new IRCTextingFragment();
+    private IRCTouchFragment touch_mode = new IRCTouchFragment();
+    private ModePanelFragment modePanel = new ModePanelFragment();
+    private NumberPanelFragment numPanel = new NumberPanelFragment();
+    private MediaPanelFragment mediaPanel = new MediaPanelFragment();
+
+    @Override
+    public void setupPresenter(BaseContracts.Presenter presenter) {
+        this.presenter = (IRCContracts.Presenter)presenter;
+    }
+
+    @Override
+    public void decompose() {
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_irc, container, false);
+        View v = inflater.inflate(R.layout.fragment_irc, container, false);
+//        default_mode = new IRCDefaultFragment();
+//        normal_mode = new IRCNormalFragment();
+//        input_mode = new IRCTextingFragment();
+//        touch_mode = new IRCTouchFragment();
+
+        default_mode.setDelegate(this);
+        normal_mode.setDelegate(this);
+        input_mode.setDelegate(this);
+        touch_mode.setDelegate(this);
+        numPanel.setDelegate(this);
+        mediaPanel.setDelegate(this);
+        modePanel.setDelegate(this);
+
+
+
+//        numPanel = new NumberPanelFragment();
+//        getFragmentManager().beginTransaction().add(R.id.fragment_num_content_container,numPanel).commit();
+//        getFragmentManager().beginTransaction().hide(numPanel).commit();
+
+//        mediaPanel = new MediaPanelFragment();
+//        getFragmentManager().beginTransaction().add(R.id.fragment_media_content_container,mediaPanel).commit();
+//        getFragmentManager().beginTransaction().hide(mediaPanel).commit();
+
+//        modePanel = new ModePanelFragment();
+//        getFragmentManager().beginTransaction().add(R.id.fragment_mode_list_content_container,modePanel).commit();
+//        getFragmentManager().beginTransaction().hide(modePanel).commit();
+
+        return v;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter.onCreate();
     }
 
     @Override
@@ -56,52 +102,41 @@ public class IRCFragment extends Fragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        default_mode = new IRCDefaultFragment();
-        normal_mode = new IRCNormalFragment();
-        input_mode = new IRCTextingFragment();
-        touch_mode = new IRCTouchFragment();
 
-        default_mode.setDelegate(this);
-        normal_mode.setDelegate(this);
-        input_mode.setDelegate(this);
-        touch_mode.setDelegate(this);
-
-        getFragmentManager().beginTransaction().add(R.id.fragment_mode_content_container,default_mode).commit();
-
-        numPanel = new NumberPanelFragment();
-        numPanel.setDelegate(this);
-        getFragmentManager().beginTransaction().add(R.id.fragment_num_content_container,numPanel).commit();
-        getFragmentManager().beginTransaction().hide(numPanel).commit();
-
-        mediaPanel = new MediaPanelFragment();
-        mediaPanel.setDelegate(this);
-        getFragmentManager().beginTransaction().add(R.id.fragment_media_content_container,mediaPanel).commit();
-        getFragmentManager().beginTransaction().hide(mediaPanel).commit();
-
-        modePanel = new ModePanelFragment();
-        modePanel.setDelegate(this);
-        getFragmentManager().beginTransaction().add(R.id.fragment_mode_list_content_container,modePanel).commit();
-        getFragmentManager().beginTransaction().hide(modePanel).commit();
-        presenter = new IRCPresenter(getActivity().getApplicationContext(), this);
-        presenter.onCreate();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        getFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_mode_content_container,default_mode)
+                .add(R.id.fragment_num_content_container,numPanel)
+                .add(R.id.fragment_media_content_container,mediaPanel)
+                .add(R.id.fragment_mode_list_content_container,modePanel)
+                .hide(numPanel)
+                .hide(mediaPanel)
+                .hide(modePanel)
+                .commit();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        getFragmentManager()
+                .beginTransaction()
+                .remove(default_mode)
+                .remove(numPanel)
+                .remove(mediaPanel)
+                .remove(modePanel)
+                .commit();
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-        presenter = null;
-        Runtime.getRuntime().gc();
     }
 
     @Override
@@ -287,4 +322,6 @@ public class IRCFragment extends Fragment
         getFragmentManager().beginTransaction().hide(modePanel).commit();
         getFragmentManager().beginTransaction().hide(numPanel).commit();
     }
+
+
 }

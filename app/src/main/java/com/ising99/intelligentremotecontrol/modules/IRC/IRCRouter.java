@@ -1,7 +1,9 @@
 package com.ising99.intelligentremotecontrol.modules.IRC;
 
+import android.app.Fragment;
 import android.content.Context;
 
+import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Presenter;
 
@@ -14,16 +16,32 @@ public class IRCRouter implements Wireframe {
 
     private Context context;
     private Presenter presenter;
+    private Fragment view ;
 
-    IRCRouter(Context context, Presenter presenter) {
+    private IRCRouter(Context context) {
         this.context = context;
-        this.presenter = presenter;
     }
 
-    @Override
-    public void decompose() {
-        context = null;
-        presenter = null;
+
+    public static IRCFragment setupModule(Context context, RemoteControlCoAPService service){
+
+        IRCFragment view = new IRCFragment();
+        IRCInteractor interactor = new IRCInteractor(context, service);
+        IRCPresenter presenter = new IRCPresenter();
+        IRCRouter router = new IRCRouter(context);
+
+        view.setupPresenter(presenter);
+
+        presenter.setupView(view);
+        presenter.setupWireframe(router);
+        presenter.setupInteractor(interactor);
+
+        router.view = view;
+        router.presenter = presenter;
+
+        interactor.setupPresenter(presenter);
+
+        return view;
     }
 }
 

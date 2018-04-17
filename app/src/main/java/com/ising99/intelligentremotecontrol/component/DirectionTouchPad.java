@@ -1,11 +1,16 @@
 package com.ising99.intelligentremotecontrol.component;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.ising99.intelligentremotecontrol.R;
 
 /**
  * Created by shun on 2018/4/16.
@@ -16,6 +21,9 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
 
     private static final float SWIPE_THRESHOLD = 100;
     private static final float SWIPE_VELOCITY_THRESHOLD = 100;
+    private ImageView image;
+    private int dX = 0;
+    private int dY = 0;
 
     public interface DirectionTouchPadDelegate {
         void didActOn(Action action);
@@ -36,19 +44,29 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
 
     @Override
     public void onShowPress(MotionEvent motionEvent) {
+        image.setAlpha(1f);
+        image.setX(motionEvent.getX() - image.getWidth()/2 - dX);
+        image.setY(motionEvent.getY() - image.getHeight()/2 - dY);
         Log.i("====>", "onShowPress: ");
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent motionEvent) {
         Log.i("====>", "onSingleTapUp: ");
+        if (delegate == null) return false;
         delegate.didActOn(Action.center);
+        image.setAlpha(1f);
+        image.setX(motionEvent.getX() - image.getWidth()/2 - dX);
+        image.setY(motionEvent.getY() - image.getHeight()/2 - dY);
+        image.animate().alpha(0).setDuration(500).start();
         return true;
     }
 
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        Log.i("====>", "onScroll: ");
+        image.setX(image.getX() - v);
+        image.setY(image.getY() - v1);
+        Log.i("====>", "onScroll: "+v+"-"+v1+"-"+motionEvent.getAction());
         return true;
     }
 
@@ -59,7 +77,7 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        Log.i("====>", "onFling: ");
+
         if (delegate == null) return false;
 
         boolean result = false;
@@ -67,6 +85,7 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
         try {
             float diffY = motionEvent1.getY() - motionEvent.getY();
             float diffX = motionEvent1.getX() - motionEvent.getX();
+            image.setAlpha(0f);
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(v) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffX > 0) {
@@ -111,28 +130,41 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
     }
 
 
-
     public DirectionTouchPad(Context context) {
-        super(context);
-        commonInit();
+        this(context, null);
     }
 
     public DirectionTouchPad(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        commonInit();
+        this(context, attrs, 0);
     }
 
     public DirectionTouchPad(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         commonInit();
+        if (attrs!=null) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DirectionTouchPad);
+            int touch_dot_resId = a.getResourceId(R.styleable.DirectionTouchPad_dot_icon, R.color.white);
+            image = new ImageView(context);
+            image.setBackgroundResource(touch_dot_resId);
+            image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            image.setAlpha(0f);
+            addView(image,-1);
+            a.recycle();
+        }
     }
 
     private void commonInit(){
         gesture = new GestureDetector(getContext(), this);
     }
+
+
     @Override
     protected void onLayout(boolean b, int i, int i1, int i2, int i3) {
-
+        View v = getChildAt(0);
+        int length = Math.min(i2-i,i3-i1);
+        dX = i;
+        dY = i1;
+        v.layout(i, i1,length/3, length/3);
     }
 
     @Override

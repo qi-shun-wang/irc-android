@@ -78,6 +78,14 @@
         android:layout_weight="4"
         android:background="@color/clear"
         >
+        <ImageView
+            android:id="@+id/irc_touch_dpad_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/clear"
+            android:layout_margin="24dp"
+            android:scaleType="fitCenter"
+            />
         <com.ising99.intelligentremotecontrol.component.DirectionTouchPad
             android:id="@+id/irc_touch_dpad"
             android:layout_width="match_parent"
@@ -86,6 +94,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="@drawable/outline"
+            app:dot_icon="@drawable/irc_touch_dot_icon"
             />
     </RelativeLayout>
 

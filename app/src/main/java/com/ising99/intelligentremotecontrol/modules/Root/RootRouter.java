@@ -74,6 +74,7 @@ public class RootRouter implements Wireframe {
         return view;
     }
 
+
     @Override
     public void openDeviceDiscovery() {
         Intent intentToDeviceDiscoveryActivity = new Intent(context, DeviceDiscoveryActivity.class);

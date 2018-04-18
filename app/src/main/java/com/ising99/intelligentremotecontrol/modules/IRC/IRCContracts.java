@@ -15,9 +15,6 @@ public interface IRCContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        void didSent(SendCode code);
-        void didSent(int number);
-        void didSent(String text);
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -31,6 +28,18 @@ public interface IRCContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
+        void composingModes();
+        void decomposingModes();
+        void presentNumPanel();
+        void presentMediaPanel();
+        void presentModePanel();
+        void presentTextingMode();
+        void presentTouchMode();
+        void presentNormalMode();
+        void presentDefaultMode();
+        void dismissNumPanel();
+        void dismissMediaPanel();
+        void dismissModePanel();
 
     }
 }

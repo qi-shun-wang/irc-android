@@ -31,7 +31,7 @@ public class IRCInteractor implements IRCContracts.Interactor {
 
     }
 
-    IRCInteractor(Context context){
+    private IRCInteractor(Context context){
         this.context = context;
     }
 

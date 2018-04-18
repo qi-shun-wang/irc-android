@@ -14,16 +14,32 @@ import com.ising99.intelligentremotecontrol.R;
  */
 
 public class RootActivity extends Activity {
-
+    Fragment root;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
-
-        Fragment root = RootRouter.setupModule(getApplicationContext());
+        root = RootRouter.setupModule(getApplicationContext());
         getFragmentManager().beginTransaction().add(R.id.fragment_root_container,root).commit();
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getFragmentManager().beginTransaction().remove(root).commit();
+    }
 }

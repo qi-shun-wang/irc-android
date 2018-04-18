@@ -7,13 +7,14 @@ import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.InteractorOutput;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Wireframe;
+import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCSelectModeDelegate;
 
 /**
  * Created by shun on 2018/4/12 下午 02:16:54.
  * .
  */
 
-public class IRCPresenter implements Presenter, InteractorOutput {
+public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDelegate , IRCSelectModeDelegate {
 
     private View view;
     private Interactor interactor;
@@ -43,7 +44,7 @@ public class IRCPresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onCreate() {
-
+        router.composingModes();
     }
 
     @Override
@@ -58,21 +59,191 @@ public class IRCPresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onDestroy() {
+        router.decomposingModes();
     }
 
     @Override
-    public void didSent(SendCode code) {
-        interactor.perform(code);
+    public void dispatchTextAction(String message) {
+        interactor.perform(message);
     }
 
     @Override
-    public void didSent(int number) {
+    public void dispatchUpAction() {
+        interactor.perform(SendCode.KEYCODE_DPAD_UP);
+    }
+
+    @Override
+    public void dispatchDownAction() {
+        interactor.perform(SendCode.KEYCODE_DPAD_DOWN);
+    }
+
+    @Override
+    public void dispatchLeftAction() {
+        interactor.perform(SendCode.KEYCODE_DPAD_LEFT);
+    }
+
+    @Override
+    public void dispatchRightAction() {
+        interactor.perform(SendCode.KEYCODE_DPAD_RIGHT);
+    }
+
+    @Override
+    public void dispatchEnterAction() {
+        interactor.perform(SendCode.KEYCODE_ENTER);
+    }
+
+    @Override
+    public void dispatchPowerAction() {
+        interactor.perform(SendCode.KEYCODE_POWER);
+    }
+
+    @Override
+    public void dispatchMenuAction() {
+        interactor.perform(SendCode.KEYCODE_MENU);
+    }
+
+    @Override
+    public void dispatchPlaybackAction() {
+        interactor.perform(SendCode.KEYCODE_MEDIA_PLAY_PAUSE);
+    }
+
+    @Override
+    public void dispatchBackAction() {
+        interactor.perform(SendCode.KEYCODE_BACK);
+    }
+
+
+    @Override
+    public void dispatchVolumeAction(boolean isIncrease) {
+        if (isIncrease)
+        {
+            interactor.perform(SendCode.KEYCODE_VOLUME_UP);
+        }
+        else
+        {
+            interactor.perform(SendCode.KEYCODE_VOLUME_DOWN);
+        }
+    }
+
+    @Override
+    public void dispatchChannelAction(boolean isIncrease) {
+        if (isIncrease)
+        {
+            interactor.perform(SendCode.KEYCODE_CHANNEL_UP);
+        }
+        else
+        {
+            interactor.perform(SendCode.KEYCODE_CHANNEL_DOWN);
+        }
+    }
+
+    @Override
+    public void dispatchKodAction() {
+        interactor.perform(SendCode.KEYCODE_KOD_PLUS);
+    }
+
+    @Override
+    public void dispatchNumPadAction(int number) {
         interactor.perform(SendCode.numberConvert(number));
     }
 
     @Override
-    public void didSent(String text) {
-        interactor.perform(text);
+    public void dispatchMuteAction() {
+        interactor.perform(SendCode.KEYCODE_VOLUME_MUTE);
+    }
+
+    @Override
+    public void dispatchInsertAction() {
+        interactor.perform(SendCode.SendCode_INSERT_SONG);
+    }
+
+    @Override
+    public void dispatchTerminateAction() {
+        interactor.perform(SendCode.SendCode_PASS_SONG);
+    }
+
+    @Override
+    public void dispatchTuningAction() {
+        interactor.perform(SendCode.SendCode_TUNING);
+    }
+
+    @Override
+    public void dispatchPlayerAction() {
+        interactor.perform(SendCode.SendCode_PLAY_CONTROL);
+    }
+
+    @Override
+    public void dispatchVocalAction() {
+        interactor.perform(SendCode.SendCode_MAN_WOMEN);
+    }
+
+    @Override
+    public void dispatchRecordAction() {
+        interactor.perform(SendCode.SendCode_RECORD);
+    }
+
+    @Override
+    public void dispatchReviewAction() {
+        interactor.perform(SendCode.SendCode_APPRECIATE);
+    }
+
+    @Override
+    public void didSelectedDefaultMode() {
+        router.presentDefaultMode();
+        router.dismissModePanel();
+    }
+
+    @Override
+    public void didSelectedNormalMode() {
+        router.presentNormalMode();
+        router.dismissModePanel();
+    }
+
+    @Override
+    public void didSelectedTouchMode() {
+        router.presentTouchMode();
+        router.dismissModePanel();
+    }
+
+    @Override
+    public void didSelectedTextingMode() {
+        router.presentTextingMode();
+        router.dismissModePanel();
+    }
+
+    @Override
+    public void didSelectedGameMode() {
+        router.dismissModePanel();
+    }
+
+    @Override
+    public void didCanceledSelection() {
+        router.dismissModePanel();
+    }
+
+    @Override
+    public void dispatchNumPanelAction() {
+        router.presentNumPanel();
+    }
+
+    @Override
+    public void dispatchMediaPanelAction() {
+        router.presentMediaPanel();
+    }
+
+    @Override
+    public void dispatchModeAction() {
+        router.presentModePanel();
+    }
+
+    @Override
+    public void dismissNumPadAction() {
+        router.dismissNumPanel();
+    }
+
+    @Override
+    public void dismissMediaPadAction() {
+        router.dismissMediaPanel();
     }
 
     @Override

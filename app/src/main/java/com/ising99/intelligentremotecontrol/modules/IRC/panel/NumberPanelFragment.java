@@ -31,6 +31,7 @@ public class NumberPanelFragment extends Fragment {
         v.findViewById(R.id.irc_number_panel_num7_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchNumPadAction(7);});
         v.findViewById(R.id.irc_number_panel_num8_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchNumPadAction(8);});
         v.findViewById(R.id.irc_number_panel_num9_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchNumPadAction(9);});
+        v.findViewById(R.id.irc_number_panel_del_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchDeleteAction();});
         v.findViewById(R.id.irc_number_panel_outside_view).setOnClickListener((view) -> {if(delegate != null) delegate.dismissNumPadAction();});
         return v;
     }

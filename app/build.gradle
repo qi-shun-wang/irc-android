@@ -36,7 +36,7 @@ dependencies {
     //used for bottom navi
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     implementation "com.android.support:design:27.1.1"
-
+    implementation 'io.github.controlwear:virtualjoystick:1.8.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     //used for coap protocol
     implementation 'org.eclipse.californium:californium-core:2.0.0-M9'

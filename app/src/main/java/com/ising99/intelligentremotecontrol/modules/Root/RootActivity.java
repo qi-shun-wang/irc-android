@@ -40,6 +40,11 @@ public class RootActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getFragmentManager().beginTransaction().remove(root).commit();
+        try {
+            getFragmentManager().beginTransaction().remove(root).commit();
+        } catch (IllegalStateException e){
+            e.printStackTrace();
+        }
     }
+
 }

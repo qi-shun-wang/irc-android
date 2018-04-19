@@ -24,17 +24,17 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
 
     @Override
     public void setupView(BaseContracts.View view) {
-        this.view = (IRCContracts.View)view;
+        this.view = (View)view;
     }
 
     @Override
     public void setupInteractor(BaseContracts.Interactor interactor) {
-        this.interactor = (IRCContracts.Interactor)interactor;
+        this.interactor = (Interactor)interactor;
     }
 
     @Override
     public void setupWireframe(BaseContracts.Wireframe router) {
-        this.router = (IRCContracts.Wireframe)router;
+        this.router = (Wireframe)router;
     }
 
     @Override
@@ -129,11 +129,11 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     public void dispatchChannelAction(boolean isIncrease) {
         if (isIncrease)
         {
-            interactor.perform(SendCode.KEYCODE_CHANNEL_UP);
+            interactor.perform(SendCode.KEYCODE_PAGE_UP);
         }
         else
         {
-            interactor.perform(SendCode.KEYCODE_CHANNEL_DOWN);
+            interactor.perform(SendCode.KEYCODE_PAGE_DOWN);
         }
     }
 
@@ -148,43 +148,48 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     }
 
     @Override
+    public void dispatchDeleteAction() {
+        interactor.perform(SendCode.KEYCODE_DEL);
+    }
+
+    @Override
     public void dispatchMuteAction() {
         interactor.perform(SendCode.KEYCODE_VOLUME_MUTE);
     }
 
     @Override
     public void dispatchInsertAction() {
-        interactor.perform(SendCode.SendCode_INSERT_SONG);
+        interactor.perform(SendCode.KEYCODE_INSERT_SONG);
     }
 
     @Override
     public void dispatchTerminateAction() {
-        interactor.perform(SendCode.SendCode_PASS_SONG);
+        interactor.perform(SendCode.KEYCODE_PASS_SONG);
     }
 
     @Override
     public void dispatchTuningAction() {
-        interactor.perform(SendCode.SendCode_TUNING);
+        interactor.perform(SendCode.KEYCODE_TUNING);
     }
 
     @Override
     public void dispatchPlayerAction() {
-        interactor.perform(SendCode.SendCode_PLAY_CONTROL);
+        interactor.perform(SendCode.KEYCODE_MEDIA_PLAY_PAUSE);
     }
 
     @Override
     public void dispatchVocalAction() {
-        interactor.perform(SendCode.SendCode_MAN_WOMEN);
+        interactor.perform(SendCode.KEYCODE_MAN_WOMEN);
     }
 
     @Override
     public void dispatchRecordAction() {
-        interactor.perform(SendCode.SendCode_RECORD);
+        interactor.perform(SendCode.KEYCODE_RECORD);
     }
 
     @Override
     public void dispatchReviewAction() {
-        interactor.perform(SendCode.SendCode_APPRECIATE);
+        interactor.perform(SendCode.KEYCODE_APPRECIATE);
     }
 
     @Override
@@ -213,6 +218,7 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
 
     @Override
     public void didSelectedGameMode() {
+        router.presentGameMode();
         router.dismissModePanel();
     }
 

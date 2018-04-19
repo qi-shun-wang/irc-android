@@ -23,6 +23,7 @@
 
         <activity
             android:name=".modules.Root.RootActivity"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,9 +31,13 @@
             </intent-filter>
         </activity>
 
-        <service android:name="org.fourthline.cling.android.AndroidUpnpServiceImpl"/>
         <activity android:name=".modules.DeviceDiscovery.DeviceDiscoveryActivity"/>
+        <activity
+            android:name=".modules.IRC.mode.IRCGameActivity"
+            android:screenOrientation="landscape"
+            />
 
+        <service android:name="org.fourthline.cling.android.AndroidUpnpServiceImpl"/>
     </application>
 
 </manifest>

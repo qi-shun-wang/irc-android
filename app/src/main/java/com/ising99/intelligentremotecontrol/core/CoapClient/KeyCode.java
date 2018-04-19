@@ -7,19 +7,7 @@ package com.ising99.intelligentremotecontrol.core.CoapClient;
 @Deprecated
 @SuppressWarnings("Unused enumerations")
 public enum KeyCode {
-
-    KEYCODE_DPAD_UP(19),
-    KEYCODE_DPAD_DOWN(20),
-    KEYCODE_DPAD_LEFT(21),
-    KEYCODE_DPAD_RIGHT(22),
-    KEYCODE_ENTER(66),
-    KEYCODE_MENU(82),
-    KEYCODE_BACK(4),
-    KEYCODE_POWER(26),
-
-    KEYCODE_VOLUME_UP(24),
-    KEYCODE_VOLUME_DOWN(25),
-    KEYCODE_VOLUME_MUTE(164),
+    KEYCODE_APPRECIATE(630),
 
     KEYCODE_CHANNEL_UP(92),
     KEYCODE_CHANNEL_DOWN(93),

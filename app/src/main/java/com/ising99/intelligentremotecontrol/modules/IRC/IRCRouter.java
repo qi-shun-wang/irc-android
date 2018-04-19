@@ -2,12 +2,14 @@ package com.ising99.intelligentremotecontrol.modules.IRC;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCDefaultFragment;
+import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCGameActivity;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCNormalFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCTextingFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCTouchFragment;
@@ -91,13 +93,18 @@ public class IRCRouter implements Wireframe {
 
     @Override
     public void decomposingModes() {
-        view.getFragmentManager()
-                .beginTransaction()
-                .remove(default_mode)
-                .remove(numPanel)
-                .remove(mediaPanel)
-                .remove(modePanel)
-                .commit();
+        try {
+            view.getFragmentManager()
+                    .beginTransaction()
+                    .remove(default_mode)
+                    .remove(numPanel)
+                    .remove(mediaPanel)
+                    .remove(modePanel)
+                    .commit();
+        }
+        catch (IllegalStateException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -133,6 +140,13 @@ public class IRCRouter implements Wireframe {
     @Override
     public void presentDefaultMode() {
         view.getFragmentManager().beginTransaction().replace(R.id.fragment_mode_content_container,default_mode).commit();
+    }
+
+    @Override
+    public void presentGameMode() {
+        Intent i = new Intent(context,IRCGameActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
 
     @Override

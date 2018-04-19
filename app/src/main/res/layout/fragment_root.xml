@@ -74,7 +74,16 @@
         android:background="@color/black"
         app:itemIconTint="@color/selector_item_selected_color"
         app:itemTextColor="@color/selector_item_selected_color"
-        app:menu="@menu/root_bottom_navigation" />
+        app:menu="@menu/root_bottom_navigation"
+        />
 
+    <FrameLayout
+        android:id="@+id/root_fullscreen_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/clear"
+        >
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

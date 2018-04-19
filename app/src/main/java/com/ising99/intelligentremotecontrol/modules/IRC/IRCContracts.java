@@ -37,6 +37,7 @@ public interface IRCContracts extends BaseContracts {
         void presentTouchMode();
         void presentNormalMode();
         void presentDefaultMode();
+        void presentGameMode();
         void dismissNumPanel();
         void dismissMediaPanel();
         void dismissModePanel();

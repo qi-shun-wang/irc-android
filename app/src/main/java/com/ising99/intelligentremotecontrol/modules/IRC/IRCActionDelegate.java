@@ -25,6 +25,7 @@ public interface IRCActionDelegate {
     void dismissNumPadAction();
     void dismissMediaPadAction();
     void dispatchNumPadAction(int number);
+    void dispatchDeleteAction();
     void dispatchMuteAction();
     void dispatchInsertAction();
     void dispatchTerminateAction();

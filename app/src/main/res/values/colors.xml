@@ -17,4 +17,6 @@
     <color name="ns_blue">#272734</color>
     <color name="red">#e71616</color>
     <color name="lightGray">#3f515151</color>
+    <color name="bluePurple">#8272F7</color>
+    <color name="white_transparent">#27d2d4d5</color>
 </resources>

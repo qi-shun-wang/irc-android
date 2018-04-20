@@ -15,11 +15,14 @@ public interface IRCContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
+        String getAddress();
     }
 
     interface Interactor extends BaseContracts.Interactor {
         void perform(SendCode code);
+        void performL(SendCode code);
         void perform(String  text);
+        String getAddress();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

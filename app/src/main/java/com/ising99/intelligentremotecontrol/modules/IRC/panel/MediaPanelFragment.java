@@ -29,7 +29,8 @@ public class MediaPanelFragment extends Fragment {
         v.findViewById(R.id.irc_media_panel_player_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchPlayerAction();});
         v.findViewById(R.id.irc_media_panel_vocal_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchVocalAction();});
         v.findViewById(R.id.irc_media_panel_record_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchRecordAction();});
-        v.findViewById(R.id.irc_media_panel_review_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchReviewAction();});
+        v.findViewById(R.id.irc_media_panel_review_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchReviewLAction();});
+        v.findViewById(R.id.irc_media_panel_review_btn).setOnLongClickListener((view) -> {if(delegate != null) delegate.dispatchReviewAction();return true;});
         v.findViewById(R.id.irc_media_panel_outside_view).setOnClickListener((view) -> {if(delegate != null) delegate.dismissMediaPadAction();});
         return v;
     }

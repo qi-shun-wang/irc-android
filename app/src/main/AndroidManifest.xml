@@ -33,7 +33,7 @@
 
         <activity android:name=".modules.DeviceDiscovery.DeviceDiscoveryActivity"/>
         <activity
-            android:name=".modules.IRC.mode.IRCGameActivity"
+            android:name=".modules.Game.GameActivity"
             android:screenOrientation="landscape"
             />
 

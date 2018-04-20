@@ -41,6 +41,11 @@ public final class RemoteControlCoAPService {
         client.useNONs().post(handler,String.valueOf(code.getCode()), MediaTypeRegistry.TEXT_PLAIN);
     }
 
+    public void sendL(SendCode code){
+        client.setURI("coap://"+address+":"+port+"/sendLongPressedEvent");
+        client.useNONs().post(handler,String.valueOf(code.getCode()), MediaTypeRegistry.TEXT_PLAIN);
+    }
+
     public void send(String text){
         try {
             client.setURI("coap://"+address+":"+port+"/textInput");
@@ -48,6 +53,10 @@ public final class RemoteControlCoAPService {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public void setAddress(String address) {

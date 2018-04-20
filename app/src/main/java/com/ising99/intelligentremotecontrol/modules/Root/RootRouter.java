@@ -3,6 +3,8 @@ package com.ising99.intelligentremotecontrol.modules.Root;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.view.View;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeFragment;

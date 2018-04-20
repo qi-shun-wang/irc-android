@@ -15,11 +15,18 @@ public interface RootContracts extends BaseContracts {
         void setupActionBinding();
         void updateNetworkStatus(String text);
         void updateConnectedDeviceStatus(String text);
+
+        void hideNavigationBar();
+        void showNavigationBar();
+        void hideTabBar();
+        void showTabBar();
     }
 
     interface Presenter extends BaseContracts.Presenter {
         void didTapOnDeviceDiscovery();
         boolean didSelectedTabAt(int position);
+        void openFullScreenMode();
+        void closeFullScreenMode();
 
     }
 

@@ -46,7 +46,6 @@ public class RootPresenter implements Presenter ,InteractorOutput{
         router = null;
     }
 
-
     @Override
     public void onCreate() {
         view.prepareTabBar();
@@ -97,4 +96,15 @@ public class RootPresenter implements Presenter ,InteractorOutput{
         view.updateConnectedDeviceStatus("目前已連到設備 " + device.getName());
     }
 
+    @Override
+    public void openFullScreenMode() {
+        view.hideNavigationBar();
+        view.hideTabBar();
+    }
+
+    @Override
+    public void closeFullScreenMode() {
+        view.showNavigationBar();
+        view.showTabBar();
+    }
 }

@@ -1,0 +1,254 @@
+
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/spaceGray"
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:background="@color/clear">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="8dp"
+                        android:background="@color/clear">
+
+                        <com.ising99.intelligentremotecontrol.component.CircularButton
+                            android:id="@+id/irc_game_dpad"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            app:dpad_default_icon="@drawable/irc_game_dpad_icon"
+                            app:dpad_down_icon="@drawable/irc_game_dpad_down_icon"
+                            app:dpad_left_icon="@drawable/irc_game_dpad_left_icon"
+                            app:dpad_ok_icon="@drawable/irc_game_dpad_icon"
+                            app:dpad_right_icon="@drawable/irc_game_dpad_right_icon"
+                            app:dpad_up_icon="@drawable/irc_game_dpad_up_icon" />
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="8dp"
+                        android:background="@color/clear">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:padding="8dp"
+                                android:background="@color/clear">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="20dp"
+                                    android:scaleType="fitCenter"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/kod_plus_mark_icon"/>
+                            </RelativeLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="2"
+                                android:padding="8dp"
+                                android:orientation="horizontal"
+                                android:background="@color/clear">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:layout_weight="1">
+                                    <ImageButton
+                                        android:id="@+id/irc_game_start_btn"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:background="@color/clear"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/irc_game_select_icon"
+                                        />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:textStyle="italic"
+                                        android:textColor="@color/white"
+                                        android:text="START"
+                                        android:textSize="11sp"
+                                        android:textAlignment="center"
+                                        />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:layout_weight="1">
+                                    <ImageButton
+                                        android:id="@+id/irc_game_select_btn"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:background="@color/clear"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/irc_game_select_icon" />
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:textColor="@color/white"
+                                        android:textAlignment="center"
+                                        android:textStyle="italic"
+                                        android:textSize="11sp"
+                                        android:text="SELECT"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="2"
+                                android:padding="8dp"
+                                android:background="@color/clear">
+
+                                <io.github.controlwear.virtual.joystick.android.JoystickView
+                                    android:id="@+id/irc_game_joystick_component"
+                                    android:layout_width="115dp"
+                                    android:layout_height="115dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentStart="true"
+                                    android:background="@drawable/irc_game_joystick_pad_icon"
+                                    app:JV_borderWidth="4dp"
+                                    app:JV_backgroundSizeRatio="50%"
+                                    app:JV_buttonColor="@color/white_transparent"
+                                    app:JV_buttonSizeRatio="40%"
+                                    app:JV_fixedCenter="false" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:background="@color/clear">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <ImageButton
+                    android:id="@+id/irc_game_x_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@color/clear"
+                    android:scaleType="fitCenter"
+                    android:layout_marginEnd="30dp"
+                    android:src="@drawable/irc_game_x_icon"
+                    />
+
+                <ImageButton
+                    android:id="@+id/irc_game_b_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@color/clear"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/irc_game_b_icon" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+                <ImageButton
+                    android:id="@+id/irc_game_y_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@color/clear"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="30dp"
+                    android:src="@drawable/irc_game_y_icon"
+                    />
+                <ImageButton
+                    android:id="@+id/irc_game_a_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@color/clear"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/irc_game_a_icon"
+                    />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/irc_game_back_image"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/clear"
+        android:scaleType="fitCenter"
+        android:src="@drawable/irc_back_icon"
+        />
+    <Button
+        android:id="@+id/irc_game_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@color/clear"
+        android:textColor="@color/white"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        android:layout_toEndOf="@id/irc_game_back_image"
+        android:text="離開"
+        />
+
+</RelativeLayout>

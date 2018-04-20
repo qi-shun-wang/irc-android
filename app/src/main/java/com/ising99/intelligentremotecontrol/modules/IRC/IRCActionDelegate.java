@@ -34,4 +34,6 @@ public interface IRCActionDelegate {
     void dispatchVocalAction();
     void dispatchRecordAction();
     void dispatchReviewAction();
+    void dispatchReviewLAction();
+
 }

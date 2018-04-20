@@ -60,6 +60,26 @@ public class RootFragment extends Fragment implements RootContracts.View {
     }
 
     @Override
+    public void hideTabBar() {
+        view.findViewById(R.id.bottom_navigation).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void hideNavigationBar() {
+        view.findViewById(R.id.root_header_container).setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showNavigationBar() {
+        view.findViewById(R.id.root_header_container).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showTabBar() {
+        view.findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void setupActionBinding() {
         view.findViewById(R.id.root_wifi_btn).setOnClickListener(showDeviceDiscoveryAction);
     }

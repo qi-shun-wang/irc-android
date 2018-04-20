@@ -193,6 +193,11 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     }
 
     @Override
+    public void dispatchReviewLAction() {
+        interactor.performL(SendCode.KEYCODE_APPRECIATE);
+    }
+
+    @Override
     public void didSelectedDefaultMode() {
         router.presentDefaultMode();
         router.dismissModePanel();
@@ -262,4 +267,8 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
 
     }
 
+    @Override
+    public String getAddress() {
+        return interactor.getAddress();
+    }
 }

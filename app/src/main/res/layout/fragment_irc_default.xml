@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
+    android:padding="8dp"
     tools:context="com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCDefaultFragment"
     >
 
@@ -26,7 +27,6 @@
                 android:id="@+id/irc_default_power_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
                 android:src="@drawable/irc_default_power" />
@@ -40,7 +40,6 @@
                 android:id="@+id/irc_default_number_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
                 android:src="@drawable/irc_default_num_icon" />
@@ -54,7 +53,6 @@
                 android:id="@+id/irc_default_media_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
                 android:src="@drawable/irc_default_media_icon" />
@@ -69,7 +67,6 @@
                 android:id="@+id/irc_default_mode_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp"
                 android:scaleType="fitCenter"
                 android:background="@color/clear"
                 android:src="@drawable/irc_default_mode_icon" />

@@ -20,7 +20,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="8dp"
             android:background="@color/clear">
 
             <ImageButton
@@ -28,47 +27,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:background="@drawable/irc_normal_power" />
+                android:background="@color/clear"
+                android:src="@drawable/irc_normal_power" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="8dp"
             android:background="@color/clear">
             <ImageButton
                 android:id="@+id/irc_normal_volume_p_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:background="@drawable/irc_normal_volume_p" />
+                android:background="@color/clear"
+                android:src="@drawable/irc_normal_volume_p" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="8dp"
             android:background="@color/clear">
             <ImageButton
                 android:id="@+id/irc_normal_volume_m_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:background="@drawable/irc_normal_volume_m" />
+                android:background="@color/clear"
+                android:src="@drawable/irc_normal_volume_m" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="8dp"
             android:background="@color/clear">
             <ImageButton
                 android:id="@+id/irc_normal_mode_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:background="@drawable/irc_normal_mode" />
+                android:background="@color/clear"
+                android:src="@drawable/irc_normal_mode" />
         </RelativeLayout>
     </LinearLayout>
 

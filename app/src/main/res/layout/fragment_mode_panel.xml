@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/space_gray_trasparent"
     tools:context="com.ising99.intelligentremotecontrol.modules.IRC.panel.ModePanelFragment">
 
     <RelativeLayout
@@ -14,12 +15,13 @@
             android:layout_height="250dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="81dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/round_corner"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/irc_mode_pannel_list"
+                android:id="@+id/irc_mode_panel_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </android.support.v7.widget.RecyclerView>

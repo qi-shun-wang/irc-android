@@ -42,7 +42,7 @@ public class ModePanelFragment extends Fragment implements ModeListAdapterDelega
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_mode_panel, container, false);
-        RecyclerView listView = view.findViewById(R.id.irc_mode_pannel_list);
+        RecyclerView listView = view.findViewById(R.id.irc_mode_panel_list);
         view.findViewById(R.id.irc_mode_container).setOnClickListener((v)-> delegate.didCanceledSelection());
 
         ListViewAdapter adapter = new ListViewAdapter();

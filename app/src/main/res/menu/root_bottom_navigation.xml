@@ -20,20 +20,20 @@
         android:orderInCategory="1"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_mod"
-        android:enabled="true"
-        android:icon="@drawable/root_tab_mod_icon"
-        android:title="@string/root_tab_mod_text"
-        android:orderInCategory="2"
-        app:showAsAction="ifRoom" />
+    <!--<item-->
+        <!--android:id="@+id/action_mod"-->
+        <!--android:enabled="true"-->
+        <!--android:icon="@drawable/root_tab_mod_icon"-->
+        <!--android:title="@string/root_tab_mod_text"-->
+        <!--android:orderInCategory="2"-->
+        <!--app:showAsAction="ifRoom" />-->
 
     <item
         android:id="@+id/action_web"
         android:enabled="true"
         android:icon="@drawable/root_tab_web_icon"
         android:title="@string/root_tab_web_text"
-        android:orderInCategory="3"
+        android:orderInCategory="2"
         app:showAsAction="ifRoom" />
 
     <item
@@ -41,7 +41,7 @@
         android:enabled="true"
         android:icon="@drawable/root_tab_more_icon"
         android:title="@string/root_tab_more_text"
-        android:orderInCategory="4"
+        android:orderInCategory="3"
         app:showAsAction="ifRoom" />
 
 </menu>

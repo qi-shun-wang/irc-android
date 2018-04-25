@@ -55,7 +55,7 @@ public class RootFragment extends Fragment implements RootContracts.View {
         bottom.enableAnimation(false);
         bottom.enableShiftingMode(false);
         bottom.enableItemShiftingMode(false);
-        bottom.setTextSize(6);
+        bottom.setTextSize(9);
         bottom.setOnNavigationItemSelectedListener((item)-> presenter.didSelectedTabAt(item.getOrder()));
     }
 

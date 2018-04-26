@@ -61,6 +61,8 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
             if (entity.getAddress().equals(device.getBackupAddress())) {
                 isExist = true;
                 entity.setIsConnected(true);
+                entity.setName(device.getName());
+                entity.setSettings(device.getSettings());
             }
             entity.setUpdate_at( new Date());
             ((App)context).getDaoSession().getDeviceEntityDao().update(entity);

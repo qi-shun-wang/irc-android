@@ -23,19 +23,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/title_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:paddingStart="0dp"
+                android:paddingEnd="36dp"
                 android:gravity="center"
                 android:text="正在搜尋KOD＋"
-                android:autoSizeTextType="uniform"
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="60sp"
+                app:autoSizeMinTextSize="6sp"
+                app:autoSizeStepGranularity="1sp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 tools:textAlignment="center"
-                tools:textSize="60sp" />
+                 />
         </RelativeLayout>
 
         <ImageView

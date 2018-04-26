@@ -14,6 +14,7 @@ import com.ising99.intelligentremotecontrol.R;
  */
 
 public class RootActivity extends Activity {
+
     Fragment root;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,16 +26,12 @@ public class RootActivity extends Activity {
 
     }
 
-    @Override
     protected void onResume() {
         super.onResume();
-
     }
 
-    @Override
     protected void onPause() {
         super.onPause();
-
     }
 
     @Override

@@ -103,7 +103,7 @@ public class RootPresenter implements Presenter ,InteractorOutput{
 
     @Override
     public void didConnectedToDevice(Device device) {
-        view.updateConnectedDeviceStatus("目前已連到設備 " + device.getName());
+        view.updateConnectedDeviceStatus("目前已連到設備：" + device.getName());
         view.setupConnectedDeviceImage();
     }
 

@@ -8,6 +8,9 @@ import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Interacto
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * Created by shun on 2018/3/27.
@@ -51,14 +54,18 @@ public class RootPresenter implements Presenter ,InteractorOutput{
         view.prepareTabBar();
         router.presentTabAt(0);
         view.setupActionBinding();
-        view.updateNetworkStatus("尚未連接WiFi");
+//        view.updateNetworkStatus("尚未連接WiFi");
+        view.setupDisconnectedDeviceImage();
         view.updateConnectedDeviceStatus("尚未連接設備");
+        interactor.checkWiFiStatus();
+
     }
 
     @Override
     public void onResume() {
+
         interactor.checkWiFiStatus();
-        interactor.checkLastConnectedDevice();
+
     }
 
     @Override
@@ -83,17 +90,21 @@ public class RootPresenter implements Presenter ,InteractorOutput{
 
     @Override
     public void didConnectedToWiFi(String name) {
-        view.updateNetworkStatus("目前連到Wifi " + name);
+        view.hideWarningBadge();
+        interactor.checkLastConnectedDevice();
+//        view.updateNetworkStatus("目前連到Wifi " + name);
     }
 
     @Override
     public void didNotConnectedToWiFi() {
-        view.updateNetworkStatus("尚未連接WiFi");
+        view.showWarningBadge();
+        view.updateConnectedDeviceStatus("等待連接WiFi...");
     }
 
     @Override
     public void didConnectedToDevice(Device device) {
         view.updateConnectedDeviceStatus("目前已連到設備 " + device.getName());
+        view.setupConnectedDeviceImage();
     }
 
     @Override

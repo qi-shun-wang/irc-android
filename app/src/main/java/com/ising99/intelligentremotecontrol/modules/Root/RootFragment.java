@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
@@ -103,7 +105,27 @@ public class RootFragment extends Fragment implements RootContracts.View {
 
     @Override
     public void updateNetworkStatus(String text) {
-        ((Button)view.findViewById(R.id.root_wifi_btn)).setText(text);
+//        ((Button)view.findViewById(R.id.root_wifi_btn)).setText(text);
+    }
+
+    @Override
+    public void setupConnectedDeviceImage() {
+        ((ImageView)view.findViewById(R.id.root_wifi_icon)).setImageResource(R.drawable.device_connect_icon);
+    }
+
+    @Override
+    public void setupDisconnectedDeviceImage() {
+        ((ImageView)view.findViewById(R.id.root_wifi_icon)).setImageResource(R.drawable.device_disconnect_icon);
+    }
+
+    @Override
+    public void showWarningBadge() {
+        view.findViewById(R.id.root_warning_text).animate().setDuration(1000).alpha(1).start();
+    }
+
+    @Override
+    public void hideWarningBadge() {
+        view.findViewById(R.id.root_warning_text).animate().setDuration(1000).alpha(0).start();
     }
 
 }

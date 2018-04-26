@@ -15,11 +15,14 @@ public interface RootContracts extends BaseContracts {
         void setupActionBinding();
         void updateNetworkStatus(String text);
         void updateConnectedDeviceStatus(String text);
-
+        void setupConnectedDeviceImage();
+        void setupDisconnectedDeviceImage();
         void hideNavigationBar();
         void showNavigationBar();
         void hideTabBar();
         void showTabBar();
+        void showWarningBadge();
+        void hideWarningBadge();
     }
 
     interface Presenter extends BaseContracts.Presenter {

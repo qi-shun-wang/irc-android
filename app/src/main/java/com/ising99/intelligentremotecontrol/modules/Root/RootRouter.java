@@ -70,8 +70,8 @@ public class RootRouter implements Wireframe {
 
         router.fragments.add(irc);
         router.fragments.add(karaoke);
-        router.fragments.add(more);
         router.fragments.add(web);
+        router.fragments.add(more);
 //        router.fragments.add(movie);
         return view;
     }

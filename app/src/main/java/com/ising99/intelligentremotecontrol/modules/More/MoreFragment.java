@@ -3,6 +3,9 @@ package com.ising99.intelligentremotecontrol.modules.More;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +19,7 @@ import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Presenter
  * .
  */
 
-public class MoreFragment extends Fragment implements MoreContracts.View {
+public class MoreFragment extends Fragment implements MoreContracts.View ,MoreListAdapterDelegate{
 
     private Presenter presenter;
     private ViewGroup view;
@@ -39,6 +42,17 @@ public class MoreFragment extends Fragment implements MoreContracts.View {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_more, container, false);
+        RecyclerView listView = view.findViewById(R.id.more_list_view);
+
+        MoreListViewAdapter adapter = new MoreListViewAdapter();
+        adapter.setupDelegate(this);
+        adapter.setMores(presenter.getMoreList());
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL,false);
+        listView.setHasFixedSize(true);
+        listView.setLayoutManager(layoutManager);
+        listView.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
         presenter.onCreate();
         return view;
     }
@@ -70,5 +84,10 @@ public class MoreFragment extends Fragment implements MoreContracts.View {
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
     }
 }

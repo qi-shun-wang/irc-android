@@ -31,8 +31,6 @@ public class MoreListViewAdapter extends RecyclerView.Adapter <MoreListViewAdapt
                 .from(parent.getContext())
                 .inflate(R.layout.list_item_more, parent, false);
 
-        int height = parent.getMeasuredWidth()/2;
-        view.setMinimumHeight(height);
         return new ViewHolder(view);
     }
 

@@ -1,22 +1,19 @@
-package com.ising99.intelligentremotecontrol.modules.More;
+package com.ising99.intelligentremotecontrol.modules.MediaShare;
 
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
-import java.util.List;
-
 /**
- * Created by shun on 2018/4/17 下午 10:04:17.
+ * Created by shun on 2018/4/30 下午 03:49:53.
  * .
  */
 
-public interface MoreContracts extends BaseContracts {
+public interface MediaShareContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        List<MoreItem> getMoreList();
-        void didSelectedAt(int position);
+
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -28,6 +25,6 @@ public interface MoreContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentMediaShare();
+
     }
 }

@@ -1,9 +1,8 @@
-package com.ising99.intelligentremotecontrol.modules.More;
+package com.ising99.intelligentremotecontrol.modules.MediaShare;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,20 +11,29 @@ import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Presenter;
+import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.Presenter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 /**
- * Created by Shun on 2018/4/17 下午 10:04:17.
+ * Created by Shun on 2018/4/30 下午 03:49:53.
  * .
  */
 
-public class MoreFragment extends Fragment implements MoreContracts.View ,MoreListAdapterDelegate{
+public class MediaShareFragment extends Fragment implements MediaShareContracts.View {
 
     private Presenter presenter;
     private ViewGroup view;
-
-    public MoreFragment() {
+    private SectionedRecyclerViewAdapter adapter;
+    private List<MediaShareItem> items = new ArrayList<>();
+    public MediaShareFragment() {
         // Required empty public constructor
+        items.add(new MediaShareItem("圖片",R.drawable.media_share_photo_icon));
+        items.add(new MediaShareItem("音樂",R.drawable.media_share_music_icon));
+        items.add(new MediaShareItem("影片",R.drawable.media_share_video_icon));
     }
 
     @Override
@@ -41,18 +49,14 @@ public class MoreFragment extends Fragment implements MoreContracts.View ,MoreLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = (ViewGroup) inflater.inflate(R.layout.fragment_more, container, false);
-        RecyclerView listView = view.findViewById(R.id.more_list_view);
 
-        MoreListViewAdapter adapter = new MoreListViewAdapter();
-        adapter.setupDelegate(this);
-        adapter.setMores(presenter.getMoreList());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL,false);
-        listView.setHasFixedSize(true);
-        listView.setLayoutManager(layoutManager);
-        listView.setAdapter(adapter);
-        adapter.setupDelegate(this);
-        adapter.notifyDataSetChanged();
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share, container, false);
+        adapter = new SectionedRecyclerViewAdapter();
+
+        adapter.addSection(new MediaShareSection("我的媒體庫",items));
+        RecyclerView recyclerView =  view.findViewById(R.id.media_share_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
         presenter.onCreate();
         return view;
     }
@@ -84,10 +88,5 @@ public class MoreFragment extends Fragment implements MoreContracts.View ,MoreLi
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-           presenter.didSelectedAt(position);
     }
 }

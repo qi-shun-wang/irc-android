@@ -9,6 +9,8 @@ import android.view.View;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeFragment;
 import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeRouter;
+import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareFragment;
+import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareRouter;
 import com.ising99.intelligentremotecontrol.modules.More.MoreFragment;
 import com.ising99.intelligentremotecontrol.modules.More.MoreRouter;
 import com.ising99.intelligentremotecontrol.modules.Movie.MovieFragment;
@@ -67,11 +69,12 @@ public class RootRouter implements Wireframe {
         MoreFragment more = MoreRouter.setupModule(context);
         WebBrowserFragment web = WebBrowserRouter.setupModule(context);
 //        MovieFragment movie = MovieRouter.setupModule(context);
-
+        MediaShareFragment mediaShare = MediaShareRouter.setupModule(context);
         router.fragments.add(irc);
         router.fragments.add(karaoke);
         router.fragments.add(web);
         router.fragments.add(more);
+        router.fragments.add(mediaShare);
 //        router.fragments.add(movie);
         return view;
     }

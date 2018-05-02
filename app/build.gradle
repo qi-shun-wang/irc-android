@@ -52,6 +52,7 @@ dependencies {
     }
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'jp.wasabeef:blurry:2.1.1'
     implementation group: 'org.fourthline.cling', name: 'cling-core', version: '2.1.1'

@@ -5,6 +5,7 @@
     <string name="root_tab_web_text">網址導航</string>
     <string name="root_tab_mod_text">Hami影視</string>
     <string name="root_tab_more_text">更多</string>
+    <string name="root_tab_share_text">媒體分享</string>
     <string name="root_wifi_text">尚未連接設備</string>
     <string name="irc_texting_edit_text_hint">點擊這裡，開始輸入文字…</string>
     <string name="irc_default_channel_text">頻道\nPAGE</string>
@@ -24,4 +25,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="media_share">媒體分享</string>
 </resources>

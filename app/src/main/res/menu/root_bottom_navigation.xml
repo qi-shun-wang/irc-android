@@ -44,4 +44,12 @@
         android:orderInCategory="3"
         app:showAsAction="ifRoom" />
 
+    <item
+    android:id="@+id/action_media_share"
+    android:enabled="true"
+    android:icon="@drawable/root_tab_share_icon"
+    android:title="@string/root_tab_share_text"
+    android:orderInCategory="4"
+    app:showAsAction="ifRoom" />
+
 </menu>

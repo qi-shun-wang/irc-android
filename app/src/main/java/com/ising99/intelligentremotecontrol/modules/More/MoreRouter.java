@@ -2,7 +2,9 @@ package com.ising99.intelligentremotecontrol.modules.More;
 
 import android.content.Context;
 import android.app.Fragment;
+import android.content.Intent;
 
+import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareActivity;
 import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.View;
@@ -41,6 +43,13 @@ public class MoreRouter implements Wireframe {
         interactor.setupPresenter(presenter);
 
         return view;
+    }
+
+    @Override
+    public void presentMediaShare() {
+        Intent i = new Intent(context, MediaShareActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
 }
 

@@ -37,11 +37,11 @@
         android:src="@drawable/light_gray_arrow_right_icon"
         />
 
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1px"
-    android:layout_alignParentBottom="true"
-    android:background="@color/lightGray2"
-    />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/lightGray"
+        />
 
 </RelativeLayout>

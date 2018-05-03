@@ -13,14 +13,11 @@ import java.util.List;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
-/**
- * Created by shun on 2018/5/2.
- */
-
 public class MediaShareSection extends StatelessSection {
 
     private String title;
     private List<MediaShareItem> list;
+    private MediaShareSectionDelegate delegate;
 
     MediaShareSection(String title, List<MediaShareItem> list) {
         super(SectionParameters.builder()
@@ -52,11 +49,8 @@ public class MediaShareSection extends StatelessSection {
         itemHolder.imgItem.setImageResource(item.getImageResID());
 
         itemHolder.rootView.setOnClickListener(v -> {
-//                Toast.makeText(getContext(),
-//                        String.format("Clicked on position #%s of Section %s",
-//                                sectionAdapter.getPositionInSection(itemHolder.getAdapterPosition()),
-//                                title),
-//                        Toast.LENGTH_SHORT).show();
+            if (delegate == null) return;
+            delegate.didSelectedAt(position);
         });
     }
 
@@ -70,6 +64,10 @@ public class MediaShareSection extends StatelessSection {
         HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
 
         headerHolder.tvTitle.setText(title);
+    }
+
+    public void setDelegate(MediaShareSectionDelegate delegate) {
+        this.delegate = delegate;
     }
 
 

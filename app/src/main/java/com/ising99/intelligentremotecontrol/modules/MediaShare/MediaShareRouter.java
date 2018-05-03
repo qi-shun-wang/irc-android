@@ -1,11 +1,12 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShare;
 
 import android.content.Context;
-import android.app.Fragment;
+import android.content.Intent;
 
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.View;
+import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListActivity;
 
 /**
  * Created by shun on 2018/4/30 下午 03:49:53.
@@ -41,6 +42,13 @@ public class MediaShareRouter implements Wireframe {
         interactor.setupPresenter(presenter);
 
         return view;
+    }
+
+    @Override
+    public void presentPhotoList() {
+        Intent i = new Intent(context, MediaSharePhotoGroupListActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
 }
 

@@ -7,10 +7,12 @@ package com.ising99.intelligentremotecontrol.modules.MediaShare;
 public class MediaShareItem {
     private String title;
     private int imageResID;
+    private MediaShareType type;
 
-    public MediaShareItem(String title, int imageResID) {
+    public MediaShareItem(String title, int imageResID, MediaShareType type) {
         this.title = title;
         this.imageResID = imageResID;
+        this.type = type;
     }
 
     public int getImageResID() {
@@ -20,4 +22,14 @@ public class MediaShareItem {
     public String getTitle() {
         return title;
     }
+
+    public MediaShareType getType() {
+        return type;
+    }
+}
+
+enum MediaShareType {
+    music,
+    photo,
+    video
 }

@@ -18,6 +18,10 @@ public class Photo  implements Parcelable {
     private String title;
     private String url;
 
+    public String getLocalURL() {
+        return localURL;
+    }
+
     public Photo(String id, String localURL, String dir_id, Boolean isRestricted, String info, long size, String title, String url) {
         this.id = id;
         this.localURL = localURL;
@@ -64,6 +68,7 @@ public class Photo  implements Parcelable {
         this.url = data[7];
 
     }
+
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Photo createFromParcel(Parcel in) {
             return new Photo(in);

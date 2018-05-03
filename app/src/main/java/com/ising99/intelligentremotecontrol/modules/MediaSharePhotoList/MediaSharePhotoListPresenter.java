@@ -52,7 +52,7 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void onResume() {
-
+        view.reloadGridView(interactor.getPhotos());
     }
 
     @Override

@@ -3,9 +3,12 @@ package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList;
 import android.content.Context;
 import android.app.Fragment;
 
+import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.View;
+
+import java.util.List;
 
 /**
  * Created by shun on 2018/5/3 下午 04:22:46.
@@ -22,10 +25,10 @@ public class MediaSharePhotoListRouter implements Wireframe {
         this.context = context;
     }
 
-    public static MediaSharePhotoListFragment setupModule(Context context) {
+    public static MediaSharePhotoListFragment setupModule(Context context, List<Photo> collection) {
 
         MediaSharePhotoListFragment view = new MediaSharePhotoListFragment();
-        MediaSharePhotoListInteractor interactor = new MediaSharePhotoListInteractor(context);
+        MediaSharePhotoListInteractor interactor = new MediaSharePhotoListInteractor(context,collection);
         MediaSharePhotoListPresenter presenter = new MediaSharePhotoListPresenter();
         MediaSharePhotoListRouter router = new MediaSharePhotoListRouter(context);
 

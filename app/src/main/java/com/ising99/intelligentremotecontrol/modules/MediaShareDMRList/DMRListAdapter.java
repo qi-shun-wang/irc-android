@@ -15,24 +15,11 @@ import org.fourthline.cling.model.meta.RemoteDevice;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by shun on 2018/4/10.
- * .
- */
-
-interface DMRListAdapterDelegate {
-    void onItemClick(View view , int position);
-}
-
 public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHolder> implements View.OnClickListener {
 
     private List<RemoteDevice> devices = new ArrayList<>();
-
-    void setupDelegate(DMRListAdapterDelegate delegate) {
-        this.delegate = delegate;
-    }
-
     private DMRListAdapterDelegate delegate ;
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,15 +42,18 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
         return devices.size();
     }
 
-    void setDevices(List<RemoteDevice> devices) {
-        this.devices = devices;
-    }
-
     @Override
     public void onClick(View view) {
         if(delegate!=null){
             delegate.onItemClick(view,(int)view.getTag());
         }
+    }
+
+    public void setupDelegate(DMRListAdapterDelegate delegate) {
+        this.delegate = delegate;
+    }
+    public void setDevices(List<RemoteDevice> devices) {
+        this.devices = devices;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

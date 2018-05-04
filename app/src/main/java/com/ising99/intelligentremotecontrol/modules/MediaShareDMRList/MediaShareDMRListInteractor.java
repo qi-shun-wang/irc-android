@@ -19,21 +19,33 @@ import org.fourthline.cling.registry.RegistryListener;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by shun on 2018/4/10 上午 10:33:06.
+ * Created by shun on 2018/5/4 上午 10:51:23.
+ * .
  */
 
-public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.Interactor, RegistryListener {
+public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.Interactor ,RegistryListener {
 
-    private Context context;
     private InteractorOutput output;
+    private Context context;
     private UpnpService service ;
     private ArrayList<RemoteDevice> devices = new ArrayList<>();
 
-    MediaShareDMRListInteractor(Context context, InteractorOutput output) {
+    MediaShareDMRListInteractor(Context context) {
         this.context = context;
-        this.output = output;
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.InteractorOutput output) {
+        this.output = (InteractorOutput) output;
+    }
+
+    @Override
+    public void decompose() {
+        output = null;
+        context = null;
     }
 
     @Override
@@ -53,27 +65,15 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
         new Thread(() -> {
             if (service != null)
             {
+                service.getRegistry().removeListener(this);
                 service.shutdown();
             }
         });
-
     }
 
     @Override
-    public ArrayList<RemoteDevice> getCurrentDevices() {
+    public List<RemoteDevice> getCurrentDevices() {
         return devices;
-    }
-
-    @Override
-    public void setupPresenter(BaseContracts.InteractorOutput output) {
-
-    }
-
-    @Override
-    public void decompose() {
-        context = null;
-        output = null;
-        stopSearchDMR();
     }
 
     @Override

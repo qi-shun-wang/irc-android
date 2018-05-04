@@ -13,9 +13,6 @@ import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.Presenter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 /**

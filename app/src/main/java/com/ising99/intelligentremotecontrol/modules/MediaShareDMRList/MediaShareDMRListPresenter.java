@@ -1,8 +1,5 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareDMRList;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Interactor;
@@ -16,22 +13,68 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by shun on 2018/4/10 上午 10:33:06.
+ * Created by shun on 2018/5/4 上午 10:51:23.
+ * .
  */
 
 public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
 
-    private Context context;
     private View view;
     private Interactor interactor;
     private Wireframe router;
+    private MediaShareDMRListFragmentDelegate delegate;
+    private Timer startSearchTask;
+    private Timer stopSearchTask ;
 
-    MediaShareDMRListPresenter(Context context, View view) {
-        this.context = context;
-        this.view = view;
-        interactor = new MediaShareDMRListInteractor(context, this);
-        router = new MediaShareDMRListRouter(context, this);
+    MediaShareDMRListPresenter(MediaShareDMRListFragmentDelegate delegate) {
+        this.delegate = delegate;
+    }
 
+    private void performTasks(){
+        startSearchTask = new Timer();
+        stopSearchTask = new Timer();
+        view.startSearchIconRotation();
+        startSearchTask.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                view.updateSearchedStatus("正在搜尋設備中...");
+                interactor.startSearchDMR();
+            }
+        },3000);
+
+        stopSearchTask.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                view.reloadDMRList(interactor.getCurrentDevices());
+                view.updateSearchedStatus("已找到的設備");
+                view.stopSearchIconRotation();
+                interactor.stopSearchDMR();
+            }
+        },9000);
+    }
+
+    @Override
+    public void setupView(BaseContracts.View view) {
+        this.view = (View) view;
+    }
+
+    @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+        this.interactor = (Interactor) interactor;
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+        this.router = (Wireframe) router;
+    }
+
+    @Override
+    public void decompose() {
+        interactor.decompose();
+        view.decompose();
+        interactor = null;
+        view = null;
+        router = null;
     }
 
     @Override
@@ -41,63 +84,35 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onResume() {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                interactor.startSearchDMR();
-            }
-        },3000);
-
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                view.reloadDMRList(interactor.getCurrentDevices());
-                interactor.stopSearchDMR();
-            }
-        },9000);
-
+        performTasks();
     }
 
     @Override
     public void onPause() {
+        startSearchTask.cancel();
+        stopSearchTask.cancel();
         interactor.stopSearchDMR();
     }
 
     @Override
     public void onDestroy() {
-        interactor.decompose();
-        context = null;
-        view = null;
-        interactor = null;
-        router = null;
-    }
-
-    @Override
-    public void setupView(BaseContracts.View view) {
-
-    }
-
-    @Override
-    public void setupInteractor(BaseContracts.Interactor interactor) {
-
-    }
-
-    @Override
-    public void setupWireframe(BaseContracts.Wireframe router) {
-
-    }
-
-    @Override
-    public void decompose() {
-
+        router.dismissDMRList();
     }
 
 
     @Override
     public void prepareCastDeviceAt(int index) {
-
         RemoteDevice device = interactor.getCurrentDevices().get(index);
+        delegate.didSelected(device);
+    }
 
-        Log.v("prepareCastDeviceAt","==prepareCastDeviceAt==>"+device.getDetails().getFriendlyName());
+    @Override
+    public void performDismiss() {
+        delegate.didClosed();
+    }
+
+    @Override
+    public void performRefreshTask() {
+        performTasks();
     }
 }

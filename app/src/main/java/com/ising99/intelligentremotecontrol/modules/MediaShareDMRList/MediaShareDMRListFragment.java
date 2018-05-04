@@ -2,13 +2,14 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareDMRList;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
@@ -19,19 +20,47 @@ import org.fourthline.cling.model.meta.RemoteDevice;
 import java.util.List;
 
 /**
- * Created by shun on 2018/4/10.
+ * Created by Shun on 2018/5/4 上午 10:51:23.
  * .
  */
 
-public class MediaShareDMRListFragment extends Fragment implements MediaShareDMRListContracts.View ,DMRListAdapterDelegate {
+public class MediaShareDMRListFragment extends Fragment implements MediaShareDMRListContracts.View , DMRListAdapterDelegate {
 
-    private DMRListAdapter adapter;
     private Presenter presenter;
-    private MediaShareDMRListFragmentDelegate delegate;
+    private ViewGroup view;
+    private DMRListAdapter adapter;
+
+
+    public MediaShareDMRListFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void setupPresenter(BaseContracts.Presenter presenter) {
+        this.presenter = (Presenter) presenter;
+    }
+
+    @Override
+    public void decompose() {
+        presenter = null;
+        view = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_media_share_dmr_list, container, false);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_dmr_list, container, false);
+        view.findViewById(R.id.fragment_media_share_dmr_list_container).setOnClickListener((v)->presenter.performDismiss());
+        view.findViewById(R.id.media_share_dmr_list_refresh_btn).setOnClickListener((v -> presenter.performRefreshTask()));
+        RecyclerView recyclerView = view.findViewById(R.id.media_share_dmr_list);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new DMRListAdapter();
+        adapter.setupDelegate(this);
+        recyclerView.setAdapter(adapter);
+        presenter.onCreate();
+        return view;
     }
 
     @Override
@@ -46,26 +75,9 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
         presenter.onPause();
     }
 
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        presenter = new MediaShareDMRListPresenter(getActivity().getApplicationContext(),this);
-        view.findViewById(R.id.fragment_media_share_dmr_list_container).setOnClickListener((v)->delegate.didClosed());
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_dmr);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new DMRListAdapter();
-        adapter.setupDelegate(this);
-        recyclerView.setAdapter(adapter);
-        presenter.onCreate();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        //TODO Setup OnFragmentInteractionListener
 
     }
 
@@ -78,13 +90,6 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
-        presenter = null;
-        delegate = null;
-        Runtime.getRuntime().gc();
-    }
-
-    public void setDelegate(MediaShareDMRListFragmentDelegate delegate) {
-        this.delegate = delegate;
     }
 
     @Override
@@ -96,17 +101,29 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
     }
 
     @Override
+    public void updateSearchedStatus(String text) {
+        getActivity().runOnUiThread(()-> ((TextView)view.findViewById(R.id.media_share_dmr_list_status_text)).setText(text));
+    }
+
+    @Override
+    public void startSearchIconRotation() {
+        getActivity().runOnUiThread(()-> view.findViewById(R.id.media_share_dmr_list_refresh_btn).animate().rotation(3600).setDuration(20000).setInterpolator(new LinearInterpolator()).start());
+    }
+
+    @Override
+    public void stopSearchIconRotation() {
+        getActivity().runOnUiThread(
+                ()->
+                {
+                    view.findViewById(R.id.media_share_dmr_list_refresh_btn).animate().cancel();
+                    view.findViewById(R.id.media_share_dmr_list_refresh_btn).setRotation(0);
+                }
+        );
+    }
+
+
+    @Override
     public void onItemClick(View view, int position) {
         presenter.prepareCastDeviceAt(position);
-    }
-
-    @Override
-    public void setupPresenter(BaseContracts.Presenter presenter) {
-
-    }
-
-    @Override
-    public void decompose() {
-
     }
 }

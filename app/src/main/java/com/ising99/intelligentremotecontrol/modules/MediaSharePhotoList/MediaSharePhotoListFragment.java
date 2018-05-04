@@ -27,7 +27,6 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
     private Presenter presenter;
     private ViewGroup view;
 
-    private RecyclerView listView;
     private GridViewAdapter adapter;
 
     public MediaSharePhotoListFragment() {
@@ -48,7 +47,7 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_photo_list, container, false);
-        listView = view.findViewById(R.id.media_share_photo_list_view);
+        RecyclerView listView = view.findViewById(R.id.media_share_photo_list_view);
 
         adapter = new GridViewAdapter();
 
@@ -57,6 +56,7 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
         adapter.setupDelegate(this);
+        view.findViewById(R.id.media_share_photo_list_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
 
         presenter.onCreate();
         return view;

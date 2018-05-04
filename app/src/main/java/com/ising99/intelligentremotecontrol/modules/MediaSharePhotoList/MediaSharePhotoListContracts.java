@@ -17,7 +17,7 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
-
+        void didTapOnCast();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -30,5 +30,6 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
 
     interface Wireframe extends BaseContracts.Wireframe {
 
+        void presentDMRList();
     }
 }

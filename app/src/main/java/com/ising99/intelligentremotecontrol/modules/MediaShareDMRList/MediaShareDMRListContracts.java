@@ -7,17 +7,23 @@ import org.fourthline.cling.model.meta.RemoteDevice;
 import java.util.List;
 
 /**
- * Created by shun on 2018/4/10 上午 10:33:06.
+ * Created by shun on 2018/5/4 上午 10:51:23.
+ * .
  */
 
 public interface MediaShareDMRListContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void reloadDMRList(List<RemoteDevice> devices);
+        void updateSearchedStatus(String text);
+        void startSearchIconRotation();
+        void stopSearchIconRotation();
     }
 
     interface Presenter extends BaseContracts.Presenter {
         void prepareCastDeviceAt(int index);
+        void performDismiss();
+        void performRefreshTask();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -31,6 +37,6 @@ public interface MediaShareDMRListContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-
+        void dismissDMRList();
     }
 }

@@ -64,4 +64,8 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     public void onDestroy() {
     }
 
+    @Override
+    public void didTapOnCast() {
+        router.presentDMRList();
+    }
 }

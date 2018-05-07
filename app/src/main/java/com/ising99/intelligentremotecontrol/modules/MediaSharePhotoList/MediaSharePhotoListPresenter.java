@@ -7,6 +7,8 @@ import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Wireframe;
 
+import org.fourthline.cling.model.meta.Device;
+
 /**
  * Created by shun on 2018/5/3 下午 04:22:46.
  * .
@@ -67,5 +69,10 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     @Override
     public void didTapOnCast() {
         router.presentDMRList();
+    }
+
+    @Override
+    public void didSelected(Device device) {
+        interactor.performCast(device);
     }
 }

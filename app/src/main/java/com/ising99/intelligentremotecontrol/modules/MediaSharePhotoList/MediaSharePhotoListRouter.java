@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.core.DLNA.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListRouter;
@@ -35,10 +36,10 @@ public class MediaSharePhotoListRouter implements Wireframe , MediaShareDMRListF
         this.context = context;
     }
 
-    public static MediaSharePhotoListFragment setupModule(Context context, List<Photo> collection) {
+    public static MediaSharePhotoListFragment setupModule(Context context, List<Photo> collection, DLNAMediaManager manager) {
 
         MediaSharePhotoListFragment view = new MediaSharePhotoListFragment();
-        MediaSharePhotoListInteractor interactor = new MediaSharePhotoListInteractor(context,collection);
+        MediaSharePhotoListInteractor interactor = new MediaSharePhotoListInteractor(context,collection,manager);
         MediaSharePhotoListPresenter presenter = new MediaSharePhotoListPresenter();
         MediaSharePhotoListRouter router = new MediaSharePhotoListRouter(context);
 
@@ -77,7 +78,7 @@ public class MediaSharePhotoListRouter implements Wireframe , MediaShareDMRListF
 
     @Override
     public void didSelected(Device device) {
-
+        presenter.didSelected(device);
     }
 }
 

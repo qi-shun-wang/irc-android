@@ -9,15 +9,13 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShare
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.UpnpServiceImpl;
 import org.fourthline.cling.android.AndroidUpnpServiceConfiguration;
-import org.fourthline.cling.model.message.header.DeviceTypeHeader;
-import org.fourthline.cling.model.message.header.STAllHeader;
+import org.fourthline.cling.model.message.header.UDAServiceTypeHeader;
 import org.fourthline.cling.model.meta.LocalDevice;
 import org.fourthline.cling.model.meta.RemoteDevice;
+import org.fourthline.cling.model.types.UDAServiceType;
 import org.fourthline.cling.registry.Registry;
 import org.fourthline.cling.registry.RegistryListener;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +49,8 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
     @Override
     public void startSearchDMR() {
         service = new UpnpServiceImpl(new AndroidUpnpServiceConfiguration(),this);
-        URI path ;
-        try {
-            path = new URI("urn:schemas-upnp-org:device:MediaRenderer:1");
-            service.getControlPoint().search(new DeviceTypeHeader(path));
-        }catch (URISyntaxException e){
-            service.getControlPoint().search(new STAllHeader(),5);
-        }
+        UDAServiceType udaType = new UDAServiceType("AVTransport");
+        service.getControlPoint().search(new UDAServiceTypeHeader(udaType));
     }
 
     @Override
@@ -78,11 +71,7 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
 
     @Override
     public void remoteDeviceDiscoveryStarted(Registry registry, RemoteDevice device) {
-        if (this.devices.contains(device)){
-            return;
-        }
-        this.devices.add(device);
-        Log.v("DMR-Device",device.getDetails().toString());
+
     }
 
     @Override
@@ -92,11 +81,16 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
 
     @Override
     public void remoteDeviceAdded(Registry registry, RemoteDevice device) {
+        registry.addDevice(device);
 
     }
 
     @Override
     public void remoteDeviceUpdated(Registry registry, RemoteDevice device) {
+        if (this.devices.contains(device)){
+            return;
+        }
+        this.devices.add(device);
 
     }
 
@@ -124,5 +118,8 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
     public void afterShutdown() {
         Log.v("DMR-Device","afterShutdown");
     }
+
+
+
 }
 

@@ -80,7 +80,8 @@ public class MediaSharePresenter implements Presenter, InteractorOutput {
     @Override
     public void didSelectAt(int position) {
         switch (items.get(position).getType()){
-            case photo:router.presentPhotoList();
+            case photo:router.presentPhotoList();break;
+            case music:router.presentMusicList();break;
         }
     }
 }

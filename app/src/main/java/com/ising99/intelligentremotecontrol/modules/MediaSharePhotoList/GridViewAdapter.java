@@ -65,17 +65,13 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.ViewH
         }
     }
 
-    void setupDelegate(GridViewAdapterDelegate delegate) {
+    public void setupDelegate(GridViewAdapterDelegate delegate) {
         this.delegate = delegate;
     }
 
-    void setPhotos(List<PhotoItem> collection) {
+    public void setPhotos(List<PhotoItem> collection) {
         this.collection = collection;
     }
 
-}
-
-interface GridViewAdapterDelegate {
-    void onItemClick(View view , int position);
 }
 

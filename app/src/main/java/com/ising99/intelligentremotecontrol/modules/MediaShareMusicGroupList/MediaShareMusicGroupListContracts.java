@@ -1,4 +1,4 @@
-package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList;
+package com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList;
 
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by shun on 2018/5/3 上午 10:22:42.
+ * Created by shun on 2018/5/8 下午 04:25:19.
  * .
  */
 
-public interface MediaSharePhotoGroupListContracts extends BaseContracts {
+public interface MediaShareMusicGroupListContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void updateListView(List<String> titles);
@@ -18,18 +18,17 @@ public interface MediaSharePhotoGroupListContracts extends BaseContracts {
 
     interface Presenter extends BaseContracts.Presenter {
         void didSelectedAt(int position);
-
     }
 
     interface Interactor extends BaseContracts.Interactor {
-        void preparePhotoAssets();
+        void prepareMusicAssets();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
-        void didPreparedPhotoAssets(HashMap<String, List<Photo>> assets);
+        void didPreparedMusicAssets(HashMap<String, List<Music>> assets);
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentPhotoCollectionWith(String title, List<Photo> assets);
+        void presentPhotoCollectionWith(String title, List<Music> assets);
     }
 }

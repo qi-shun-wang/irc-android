@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.View;
+import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListActivity;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListActivity;
 
 /**
@@ -47,6 +48,12 @@ public class MediaShareRouter implements Wireframe {
     @Override
     public void presentPhotoList() {
         Intent i = new Intent(context, MediaSharePhotoGroupListActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
+    }
+    @Override
+    public void presentMusicList() {
+        Intent i = new Intent(context, MediaShareMusicGroupListActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }

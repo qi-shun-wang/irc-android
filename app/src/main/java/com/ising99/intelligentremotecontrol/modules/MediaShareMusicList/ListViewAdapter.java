@@ -1,4 +1,4 @@
-package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList;
+package com.ising99.intelligentremotecontrol.modules.MediaShareMusicList;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,41 +8,41 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
+import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.GridViewAdapterDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by shun on 2018/5/3.
+ * Created by shun on 2018/5/8.
  * .
  */
 
-public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHolder> {
+public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewHolder>{
 
-    private ListAdapterDelegate delegate;
-    private List<String> groups = new ArrayList<>();
+    private List<Music> assets = new ArrayList<>();
+    private GridViewAdapterDelegate delegate;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ViewGroup view = (ViewGroup) LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.list_item_photo_group, parent, false);
-        return new ViewHolder(view);
+                .inflate(R.layout.list_item_photo, parent, false);
 
+        return new ListViewAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-        String title = groups.get(position);
-        holder.title.setText(title);
-
+        Music item = assets.get(position);
+        //TODO-setup ui data
     }
 
     @Override
     public int getItemCount() {
-        return groups.size();
+        return assets.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -52,9 +52,8 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
         ViewHolder(View itemView) {
             super(itemView);
-
-            title = itemView.findViewById(R.id.list_item_photo_group_title);
-
+            //TODO-setup ui layout
+//            title = itemView.findViewById(R.id.media_share_photo_imageView);
             itemView.setOnClickListener(this);
         }
 
@@ -64,12 +63,13 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         }
     }
 
-    public void setupDelegate(ListAdapterDelegate delegate) {
+    public void setupDelegate(GridViewAdapterDelegate delegate) {
         this.delegate = delegate;
     }
-    public void setGroups(List<String> groups)
-    {
-        this.groups = groups;
+
+    public void setMusicAssets(List<Music> assets) {
+        this.assets = assets;
     }
+
 }
 

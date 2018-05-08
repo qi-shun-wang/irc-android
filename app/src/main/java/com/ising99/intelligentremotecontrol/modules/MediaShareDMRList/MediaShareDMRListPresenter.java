@@ -104,6 +104,7 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
     public void prepareCastDeviceAt(int index) {
         RemoteDevice device = interactor.getCurrentDevices().get(index);
         delegate.didSelected(device);
+        delegate.didClosed();
     }
 
     @Override

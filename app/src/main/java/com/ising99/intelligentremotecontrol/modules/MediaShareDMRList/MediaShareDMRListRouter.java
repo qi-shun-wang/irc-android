@@ -17,7 +17,7 @@ public class MediaShareDMRListRouter implements Wireframe {
     private Presenter presenter;
     private View view;
 
-    public MediaShareDMRListRouter(Context context) {
+    private MediaShareDMRListRouter(Context context) {
         this.context = context;
     }
 

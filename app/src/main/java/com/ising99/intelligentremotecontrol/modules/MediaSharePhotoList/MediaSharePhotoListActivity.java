@@ -8,21 +8,23 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
-import com.ising99.intelligentremotecontrol.core.DLNA.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
 public class MediaSharePhotoListActivity extends Activity {
 
+    private DLNAMediaManager manager = new DLNAMediaManager();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_share_photo_list);
 
-        DLNAMediaManager manager = new DLNAMediaManager();
         try {
             manager.setupMediaServer(getLocalIpAddress());
         } catch (Exception e){
@@ -36,6 +38,22 @@ public class MediaSharePhotoListActivity extends Activity {
         MediaSharePhotoListFragment mediaSharePhotoList = MediaSharePhotoListRouter.setupModule(getApplicationContext(), collection,manager);
         getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_photo_list_container, mediaSharePhotoList).commit();
         findViewById(R.id.activity_media_share_photo_list_back_btn).setOnClickListener((v)->finish());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try{
+            manager.startServer();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        manager.stopServer();
     }
 
     private InetAddress getLocalIpAddress() throws UnknownHostException {

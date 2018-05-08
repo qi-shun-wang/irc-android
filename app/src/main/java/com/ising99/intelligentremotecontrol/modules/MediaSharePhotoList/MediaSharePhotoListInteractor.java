@@ -1,19 +1,17 @@
 package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList;
 
 import android.content.Context;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 
-import com.ising99.intelligentremotecontrol.core.DLNA.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.InteractorOutput;
 
 import org.fourthline.cling.model.meta.Device;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by shun on 2018/5/3 下午 04:22:46.
@@ -26,6 +24,9 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     private Context context;
     private List<Photo> collection;
     private DLNAMediaManager manager;
+    private Timer worker;
+    private int cursor = 0;
+    private Device currentCastingDevice;
 
     MediaSharePhotoListInteractor(Context context,List<Photo> collection ,DLNAMediaManager manager) {
         this.context = context;
@@ -40,6 +41,7 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
 
     @Override
     public void decompose() {
+        worker.cancel();
         output = null;
         context = null;
     }
@@ -50,8 +52,29 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     }
 
     @Override
-    public void performCast(Device device) {
-        manager.play(device,"/storage/emulated/0/Pictures/3162F696-D1B3-4509-82F7-F98C701A25C6.jpg","");
+    public void setupCurrentDevice(Device device) {
+        currentCastingDevice = device;
+    }
+
+    @Override
+    public void performCast(List<Photo> photos) {
+        worker = new Timer();
+        cursor = 0;
+        worker.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (cursor >= photos.size()) return;
+                manager.play(currentCastingDevice,"/image" + photos.get(cursor).getFilePath(),"");
+                cursor ++;
+            }
+        },1000,5000);
+    }
+
+    @Override
+    public void stopCast() {
+        if (currentCastingDevice == null || worker == null) return;
+        worker.cancel();
+        manager.stop(currentCastingDevice);
     }
 }
 

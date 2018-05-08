@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ising99.intelligentremotecontrol.R;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ import java.util.List;
 
 public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.ViewHolder>{
 
-    private List<Photo> collection = new ArrayList<>();
+    private List<PhotoItem> collection = new ArrayList<>();
     private GridViewAdapterDelegate delegate;
 
     @NonNull
@@ -37,8 +36,9 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Photo photo = collection.get(position);
-        Glide.with(holder.itemView).load(new File(photo.getLocalURL())).into(holder.image);
+        PhotoItem item = collection.get(position);
+        holder.selectedMark.setAlpha(item.isSelected()?1f:0f);
+        Glide.with(holder.itemView).load(new File(item.getPhoto().getFilePath())).into(holder.image);
     }
 
     @Override
@@ -49,10 +49,13 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.ViewH
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView image;
+        ImageView selectedMark;
 
         ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.media_share_photo_imageView);
+            selectedMark = itemView.findViewById(R.id.media_share_photo_selected_imageView);
+
             itemView.setOnClickListener(this);
         }
 
@@ -66,7 +69,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.ViewH
         this.delegate = delegate;
     }
 
-    void setPhotos(List<Photo> collection) {
+    void setPhotos(List<PhotoItem> collection) {
         this.collection = collection;
     }
 

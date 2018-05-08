@@ -1,7 +1,6 @@
-package com.ising99.intelligentremotecontrol.core.DLNA;
+package com.ising99.intelligentremotecontrol.core.UPnP;
 
 import org.fourthline.cling.model.meta.Device;
-import org.fourthline.cling.model.meta.RemoteDevice;
 
 /**
  * Created by shun on 2018/5/4.

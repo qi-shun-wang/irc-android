@@ -1,4 +1,4 @@
-package com.ising99.intelligentremotecontrol.core.DLNA;
+package com.ising99.intelligentremotecontrol.core.UPnP;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,11 +12,7 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class WebServer extends NanoHTTPD {
 
-    public WebServer(int port) {
-        super(port);
-    }
-
-    public WebServer(String hostname, int port) {
+    WebServer(String hostname, int port) {
         super(hostname, port);
     }
 

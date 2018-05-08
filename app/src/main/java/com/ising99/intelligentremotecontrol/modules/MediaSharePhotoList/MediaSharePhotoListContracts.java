@@ -15,17 +15,20 @@ import java.util.List;
 public interface MediaSharePhotoListContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
-        void reloadGridView(List<Photo> collection);
+        void reloadGridView(List<PhotoItem> collection);
     }
 
     interface Presenter extends BaseContracts.Presenter {
         void didTapOnCast();
         void didSelected(Device device);
+        void didSelectedPhotoAt(int position);
     }
 
     interface Interactor extends BaseContracts.Interactor {
         List<Photo> getPhotos();
-        void performCast(Device device);
+        void stopCast();
+        void performCast(List<Photo> photos);
+        void setupCurrentDevice(Device device);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Presenter;
 
 import java.util.List;
@@ -26,7 +25,6 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
 
     private Presenter presenter;
     private ViewGroup view;
-
     private GridViewAdapter adapter;
 
     public MediaSharePhotoListFragment() {
@@ -93,11 +91,11 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
 
     @Override
     public void onItemClick(View view, int position) {
-
+        presenter.didSelectedPhotoAt(position);
     }
 
     @Override
-    public void reloadGridView(List<Photo> collection) {
+    public void reloadGridView(List<PhotoItem> collection) {
         adapter.setPhotos(collection);
         adapter.notifyDataSetChanged();
     }

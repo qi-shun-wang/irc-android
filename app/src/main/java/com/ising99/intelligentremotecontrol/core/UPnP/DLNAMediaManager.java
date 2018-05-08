@@ -1,4 +1,4 @@
-package com.ising99.intelligentremotecontrol.core.DLNA;
+package com.ising99.intelligentremotecontrol.core.UPnP;
 
 import android.util.Log;
 
@@ -16,7 +16,9 @@ import org.fourthline.cling.registry.Registry;
 import org.fourthline.cling.registry.RegistryListener;
 import org.fourthline.cling.support.avtransport.callback.Play;
 import org.fourthline.cling.support.avtransport.callback.SetAVTransportURI;
+import org.fourthline.cling.support.avtransport.callback.Stop;
 
+import java.io.IOException;
 import java.net.InetAddress;
 
 /**
@@ -27,7 +29,7 @@ import java.net.InetAddress;
 public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListener {
 
     public DLNAMediaManager(){
-
+        upnpService = new UpnpServiceImpl(new AndroidUpnpServiceConfiguration());
     }
 
     private WebServer server;
@@ -35,32 +37,31 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
 
     @Override
     public boolean play(Device device, String path, String data) {
-        upnpService = new UpnpServiceImpl(new AndroidUpnpServiceConfiguration());
+
         try {
-            Service localService = device
-                    .findService(new UDAServiceId("AVTransport"));
+            Service localService = device.findService(new UDAServiceId("AVTransport"));
             if (localService != null) {
                 Log.e("set url", "set url" + path);
-                upnpService.getControlPoint().execute(new SetAVTransportURI(localService,"http://"+server.getHostname()+ ":"+server.getListeningPort() + "/image"+ path) {
+                upnpService.getControlPoint().execute(new SetAVTransportURI(localService,"http://"+server.getHostname()+ ":"+server.getListeningPort() + path) {
                     @Override
                     public void success(ActionInvocation invocation) {
-                        Log.i("", "Play success.");
+                        Log.i("DLNAMediaManager", "SetAVTransportURI success.");
                         upnpService.getControlPoint().execute(new Play(localService) {
                             @Override
                             public void success(ActionInvocation invocation) {
-                                Log.i("", "Play success.");
+                                Log.i("DLNAMediaManager", "Play success.");
                             }
 
                             @Override
                             public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-                                Log.e("", "Play failed");
+                                Log.e("DLNAMediaManager", "Play failed");
                             }
                         });
                     }
 
                     @Override
                     public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-                        Log.e("", "Play failed");
+                        Log.e("DLNAMediaManager", "SetAVTransportURI failed");
                     }
                 });
 
@@ -131,6 +132,23 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
 
     @Override
     public boolean stop(Device device) {
+        try {
+            Service localService = device.findService(new UDAServiceId("AVTransport"));
+            if (localService != null) {
+                upnpService.getControlPoint().execute(new Stop(localService) {
+                    @Override
+                    public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+                        Log.e("DLNAMediaManager", "Stop failed");
+                    }
+                });
+
+            } else {
+                Log.e("null", "null");
+            }
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+
         return false;
     }
 
@@ -190,14 +208,15 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
     }
 
     public void setupMediaServer(InetAddress address) {
-        try {
-            server = new WebServer(address.getHostAddress(),8080);
-
-            server.start();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        server = new WebServer(address.getHostAddress(),8080);
     }
 
+    public void startServer() throws IOException {
+        server.start();
+    }
+
+    public void stopServer() {
+        server.stop();
+    }
 
 }

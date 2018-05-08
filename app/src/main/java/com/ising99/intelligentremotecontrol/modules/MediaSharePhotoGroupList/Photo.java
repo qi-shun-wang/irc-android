@@ -10,27 +10,32 @@ import android.os.Parcelable;
 public class Photo  implements Parcelable {
 
     private String id;
-    private String localURL;
+    private String filePath;
     private String dir_id;
     private Boolean isRestricted;
     private String info;
     private long size;
     private String title;
-    private String url;
+    private String uri;
 
-    public String getLocalURL() {
-        return localURL;
-    }
-
-    public Photo(String id, String localURL, String dir_id, Boolean isRestricted, String info, long size, String title, String url) {
+    public Photo(
+            String id,
+            String filePath,
+            String dir_id,
+            Boolean isRestricted,
+            String info,
+            long size,
+            String title,
+            String url
+    ) {
         this.id = id;
-        this.localURL = localURL;
+        this.title = title;
+        this.filePath = filePath;
         this.dir_id = dir_id;
         this.isRestricted = isRestricted;
         this.info = info;
         this.size = size;
-        this.title = title;
-        this.url = url;
+        this.uri = url;
     }
 
     @Override
@@ -43,13 +48,13 @@ public class Photo  implements Parcelable {
         parcel.writeStringArray(new String[]
                 {
                         this.id,
-                        this.localURL,
+                        this.filePath,
                         this.dir_id,
                         String.valueOf(this.isRestricted),
                         this.info,
                         String.valueOf(this.size),
                         this.title,
-                        this.url,
+                        this.uri,
                 });
     }
 
@@ -59,13 +64,13 @@ public class Photo  implements Parcelable {
         in.readStringArray(data);
         // the order needs to be the same as in writeToParcel() method
         this.id = data[0];
-        this.localURL = data[1];
+        this.filePath = data[1];
         this.dir_id = data[2];
         this.isRestricted = Boolean.valueOf(data[3]);
         this.info = data[4];
         this.size = Long.valueOf(data[5]);
         this.title = data[6];
-        this.url = data[7];
+        this.uri = data[7];
 
     }
 
@@ -78,4 +83,8 @@ public class Photo  implements Parcelable {
             return new Photo[size];
         }
     };
+
+    public String getFilePath() {
+        return filePath;
+    }
 }

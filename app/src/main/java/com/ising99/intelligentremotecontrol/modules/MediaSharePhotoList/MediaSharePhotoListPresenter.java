@@ -1,6 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList;
 
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
+import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.InteractorOutput;
@@ -8,6 +9,9 @@ import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Wireframe;
 
 import org.fourthline.cling.model.meta.Device;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shun on 2018/5/3 下午 04:22:46.
@@ -19,6 +23,8 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     private View view;
     private Interactor interactor;
     private Wireframe router;
+    private List<PhotoItem> photos = new ArrayList<>();
+    private boolean isFirstPerformedCasting = true;
 
     MediaSharePhotoListPresenter() {
     }
@@ -49,12 +55,14 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void onCreate() {
-
+        for (Photo photo: interactor.getPhotos()){
+            photos.add(new PhotoItem(photo,false));
+        }
     }
 
     @Override
     public void onResume() {
-        view.reloadGridView(interactor.getPhotos());
+        view.reloadGridView(photos);
     }
 
     @Override
@@ -68,11 +76,32 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void didTapOnCast() {
-        router.presentDMRList();
+        if (isFirstPerformedCasting) router.presentDMRList();
+        else prepareCasting();
     }
 
     @Override
     public void didSelected(Device device) {
-        interactor.performCast(device);
+        isFirstPerformedCasting = false;
+        interactor.setupCurrentDevice(device);
+        prepareCasting();
+    }
+
+    @Override
+    public void didSelectedPhotoAt(int position) {
+        interactor.stopCast();
+        PhotoItem item = photos.get(position);
+        item.setSelected(!item.isSelected());
+        view.reloadGridView(photos);
+    }
+
+    private void prepareCasting(){
+        List<Photo> selectedPhotos = new ArrayList<>();
+        for (PhotoItem item : photos) {
+            if (item.isSelected()){
+                selectedPhotos.add(item.getPhoto());
+            }
+        }
+        interactor.performCast(selectedPhotos);
     }
 }

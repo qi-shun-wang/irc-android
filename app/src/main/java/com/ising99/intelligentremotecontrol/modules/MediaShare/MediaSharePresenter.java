@@ -82,6 +82,7 @@ public class MediaSharePresenter implements Presenter, InteractorOutput {
         switch (items.get(position).getType()){
             case photo:router.presentPhotoList();break;
             case music:router.presentMusicList();break;
+            case video:router.presentVideoList();break;
         }
     }
 }

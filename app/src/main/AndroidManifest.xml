@@ -43,7 +43,9 @@
         <activity android:name=".modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListActivity" />
         <activity android:name=".modules.MediaSharePhotoList.MediaSharePhotoListActivity" />
         <activity android:name=".modules.MediaShareMusicGroupList.MediaShareMusicGroupListActivity" />
-        <activity android:name=".modules.MediaShareMusicList.MediaShareMusicListActivity"></activity>
+        <activity android:name=".modules.MediaShareMusicList.MediaShareMusicListActivity" />
+        <activity android:name=".modules.MediaShareVideoGroupList.MediaShareVideoGroupListActivity" />
+        <activity android:name=".modules.MediaShareVideoList.MediaShareVideoListActivity"></activity>
     </application>
 
 </manifest>

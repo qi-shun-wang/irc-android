@@ -8,6 +8,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContrac
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListActivity;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListActivity;
+import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.MediaShareVideoGroupListActivity;
 
 /**
  * Created by shun on 2018/4/30 下午 03:49:53.
@@ -54,6 +55,13 @@ public class MediaShareRouter implements Wireframe {
     @Override
     public void presentMusicList() {
         Intent i = new Intent(context, MediaShareMusicGroupListActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
+    }
+
+    @Override
+    public void presentVideoList() {
+        Intent i = new Intent(context, MediaShareVideoGroupListActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }

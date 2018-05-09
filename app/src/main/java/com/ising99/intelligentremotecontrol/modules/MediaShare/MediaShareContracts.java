@@ -31,5 +31,6 @@ public interface MediaShareContracts extends BaseContracts {
     interface Wireframe extends BaseContracts.Wireframe {
         void presentPhotoList();
         void presentMusicList();
+        void presentVideoList();
     }
 }

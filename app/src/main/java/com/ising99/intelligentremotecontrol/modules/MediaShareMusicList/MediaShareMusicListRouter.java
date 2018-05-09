@@ -71,8 +71,8 @@ public class MediaShareMusicListRouter implements Wireframe ,MediaShareDMRListFr
 
     @Override
     public void didClosed() {
-        Blurry.delete(((MediaShareMusicListFragment)view).getActivity().findViewById(R.id.media_share_music_list_container));
-        ((MediaShareMusicListFragment)view).getFragmentManager().beginTransaction().detach(dmrList).commit();
+        Blurry.delete(((MediaShareMusicListFragment) view).getActivity().findViewById(R.id.media_share_music_list_container));
+        ((MediaShareMusicListFragment) view).getFragmentManager().beginTransaction().detach(dmrList).commit();
         dmrList = null;
     }
 

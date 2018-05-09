@@ -1,9 +1,8 @@
-package com.ising99.intelligentremotecontrol.modules.MediaShareMusicList;
+package com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,24 +11,25 @@ import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
-import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Presenter;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.GridViewAdapterDelegate;
+import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.ListAdapterDelegate;
+import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.ListViewAdapter;
+import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.MediaShareVideoGroupListContracts.Presenter;
 
 import java.util.List;
 
 /**
- * Created by Shun on 2018/5/8 下午 05:55:17.
+ * Created by Shun on 2018/5/9 下午 03:05:36.
  * .
  */
 
-public class MediaShareMusicListFragment extends Fragment implements MediaShareMusicListContracts.View ,GridViewAdapterDelegate {
+public class MediaShareVideoGroupListFragment extends Fragment implements MediaShareVideoGroupListContracts.View ,ListAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;
+    private RecyclerView listView;
     private ListViewAdapter adapter;
 
-    public MediaShareMusicListFragment() {
+    public MediaShareVideoGroupListFragment() {
         // Required empty public constructor
     }
 
@@ -46,16 +46,16 @@ public class MediaShareMusicListFragment extends Fragment implements MediaShareM
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_list, container, false);
-        RecyclerView listView = view.findViewById(R.id.media_share_music_list_view);
-        adapter = new ListViewAdapter();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
+        //TODO-create fragment_media_share_video_group_list
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_group_list, container, false);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_photo_group_list, container, false);
+        listView = view.findViewById(R.id.media_share_photo_group_list_view);
         listView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         listView.setLayoutManager(layoutManager);
-        listView.setAdapter(adapter);
+        adapter = new ListViewAdapter();
         adapter.setupDelegate(this);
-        view.findViewById(R.id.media_share_music_list_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
-
+        listView.setAdapter(adapter);
         presenter.onCreate();
         return view;
     }
@@ -90,13 +90,13 @@ public class MediaShareMusicListFragment extends Fragment implements MediaShareM
     }
 
     @Override
-    public void onItemClick(View view, int position) {
-        presenter.didSelectedMusicAt(position);
+    public void updateListView(List<String> titles) {
+        adapter.setGroups(titles);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void reloadGridView(List<Music> assets) {
-        adapter.setMusicAssets(assets);
-        adapter.notifyDataSetChanged();
+    public void onItemClick(View view, int position) {
+        presenter.didSelectedAt(position);
     }
 }

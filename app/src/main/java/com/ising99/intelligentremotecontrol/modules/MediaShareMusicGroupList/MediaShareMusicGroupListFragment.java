@@ -47,6 +47,7 @@ public class MediaShareMusicGroupListFragment extends Fragment implements MediaS
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //TODO-create fragment_media_share_music_group_list
 //        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_group_list, container, false);
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_photo_group_list, container, false);
         listView = view.findViewById(R.id.media_share_photo_group_list_view);
@@ -94,6 +95,7 @@ public class MediaShareMusicGroupListFragment extends Fragment implements MediaS
         adapter.setGroups(titles);
         adapter.notifyDataSetChanged();
     }
+
     @Override
     public void onItemClick(View view, int position) {
         presenter.didSelectedAt(position);

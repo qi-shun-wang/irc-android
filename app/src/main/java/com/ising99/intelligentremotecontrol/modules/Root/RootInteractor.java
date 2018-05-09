@@ -61,7 +61,6 @@ public class RootInteractor implements RootContracts.Interactor {
 
     @Override
     public void checkLastConnectedDevice() {
-        //TODO-check out persisted device in db
         Query query = ((App)context).getDaoSession().getDeviceEntityDao().queryBuilder()
                 .where(DeviceEntityDao.Properties.IsConnected.ge(true))
                 .build();

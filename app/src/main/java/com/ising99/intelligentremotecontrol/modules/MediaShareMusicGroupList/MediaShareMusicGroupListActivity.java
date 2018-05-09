@@ -10,6 +10,7 @@ public class MediaShareMusicGroupListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO-create activity_media_share_music_group_list
 //        setContentView(R.layout.activity_media_share_music_group_list);
         setContentView(R.layout.activity_media_share_photo_group_list);
         MediaShareMusicGroupListFragment mediaSharePhotoGroupList = MediaShareMusicGroupListRouter.setupModule(getApplicationContext());

@@ -62,9 +62,6 @@ public class MediaShareMusicGroupListInteractor implements MediaShareMusicGroupL
                 long size = audioCursor.getLong(audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE));
                 long duration = audioCursor.getLong(audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
                 String album = audioCursor.getString(audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
-                if (mimeType == null) {
-                    continue;
-                }
 
                 //                if (artist != null && artist.contains("?")|| artist.equals("<unknown>")) {
                 //                    artist = getString(R.string.unknown_artist);

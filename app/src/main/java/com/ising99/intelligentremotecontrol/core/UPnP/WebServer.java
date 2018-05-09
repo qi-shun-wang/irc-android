@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
@@ -25,30 +27,35 @@ public class WebServer extends NanoHTTPD {
     public Response serve(IHTTPSession session) {
         String uri = session.getUri();
         if (uri.startsWith("/image/")) {
-            String filepath = uri.replaceFirst("/image","");
             try {
+                String uriPath = uri.replaceFirst("/image","");
+                String filepath = URLDecoder.decode(uriPath,"UTF-8");
                 FileInputStream fis = new FileInputStream(new File(filepath));
                 return newChunkedResponse(Response.Status.OK,"image/jpeg", fis);
             } catch (Exception e) {
-                return  newFixedLengthResponse(e.getLocalizedMessage());
+                return newFixedLengthResponse(e.getLocalizedMessage());
             }
         }
 
         if (uri.startsWith("/music/")) {
-            String filepath = uri.replaceFirst("/music","");
+
             try {
+                String uriPath = uri.replaceFirst("/music","");
+                String filepath = URLDecoder.decode(uriPath,"UTF-8");
                 return  serveFile(session.getHeaders(), new File(filepath), "audio/mpeg");
             } catch (Exception e) {
-                return  newFixedLengthResponse(e.getLocalizedMessage());
+                return newFixedLengthResponse(e.getLocalizedMessage());
             }
         }
 
         if (uri.startsWith("/video/")) {
-            String filepath = uri.replaceFirst("/video","");
+
             try {
-                return  serveFile( session.getHeaders(), new File(filepath), "video/mp4");
+                String uriPath = uri.replaceFirst("/video","");
+                String filepath = URLDecoder.decode(uriPath,"UTF-8");
+                return serveFile( session.getHeaders(), new File(filepath), "video/mp4");
             } catch (Exception e) {
-                return  newFixedLengthResponse(e.getLocalizedMessage());
+                return newFixedLengthResponse(e.getLocalizedMessage());
             }
         }
         return  null;
@@ -67,7 +74,7 @@ public class WebServer extends NanoHTTPD {
      * ignores all headers and HTTP parameters.
      */
     private Response serveFile( Map<String, String> header,
-                               File file, String mime) {
+                                File file, String mime) {
         Response res;
         try {
             // Calculate etag

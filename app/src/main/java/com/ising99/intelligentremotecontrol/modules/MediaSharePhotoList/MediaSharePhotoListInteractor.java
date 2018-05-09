@@ -9,6 +9,8 @@ import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSha
 
 import org.fourthline.cling.model.meta.Device;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -57,14 +59,19 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     }
 
     @Override
-    public void performCast(List<Photo> photos) {
+    public void performCast(List<Photo> assets) {
         worker = new Timer();
         cursor = 0;
         worker.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (cursor >= photos.size()) return;
-                manager.play(currentCastingDevice,"/image" + photos.get(cursor).getFilePath(),"");
+                if (cursor >= assets.size()) return;
+                try {
+                    String path = URLEncoder.encode( assets.get(cursor).getFilePath(), "UTF-8");
+                    manager.play(currentCastingDevice,"/image" + path,"");
+                } catch (UnsupportedEncodingException e){
+                    e.printStackTrace();
+                }
                 cursor ++;
             }
         },1000,5000);

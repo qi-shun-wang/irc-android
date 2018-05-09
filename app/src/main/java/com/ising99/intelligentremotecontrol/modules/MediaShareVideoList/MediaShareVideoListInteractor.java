@@ -9,6 +9,8 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaSha
 
 import org.fourthline.cling.model.meta.Device;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -66,7 +68,12 @@ public class MediaShareVideoListInteractor implements MediaShareVideoListContrac
             @Override
             public void run() {
                 if (cursor >= assets.size()) return;
-                manager.play(currentCastingDevice,"/video" + assets.get(cursor).getFilePath(),"");
+                try {
+                    String path = URLEncoder.encode( assets.get(cursor).getFilePath(), "UTF-8");
+                    manager.play(currentCastingDevice,"/video" + path,"");
+                } catch (UnsupportedEncodingException e){
+                    e.printStackTrace();
+                }
                 cursor ++;
             }
         },1000,50000);

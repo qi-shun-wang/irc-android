@@ -29,7 +29,7 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ViewGroup view = (ViewGroup) LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.list_item_photo, parent, false);
+                .inflate(R.layout.list_item_music, parent, false);
 
         return new ListViewAdapter.ViewHolder(view);
     }
@@ -37,7 +37,7 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Music item = assets.get(position);
-        //TODO-setup ui data
+        holder.title.setText(item.getTitle());
     }
 
     @Override
@@ -49,11 +49,9 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
 
         TextView title;
 
-
         ViewHolder(View itemView) {
             super(itemView);
-            //TODO-setup ui layout
-//            title = itemView.findViewById(R.id.media_share_photo_imageView);
+            title = itemView.findViewById(R.id.media_share_music_item_title);
             itemView.setOnClickListener(this);
         }
 

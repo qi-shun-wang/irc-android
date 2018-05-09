@@ -32,7 +32,7 @@ public class MediaSharePhotoListActivity extends Activity {
         }
 
         String title = getIntent().getStringExtra("TITLE");
-        List<Photo> collection = getIntent().getParcelableArrayListExtra("PHOTOS");
+        List<Photo> collection = getIntent().getParcelableArrayListExtra("ASSETS");
         ((TextView)findViewById(R.id.activity_media_share_photo_list_title)).setText(title);
 
         MediaSharePhotoListFragment mediaSharePhotoList = MediaSharePhotoListRouter.setupModule(getApplicationContext(), collection,manager);

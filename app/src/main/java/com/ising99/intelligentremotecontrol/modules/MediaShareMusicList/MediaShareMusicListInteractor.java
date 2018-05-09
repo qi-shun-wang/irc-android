@@ -67,7 +67,7 @@ public class MediaShareMusicListInteractor implements MediaShareMusicListContrac
                 manager.play(currentCastingDevice,"/music" + assets.get(cursor).getFilePath(),"");
                 cursor ++;
             }
-        },1000,5000);
+        },1000,50000);
     }
 
     @Override

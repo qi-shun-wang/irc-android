@@ -53,7 +53,7 @@ public class MediaSharePhotoGroupListRouter implements Wireframe {
         Intent i = new Intent(context, MediaSharePhotoListActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("TITLE",title);
-        i.putParcelableArrayListExtra("PHOTOS", (ArrayList<? extends Parcelable>) photos);
+        i.putParcelableArrayListExtra("ASSETS", (ArrayList<? extends Parcelable>) photos);
         context.startActivity(i);
     }
 }

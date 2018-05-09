@@ -12,7 +12,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Mus
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.View;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListFragment;
+
 
 import org.fourthline.cling.model.meta.Device;
 
@@ -61,18 +61,18 @@ public class MediaShareMusicListRouter implements Wireframe ,MediaShareDMRListFr
     public void presentDMRList() {
         dmrList =  MediaShareDMRListRouter.setupModule(context,this);
 
-        Blurry.with(((MediaSharePhotoListFragment)view).getActivity().getApplicationContext()).radius(10).sampling(2).onto(((MediaSharePhotoListFragment)view).getActivity().findViewById(R.id.media_share_photo_list_container));
-        FragmentTransaction fragmentTransaction = ((MediaSharePhotoListFragment)view).getFragmentManager().beginTransaction();
+        Blurry.with(((MediaShareMusicListFragment)view).getActivity().getApplicationContext()).radius(10).sampling(2).onto(((MediaShareMusicListFragment)view).getActivity().findViewById(R.id.media_share_music_list_container));
+        FragmentTransaction fragmentTransaction = ((MediaShareMusicListFragment)view).getFragmentManager().beginTransaction();
 
         fragmentTransaction.setCustomAnimations(R.animator.slide_in_up,R.animator.slide_out_down,R.animator.slide_in_up,R.animator.slide_out_down);
-        fragmentTransaction.replace(R.id.media_share_photo_list_dmr_container, dmrList, "MediaShareDMRListFragment");
+        fragmentTransaction.replace(R.id.media_share_music_list_dmr_container, dmrList, "MediaShareDMRListFragment");
         fragmentTransaction.commit();
     }
 
     @Override
     public void didClosed() {
-        Blurry.delete(((MediaSharePhotoListFragment)view).getActivity().findViewById(R.id.media_share_photo_list_container));
-        ((MediaSharePhotoListFragment)view).getFragmentManager().beginTransaction().detach(dmrList).commit();
+        Blurry.delete(((MediaShareMusicListFragment)view).getActivity().findViewById(R.id.media_share_music_list_container));
+        ((MediaShareMusicListFragment)view).getFragmentManager().beginTransaction().detach(dmrList).commit();
         dmrList = null;
     }
 

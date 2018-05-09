@@ -31,14 +31,12 @@ public class MediaShareMusicListActivity extends Activity {
             e.printStackTrace();
         }
         String title = getIntent().getStringExtra("TITLE");
-        List<Music> collection = getIntent().getParcelableArrayListExtra("PHOTOS");
-        //TODO-update music layout
-        ((TextView)findViewById(R.id.activity_media_share_photo_list_title)).setText(title);
+        List<Music> collection = getIntent().getParcelableArrayListExtra("ASSETS");
+        ((TextView)findViewById(R.id.activity_media_share_music_list_title)).setText(title);
 
-        MediaShareMusicListFragment mediaSharePhotoList = MediaShareMusicListRouter.setupModule(getApplicationContext(), collection,manager);
-        //TODO-update music layout
-        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_photo_list_container, mediaSharePhotoList).commit();
-        findViewById(R.id.activity_media_share_photo_list_back_btn).setOnClickListener((v)->finish());
+        MediaShareMusicListFragment mediaSharePhotoList = MediaShareMusicListRouter.setupModule(getApplicationContext(), collection, manager);
+        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_music_list_container, mediaSharePhotoList).commit();
+        findViewById(R.id.activity_media_share_music_list_back_btn).setOnClickListener((v)->finish());
     }
 
     @Override

@@ -1,12 +1,15 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList;
 
 import android.content.Context;
-import android.app.Fragment;
+import android.content.Intent;
+import android.os.Parcelable;
 
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.View;
+import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,8 +49,12 @@ public class MediaShareMusicGroupListRouter implements Wireframe {
     }
 
     @Override
-    public void presentPhotoCollectionWith(String title, List<Music> assets) {
-
+    public void presentMusicAssetsWith(String title, List<Music> assets) {
+        Intent i = new Intent(context, MediaShareMusicListActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("TITLE",title);
+        i.putParcelableArrayListExtra("ASSETS", (ArrayList<? extends Parcelable>) assets);
+        context.startActivity(i);
     }
 }
 

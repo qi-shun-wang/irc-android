@@ -106,4 +106,8 @@ public class Music  implements Parcelable {
     public String getArtist() {
         return artist;
     }
+
+    public String getTitle() {
+        return title;
+    }
 }

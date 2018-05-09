@@ -75,7 +75,7 @@ public class MediaShareMusicGroupListPresenter implements Presenter, InteractorO
     public void didSelectedAt(int position) {
         String title = keys.get(position);
         List<Music> collection = assets.get(title);
-        router.presentPhotoCollectionWith(title,collection);
+        router.presentMusicAssetsWith(title,collection);
     }
 
     @Override

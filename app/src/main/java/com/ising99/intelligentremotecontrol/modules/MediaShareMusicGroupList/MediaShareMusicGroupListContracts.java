@@ -29,6 +29,6 @@ public interface MediaShareMusicGroupListContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentPhotoCollectionWith(String title, List<Music> assets);
+        void presentMusicAssetsWith(String title, List<Music> assets);
     }
 }

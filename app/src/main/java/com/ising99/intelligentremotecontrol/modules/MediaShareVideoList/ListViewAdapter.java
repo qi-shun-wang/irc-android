@@ -1,10 +1,14 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoList;
 
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
@@ -29,7 +33,7 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ViewGroup view = (ViewGroup) LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.list_item_music, parent, false);
+                .inflate(R.layout.list_item_video, parent, false);
 
         return new ViewHolder(view);
     }
@@ -38,6 +42,7 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Video item = assets.get(position);
         holder.title.setText(item.getTitle());
+        holder.thumbnail.setImageBitmap(ThumbnailUtils.createVideoThumbnail(item.getFilePath(), MediaStore.Video.Thumbnails.MICRO_KIND));
     }
 
     @Override
@@ -48,10 +53,12 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
+        ImageView thumbnail;
 
         ViewHolder(View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.media_share_music_item_title);
+            title = itemView.findViewById(R.id.media_share_video_item_title);
+            thumbnail = itemView.findViewById(R.id.media_share_video_item_thumbnail);
             itemView.setOnClickListener(this);
         }
 

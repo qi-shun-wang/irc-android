@@ -20,6 +20,7 @@ public class Video implements Parcelable {
     private String uri;
     private long duration;
     private String artist;
+    private String directoryName;
 
 
     public Video(
@@ -31,7 +32,7 @@ public class Video implements Parcelable {
             long size,
             String title,
             String url,
-            long duration, String artist) {
+            long duration, String artist, String directoryName) {
         this.id = id;
         this.title = title;
         this.filePath = filePath;
@@ -42,6 +43,7 @@ public class Video implements Parcelable {
         this.uri = url;
         this.duration = duration;
         this.artist = artist;
+        this.directoryName = directoryName;
     }
 
     @Override
@@ -62,12 +64,13 @@ public class Video implements Parcelable {
                         this.title,
                         this.uri,
                         String.valueOf(this.duration),
-                        this.artist
+                        this.artist,
+                        this.directoryName
                 });
     }
 
     public Video(Parcel in){
-        String[] data = new String[10];
+        String[] data = new String[11];
 
         in.readStringArray(data);
         // the order needs to be the same as in writeToParcel() method
@@ -81,6 +84,7 @@ public class Video implements Parcelable {
         this.uri = data[7];
         this.duration = Long.valueOf(data[8]);
         this.artist = data[9];
+        this.directoryName = data[10];
 
     }
 
@@ -108,5 +112,9 @@ public class Video implements Parcelable {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDirectoryName() {
+        return directoryName;
     }
 }

@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.MediaShareVideoGroupListContracts.InteractorOutput;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +64,7 @@ public class MediaShareVideoGroupListInteractor implements MediaShareVideoGroupL
                 long size = videoCursor.getLong(videoCursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
                 long duration = videoCursor.getLong(videoCursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
                 String resolution = videoCursor.getString(videoCursor.getColumnIndexOrThrow(MediaStore.Video.Media.RESOLUTION));
-
+                String directoryName = new File(filePath).getParentFile().getName();
                 Video video = new Video
                         (
                                 id,
@@ -75,12 +76,17 @@ public class MediaShareVideoGroupListInteractor implements MediaShareVideoGroupL
                                 title,
                                 id,
                                 duration,
-                                artist);
+                                artist,
+                                directoryName);
+                if (videoGroup.containsKey(directoryName)) {
+                    videoGroup.get(directoryName).add(video);
+                }else{
+                    videoGroup.put(directoryName,new ArrayList<>());
+                    videoGroup.get(directoryName).add(video);
+                }
                 videoList.add(video);
 
-
             } while (videoCursor.moveToNext());
-
 
             videoCursor.close();
             videoGroup.put("Total",videoList);

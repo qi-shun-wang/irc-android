@@ -52,7 +52,7 @@ public class MediaShareVideoListFragment extends Fragment implements MediaShareV
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
         adapter.setupDelegate(this);
-        view.findViewById(R.id.media_share_video_list_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
+
 
         presenter.onCreate();
         return view;

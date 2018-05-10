@@ -8,9 +8,6 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Wireframe;
 
-import org.fourthline.cling.model.meta.Device;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,12 +21,12 @@ public class MediaShareVideoListPresenter implements Presenter, InteractorOutput
     private Interactor interactor;
     private Wireframe router;
     private List<Video> assets;
-    private List<Video> selectedAssets;
+    private String title;
 
-    private boolean isFirstPerformedCasting = true;
-
-    MediaShareVideoListPresenter() {
+    MediaShareVideoListPresenter(String title) {
+        this.title = title;
     }
+
 
     @Override
     public void setupView(BaseContracts.View view) {
@@ -75,26 +72,8 @@ public class MediaShareVideoListPresenter implements Presenter, InteractorOutput
     }
 
     @Override
-    public void didTapOnCast() {
-        if (isFirstPerformedCasting) router.presentDMRList();
-        else prepareCasting();
-    }
-
-
-    @Override
-    public void didSelected(Device device) {
-        isFirstPerformedCasting = false;
-        interactor.setupCurrentDevice(device);
-        prepareCasting();
-    }
-
-    @Override
     public void didSelectedVideoAt(int position) {
-        selectedAssets = new ArrayList<>();
-        selectedAssets.add(assets.get(position));
+        router.presentVideoPlayer(assets.get(position), title);
     }
 
-    private void prepareCasting(){
-        interactor.performCast(selectedAssets);
-    }
 }

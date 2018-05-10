@@ -1,10 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoList;
 
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
-
-import org.fourthline.cling.model.meta.Device;
 
 import java.util.List;
 
@@ -20,16 +17,11 @@ public interface MediaShareVideoListContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        void didTapOnCast();
-        void didSelected(Device device);
         void didSelectedVideoAt(int position);
     }
 
     interface Interactor extends BaseContracts.Interactor {
         List<Video> getVideoAssets();
-        void stopCast();
-        void performCast(List<Video> photos);
-        void setupCurrentDevice(Device device);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
@@ -37,6 +29,6 @@ public interface MediaShareVideoListContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentDMRList();
+        void presentVideoPlayer(Video asset,String backTitle);
     }
 }

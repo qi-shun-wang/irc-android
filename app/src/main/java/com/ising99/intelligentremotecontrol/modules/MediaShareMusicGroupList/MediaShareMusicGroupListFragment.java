@@ -47,10 +47,8 @@ public class MediaShareMusicGroupListFragment extends Fragment implements MediaS
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO-create fragment_media_share_music_group_list
-//        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_group_list, container, false);
-        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_photo_group_list, container, false);
-        listView = view.findViewById(R.id.media_share_photo_group_list_view);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_group_list, container, false);
+        listView = view.findViewById(R.id.media_share_music_group_list_view);
         listView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         listView.setLayoutManager(layoutManager);

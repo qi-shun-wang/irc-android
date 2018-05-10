@@ -44,16 +44,15 @@ public class MediaShareVideoListFragment extends Fragment implements MediaShareV
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO-create fragment_media_share_video_list
-        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_list, container, false);
-        RecyclerView listView = view.findViewById(R.id.media_share_music_list_view);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_video_list, container, false);
+        RecyclerView listView = view.findViewById(R.id.media_share_video_list_view);
         adapter = new ListViewAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
         listView.setHasFixedSize(true);
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
         adapter.setupDelegate(this);
-        view.findViewById(R.id.media_share_music_list_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
+        view.findViewById(R.id.media_share_video_list_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
 
         presenter.onCreate();
         return view;

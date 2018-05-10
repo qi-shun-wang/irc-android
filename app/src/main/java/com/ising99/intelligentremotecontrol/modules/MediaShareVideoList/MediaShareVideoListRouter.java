@@ -64,7 +64,7 @@ public class MediaShareVideoListRouter implements Wireframe ,MediaShareDMRListFr
         FragmentTransaction fragmentTransaction = ((MediaShareVideoListFragment)view).getFragmentManager().beginTransaction();
 
         fragmentTransaction.setCustomAnimations(R.animator.slide_in_up,R.animator.slide_out_down,R.animator.slide_in_up,R.animator.slide_out_down);
-        fragmentTransaction.replace(R.id.media_share_music_list_dmr_container, dmrList, "MediaShareDMRListFragment");
+        fragmentTransaction.replace(R.id.media_share_list_dmr_container, dmrList, "MediaShareDMRListFragment");
         fragmentTransaction.commit();
     }
 

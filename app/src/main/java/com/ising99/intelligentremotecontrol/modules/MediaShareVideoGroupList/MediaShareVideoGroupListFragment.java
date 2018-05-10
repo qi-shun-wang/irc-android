@@ -46,7 +46,6 @@ public class MediaShareVideoGroupListFragment extends Fragment implements MediaS
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //TODO-create fragment_media_share_video_group_list
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_video_group_list, container, false);
         listView = view.findViewById(R.id.media_share_video_group_list_view);
         listView.setHasFixedSize(true);

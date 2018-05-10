@@ -44,7 +44,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <FrameLayout
-        android:id="@+id/media_share_photo_list_dmr_container"
+        android:id="@+id/media_share_list_dmr_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >

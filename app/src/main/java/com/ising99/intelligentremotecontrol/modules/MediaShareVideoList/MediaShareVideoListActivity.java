@@ -25,22 +25,21 @@ public class MediaShareVideoListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO-create activity_media_share_video_list
-//        setContentView(R.layout.activity_media_share_video_list);
-        setContentView(R.layout.activity_media_share_music_list);
+        setContentView(R.layout.activity_media_share_video_list);
 
         try {
             manager.setupMediaServer(getLocalIpAddress());
         } catch (Exception e){
             e.printStackTrace();
         }
+
         String title = getIntent().getStringExtra("TITLE");
         List<Video> collection = getIntent().getParcelableArrayListExtra("ASSETS");
-        ((TextView)findViewById(R.id.activity_media_share_music_list_title)).setText(title);
+        ((TextView)findViewById(R.id.activity_media_share_video_list_title)).setText(title);
 
         MediaShareVideoListFragment mediaSharePhotoList = MediaShareVideoListRouter.setupModule(getApplicationContext(), collection, manager);
-        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_music_list_container, mediaSharePhotoList).commit();
-        findViewById(R.id.activity_media_share_music_list_back_btn).setOnClickListener((v)->finish());
+        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_video_list_container, mediaSharePhotoList).commit();
+        findViewById(R.id.activity_media_share_video_list_back_btn).setOnClickListener((v)->finish());
     }
 
     @Override

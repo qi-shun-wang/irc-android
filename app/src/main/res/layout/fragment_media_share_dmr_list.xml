@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/lightGray"
+        android:background="@color/darkGray2"
         app:layout_constraintBottom_toTopOf="@id/media_share_dmr_list"
         >
         <TextView

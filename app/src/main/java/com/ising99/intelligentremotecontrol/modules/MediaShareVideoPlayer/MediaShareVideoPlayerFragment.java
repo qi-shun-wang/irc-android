@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
@@ -28,7 +29,7 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
     private ViewGroup view;
     private SurfaceView mediaContainer;
     private SurfaceHolder mediaContainerHolder;
-    private MediaPlayer player;
+
 
     public MediaShareVideoPlayerFragment() {
         // Required empty public constructor
@@ -52,6 +53,9 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
         mediaContainerHolder = mediaContainer.getHolder();
         mediaContainerHolder.addCallback(this);
         view.findViewById(R.id.media_share_video_player_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
+        view.findViewById(R.id.media_share_video_player_playback_btn).setOnClickListener((v)->{
+            presenter.performPlayBack();
+        });
         presenter.onCreate();
         return view;
     }
@@ -87,17 +91,7 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        player = new MediaPlayer();
-        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        player.setDisplay(surfaceHolder);
-        try {
-            player.setDataSource(presenter.getFilePath());
-            player.prepare();
-            player.start();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
+        presenter.prepareMediaPlayer(surfaceHolder);
     }
 
     @Override
@@ -108,5 +102,10 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
+    }
+
+    @Override
+    public void updatePlaybackIconWith(int resID) {
+        getActivity().runOnUiThread(()-> ((ImageButton)view.findViewById(R.id.media_share_video_player_playback_btn)).setImageResource(resID));
     }
 }

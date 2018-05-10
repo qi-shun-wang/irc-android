@@ -1,5 +1,10 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.view.SurfaceHolder;
+
+import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.Interactor;
@@ -8,6 +13,8 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaS
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.Wireframe;
 
 import org.fourthline.cling.model.meta.Device;
+
+import java.io.IOException;
 
 /**
  * Created by shun on 2018/5/10 下午 02:37:57.
@@ -20,6 +27,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     private Interactor interactor;
     private Wireframe router;
     private boolean isFirstPerformedCasting = true;
+    private MediaPlayer player;
 
     MediaShareVideoPlayerPresenter() {
     }
@@ -68,8 +76,31 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     }
 
     @Override
-    public String getFilePath() {
-        return interactor.getVideoAsset().getFilePath();
+    public void prepareMediaPlayer(SurfaceHolder surfaceHolder) {
+        player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        player.setDisplay(surfaceHolder);
+        try {
+            player.setDataSource(interactor.getVideoAsset().getFilePath());
+            player.prepare();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void performPlayBack() {
+        if (player.isPlaying())
+        {
+            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+            player.pause();
+        }
+        else
+        {
+            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            player.start();
+        }
+
     }
 
     @Override
@@ -84,6 +115,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         if (isFirstPerformedCasting) router.presentDMRList();
         else prepareCasting();
     }
+
     private void prepareCasting(){
         interactor.performCast();
     }

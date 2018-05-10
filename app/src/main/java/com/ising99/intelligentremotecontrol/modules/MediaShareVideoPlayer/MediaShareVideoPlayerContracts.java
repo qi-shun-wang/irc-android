@@ -1,5 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer;
 
+import android.view.SurfaceHolder;
+
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 
@@ -13,10 +15,12 @@ import org.fourthline.cling.model.meta.Device;
 public interface MediaShareVideoPlayerContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
+        void updatePlaybackIconWith(int resID);
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        String getFilePath();
+        void prepareMediaPlayer(SurfaceHolder surfaceHolder);
+        void performPlayBack();
         void didSelected(Device device);
         void didTapOnCast();
     }

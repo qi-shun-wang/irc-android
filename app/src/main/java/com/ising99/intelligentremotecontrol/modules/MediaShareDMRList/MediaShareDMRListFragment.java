@@ -12,6 +12,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Presenter;
 
@@ -24,7 +25,7 @@ import java.util.List;
  * .
  */
 
-public class MediaShareDMRListFragment extends Fragment implements MediaShareDMRListContracts.View , DMRListAdapterDelegate {
+public class MediaShareDMRListFragment extends Fragment implements MediaShareDMRListContracts.View , BaseCollectionAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;

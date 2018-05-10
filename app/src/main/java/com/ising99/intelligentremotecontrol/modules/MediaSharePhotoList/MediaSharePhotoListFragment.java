@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Presenter;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * .
  */
 
-public class MediaSharePhotoListFragment extends Fragment implements MediaSharePhotoListContracts.View ,GridViewAdapterDelegate {
+public class MediaSharePhotoListFragment extends Fragment implements MediaSharePhotoListContracts.View ,BaseCollectionAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;

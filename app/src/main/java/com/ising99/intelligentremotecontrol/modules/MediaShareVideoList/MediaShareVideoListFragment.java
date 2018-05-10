@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.GridViewAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Presenter;
 
@@ -22,7 +22,7 @@ import java.util.List;
  * .
  */
 
-public class MediaShareVideoListFragment extends Fragment implements MediaShareVideoListContracts.View ,GridViewAdapterDelegate {
+public class MediaShareVideoListFragment extends Fragment implements MediaShareVideoListContracts.View, BaseCollectionAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;

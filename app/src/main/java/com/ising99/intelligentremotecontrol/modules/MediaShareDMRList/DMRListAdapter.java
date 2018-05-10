@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 
 import org.fourthline.cling.model.meta.RemoteDevice;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHolder> implements View.OnClickListener {
 
     private List<RemoteDevice> devices = new ArrayList<>();
-    private DMRListAdapterDelegate delegate ;
+    private BaseCollectionAdapterDelegate delegate ;
 
     @NonNull
     @Override
@@ -49,7 +50,7 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
         }
     }
 
-    public void setupDelegate(DMRListAdapterDelegate delegate) {
+    public void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
     public void setDevices(List<RemoteDevice> devices) {

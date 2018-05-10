@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.ListAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.ListViewAdapter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.MediaShareVideoGroupListContracts.Presenter;
 
@@ -22,7 +22,7 @@ import java.util.List;
  * .
  */
 
-public class MediaShareVideoGroupListFragment extends Fragment implements MediaShareVideoGroupListContracts.View ,ListAdapterDelegate {
+public class MediaShareVideoGroupListFragment extends Fragment implements MediaShareVideoGroupListContracts.View ,BaseCollectionAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;
@@ -47,9 +47,8 @@ public class MediaShareVideoGroupListFragment extends Fragment implements MediaS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO-create fragment_media_share_video_group_list
-        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_group_list, container, false);
-        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_photo_group_list, container, false);
-        listView = view.findViewById(R.id.media_share_photo_group_list_view);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_video_group_list, container, false);
+        listView = view.findViewById(R.id.media_share_video_group_list_view);
         listView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         listView.setLayoutManager(layoutManager);

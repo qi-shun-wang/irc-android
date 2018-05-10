@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCSelectModeDelegate;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ModePanelFragment extends Fragment implements ModeListAdapterDelegate {
+public class ModePanelFragment extends Fragment implements BaseCollectionAdapterDelegate {
 
     private final int DEFAULT_MODE_TAG = 0;
     private final int NORMAL_MODE_TAG = 1;

@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.GridViewAdapterDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewHolder>{
 
     private List<Music> assets = new ArrayList<>();
-    private GridViewAdapterDelegate delegate;
+    private BaseCollectionAdapterDelegate delegate;
 
     @NonNull
     @Override
@@ -61,7 +61,7 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
         }
     }
 
-    public void setupDelegate(GridViewAdapterDelegate delegate) {
+    public void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
 

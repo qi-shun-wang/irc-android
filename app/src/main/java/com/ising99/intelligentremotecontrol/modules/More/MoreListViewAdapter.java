@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 public class MoreListViewAdapter extends RecyclerView.Adapter <MoreListViewAdapter.ViewHolder>{
 
     private List<MoreItem> moreList = new ArrayList<>();
-    private MoreListAdapterDelegate delegate;
+    private BaseCollectionAdapterDelegate delegate;
 
     @NonNull
     @Override
@@ -67,15 +68,11 @@ public class MoreListViewAdapter extends RecyclerView.Adapter <MoreListViewAdapt
         }
     }
 
-    void setupDelegate(MoreListAdapterDelegate delegate) {
+    void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
     void setMores(List<MoreItem> moreList) {
         this.moreList = moreList;
     }
 
-}
-
-interface MoreListAdapterDelegate {
-    void onItemClick(View view , int position);
 }

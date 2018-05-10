@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class ListViewAdapter extends  RecyclerView.Adapter<ListViewAdapter.ViewHolder>  {
 
-    private ModeListAdapterDelegate delegate;
+    private BaseCollectionAdapterDelegate delegate;
     private List<ModeItem> modes = new ArrayList<>();
 
     @NonNull
@@ -65,15 +66,11 @@ public class ListViewAdapter extends  RecyclerView.Adapter<ListViewAdapter.ViewH
         }
     }
 
-    void setupDelegate(ModeListAdapterDelegate delegate) {
+    void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
     void setModes(List<ModeItem> modes) {
         this.modes = modes;
     }
 
-}
-
-interface ModeListAdapterDelegate {
-    void onItemClick(View view , int position);
 }

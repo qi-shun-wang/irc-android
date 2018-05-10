@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.Device;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHolder> {
 
-    private DMRListAdapterDelegate delegate;
+    private BaseCollectionAdapterDelegate delegate;
     private List<Device> devices = new ArrayList<>();
     private Handler handler = new Handler();
 
@@ -83,14 +84,10 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         }
     }
 
-    void setupDelegate(DMRListAdapterDelegate delegate) {
+    void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
     void setDevices(List<Device> devices) {
         this.devices = devices;
     }
-}
-
-interface DMRListAdapterDelegate {
-    void onItemClick(View view , int position);
 }

@@ -3,7 +3,6 @@ package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListContracts.Presenter;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,12 +21,11 @@ import java.util.List;
  * .
  */
 
-public class MediaSharePhotoGroupListFragment extends Fragment implements MediaSharePhotoGroupListContracts.View ,ListAdapterDelegate {
+public class MediaSharePhotoGroupListFragment extends Fragment implements MediaSharePhotoGroupListContracts.View ,BaseCollectionAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;
 
-    private RecyclerView listView;
     private ListViewAdapter adapter;
 
     public MediaSharePhotoGroupListFragment() {
@@ -48,7 +46,7 @@ public class MediaSharePhotoGroupListFragment extends Fragment implements MediaS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_photo_group_list, container, false);
-        listView = view.findViewById(R.id.media_share_photo_group_list_view);
+        RecyclerView listView = view.findViewById(R.id.media_share_photo_group_list_view);
         listView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         listView.setLayoutManager(layoutManager);

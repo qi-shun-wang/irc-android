@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Presenter;
 
@@ -19,7 +20,7 @@ import com.ising99.intelligentremotecontrol.modules.More.MoreContracts.Presenter
  * .
  */
 
-public class MoreFragment extends Fragment implements MoreContracts.View ,MoreListAdapterDelegate{
+public class MoreFragment extends Fragment implements MoreContracts.View, BaseCollectionAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;

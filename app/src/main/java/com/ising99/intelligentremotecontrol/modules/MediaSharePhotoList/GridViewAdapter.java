@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.List;
 public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.ViewHolder>{
 
     private List<PhotoItem> collection = new ArrayList<>();
-    private GridViewAdapterDelegate delegate;
+    private BaseCollectionAdapterDelegate delegate;
 
     @NonNull
     @Override
@@ -65,7 +66,7 @@ public class GridViewAdapter extends RecyclerView.Adapter <GridViewAdapter.ViewH
         }
     }
 
-    public void setupDelegate(GridViewAdapterDelegate delegate) {
+    public void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
 

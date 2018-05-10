@@ -3,7 +3,6 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicList;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Presenter;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.GridViewAdapterDelegate;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ import java.util.List;
  * .
  */
 
-public class MediaShareMusicListFragment extends Fragment implements MediaShareMusicListContracts.View ,GridViewAdapterDelegate {
+public class MediaShareMusicListFragment extends Fragment implements MediaShareMusicListContracts.View ,BaseCollectionAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;

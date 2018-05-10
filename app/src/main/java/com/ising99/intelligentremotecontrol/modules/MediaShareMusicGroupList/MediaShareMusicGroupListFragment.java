@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.Presenter;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.ListAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.ListViewAdapter;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * .
  */
 
-public class MediaShareMusicGroupListFragment extends Fragment implements MediaShareMusicGroupListContracts.View ,ListAdapterDelegate {
+public class MediaShareMusicGroupListFragment extends Fragment implements MediaShareMusicGroupListContracts.View ,BaseCollectionAdapterDelegate {
 
     private Presenter presenter;
     private ViewGroup view;

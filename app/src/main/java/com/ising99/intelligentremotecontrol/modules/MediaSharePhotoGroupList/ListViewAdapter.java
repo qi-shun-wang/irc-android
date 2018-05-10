@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHolder> {
 
-    private ListAdapterDelegate delegate;
+    private BaseCollectionAdapterDelegate delegate;
     private List<String> groups = new ArrayList<>();
 
     @NonNull
@@ -64,7 +65,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         }
     }
 
-    public void setupDelegate(ListAdapterDelegate delegate) {
+    public void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
     public void setGroups(List<String> groups)

@@ -16,11 +16,17 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void updatePlaybackIconWith(int resID);
+        void setupSeekBarMaxScale(int scale);
+        void updateCurrentTimeLabel(String text);
+        void updateEndTimeLabel(String text);
+        void updateSeekBarLocation(int scale);
     }
 
     interface Presenter extends BaseContracts.Presenter {
         void prepareMediaPlayer(SurfaceHolder surfaceHolder);
         void performPlayBack();
+        void performedSeekAt(int secScale);
+        void performingSeekAt(int secScale);
         void didSelected(Device device);
         void didTapOnCast();
     }

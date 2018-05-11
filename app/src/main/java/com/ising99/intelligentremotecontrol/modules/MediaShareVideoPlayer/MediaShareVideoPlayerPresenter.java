@@ -15,6 +15,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaS
 import org.fourthline.cling.model.meta.Device;
 
 import java.io.IOException;
+import java.util.Timer;
 
 /**
  * Created by shun on 2018/5/10 下午 02:37:57.
@@ -28,6 +29,10 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     private Wireframe router;
     private boolean isFirstPerformedCasting = true;
     private MediaPlayer player;
+
+    //TODO-init worker for update time travel scale
+    private long currentMillis = 0;
+    private Timer worker;
 
     MediaShareVideoPlayerPresenter() {
     }
@@ -63,7 +68,18 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
 
     @Override
     public void onResume() {
+        long millis = interactor.getVideoAsset().getDuration();
+        view.setupSeekBarMaxScale( (int)millis/1000 );
+        view.updateEndTimeLabel("-" + transformedFrom(millis));
+        view.updateCurrentTimeLabel("00:00:00");
+    }
 
+    private String transformedFrom(long millis) {
+        long second = (millis / 1000) % 60;
+        long minute = (millis / (1000 * 60)) % 60;
+        long hour = (millis / (1000 * 60 * 60)) % 24;
+        String time = String.format("%02d:%02d:%02d", hour, minute, second);
+        return time;
     }
 
     @Override
@@ -101,6 +117,18 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
             player.start();
         }
 
+    }
+
+    @Override
+    public void performedSeekAt(int secScale) {
+        player.seekTo(secScale*1000);
+    }
+
+    @Override
+    public void performingSeekAt(int secScale) {
+
+        view.updateEndTimeLabel("-" + transformedFrom((interactor.getVideoAsset().getDuration() - secScale*1000)));
+        view.updateCurrentTimeLabel(transformedFrom(secScale*1000));
     }
 
     @Override

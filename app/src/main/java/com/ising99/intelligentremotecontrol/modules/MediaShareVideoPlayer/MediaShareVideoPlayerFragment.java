@@ -1,29 +1,28 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer;
 
 import android.content.Context;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.Presenter;
-
-import java.io.IOException;
 
 /**
  * Created by Shun on 2018/5/10 下午 02:37:57.
  * .
  */
 
-public class MediaShareVideoPlayerFragment extends Fragment implements MediaShareVideoPlayerContracts.View, SurfaceHolder.Callback {
+public class MediaShareVideoPlayerFragment extends Fragment implements MediaShareVideoPlayerContracts.View, SurfaceHolder.Callback ,SeekBar.OnSeekBarChangeListener{
 
     private Presenter presenter;
     private ViewGroup view;
@@ -56,6 +55,7 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
         view.findViewById(R.id.media_share_video_player_playback_btn).setOnClickListener((v)->{
             presenter.performPlayBack();
         });
+        ((SeekBar)view.findViewById(R.id.seekBar)).setOnSeekBarChangeListener(this);
         presenter.onCreate();
         return view;
     }
@@ -107,5 +107,39 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
     @Override
     public void updatePlaybackIconWith(int resID) {
         getActivity().runOnUiThread(()-> ((ImageButton)view.findViewById(R.id.media_share_video_player_playback_btn)).setImageResource(resID));
+    }
+
+    @Override
+    public void setupSeekBarMaxScale(int scale) {
+        ((SeekBar)view.findViewById(R.id.seekBar)).setMax(scale);
+    }
+
+    @Override
+    public void updateCurrentTimeLabel(String text) {
+        ((TextView)view.findViewById(R.id.current_time_text)).setText(text);
+    }
+
+    @Override
+    public void updateEndTimeLabel(String text) {
+        ((TextView)view.findViewById(R.id.end_time_text)).setText(text);
+    }
+
+    @Override
+    public void updateSeekBarLocation(int scale) {
+        ((SeekBar)view.findViewById(R.id.seekBar)).setProgress(scale);
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+        presenter.performingSeekAt(i);
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        presenter.performedSeekAt(seekBar.getProgress());
     }
 }

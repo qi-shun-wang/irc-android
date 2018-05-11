@@ -116,17 +116,18 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
 
     @Override
     public void updateCurrentTimeLabel(String text) {
-        ((TextView)view.findViewById(R.id.current_time_text)).setText(text);
+        getActivity().runOnUiThread(()->((TextView)view.findViewById(R.id.current_time_text)).setText(text));
+
     }
 
     @Override
     public void updateEndTimeLabel(String text) {
-        ((TextView)view.findViewById(R.id.end_time_text)).setText(text);
+        getActivity().runOnUiThread(()->((TextView)view.findViewById(R.id.end_time_text)).setText(text));
     }
 
     @Override
     public void updateSeekBarLocation(int scale) {
-        ((SeekBar)view.findViewById(R.id.seekBar)).setProgress(scale);
+        getActivity().runOnUiThread(()->((SeekBar)view.findViewById(R.id.seekBar)).setProgress(scale));
     }
 
     @Override

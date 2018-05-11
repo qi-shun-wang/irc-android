@@ -32,6 +32,8 @@
                 android:text="00:00"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
+                android:paddingStart="4dp"
+                android:paddingBottom="4dp"
                 />
 
             <TextView
@@ -40,6 +42,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                android:paddingEnd="4dp"
                 android:text="59:59"/>
 
             <SeekBar
@@ -51,6 +54,7 @@
                 android:thumbTint="@color/red"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:paddingBottom="4dp"
                 />
 
         </android.support.constraint.ConstraintLayout>

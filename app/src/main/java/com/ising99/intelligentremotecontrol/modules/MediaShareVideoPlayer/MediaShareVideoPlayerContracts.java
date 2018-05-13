@@ -35,6 +35,9 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
         Video getVideoAsset();
         void stopCast();
         void performCast();
+        void performPlay();
+        void performPause();
+        void performSeekAt(String relativeTimeTarget);
         void setupCurrentDevice(Device device);
     }
 

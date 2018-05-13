@@ -14,6 +14,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaS
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.Wireframe;
 
 import org.fourthline.cling.model.meta.Device;
+import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -29,7 +30,8 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     private View view;
     private Interactor interactor;
     private Wireframe router;
-    private boolean isFirstPerformedCasting = true;
+    private boolean isRemoteMode = false;
+    private boolean isRemotePlaying = false;
     private MediaPlayer player;
 
     private int currentSec = 0;
@@ -106,24 +108,46 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
 
     @Override
     public void performPlayBack() {
-        if (player.isPlaying())
+        if (isRemoteMode)
         {
-            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
-            player.pause();
+            if(isRemotePlaying)
+            {
+                view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+                interactor.performPause();
+            }
+            else
+            {
+                view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+                interactor.performPlay();
+            }
+            isRemotePlaying = !isRemotePlaying;
         }
         else
         {
-            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
-            player.start();
+            if (player.isPlaying())
+            {
+                view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+                player.pause();
+            }
+            else
+            {
+                view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+                player.start();
+            }
         }
-
     }
 
     @Override
     public void performedSeekAt(int secScale) {
         currentSec = secScale;
-        player.seekTo(currentSec*1000);
-        //TODO-remote seek/paly/pause/stop
+        if (isRemoteMode)
+        {
+            interactor.performSeekAt(transformedFrom(secScale*1000));
+        }
+        else
+        {
+            player.seekTo(currentSec * 1000);
+        }
     }
 
     @Override
@@ -133,19 +157,19 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
 
     @Override
     public void didSelected(Device device) {
-        isFirstPerformedCasting = false;
-        interactor.setupCurrentDevice(device);
-        prepareCasting();
+        isRemoteMode = device instanceof RemoteDevice;
+        if (isRemoteMode)
+        {
+            isRemotePlaying = true;
+            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            interactor.setupCurrentDevice(device);
+            interactor.performCast();
+        }
     }
 
     @Override
     public void didTapOnCast() {
-        if (isFirstPerformedCasting) router.presentDMRList();
-        else prepareCasting();
-    }
-
-    private void prepareCasting(){
-        interactor.performCast();
+        router.presentDMRList();
     }
 
     private void updateLabels(int secScale){
@@ -169,7 +193,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         worker.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (player.isPlaying() ) {
+                if (player.isPlaying()||isRemotePlaying) {
                     currentSec++;
                     long duration = interactor.getVideoAsset().getDuration();
                     if (currentSec>=duration/1000){
@@ -185,6 +209,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
                     view.updateSeekBarLocation(currentSec);
                     Log.v("==currentSec==>","currentSec:"+currentSec);
                 }
+
             }
         },0,1000);
     }

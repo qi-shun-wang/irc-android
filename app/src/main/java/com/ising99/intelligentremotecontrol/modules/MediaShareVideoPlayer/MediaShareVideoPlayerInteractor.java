@@ -24,7 +24,7 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
     private InteractorOutput output;
     private Context context;
     private Video asset;
-    private DLNAMediaManager manager;
+    private DLNAMediaManager manager;//TODO-DLNAMediaManager callback event
     private Timer worker;
     private Device currentCastingDevice;
 
@@ -66,7 +66,7 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
             public void run() {
                 try {
                     String path = URLEncoder.encode(asset.getFilePath(), "UTF-8");
-                    manager.play(currentCastingDevice,"/video" + path,"");
+                    manager.setAVTransportURI(currentCastingDevice,"/video" + path);
                 } catch (UnsupportedEncodingException e){
                     e.printStackTrace();
                 }
@@ -74,6 +74,20 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
         },1000,asset.getDuration());
     }
 
+    @Override
+    public void performSeekAt(String relativeTimeTarget) {
+        manager.seek(currentCastingDevice, relativeTimeTarget);
+    }
+
+    @Override
+    public void performPause() {
+        manager.pause(currentCastingDevice);
+    }
+
+    @Override
+    public void performPlay() {
+        manager.play(currentCastingDevice);
+    }
 
     @Override
     public void setupCurrentDevice(Device device) {

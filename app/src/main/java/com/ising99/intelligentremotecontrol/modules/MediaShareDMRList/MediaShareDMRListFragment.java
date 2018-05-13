@@ -16,6 +16,7 @@ import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegat
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Presenter;
 
+import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.util.List;
@@ -94,7 +95,7 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
     }
 
     @Override
-    public void reloadDMRList(List<RemoteDevice> devices) {
+    public void reloadDMRList(List<Device> devices) {
         getActivity().runOnUiThread(() -> {
             adapter.setDevices(devices);
             adapter.notifyDataSetChanged();

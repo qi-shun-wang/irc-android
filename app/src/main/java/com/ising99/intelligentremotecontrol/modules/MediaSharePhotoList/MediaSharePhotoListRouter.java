@@ -59,7 +59,7 @@ public class MediaSharePhotoListRouter implements Wireframe , MediaShareDMRListF
 
     @Override
     public void presentDMRList() {
-        dmrList =  MediaShareDMRListRouter.setupModule(context,this);
+        dmrList =  MediaShareDMRListRouter.setupModule(context,this,false);
 
         Blurry.with(((MediaSharePhotoListFragment)view).getActivity().getApplicationContext()).radius(10).sampling(2).onto(((MediaSharePhotoListFragment)view).getActivity().findViewById(R.id.media_share_photo_list_container));
         FragmentTransaction fragmentTransaction = ((MediaSharePhotoListFragment)view).getFragmentManager().beginTransaction();

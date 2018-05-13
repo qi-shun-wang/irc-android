@@ -57,7 +57,7 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
 
     @Override
     public void presentDMRList() {
-        dmrList =  MediaShareDMRListRouter.setupModule(context,this);
+        dmrList =  MediaShareDMRListRouter.setupModule(context,this,true);
 
         Blurry.with(((MediaShareVideoPlayerFragment)view).getActivity().getApplicationContext()).radius(10).sampling(2).onto(((MediaShareVideoPlayerFragment)view).getActivity().findViewById(R.id.media_share_video_player_container));
         FragmentTransaction fragmentTransaction = ((MediaShareVideoPlayerFragment)view).getFragmentManager().beginTransaction();
@@ -66,7 +66,6 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
         fragmentTransaction.replace(R.id.media_share_list_dmr_container, dmrList, "MediaShareDMRListFragment");
         fragmentTransaction.commit();
     }
-
 
     @Override
     public void didClosed() {

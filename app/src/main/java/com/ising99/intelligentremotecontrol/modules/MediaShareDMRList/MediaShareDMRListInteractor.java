@@ -10,6 +10,7 @@ import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.UpnpServiceImpl;
 import org.fourthline.cling.android.AndroidUpnpServiceConfiguration;
 import org.fourthline.cling.model.message.header.UDAServiceTypeHeader;
+import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.LocalDevice;
 import org.fourthline.cling.model.meta.RemoteDevice;
 import org.fourthline.cling.model.types.UDAServiceType;
@@ -29,7 +30,7 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
     private InteractorOutput output;
     private Context context;
     private UpnpService service ;
-    private ArrayList<RemoteDevice> devices = new ArrayList<>();
+    private ArrayList<Device> devices = new ArrayList<>();
 
     MediaShareDMRListInteractor(Context context) {
         this.context = context;
@@ -65,7 +66,7 @@ public class MediaShareDMRListInteractor implements MediaShareDMRListContracts.I
     }
 
     @Override
-    public List<RemoteDevice> getCurrentDevices() {
+    public List<Device> getCurrentDevices() {
         return devices;
     }
 

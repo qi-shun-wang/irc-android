@@ -98,11 +98,11 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <!--<FrameLayout-->
-    <!--android:id="@+id/media_share_list_dmr_container"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--&gt;-->
-    <!--</FrameLayout>-->
+    <FrameLayout
+        android:id="@+id/media_share_list_dmr_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

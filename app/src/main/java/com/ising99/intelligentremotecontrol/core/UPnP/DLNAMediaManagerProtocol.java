@@ -8,16 +8,15 @@ import org.fourthline.cling.model.meta.Device;
 
 public interface DLNAMediaManagerProtocol {
 
+    boolean setAVTransportURI(Device device, String path);
     /**
      * Play the video with the video path.
      *
      * @param device
      *            The device be controlled.
-     * @param path
-     *            The path of the video.
      * @return If is success to play the video.
      */
-    boolean play(Device device, String path, String data);
+    boolean play(Device device);
 
     /**
      * Go on playing the video from the position.

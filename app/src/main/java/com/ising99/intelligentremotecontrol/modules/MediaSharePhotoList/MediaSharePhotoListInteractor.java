@@ -68,7 +68,7 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
                 if (cursor >= assets.size()) return;
                 try {
                     String path = URLEncoder.encode( assets.get(cursor).getFilePath(), "UTF-8");
-                    manager.play(currentCastingDevice,"/image" + path,"");
+                    manager.setAVTransportURI(currentCastingDevice,"/image" + path);
                 } catch (UnsupportedEncodingException e){
                     e.printStackTrace();
                 }

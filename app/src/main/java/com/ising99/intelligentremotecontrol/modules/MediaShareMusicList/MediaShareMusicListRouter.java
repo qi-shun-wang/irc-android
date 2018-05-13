@@ -59,7 +59,7 @@ public class MediaShareMusicListRouter implements Wireframe ,MediaShareDMRListFr
 
     @Override
     public void presentDMRList() {
-        dmrList =  MediaShareDMRListRouter.setupModule(context,this);
+        dmrList =  MediaShareDMRListRouter.setupModule(context,this,false);
 
         Blurry.with(((MediaShareMusicListFragment)view).getActivity().getApplicationContext()).radius(10).sampling(2).onto(((MediaShareMusicListFragment)view).getActivity().findViewById(R.id.media_share_music_list_container));
         FragmentTransaction fragmentTransaction = ((MediaShareMusicListFragment)view).getFragmentManager().beginTransaction();

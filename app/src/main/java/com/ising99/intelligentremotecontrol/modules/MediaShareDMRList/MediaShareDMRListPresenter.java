@@ -7,8 +7,14 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShare
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Wireframe;
 
-import org.fourthline.cling.model.meta.RemoteDevice;
+import org.fourthline.cling.model.ValidationException;
+import org.fourthline.cling.model.meta.Device;
+import org.fourthline.cling.model.meta.DeviceIdentity;
+import org.fourthline.cling.model.meta.LocalDevice;
+import org.fourthline.cling.model.types.UDN;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,9 +31,18 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
     private MediaShareDMRListFragmentDelegate delegate;
     private Timer startSearchTask;
     private Timer stopSearchTask ;
-
-    MediaShareDMRListPresenter(MediaShareDMRListFragmentDelegate delegate) {
+    private boolean prependedLocalDevice = false;
+    private  Device localDevice;
+    MediaShareDMRListPresenter(MediaShareDMRListFragmentDelegate delegate, boolean prependedLocalDevice) {
         this.delegate = delegate;
+        this.prependedLocalDevice = prependedLocalDevice;
+        if (prependedLocalDevice) {
+            try {
+                localDevice = new LocalDevice(new DeviceIdentity(UDN.valueOf("Android Phone")));
+            } catch (ValidationException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void performTasks(){
@@ -45,12 +60,23 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
         stopSearchTask.schedule(new TimerTask() {
             @Override
             public void run() {
-                view.reloadDMRList(interactor.getCurrentDevices());
+                if (prependedLocalDevice)
+                {
+                    List<Device> devices = new ArrayList<>();
+                    devices.add(localDevice);
+                    devices.addAll(interactor.getCurrentDevices());
+                    view.reloadDMRList(devices);
+                }
+                else
+                {
+                    view.reloadDMRList(interactor.getCurrentDevices());
+                }
+
                 view.updateSearchedStatus("已找到的設備");
                 view.stopSearchIconRotation();
                 interactor.stopSearchDMR();
             }
-        },9000);
+        },6000);
     }
 
     @Override
@@ -102,7 +128,23 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
 
     @Override
     public void prepareCastDeviceAt(int index) {
-        RemoteDevice device = interactor.getCurrentDevices().get(index);
+        Device device;
+        if (prependedLocalDevice)
+        {
+            if (index == 0)
+            {
+                device = localDevice;
+            }
+            else
+            {
+                device = interactor.getCurrentDevices().get(index - 1);
+            }
+        }
+        else
+        {
+            device = interactor.getCurrentDevices().get(index);
+        }
+
         delegate.didSelected(device);
         delegate.didClosed();
     }

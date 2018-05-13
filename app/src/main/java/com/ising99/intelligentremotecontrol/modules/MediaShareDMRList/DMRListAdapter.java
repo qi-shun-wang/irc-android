@@ -11,14 +11,15 @@ import android.widget.TextView;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 
-import org.fourthline.cling.model.meta.RemoteDevice;
+import org.fourthline.cling.model.meta.Device;
+import org.fourthline.cling.model.meta.LocalDevice;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHolder> implements View.OnClickListener {
 
-    private List<RemoteDevice> devices = new ArrayList<>();
+    private List<Device> devices = new ArrayList<>();
     private BaseCollectionAdapterDelegate delegate ;
 
     @NonNull
@@ -33,7 +34,17 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title.setText(devices.get(position).getDetails().getFriendlyName());
+        String title;
+        if(devices.get(position) instanceof LocalDevice)
+        {
+            title = "Android Phone";
+        }
+        else
+        {
+            title = devices.get(position).getDetails().getFriendlyName();
+        }
+
+        holder.title.setText(title);
         holder.icon.setImageResource(R.drawable.kodpluswhite);
         holder.itemView.setTag(position);
     }
@@ -53,7 +64,7 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
     public void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
-    public void setDevices(List<RemoteDevice> devices) {
+    public void setDevices(List<Device> devices) {
         this.devices = devices;
     }
 

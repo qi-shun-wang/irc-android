@@ -21,11 +21,11 @@ public class MediaShareDMRListRouter implements Wireframe {
         this.context = context;
     }
 
-    public static MediaShareDMRListFragment setupModule(Context context, MediaShareDMRListFragmentDelegate delegate) {
+    public static MediaShareDMRListFragment setupModule(Context context, MediaShareDMRListFragmentDelegate delegate,boolean prependedLocalDevice) {
 
         MediaShareDMRListFragment view = new MediaShareDMRListFragment();
         MediaShareDMRListInteractor interactor = new MediaShareDMRListInteractor(context);
-        MediaShareDMRListPresenter presenter = new MediaShareDMRListPresenter(delegate);
+        MediaShareDMRListPresenter presenter = new MediaShareDMRListPresenter(delegate, prependedLocalDevice);
         MediaShareDMRListRouter router = new MediaShareDMRListRouter(context);
 
         view.setupPresenter(presenter);

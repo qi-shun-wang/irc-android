@@ -2,7 +2,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareDMRList;
 
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
-import org.fourthline.cling.model.meta.RemoteDevice;
+import org.fourthline.cling.model.meta.Device;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public interface MediaShareDMRListContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
-        void reloadDMRList(List<RemoteDevice> devices);
+        void reloadDMRList(List<Device> devices);
         void updateSearchedStatus(String text);
         void startSearchIconRotation();
         void stopSearchIconRotation();
@@ -29,7 +29,7 @@ public interface MediaShareDMRListContracts extends BaseContracts {
     interface Interactor extends BaseContracts.Interactor {
         void startSearchDMR();
         void stopSearchDMR();
-        List<RemoteDevice> getCurrentDevices();
+        List<Device> getCurrentDevices();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

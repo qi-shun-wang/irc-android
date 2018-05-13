@@ -68,7 +68,7 @@ public class MediaShareMusicListInteractor implements MediaShareMusicListContrac
                 if (cursor >= assets.size()) return;
                 try {
                     String path = URLEncoder.encode( assets.get(cursor).getFilePath(), "UTF-8");
-                    manager.play(currentCastingDevice,"/music" + path,"");
+                    manager.setAVTransportURI(currentCastingDevice,"/music" + path);
                 } catch (UnsupportedEncodingException e){
                     e.printStackTrace();
                 }

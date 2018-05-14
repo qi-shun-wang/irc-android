@@ -92,7 +92,7 @@ public class GamePresenter implements Presenter, InteractorOutput {
 
     @Override
     public void performSelectAction() {
-        interactor.perform(SendCode.KEYCODE_ENTER);
+        interactor.perform(SendCode.KEYCODE_DPAD_CENTER);
     }
 
     @Override

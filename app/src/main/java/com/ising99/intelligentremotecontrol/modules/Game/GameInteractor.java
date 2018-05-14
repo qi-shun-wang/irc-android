@@ -9,7 +9,6 @@ import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.db.DeviceEntity;
 import com.ising99.intelligentremotecontrol.db.DeviceEntityDao;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.Game.GameContracts;
 import com.ising99.intelligentremotecontrol.modules.Game.GameContracts.InteractorOutput;
 
 import org.greenrobot.greendao.query.Query;

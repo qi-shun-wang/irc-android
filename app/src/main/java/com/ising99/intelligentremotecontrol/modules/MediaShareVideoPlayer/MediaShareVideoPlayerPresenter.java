@@ -17,6 +17,7 @@ import org.fourthline.cling.model.meta.Device;
 import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.io.IOException;
+import java.util.Formatter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -185,7 +186,10 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         long second = (millis / 1000) % 60;
         long minute = (millis / (1000 * 60)) % 60;
         long hour = (millis / (1000 * 60 * 60)) % 24;
-        return String.format("%02d:%02d:%02d", hour, minute, second);
+        StringBuilder stringBuilder = new StringBuilder();
+        Formatter fmt = new Formatter(stringBuilder);
+        fmt.format("%02d:%02d:%02d", hour, minute, second);
+        return stringBuilder.toString();
     }
 
     private void prepareWorker(){

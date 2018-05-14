@@ -1,8 +1,12 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShare;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -90,5 +94,24 @@ public class MediaShareFragment extends Fragment implements MediaShareContracts.
     @Override
     public void didSelectedAt(int position) {
         presenter.didSelectAt(position);
+    }
+
+    @Override
+    public void showAlert() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        alertBuilder.setCancelable(true);
+        alertBuilder.setTitle("請求檔案存取權限");
+        alertBuilder.setMessage("媒體分享功能需要檔案存取的權限!");
+        alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        200);
+            }
+        });
+
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
     }
 }

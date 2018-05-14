@@ -12,15 +12,16 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        tools:ignore="InnerclassSeparator"
         android:name=".App"
-        android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".modules.Root.RootActivity"
             android:screenOrientation="portrait"
@@ -46,7 +47,7 @@
         <activity android:name=".modules.MediaShareMusicList.MediaShareMusicListActivity" />
         <activity android:name=".modules.MediaShareVideoGroupList.MediaShareVideoGroupListActivity" />
         <activity android:name=".modules.MediaShareVideoList.MediaShareVideoListActivity" />
-        <activity android:name=".modules.MediaShareVideoPlayer.MediaShareVideoPlayerActivity"></activity>
+        <activity android:name=".modules.MediaShareVideoPlayer.MediaShareVideoPlayerActivity"/>
     </application>
 
 </manifest>

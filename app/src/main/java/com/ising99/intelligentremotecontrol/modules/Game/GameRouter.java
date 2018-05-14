@@ -1,7 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.Game;
 
 import android.content.Context;
-import android.app.Fragment;
 
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
 import com.ising99.intelligentremotecontrol.modules.Game.GameContracts.Wireframe;

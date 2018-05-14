@@ -12,7 +12,7 @@ import java.util.List;
 public interface MediaShareContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
-
+        void showAlert();
     }
 
     interface Presenter extends BaseContracts.Presenter {
@@ -21,7 +21,7 @@ public interface MediaShareContracts extends BaseContracts {
     }
 
     interface Interactor extends BaseContracts.Interactor {
-
+        boolean isGrantedPermission();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

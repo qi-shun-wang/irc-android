@@ -89,7 +89,7 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
 
     @Override
     public void dispatchEnterAction() {
-        interactor.perform(SendCode.KEYCODE_ENTER);
+        interactor.perform(SendCode.KEYCODE_DPAD_CENTER);
     }
 
     @Override
@@ -129,17 +129,17 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     public void dispatchChannelAction(boolean isIncrease) {
         if (isIncrease)
         {
-            interactor.perform(SendCode.KEYCODE_PAGE_UP);
+            interactor.perform(SendCode.KEYCODE_CHANNEL_UP);
         }
         else
         {
-            interactor.perform(SendCode.KEYCODE_PAGE_DOWN);
+            interactor.perform(SendCode.KEYCODE_CHANNEL_DOWN);
         }
     }
 
     @Override
     public void dispatchKodAction() {
-        interactor.perform(SendCode.KEYCODE_KOD_PLUS);
+        interactor.perform(SendCode.KEYCODE_HOME);
     }
 
     @Override

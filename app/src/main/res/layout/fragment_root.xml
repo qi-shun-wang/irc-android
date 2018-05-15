@@ -13,6 +13,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/root_wifi_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -25,26 +26,34 @@
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
                 android:src="@drawable/device_disconnect_icon" />
-            <Button
+
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/root_wifi_btn"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
-                android:background="@color/clear"
-                android:gravity="fill"
-                android:textAllCaps="false"
                 android:text="@string/root_wifi_text"
+                android:gravity="start|center"
                 android:textSize="18sp"
-                android:textColor="@color/white" />
+                android:maxLines="1"
+                android:lines="1"
+
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="18sp"
+                app:autoSizeMinTextSize="6sp"
+                app:autoSizeStepGranularity="1sp"
+                android:background="@color/clear"
+                android:textColor="@color/white"
+                />
             <!--<ImageButton-->
-                <!--android:id="@+id/root_scan_qrcode_btn"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="2"-->
-                <!--android:layout_margin="8dp"-->
-                <!--android:background="@color/clear"-->
-                <!--android:scaleType="fitCenter"-->
-                <!--android:src="@drawable/root_scan_qrcode_icon" />-->
+            <!--android:id="@+id/root_scan_qrcode_btn"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="2"-->
+            <!--android:layout_margin="8dp"-->
+            <!--android:background="@color/clear"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/root_scan_qrcode_icon" />-->
         </LinearLayout>
 
     </RelativeLayout>

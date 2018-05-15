@@ -2,10 +2,10 @@ package com.ising99.intelligentremotecontrol.modules.Root;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.ising99.intelligentremotecontrol.R;
@@ -81,7 +81,8 @@ public class RootFragment extends Fragment implements RootContracts.View {
 
     @Override
     public void setupActionBinding() {
-        view.findViewById(R.id.root_wifi_btn).setOnClickListener(showDeviceDiscoveryAction);
+
+        view.findViewById(R.id.root_wifi_container).setOnClickListener(showDeviceDiscoveryAction);
     }
 
     @Override
@@ -98,12 +99,12 @@ public class RootFragment extends Fragment implements RootContracts.View {
 
     @Override
     public void updateConnectedDeviceStatus(String text) {
-        ((Button)view.findViewById(R.id.root_wifi_btn)).setText(text);
+        ((AppCompatTextView)view.findViewById(R.id.root_wifi_btn)).setText(text);
     }
 
     @Override
     public void updateNetworkStatus(String text) {
-//        ((Button)view.findViewById(R.id.root_wifi_btn)).setText(text);
+//        ((AppCompatTextView)view.findViewById(R.id.root_wifi_btn)).setText(text);
     }
 
     @Override

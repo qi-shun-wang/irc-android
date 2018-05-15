@@ -198,9 +198,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:default_icon="@drawable/irc_default_ds_icon"
-                app:down_icon="@drawable/irc_default_ds_minus_icon"
-                app:up_icon="@drawable/irc_default_ds_plus_icon"/>
+                app:default_icon="@drawable/irc_default_ds_arrow_icon"
+                app:down_icon="@drawable/irc_default_ds_arrow_minus_icon"
+                app:up_icon="@drawable/irc_default_ds_arrow_plus_icon"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

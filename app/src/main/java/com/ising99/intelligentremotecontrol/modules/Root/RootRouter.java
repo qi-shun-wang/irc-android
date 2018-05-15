@@ -65,15 +65,15 @@ public class RootRouter implements Wireframe {
         RemoteControlCoAPService service = new RemoteControlCoAPService();
 
         IRCFragment irc = IRCRouter.setupModule(context, service);
-        KaraokeFragment karaoke = KaraokeRouter.setupModule(context);
-        MoreFragment more = MoreRouter.setupModule(context);
-        WebBrowserFragment web = WebBrowserRouter.setupModule(context);
+//        KaraokeFragment karaoke = KaraokeRouter.setupModule(context);
+//        MoreFragment more = MoreRouter.setupModule(context);
+//        WebBrowserFragment web = WebBrowserRouter.setupModule(context);
 //        MovieFragment movie = MovieRouter.setupModule(context);
         MediaShareFragment mediaShare = MediaShareRouter.setupModule(context);
         router.fragments.add(irc);
-        router.fragments.add(karaoke);
-        router.fragments.add(web);
-        router.fragments.add(more);
+//        router.fragments.add(karaoke);
+//        router.fragments.add(web);
+//        router.fragments.add(more);
         router.fragments.add(mediaShare);
 //        router.fragments.add(movie);
         return view;

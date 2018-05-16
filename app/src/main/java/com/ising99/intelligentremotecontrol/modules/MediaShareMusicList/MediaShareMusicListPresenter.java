@@ -91,8 +91,9 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void didSelectedMusicAt(int position) {
-        selectedAssets = new ArrayList<>();
-        selectedAssets.add(assets.get(position));
+        router.presentMediaPlayerWith(interactor.getMusicAssets(),position);
+//        selectedAssets = new ArrayList<>();
+//        selectedAssets.add(assets.get(position));
     }
 
     private void prepareCasting(){

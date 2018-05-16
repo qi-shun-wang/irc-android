@@ -53,7 +53,7 @@ public class MediaShareMusicListFragment extends Fragment implements MediaShareM
         listView.setLayoutManager(layoutManager);
         listView.setAdapter(adapter);
         adapter.setupDelegate(this);
-        view.findViewById(R.id.media_share_music_list_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
+//        view.findViewById(R.id.media_share_music_list_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
 
         presenter.onCreate();
         return view;
@@ -97,5 +97,20 @@ public class MediaShareMusicListFragment extends Fragment implements MediaShareM
     public void reloadGridView(List<Music> assets) {
         adapter.setMusicAssets(assets);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showMediaPlayerToolBar() {
+
+    }
+
+    @Override
+    public void replaceMusicInfo(String title, String subtitle, int resID) {
+
+    }
+
+    @Override
+    public void hideMediaPlayerToolBar() {
+
     }
 }

@@ -17,6 +17,9 @@ public interface MediaShareMusicListContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void reloadGridView(List<Music> assets);
+        void showMediaPlayerToolBar();
+        void replaceMusicInfo(String title ,String subtitle , int resID);
+        void hideMediaPlayerToolBar();
     }
 
     interface Presenter extends BaseContracts.Presenter {
@@ -38,5 +41,6 @@ public interface MediaShareMusicListContracts extends BaseContracts {
 
     interface Wireframe extends BaseContracts.Wireframe {
         void presentDMRList();
+        void presentMediaPlayerWith(List<Music> assets, int position);
     }
 }

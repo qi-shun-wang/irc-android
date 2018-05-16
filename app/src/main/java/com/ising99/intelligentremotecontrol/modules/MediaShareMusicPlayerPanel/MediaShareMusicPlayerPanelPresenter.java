@@ -64,4 +64,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     public void onDestroy() {
     }
 
+    @Override
+    public void dismissPanel() {
+        router.dismissPanel();
+    }
 }

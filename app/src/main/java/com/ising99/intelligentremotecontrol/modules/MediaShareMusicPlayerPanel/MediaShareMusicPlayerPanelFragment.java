@@ -3,9 +3,14 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
@@ -16,11 +21,12 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.M
  * .
  */
 
-public class MediaShareMusicPlayerPanelFragment extends Fragment implements MediaShareMusicPlayerPanelContracts.View {
+public class MediaShareMusicPlayerPanelFragment extends Fragment implements MediaShareMusicPlayerPanelContracts.View ,GestureDetector.OnGestureListener{
 
     private Presenter presenter;
     private ViewGroup view;
 
+    private GestureDetector gesture;
     public MediaShareMusicPlayerPanelFragment() {
         // Required empty public constructor
     }
@@ -39,6 +45,8 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_player_panel, container, false);
+        gesture = new GestureDetector(getActivity(),this);
+        view.setOnTouchListener((v,e)->gesture.onTouchEvent(e));
         presenter.onCreate();
         return view;
     }
@@ -70,5 +78,36 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return true;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return true;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        presenter.dismissPanel();
+        return true;
     }
 }

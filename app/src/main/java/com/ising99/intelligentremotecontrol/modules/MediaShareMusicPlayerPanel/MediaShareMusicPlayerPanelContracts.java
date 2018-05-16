@@ -10,10 +10,11 @@ import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
+
     }
 
     interface Presenter extends BaseContracts.Presenter {
-
+        void dismissPanel();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -25,6 +26,6 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-
+        void dismissPanel();
     }
 }

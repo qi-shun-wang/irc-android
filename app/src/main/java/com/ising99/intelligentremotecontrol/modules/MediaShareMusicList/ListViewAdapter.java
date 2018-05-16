@@ -38,6 +38,7 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Music item = assets.get(position);
         holder.title.setText(item.getTitle());
+        holder.subtitle.setText(item.getArtist());
     }
 
     @Override
@@ -48,10 +49,12 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
+        TextView subtitle;
 
         ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.media_share_music_item_title);
+            subtitle = itemView.findViewById(R.id.media_share_music_item_subtitle);
             itemView.setOnClickListener(this);
         }
 

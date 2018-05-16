@@ -35,7 +35,6 @@ public class MediaShareMusicListRouter implements Wireframe ,MediaShareDMRListFr
     private Presenter presenter;
     private View view;
     private MediaShareDMRListFragment dmrList;
-    private MediaShareMusicPlayerFragment mediaShareMusicPlayerFragment;
 
     private MediaShareMusicListRouter(Context context) {
         this.context = context;
@@ -90,7 +89,7 @@ public class MediaShareMusicListRouter implements Wireframe ,MediaShareDMRListFr
 
     @Override
     public void presentMediaPlayerWith(List<Music> assets, int position) {
-        mediaShareMusicPlayerFragment = MediaShareMusicPlayerRouter.setupModule(context, assets, position);
+        MediaShareMusicPlayerFragment mediaShareMusicPlayerFragment = MediaShareMusicPlayerRouter.setupModule(context, assets, position);
         MediaShareMusicListFragment ref = (MediaShareMusicListFragment) view;
 
         FragmentTransaction fragmentTransaction = ref.getFragmentManager().beginTransaction();

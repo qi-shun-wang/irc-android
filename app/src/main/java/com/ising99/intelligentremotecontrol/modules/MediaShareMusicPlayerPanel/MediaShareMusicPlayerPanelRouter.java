@@ -32,7 +32,7 @@ public class MediaShareMusicPlayerPanelRouter implements Wireframe {
     public static MediaShareMusicPlayerPanelFragment setupModule(Context context, List<Music> assets, int position) {
 
         MediaShareMusicPlayerPanelFragment view = new MediaShareMusicPlayerPanelFragment();
-        MediaShareMusicPlayerPanelInteractor interactor = new MediaShareMusicPlayerPanelInteractor(context);
+        MediaShareMusicPlayerPanelInteractor interactor = new MediaShareMusicPlayerPanelInteractor(context, assets, position);
         MediaShareMusicPlayerPanelPresenter presenter = new MediaShareMusicPlayerPanelPresenter();
         MediaShareMusicPlayerPanelRouter router = new MediaShareMusicPlayerPanelRouter(context);
 

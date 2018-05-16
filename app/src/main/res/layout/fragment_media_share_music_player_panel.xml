@@ -5,7 +5,13 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/bluePurple"
+    android:background="@color/white"
     >
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/media_share_music_player_panel_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </android.support.constraint.ConstraintLayout>

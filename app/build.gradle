@@ -37,6 +37,8 @@ dependencies {
     implementation "com.android.support:support-core-utils:27.1.1"
     //used for bottom navi
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
+    //used for music player panel
+    implementation 'com.karumi:headerrecyclerview:1.1.0'
     implementation "com.android.support:design:27.1.1"
     implementation 'io.github.controlwear:virtualjoystick:1.8.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'

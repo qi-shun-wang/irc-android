@@ -52,7 +52,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void onResume() {
-
+        view.setupCurrentMusicAsset(interactor.getCurrentMusicAsset());
+        view.setupMusicAssets(interactor.getMusicAssets());
     }
 
     @Override

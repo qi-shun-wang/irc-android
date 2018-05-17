@@ -51,5 +51,16 @@ public class MediaShareMusicPlayerInteractor implements MediaShareMusicPlayerCon
     public List<Music> getAssets() {
         return assets;
     }
+
+    @Override
+    public Music playNext() {
+        if (currentIndex<assets.size()-1){
+            currentIndex++;
+        }else {
+            currentIndex = 0;
+        }
+
+        return assets.get(currentIndex);
+    }
 }
 

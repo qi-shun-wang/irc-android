@@ -27,7 +27,6 @@ public class MediaShareMusicGroupListFragment extends Fragment implements MediaS
     private Presenter presenter;
     private ViewGroup view;
 
-    private RecyclerView listView;
     private ListViewAdapter adapter;
 
     public MediaShareMusicGroupListFragment() {
@@ -48,7 +47,7 @@ public class MediaShareMusicGroupListFragment extends Fragment implements MediaS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_group_list, container, false);
-        listView = view.findViewById(R.id.media_share_music_group_list_view);
+        RecyclerView listView = view.findViewById(R.id.media_share_music_group_list_view);
         listView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         listView.setLayoutManager(layoutManager);

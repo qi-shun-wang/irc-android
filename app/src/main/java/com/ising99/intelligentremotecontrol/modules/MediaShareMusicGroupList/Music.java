@@ -3,7 +3,6 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
 /**
  * Created by shun on 2018/5/8.
  * .

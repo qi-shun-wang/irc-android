@@ -3,10 +3,10 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
@@ -42,6 +42,9 @@ public class MediaShareMusicPlayerFragment extends Fragment implements MediaShar
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_player, container, false);
         view.findViewById(R.id.media_share_music_player_tool_bar_container).setOnClickListener((v) -> presenter.prepareMediaPlayerPanel());
+        view.findViewById(R.id.media_share_music_player_tiny_play_btn).setOnClickListener((v) -> presenter.performPlayback());
+        view.findViewById(R.id.media_share_music_player_tiny_fast_forward_btn).setOnClickListener((v) -> presenter.performNext());
+        view.findViewById(R.id.media_share_music_player_tiny_fast_forward_btn).setOnLongClickListener((v) -> presenter.performFastForward());
         presenter.onCreate();
         return view;
     }
@@ -79,5 +82,10 @@ public class MediaShareMusicPlayerFragment extends Fragment implements MediaShar
     public void updateMusicInfo(String title, String subtitle, int resID) {
         ((TextView)view.findViewById(R.id.media_share_music_player_tiny_title)).setText(title);
         ((TextView)view.findViewById(R.id.media_share_music_player_tiny_subtitle)).setText(subtitle);
+    }
+
+    @Override
+    public void updatePlaybackIconWith(int resID) {
+        getActivity().runOnUiThread(()-> ((ImageButton)view.findViewById(R.id.media_share_music_player_tiny_play_btn)).setImageResource(resID));
     }
 }

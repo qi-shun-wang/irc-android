@@ -17,7 +17,6 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerRouter;
 
-
 import org.fourthline.cling.model.meta.Device;
 
 import java.util.List;
@@ -89,6 +88,7 @@ public class MediaShareMusicListRouter implements Wireframe ,MediaShareDMRListFr
 
     @Override
     public void presentMediaPlayerWith(List<Music> assets, int position) {
+
         MediaShareMusicPlayerFragment mediaShareMusicPlayerFragment = MediaShareMusicPlayerRouter.setupModule(context, assets, position);
         MediaShareMusicListFragment ref = (MediaShareMusicListFragment) view;
 

@@ -52,6 +52,7 @@
                 />
         </LinearLayout>
         <ImageButton
+            android:id="@+id/media_share_music_player_tiny_play_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,6 +63,7 @@
             android:src="@drawable/media_share_play_icon"
             />
         <ImageButton
+            android:id="@+id/media_share_music_player_tiny_fast_forward_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

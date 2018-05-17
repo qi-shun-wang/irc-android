@@ -2,7 +2,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.app.Fragment;
+import android.media.MediaPlayer;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -22,13 +22,13 @@ import java.util.List;
  * .
  */
 
-public class MediaShareMusicPlayerRouter implements Wireframe {
+public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicPlayerRouterDelegate {
 
     private Context context;
     private Presenter presenter;
     private View view;
 
-    public MediaShareMusicPlayerRouter(Context context) {
+    private MediaShareMusicPlayerRouter(Context context) {
         this.context = context;
     }
 
@@ -54,9 +54,10 @@ public class MediaShareMusicPlayerRouter implements Wireframe {
     }
 
     @Override
-    public void presentMediaPlayerPanelWith(List<Music> assets, int position) {
+    public void presentMediaPlayerPanelWith(List<Music> assets, int position, MediaPlayer player) {
         MediaShareMusicPlayerFragment ref = (MediaShareMusicPlayerFragment) view;
-        MediaShareMusicPlayerPanelFragment panel = MediaShareMusicPlayerPanelRouter.setupModule(context, assets, position);
+
+        MediaShareMusicPlayerPanelFragment panel = MediaShareMusicPlayerPanelRouter.setupModule(context, assets, position, player, this);
 
         FragmentTransaction transaction = ref.getFragmentManager().beginTransaction();
         transaction.replace(R.id.media_share_music_player_panel_container, panel).commit();
@@ -80,6 +81,33 @@ public class MediaShareMusicPlayerRouter implements Wireframe {
         });
         ref.getActivity().findViewById(R.id.media_share_music_player_panel_container).startAnimation(move);
 
+    }
+
+    @Override
+    public void dismissWithPlayerStatus(boolean isPlaying) {
+        presenter.updatePlaybackIcon(isPlaying);
+        MediaShareMusicPlayerFragment ref = (MediaShareMusicPlayerFragment) view;
+        TranslateAnimation move = (TranslateAnimation) AnimationUtils.loadAnimation(ref.getActivity(), R.anim.translate_top_to_bottom);
+
+        move.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                ref.getActivity().findViewById(R.id.media_share_music_player_panel_container).setClickable(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ref.getActivity().findViewById(R.id.media_share_music_player_panel_container).setVisibility(android.view.View.GONE);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        ref.getActivity().findViewById(R.id.media_share_music_player_panel_container).startAnimation(move);
     }
 }
 

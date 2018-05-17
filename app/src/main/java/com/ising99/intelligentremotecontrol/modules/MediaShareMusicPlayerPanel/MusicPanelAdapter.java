@@ -4,14 +4,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.karumi.headerrecyclerview.HeaderRecyclerViewAdapter;
 
 public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.ViewHolder,MusicPanelHeader,Music,MusicPanelHeader> {
+    private MediaControlActionDelegate mcaDelegate;
+    private BaseCollectionAdapterDelegate delegate;
+    private int resId;
 
     @Override
     protected void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -24,8 +29,10 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
     @Override
     protected void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
-        headerViewHolder.title.setText("title");
-        headerViewHolder.subtitle.setText("subtitle");
+
+        headerViewHolder.title.setText(getHeader().getAsset().getTitle());
+        headerViewHolder.subtitle.setText(getHeader().getAsset().getArtist());
+        headerViewHolder.playback.setImageResource(resId);
     }
 
     @Override
@@ -45,26 +52,43 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
         return new HeaderViewHolder(view);
     }
 
+    public void setDelegate(BaseCollectionAdapterDelegate delegate) {
+        this.delegate = delegate;
+    }
 
+    public void setResId(int resId) {
+        this.resId = resId;
+    }
 
-    public class HeaderViewHolder extends RecyclerView.ViewHolder{
+    public void setMcaDelegate(MediaControlActionDelegate mcaDelegate) {
+        this.mcaDelegate = mcaDelegate;
+    }
+
+    public class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
         TextView subtitle;
         ImageView thumbnail;
+        ImageButton playback;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.media_share_music_player_panel_item_title);
             subtitle = itemView.findViewById(R.id.media_share_music_player_panel_item_subtitle);
             thumbnail = itemView.findViewById(R.id.media_share_music_player_panel_album_icon);
+            playback = itemView.findViewById(R.id.media_share_music_player_panel_playback_btn);
+            playback.setOnClickListener(this);
         }
 
-
+        @Override
+        public void onClick(View view) {
+            if (mcaDelegate != null){
+                if (playback.equals(view)) mcaDelegate.didTapOnPlayback();
+            }
+        }
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {//implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
         TextView subtitle;
@@ -73,12 +97,12 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
             super(itemView);
             title = itemView.findViewById(R.id.media_share_music_item_title);
             subtitle = itemView.findViewById(R.id.media_share_music_item_subtitle);
-//            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
-//        @Override
-//        public void onClick(View view) {
-//            if (delegate != null) delegate.onItemClick(view, getAdapterPosition());
-//        }
+        @Override
+        public void onClick(View view) {
+            if (delegate != null) delegate.onItemClick(view, getAdapterPosition());
+        }
     }
 }

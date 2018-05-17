@@ -7,12 +7,9 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.InteractorOutput;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Wireframe;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.PhotoItem;
 
 import org.fourthline.cling.model.meta.Device;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,7 +88,7 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void didSelectedMusicAt(int position) {
-        router.presentMediaPlayerWith(interactor.getMusicAssets(),position);
+        router.presentMediaPlayerWith(interactor.getMusicAssets(), position);
 //        selectedAssets = new ArrayList<>();
 //        selectedAssets.add(assets.get(position));
     }

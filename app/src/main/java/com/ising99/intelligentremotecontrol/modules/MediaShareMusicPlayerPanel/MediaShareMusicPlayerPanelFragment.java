@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.Presenter;
-import com.karumi.headerrecyclerview.HeaderRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -22,12 +22,12 @@ import java.util.List;
  * .
  */
 
-public class MediaShareMusicPlayerPanelFragment extends Fragment implements MediaShareMusicPlayerPanelContracts.View  {
+public class MediaShareMusicPlayerPanelFragment extends Fragment implements MediaShareMusicPlayerPanelContracts.View, BaseCollectionAdapterDelegate , MediaControlActionDelegate {
 
     private Presenter presenter;
     private ViewGroup view;
     private RecyclerView panel;
-    private HeaderRecyclerViewAdapter<RecyclerView.ViewHolder, MusicPanelHeader, Music, MusicPanelHeader> adapter;
+    private MusicPanelAdapter adapter;
 
     public MediaShareMusicPlayerPanelFragment() {
         // Required empty public constructor
@@ -48,11 +48,14 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_player_panel, container, false);
         adapter = new MusicPanelAdapter();
+        adapter.setDelegate(this);
+        adapter.setMcaDelegate(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         panel = view.findViewById(R.id.media_share_music_player_panel_recycler_view);
         panel.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         panel.setLayoutManager(layoutManager);
         panel.setAdapter(adapter);
+
         RecyclerView.OnScrollListener listener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -111,11 +114,38 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     public void setupCurrentMusicAsset(Music asset) {
         MusicPanelHeader header = new MusicPanelHeader(asset);
         adapter.setHeader(header);
+        adapter.setResId(R.drawable.media_share_pause_icon);
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void clearPanelListener() {
         panel.clearOnScrollListeners();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        presenter.didTapOnItemAt(position);
+    }
+
+    @Override
+    public void updatePlaybackIconWith(int resID) {
+        adapter.setResId(resID);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void didTapOnPlayback() {
+        presenter.performPlayback();
+    }
+
+    @Override
+    public void didTapOnFastBackward() {
+
+    }
+
+    @Override
+    public void didTapOnFastForward() {
+
     }
 }

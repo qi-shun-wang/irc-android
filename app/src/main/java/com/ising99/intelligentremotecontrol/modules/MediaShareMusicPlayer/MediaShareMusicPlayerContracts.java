@@ -1,5 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer;
 
+import android.media.MediaPlayer;
+
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 
@@ -14,17 +16,22 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void updateMusicInfo(String title , String subtitle , int resID);
+        void updatePlaybackIconWith(int resID);
     }
 
     interface Presenter extends BaseContracts.Presenter {
         void prepareMediaPlayerPanel();
-
+        void performPlayback();
+        boolean performFastForward();
+        void performNext();
+        void updatePlaybackIcon(boolean isPlaying);
     }
 
     interface Interactor extends BaseContracts.Interactor {
         Music getCurrentAsset();
         int getCurrentIndex();
         List<Music> getAssets();
+        Music playNext();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
@@ -32,6 +39,6 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentMediaPlayerPanelWith(List<Music> assets, int position);
+        void presentMediaPlayerPanelWith(List<Music> assets, int position,MediaPlayer player);
     }
 }

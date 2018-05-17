@@ -7,6 +7,10 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.M
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.Wireframe;
 
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
+
 /**
  * Created by shun on 2018/5/16 上午 11:55:30.
  * .
@@ -17,6 +21,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     private View view;
     private Interactor interactor;
     private Wireframe router;
+    private int record = 0;
+    private boolean isScrollToTop = true;
 
     MediaShareMusicPlayerPanelPresenter() {
     }
@@ -66,7 +72,22 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     }
 
     @Override
-    public void dismissPanel() {
-        router.dismissPanel();
+    public void updateScrollState(int state) {
+        switch (state){
+            case SCROLL_STATE_DRAGGING:break;
+            case SCROLL_STATE_SETTLING:
+                if (record == 0 && isScrollToTop){
+                    view.clearPanelListener();
+                    router.dismissPanel();
+                }
+                break;
+            case SCROLL_STATE_IDLE:record = 0;break;
+        }
+    }
+
+    @Override
+    public void updateScroll(int dx, int dy) {
+        isScrollToTop = dy<=0;
+        record = dy;
     }
 }

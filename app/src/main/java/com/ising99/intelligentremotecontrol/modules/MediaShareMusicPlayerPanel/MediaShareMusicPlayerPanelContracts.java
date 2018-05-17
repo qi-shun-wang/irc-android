@@ -13,12 +13,14 @@ import java.util.List;
 public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
-        void setupMusicAssets(List<Music> assests);
-        void setupCurrentMusicAsset(Music assest);
+        void setupMusicAssets(List<Music> assets);
+        void setupCurrentMusicAsset(Music asset);
+        void clearPanelListener();
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        void dismissPanel();
+        void updateScrollState(int state);
+        void updateScroll(int dx ,int dy);
     }
 
     interface Interactor extends BaseContracts.Interactor {

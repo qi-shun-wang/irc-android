@@ -2,6 +2,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel;
 
 import android.content.Context;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -58,7 +59,7 @@ public class MediaShareMusicPlayerPanelRouter implements Wireframe {
         move.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                ref.getActivity().findViewById(R.id.media_share_music_player_panel_container).setClickable(false);
             }
 
             @Override

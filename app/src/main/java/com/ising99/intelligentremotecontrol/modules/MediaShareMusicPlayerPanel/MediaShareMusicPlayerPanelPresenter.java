@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
+import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.InteractorOutput;
@@ -88,7 +89,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
             case SCROLL_STATE_SETTLING:
                 if (record == 0 && isScrollToTop){
                     view.clearPanelListener();
-                    router.dismissPanelWhen(player.isPlaying());
+                    router.dismissPanelWhen(player.isPlaying(), interactor.getCurrentIndex());
                 }
                 break;
             case SCROLL_STATE_IDLE:record = 0;break;
@@ -114,6 +115,38 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         }else{
             player.start();
             view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+        }
+    }
+
+    @Override
+    public void performFastForward() {
+        Music asset = interactor.playNext();
+        view.setupCurrentMusicAsset(asset);
+        try {
+            player.stop();
+            player.reset();
+            player.setDataSource(asset.getFilePath());
+            player.prepare();
+            player.start();
+            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void performFastBackward() {
+        Music asset = interactor.playLast();
+        view.setupCurrentMusicAsset(asset);
+        try {
+            player.stop();
+            player.reset();
+            player.setDataSource(asset.getFilePath());
+            player.prepare();
+            player.start();
+            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

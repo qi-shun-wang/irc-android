@@ -38,6 +38,11 @@ public class MediaShareMusicPlayerInteractor implements MediaShareMusicPlayerCon
     }
 
     @Override
+    public void updateCurrentIndex(int index) {
+        currentIndex = index;
+    }
+
+    @Override
     public Music getCurrentAsset() {
         return assets.get(currentIndex);
     }

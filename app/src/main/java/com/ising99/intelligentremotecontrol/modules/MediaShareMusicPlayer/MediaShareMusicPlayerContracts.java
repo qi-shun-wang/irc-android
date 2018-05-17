@@ -24,10 +24,11 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
         void performPlayback();
         boolean performFastForward();
         void performNext();
-        void updatePlaybackIcon(boolean isPlaying);
+        void updatePlaybackIcon(boolean isPlaying, int currentIndex);
     }
 
     interface Interactor extends BaseContracts.Interactor {
+        void updateCurrentIndex(int index);
         Music getCurrentAsset();
         int getCurrentIndex();
         List<Music> getAssets();

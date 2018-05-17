@@ -141,11 +141,11 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
 
     @Override
     public void didTapOnFastBackward() {
-
+        presenter.performFastBackward();
     }
 
     @Override
     public void didTapOnFastForward() {
-
+        presenter.performFastForward();
     }
 }

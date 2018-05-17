@@ -129,7 +129,11 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     }
 
     @Override
-    public void updatePlaybackIcon(boolean isPlaying) {
+    public void updatePlaybackIcon(boolean isPlaying, int currentIndex) {
+        interactor.updateCurrentIndex(currentIndex);
+        Music asset = interactor.getCurrentAsset();
+        view.updateMusicInfo(asset.getTitle(), asset.getArtist(), R.drawable.media_share_default_album_icon);
+
         if (isPlaying) {
             view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
         } else {

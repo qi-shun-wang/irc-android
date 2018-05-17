@@ -43,8 +43,35 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
     }
 
     @Override
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+
+    @Override
     public List<Music> getMusicAssets() {
         return assets;
+    }
+
+    @Override
+    public Music playNext() {
+        if (currentIndex<assets.size()-1){
+            currentIndex++;
+        }else {
+            currentIndex = 0;
+        }
+
+        return assets.get(currentIndex);
+    }
+
+    @Override
+    public Music playLast() {
+        if (currentIndex>0){
+            currentIndex--;
+        }else {
+            currentIndex = assets.size()-1;
+        }
+
+        return assets.get(currentIndex);
     }
 }
 

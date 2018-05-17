@@ -66,6 +66,7 @@
             android:layout_weight="2"
             >
             <ImageButton
+                android:id="@+id/media_share_music_player_panel_fast_backward_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -79,6 +80,7 @@
                 android:layout_weight="1"
                 android:src="@drawable/media_share_play_icon"/>
             <ImageButton
+                android:id="@+id/media_share_music_player_panel_fast_forward_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@color/clear"

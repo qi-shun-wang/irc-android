@@ -45,8 +45,8 @@ public class MediaShareMusicPlayerPanelRouter implements Wireframe {
     }
 
     @Override
-    public void dismissPanelWhen(boolean isPlaying) {
-        delegate.dismissWithPlayerStatus(isPlaying);
+    public void dismissPanelWhen(boolean isPlaying, int currentIndex) {
+        delegate.dismissWithPlayerStatus(isPlaying, currentIndex);
     }
 }
 

@@ -84,8 +84,8 @@ public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicP
     }
 
     @Override
-    public void dismissWithPlayerStatus(boolean isPlaying) {
-        presenter.updatePlaybackIcon(isPlaying);
+    public void dismissWithPlayerStatus(boolean isPlaying, int currentIndex)  {
+        presenter.updatePlaybackIcon(isPlaying,currentIndex);
         MediaShareMusicPlayerFragment ref = (MediaShareMusicPlayerFragment) view;
         TranslateAnimation move = (TranslateAnimation) AnimationUtils.loadAnimation(ref.getActivity(), R.anim.translate_top_to_bottom);
 

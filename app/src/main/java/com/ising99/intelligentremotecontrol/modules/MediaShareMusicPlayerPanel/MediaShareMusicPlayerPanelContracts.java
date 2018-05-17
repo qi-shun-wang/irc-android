@@ -24,11 +24,16 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void updateScroll(int dx ,int dy);
         void didTapOnItemAt(int position);
         void performPlayback();
+        void performFastForward();
+        void performFastBackward();
     }
 
     interface Interactor extends BaseContracts.Interactor {
         Music getCurrentMusicAsset();
+        int getCurrentIndex();
         List<Music> getMusicAssets();
+        Music playNext();
+        Music playLast();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
@@ -36,6 +41,6 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void dismissPanelWhen(boolean isPlaying);
+        void dismissPanelWhen(boolean isPlaying,int currentIndex);
     }
 }

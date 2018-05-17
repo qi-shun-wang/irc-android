@@ -70,6 +70,8 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
         TextView subtitle;
         ImageView thumbnail;
         ImageButton playback;
+        ImageButton fastForward;
+        ImageButton fastBackward;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
@@ -77,13 +79,19 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
             subtitle = itemView.findViewById(R.id.media_share_music_player_panel_item_subtitle);
             thumbnail = itemView.findViewById(R.id.media_share_music_player_panel_album_icon);
             playback = itemView.findViewById(R.id.media_share_music_player_panel_playback_btn);
+            fastForward = itemView.findViewById(R.id.media_share_music_player_panel_fast_forward_btn);
+            fastBackward = itemView.findViewById(R.id.media_share_music_player_panel_fast_backward_btn);
             playback.setOnClickListener(this);
+            fastForward.setOnClickListener(this);
+            fastBackward.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mcaDelegate != null){
                 if (playback.equals(view)) mcaDelegate.didTapOnPlayback();
+                if (fastForward.equals(view)) mcaDelegate.didTapOnFastForward();
+                if (fastBackward.equals(view)) mcaDelegate.didTapOnFastBackward();
             }
         }
     }

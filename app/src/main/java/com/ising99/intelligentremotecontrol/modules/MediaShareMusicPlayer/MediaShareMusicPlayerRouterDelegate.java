@@ -6,5 +6,5 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer;
  */
 
 public interface MediaShareMusicPlayerRouterDelegate {
-    void dismissWithPlayerStatus(boolean isPlaying);
+    void dismissWithPlayerStatus(boolean isPlaying, int currentIndex);
 }

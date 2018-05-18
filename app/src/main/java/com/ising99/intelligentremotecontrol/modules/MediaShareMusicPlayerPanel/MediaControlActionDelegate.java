@@ -4,4 +4,10 @@ interface MediaControlActionDelegate {
     void didTapOnPlayback();
     void didTapOnFastBackward();
     void didTapOnFastForward();
+    void didMediaOnProgressChanged(int i, boolean b);
+    void didVolumeOnProgressChanged(int i, boolean b);
+    void didVolumeOnStartTrackingTouch();
+    void didMediaOnStartTrackingTouch();
+    void didVolumeOnStopTrackingTouch();
+    void didMediaOnStopTrackingTouch();
 }

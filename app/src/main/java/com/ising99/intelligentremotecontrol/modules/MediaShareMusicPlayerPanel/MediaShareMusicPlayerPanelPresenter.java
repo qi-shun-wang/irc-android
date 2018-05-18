@@ -11,6 +11,9 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.M
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.Wireframe;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
@@ -28,6 +31,9 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     private int record = 0;
     private boolean isScrollToTop = true;
     private MediaPlayer player;
+    private Timer worker;
+    private boolean isSeeking = false;
+    private int seekTimeInterval = 0;
 
     MediaShareMusicPlayerPanelPresenter(MediaPlayer player) {
         this.player = player;
@@ -64,18 +70,22 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void onResume() {
-        view.setupCurrentMusicAsset(interactor.getCurrentMusicAsset());
+
         view.setupMusicAssets(interactor.getMusicAssets());
-        if(player.isPlaying()){
-            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
-        }else{
-            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+        if(player.isPlaying())
+        {
+            view.updateMediaPanel(interactor.getCurrentMusicAsset(),player.getCurrentPosition(),R.drawable.media_share_pause_icon);
         }
+        else
+        {
+            view.updateMediaPanel(interactor.getCurrentMusicAsset(),player.getCurrentPosition(),R.drawable.media_share_play_icon);
+        }
+        prepareWorker();
     }
 
     @Override
     public void onPause() {
-
+        worker.cancel();
     }
 
     @Override
@@ -105,30 +115,41 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     @Override
     public void didTapOnItemAt(int position) {
 
+        try {
+            player.stop();
+            Music asset = interactor.updateCurrentIndex(position - 1);
+            player.reset();
+            player.setDataSource(asset.getFilePath());
+            player.prepare();
+            player.start();
+            view.updateMediaPanel(asset,player.getCurrentPosition(),R.drawable.media_share_pause_icon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void performPlayback() {
-        if(player.isPlaying()){
+
+        if (player.isPlaying()) {
             player.pause();
-            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
-        }else{
+            view.updateMediaPanel(interactor.getCurrentMusicAsset(),player.getCurrentPosition(),R.drawable.media_share_play_icon);
+        } else {
             player.start();
-            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            view.updateMediaPanel(interactor.getCurrentMusicAsset(),player.getCurrentPosition(),R.drawable.media_share_pause_icon);
         }
     }
 
     @Override
     public void performFastForward() {
         Music asset = interactor.playNext();
-        view.setupCurrentMusicAsset(asset);
         try {
             player.stop();
             player.reset();
             player.setDataSource(asset.getFilePath());
             player.prepare();
             player.start();
-            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            view.updateMediaPanel(asset,player.getCurrentPosition(),R.drawable.media_share_pause_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,16 +158,56 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     @Override
     public void performFastBackward() {
         Music asset = interactor.playLast();
-        view.setupCurrentMusicAsset(asset);
         try {
             player.stop();
             player.reset();
             player.setDataSource(asset.getFilePath());
             player.prepare();
             player.start();
-            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            view.updateMediaPanel(asset,player.getCurrentPosition(),R.drawable.media_share_pause_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void startMediaSeeking() {
+        isSeeking = true;
+    }
+
+    @Override
+    public void stopMediaSeeking() {
+        isSeeking = false;
+        player.seekTo(seekTimeInterval*1000);
+    }
+
+    @Override
+    public void didMediaSeekAt(int timeInterval) {
+        if (isSeeking){
+            seekTimeInterval = timeInterval;
+        }
+
+    }
+
+    private void prepareWorker(){
+        worker = new Timer();
+        worker.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    Music asset = interactor.getCurrentMusicAsset();
+                    int duration = (int)asset.getDuration();
+                    int timeInterval = player.getCurrentPosition();
+                    if (player.isPlaying() && !isSeeking) {
+                        view.updateMediaPanel(asset, timeInterval, R.drawable.media_share_pause_icon);
+                    }
+
+                    if (timeInterval>=duration) view.updateMediaPanel(asset, 0, R.drawable.media_share_play_icon);
+
+                } catch (IllegalStateException e){
+                    e.printStackTrace();
+                }
+            }
+        },0,1000);
     }
 }

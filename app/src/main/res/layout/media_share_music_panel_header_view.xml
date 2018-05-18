@@ -31,6 +31,7 @@
             android:src="@drawable/media_share_default_album_icon"
             />
         <SeekBar
+            android:id="@+id/media_share_music_player_panel_media_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -89,6 +90,7 @@
         </LinearLayout>
 
         <SeekBar
+            android:id="@+id/media_share_music_player_panel_volume_seek_bar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

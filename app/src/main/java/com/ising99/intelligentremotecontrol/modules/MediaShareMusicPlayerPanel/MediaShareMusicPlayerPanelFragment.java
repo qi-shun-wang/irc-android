@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,18 +104,9 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
         presenter.onDestroy();
     }
 
-
     @Override
     public void setupMusicAssets(List<Music> assets) {
         adapter.setItems(assets);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void setupCurrentMusicAsset(Music asset) {
-        MusicPanelHeader header = new MusicPanelHeader(asset);
-        adapter.setHeader(header);
-        adapter.setResId(R.drawable.media_share_pause_icon);
         adapter.notifyDataSetChanged();
     }
 
@@ -126,12 +118,6 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     @Override
     public void onItemClick(View view, int position) {
         presenter.didTapOnItemAt(position);
-    }
-
-    @Override
-    public void updatePlaybackIconWith(int resID) {
-        adapter.setResId(resID);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -148,4 +134,47 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     public void didTapOnFastForward() {
         presenter.performFastForward();
     }
+
+    @Override
+    public void didMediaOnProgressChanged(int i, boolean b) {
+        Log.v("MediaOnProgressChanged","===="+i);
+        presenter.didMediaSeekAt(i);
+    }
+
+    @Override
+    public void didMediaOnStartTrackingTouch() {
+        Log.v("MediaStartTrackingTouch","======");
+        presenter.startMediaSeeking();
+    }
+
+    @Override
+    public void didMediaOnStopTrackingTouch() {
+        Log.v("MediaStopTrackingTouch","======");
+        presenter.stopMediaSeeking();
+    }
+
+    @Override
+    public void didVolumeOnProgressChanged(int i, boolean b) {
+
+    }
+
+    @Override
+    public void didVolumeOnStartTrackingTouch() {
+
+    }
+
+    @Override
+    public void didVolumeOnStopTrackingTouch() {
+
+    }
+
+    @Override
+    public void updateMediaPanel(Music asset, int currentTimeInterval, int playbackIconResID) {
+        getActivity().runOnUiThread(()->{
+            MusicPanelHeader header = new MusicPanelHeader(asset, currentTimeInterval, playbackIconResID);
+            adapter.setHeader(header);
+            adapter.notifyDataSetChanged();
+        });
+    }
+
 }

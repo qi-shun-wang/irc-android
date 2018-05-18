@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
@@ -16,7 +17,6 @@ import com.karumi.headerrecyclerview.HeaderRecyclerViewAdapter;
 public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.ViewHolder,MusicPanelHeader,Music,MusicPanelHeader> {
     private MediaControlActionDelegate mcaDelegate;
     private BaseCollectionAdapterDelegate delegate;
-    private int resId;
 
     @Override
     protected void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -32,7 +32,10 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
 
         headerViewHolder.title.setText(getHeader().getAsset().getTitle());
         headerViewHolder.subtitle.setText(getHeader().getAsset().getArtist());
-        headerViewHolder.playback.setImageResource(resId);
+        headerViewHolder.playback.setImageResource(getHeader().getPlaybackResID());
+        headerViewHolder.media.setMax((int)getHeader().getAsset().getDuration()/1000);
+        headerViewHolder.media.setProgress(getHeader().getCurrentTimeInterval()/1000);
+
     }
 
     @Override
@@ -56,15 +59,11 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
         this.delegate = delegate;
     }
 
-    public void setResId(int resId) {
-        this.resId = resId;
-    }
-
     public void setMcaDelegate(MediaControlActionDelegate mcaDelegate) {
         this.mcaDelegate = mcaDelegate;
     }
 
-    public class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener , SeekBar.OnSeekBarChangeListener {
 
         TextView title;
         TextView subtitle;
@@ -72,6 +71,8 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
         ImageButton playback;
         ImageButton fastForward;
         ImageButton fastBackward;
+        SeekBar media;
+        SeekBar volume;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
@@ -81,6 +82,10 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
             playback = itemView.findViewById(R.id.media_share_music_player_panel_playback_btn);
             fastForward = itemView.findViewById(R.id.media_share_music_player_panel_fast_forward_btn);
             fastBackward = itemView.findViewById(R.id.media_share_music_player_panel_fast_backward_btn);
+            media = itemView.findViewById(R.id.media_share_music_player_panel_media_seek_bar);
+            volume = itemView.findViewById(R.id.media_share_music_player_panel_volume_seek_bar);
+            media.setOnSeekBarChangeListener(this);
+            volume.setOnSeekBarChangeListener(this);
             playback.setOnClickListener(this);
             fastForward.setOnClickListener(this);
             fastBackward.setOnClickListener(this);
@@ -93,6 +98,24 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
                 if (fastForward.equals(view)) mcaDelegate.didTapOnFastForward();
                 if (fastBackward.equals(view)) mcaDelegate.didTapOnFastBackward();
             }
+        }
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            if (media.equals(seekBar)) mcaDelegate.didMediaOnProgressChanged(i, b);
+            if (volume.equals(seekBar)) mcaDelegate.didVolumeOnProgressChanged(i, b);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            if (media.equals(seekBar)) mcaDelegate.didMediaOnStartTrackingTouch();
+            if (volume.equals(seekBar)) mcaDelegate.didVolumeOnStartTrackingTouch();
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            if (media.equals(seekBar)) mcaDelegate.didMediaOnStopTrackingTouch();
+            if (volume.equals(seekBar)) mcaDelegate.didVolumeOnStopTrackingTouch();
         }
     }
 

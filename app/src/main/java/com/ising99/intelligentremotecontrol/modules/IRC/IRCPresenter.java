@@ -174,7 +174,7 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
 
     @Override
     public void dispatchPlayerAction() {
-        interactor.perform(SendCode.KEYCODE_MEDIA_PLAY_PAUSE);
+        interactor.perform(SendCode.KEYCODE_PLAY_CONTROL);
     }
 
     @Override

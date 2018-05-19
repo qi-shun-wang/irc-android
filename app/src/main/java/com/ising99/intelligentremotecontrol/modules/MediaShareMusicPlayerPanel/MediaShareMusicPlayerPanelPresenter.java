@@ -12,6 +12,8 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.M
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.Wireframe;
 
+import org.fourthline.cling.model.meta.Device;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,6 +40,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     private int seekTimeInterval = 0;
     private int currentVolume ;
     private boolean isVolumeFirstResponse = true;
+    private boolean isFirstPerformedCasting = true;
 
     MediaShareMusicPlayerPanelPresenter(MediaPlayer player, int volumeScale) {
         this.player = player;
@@ -182,8 +185,9 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void performCast() {
-
+        router.presentDMRList();
     }
+
 
     @Override
     public void startMediaSeeking() {
@@ -223,6 +227,13 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         }
         currentVolume = scale;
         prepareVolumeWith(currentVolume, player);
+    }
+
+    @Override
+    public void didSelected(Device device) {
+        isFirstPerformedCasting = false;
+        interactor.setupCurrentDevice(device);
+        interactor.performCast();
     }
 
     @Override

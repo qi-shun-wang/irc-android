@@ -8,8 +8,6 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Wireframe;
 
-import org.fourthline.cling.model.meta.Device;
-
 import java.util.List;
 
 /**
@@ -23,9 +21,6 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
     private Interactor interactor;
     private Wireframe router;
     private List<Music> assets;
-    private List<Music> selectedAssets;
-
-    private boolean isFirstPerformedCasting = true;
 
     MediaShareMusicListPresenter() {
     }
@@ -74,26 +69,8 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
     }
 
     @Override
-    public void didTapOnCast() {
-        if (isFirstPerformedCasting) router.presentDMRList();
-        else prepareCasting();
-    }
-
-    @Override
-    public void didSelected(Device device) {
-        isFirstPerformedCasting = false;
-        interactor.setupCurrentDevice(device);
-        prepareCasting();
-    }
-
-    @Override
     public void didSelectedMusicAt(int position) {
         router.presentMediaPlayerWith(interactor.getMusicAssets(), position);
-//        selectedAssets = new ArrayList<>();
-//        selectedAssets.add(assets.get(position));
     }
 
-    private void prepareCasting(){
-        interactor.performCast(selectedAssets);
-    }
 }

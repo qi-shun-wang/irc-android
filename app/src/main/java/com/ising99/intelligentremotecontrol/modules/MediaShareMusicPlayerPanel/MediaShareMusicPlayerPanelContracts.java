@@ -3,6 +3,8 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 
+import org.fourthline.cling.model.meta.Device;
+
 import java.util.List;
 
 /**
@@ -39,6 +41,8 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void startVolumeSeeking();
         void stopVolumeSeeking();
         void didVolumeSeekAt(int scale);
+
+        void didSelected(Device device);
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -48,6 +52,10 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         List<Music> getMusicAssets();
         Music playNext();
         Music playLast();
+
+        void setupCurrentDevice(Device device);
+        void performCast();
+        void stopCast();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
@@ -56,5 +64,6 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
 
     interface Wireframe extends BaseContracts.Wireframe {
         void dismissPanelWhen(boolean isPlaying, int currentIndex, int volumeScale);
+        void presentDMRList();
     }
 }

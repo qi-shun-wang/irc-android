@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerContracts.Presenter;
@@ -27,12 +28,13 @@ public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicP
     private Context context;
     private Presenter presenter;
     private View view;
+    private DLNAMediaManager manager;
 
     private MediaShareMusicPlayerRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareMusicPlayerFragment setupModule(Context context, List<Music> assets, int position) {
+    public static MediaShareMusicPlayerFragment setupModule(Context context, List<Music> assets, int position, DLNAMediaManager manager) {
 
         MediaShareMusicPlayerFragment view = new MediaShareMusicPlayerFragment();
         MediaShareMusicPlayerInteractor interactor = new MediaShareMusicPlayerInteractor(context, assets, position);
@@ -47,6 +49,7 @@ public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicP
 
         router.view = view;
         router.presenter = presenter;
+        router.manager = manager;
 
         interactor.setupPresenter(presenter);
 
@@ -57,7 +60,7 @@ public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicP
     public void presentMediaPlayerPanelWith(List<Music> assets, int position, MediaPlayer player, int volumeScale) {
         MediaShareMusicPlayerFragment ref = (MediaShareMusicPlayerFragment) view;
 
-        MediaShareMusicPlayerPanelFragment panel = MediaShareMusicPlayerPanelRouter.setupModule(context, assets, position, volumeScale, player, this);
+        MediaShareMusicPlayerPanelFragment panel = MediaShareMusicPlayerPanelRouter.setupModule(context, assets, position, volumeScale, player, this, manager);
 
         FragmentTransaction transaction = ref.getFragmentManager().beginTransaction();
         transaction.replace(R.id.media_share_music_player_panel_container, panel).commit();

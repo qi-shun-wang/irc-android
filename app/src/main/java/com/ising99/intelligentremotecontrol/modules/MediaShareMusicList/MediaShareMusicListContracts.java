@@ -4,8 +4,6 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicList;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 
-import org.fourthline.cling.model.meta.Device;
-
 import java.util.List;
 
 /**
@@ -17,22 +15,14 @@ public interface MediaShareMusicListContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void reloadGridView(List<Music> assets);
-        void showMediaPlayerToolBar();
-        void replaceMusicInfo(String title ,String subtitle , int resID);
-        void hideMediaPlayerToolBar();
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        void didTapOnCast();
-        void didSelected(Device device);
         void didSelectedMusicAt(int position);
     }
 
     interface Interactor extends BaseContracts.Interactor {
         List<Music> getMusicAssets();
-        void stopCast();
-        void performCast(List<Music> photos);
-        void setupCurrentDevice(Device device);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
@@ -40,7 +30,6 @@ public interface MediaShareMusicListContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentDMRList();
         void presentMediaPlayerWith(List<Music> assets, int position);
     }
 }

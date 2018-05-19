@@ -2,10 +2,15 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel;
 
 import android.content.Context;
 
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.InteractorOutput;
 
+import org.fourthline.cling.model.meta.Device;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -19,11 +24,14 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
     private Context context;
     private List<Music> assets;
     private int currentIndex;
+    private DLNAMediaManager manager;
+    private Device currentCastingDevice;
 
-    MediaShareMusicPlayerPanelInteractor(Context context, List<Music> assets, int position) {
+    MediaShareMusicPlayerPanelInteractor(Context context, List<Music> assets, int position, DLNAMediaManager manager) {
         this.context = context;
         this.currentIndex = position;
         this.assets = assets;
+        this.manager = manager;
     }
 
     @Override
@@ -72,6 +80,28 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
         }
 
         return assets.get(currentIndex);
+    }
+
+    @Override
+    public void setupCurrentDevice(Device device) {
+        currentCastingDevice = device;
+    }
+
+    @Override
+    public void performCast() {
+        try {
+            String path = URLEncoder.encode( assets.get(currentIndex).getFilePath(), "UTF-8");
+            manager.setAVTransportURI(currentCastingDevice,"/music" + path);
+            //TODO-add function callback when set success
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void stopCast() {
+        if (currentCastingDevice == null) return;
+        manager.stop(currentCastingDevice);
     }
 
     @Override

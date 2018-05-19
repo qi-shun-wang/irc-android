@@ -233,7 +233,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     public void didSelected(Device device) {
         isFirstPerformedCasting = false;
         interactor.setupCurrentDevice(device);
-        interactor.performCast();
+        interactor.setupCurrentRemoteAsset();
     }
 
     @Override
@@ -275,5 +275,51 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     private void prepareVolumeWith(int scale,MediaPlayer player){
         float log1 = (float)(Math.log(App.MAX_VOLUME-scale)/Math.log(App.MAX_VOLUME));
         player.setVolume(1-log1,1-log1);
+    }
+
+    @Override
+    public void didSetRemoteAssetSuccess() {
+        //TODO show warning badge
+        interactor.performRemotePlay();
+    }
+
+    @Override
+    public void didSetRemoteAssetFailure() {
+        //TODO show warning badge
+    }
+
+    @Override
+    public void didPlayRemoteAssetSuccess() {
+        //TODO show warning badge
+    }
+
+    @Override
+    public void didPlayRemoteAssetFailure() {
+        //TODO show warning badge
+    }
+
+    @Override
+    public void didStopRemoteAssetFailure() {
+        //TODO show warning badge
+    }
+
+    @Override
+    public void didPauseRemoteAssetSuccess() {
+        //TODO show warning badge
+    }
+
+    @Override
+    public void didPauseRemoteAssetFailure() {
+        //TODO show warning badge
+    }
+
+    @Override
+    public void didSeekRemoteAssetSuccess() {
+        //TODO show warning badge
+    }
+
+    @Override
+    public void didSeekRemoteAssetFailure() {
+        //TODO show warning badge
     }
 }

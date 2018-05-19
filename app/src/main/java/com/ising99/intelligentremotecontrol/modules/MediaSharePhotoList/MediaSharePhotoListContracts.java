@@ -26,9 +26,11 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
 
     interface Interactor extends BaseContracts.Interactor {
         List<Photo> getPhotos();
-        void stopCast();
-        void performCast(List<Photo> photos);
+
         void setupCurrentDevice(Device device);
+        void setupCurrentRemoteAsset();
+        void performRemotePlay();
+        void performRemoteStop();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

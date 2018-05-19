@@ -54,12 +54,27 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         Music playLast();
 
         void setupCurrentDevice(Device device);
-        void performCast();
-        void stopCast();
+        void setupCurrentRemoteAsset();
+        void performRemotePlay();
+        void performRemoteStop();
+        void performRemotePause();
+        void performRemoteSeek(String targetTimeInterval);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
+        void didSetRemoteAssetSuccess();
+        void didSetRemoteAssetFailure();
 
+        void didPlayRemoteAssetSuccess();
+        void didPlayRemoteAssetFailure();
+
+        void didStopRemoteAssetFailure();
+
+        void didPauseRemoteAssetSuccess();
+        void didPauseRemoteAssetFailure();
+
+        void didSeekRemoteAssetSuccess();
+        void didSeekRemoteAssetFailure();
     }
 
     interface Wireframe extends BaseContracts.Wireframe {

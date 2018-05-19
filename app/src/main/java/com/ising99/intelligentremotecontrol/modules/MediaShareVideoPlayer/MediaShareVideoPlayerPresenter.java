@@ -85,7 +85,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     public void onPause() {
         worker.cancel();
         player.pause();
-        interactor.stopCast();
+        interactor.performRemoteStop();
     }
 
     @Override
@@ -114,12 +114,12 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
             if(isRemotePlaying)
             {
                 view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
-                interactor.performPause();
+                interactor.performRemotePause();
             }
             else
             {
                 view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
-                interactor.performPlay();
+                interactor.performRemotePlay();
             }
             isRemotePlaying = !isRemotePlaying;
         }
@@ -143,7 +143,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         currentSec = secScale;
         if (isRemoteMode)
         {
-            interactor.performSeekAt(transformedFrom(secScale*1000));
+            interactor.performRemoteSeek(transformedFrom(secScale*1000));
         }
         else
         {
@@ -164,7 +164,11 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
             isRemotePlaying = true;
             view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
             interactor.setupCurrentDevice(device);
-            interactor.performCast();
+            interactor.setupCurrentRemoteAsset();
+            //todo output success/failure from the callback
+            //todo perform remote play when output success
+            interactor.performRemotePlay();
+            //todo output success/failure from the callback
         }
     }
 

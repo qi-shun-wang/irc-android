@@ -3,10 +3,13 @@ package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList;
 import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerCallback;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.InteractorOutput;
 
+import org.fourthline.cling.model.action.ActionInvocation;
+import org.fourthline.cling.model.message.UpnpResponse;
 import org.fourthline.cling.model.meta.Device;
 
 import java.io.UnsupportedEncodingException;
@@ -28,7 +31,6 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     private DLNAMediaManager manager;
     private Timer worker;
     private int cursor = 0;
-    private Device currentCastingDevice;
 
     MediaSharePhotoListInteractor(Context context,List<Photo> collection ,DLNAMediaManager manager) {
         this.context = context;
@@ -55,33 +57,84 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
 
     @Override
     public void setupCurrentDevice(Device device) {
-        currentCastingDevice = device;
+        manager.setCurrentDevice(device);
+
     }
 
     @Override
-    public void performCast(List<Photo> assets) {
-        worker = new Timer();
-        cursor = 0;
-        worker.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (cursor >= assets.size()) return;
-                try {
-                    String path = URLEncoder.encode( assets.get(cursor).getFilePath(), "UTF-8");
-                    manager.setAVTransportURI(currentCastingDevice,"/image" + path);
-                } catch (UnsupportedEncodingException e){
-                    e.printStackTrace();
+    public void setupCurrentRemoteAsset() {
+        try {
+            String path = URLEncoder.encode( collection.get(cursor).getFilePath(), "UTF-8");
+            manager.setAVTransportURI("/image" + path, new DLNAMediaManagerCallback.Common() {
+                @Override
+                public void success(ActionInvocation invocation) {
+
                 }
-                cursor ++;
-            }
-        },1000,5000);
+
+                @Override
+                public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+
+                }
+            });
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
-    public void stopCast() {
-        if (currentCastingDevice == null || worker == null) return;
-        worker.cancel();
-        manager.stop(currentCastingDevice);
+    public void performRemotePlay() {
+        manager.play(new DLNAMediaManagerCallback.Common() {
+            @Override
+            public void success(ActionInvocation invocation) {
+
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+
+            }
+        });
     }
+
+    @Override
+    public void performRemoteStop() {
+        manager.stop((invocation, operation, defaultMsg) -> {
+
+        });
+    }
+
+    //TODO move worker into presenter
+//    @Override
+//    public void performCast(List<Photo> assets) {
+//        worker = new Timer();
+//        cursor = 0;
+//
+//
+//        worker.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                if (cursor >= assets.size()) return;
+//                try {
+//                    String path = URLEncoder.encode( assets.get(cursor).getFilePath(), "UTF-8");
+//                    manager.setAVTransportURI("/image" + path, new DLNAMediaManagerCallback.Common() {
+//                        @Override
+//                        public void success(ActionInvocation invocation) {
+//
+//                        }
+//
+//                        @Override
+//                        public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+//
+//                        }
+//                    });
+//                } catch (UnsupportedEncodingException e){
+//                    e.printStackTrace();
+//                }
+//                cursor ++;
+//            }
+//        },1000,5000);
+//    }
+
 }
 

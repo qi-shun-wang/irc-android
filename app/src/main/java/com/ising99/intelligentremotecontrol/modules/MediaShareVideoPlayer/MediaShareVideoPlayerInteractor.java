@@ -3,16 +3,17 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer;
 import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerCallback;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.InteractorOutput;
 
+import org.fourthline.cling.model.action.ActionInvocation;
+import org.fourthline.cling.model.message.UpnpResponse;
 import org.fourthline.cling.model.meta.Device;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by shun on 2018/5/10 下午 02:37:57.
@@ -24,9 +25,7 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
     private InteractorOutput output;
     private Context context;
     private Video asset;
-    private DLNAMediaManager manager;//TODO-DLNAMediaManager callback event
-    private Timer worker;
-    private Device currentCastingDevice;
+    private DLNAMediaManager manager;
 
     MediaShareVideoPlayerInteractor(Context context, Video asset, DLNAMediaManager manager) {
         this.context = context;
@@ -41,7 +40,6 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
 
     @Override
     public void decompose() {
-        worker.cancel();
         output = null;
         context = null;
     }
@@ -52,46 +50,81 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
     }
 
     @Override
-    public void stopCast() {
-        if (currentCastingDevice == null || worker == null) return;
-        worker.cancel();
-        manager.stop(currentCastingDevice);
-    }
-
-    @Override
-    public void performCast() {
-        worker = new Timer();
-        worker.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    String path = URLEncoder.encode(asset.getFilePath(), "UTF-8");
-                    manager.setAVTransportURI(currentCastingDevice,"/video" + path);
-                } catch (UnsupportedEncodingException e){
-                    e.printStackTrace();
-                }
-            }
-        },1000,asset.getDuration());
-    }
-
-    @Override
-    public void performSeekAt(String relativeTimeTarget) {
-        manager.seek(currentCastingDevice, relativeTimeTarget);
-    }
-
-    @Override
-    public void performPause() {
-        manager.pause(currentCastingDevice);
-    }
-
-    @Override
-    public void performPlay() {
-        manager.play(currentCastingDevice);
-    }
-
-    @Override
     public void setupCurrentDevice(Device device) {
-        currentCastingDevice = device;
+        manager.setCurrentDevice(device);
+    }
+
+    @Override
+    public void setupCurrentRemoteAsset() {
+        try {
+            String path = URLEncoder.encode(asset.getFilePath(), "UTF-8");
+            manager.setAVTransportURI("/video" + path, new DLNAMediaManagerCallback.Common() {
+                @Override
+                public void success(ActionInvocation invocation) {
+
+                }
+
+                @Override
+                public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+
+                }
+            });
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void performRemotePlay() {
+        manager.play(new DLNAMediaManagerCallback.Common() {
+            @Override
+            public void success(ActionInvocation invocation) {
+
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+
+            }
+        });
+    }
+
+    @Override
+    public void performRemoteStop() {
+        manager.stop((invocation, operation, defaultMsg) -> {
+
+        });
+    }
+
+    @Override
+    public void performRemotePause() {
+        manager.pause(new DLNAMediaManagerCallback.Common() {
+            @Override
+            public void success(ActionInvocation invocation) {
+
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+
+            }
+        });
+    }
+
+    @Override
+    public void performRemoteSeek(String targetTimeInterval) {
+        manager.seek(targetTimeInterval, new DLNAMediaManagerCallback.Common() {
+            @Override
+            public void success(ActionInvocation invocation) {
+
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+
+            }
+        });
     }
 }
 

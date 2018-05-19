@@ -1,12 +1,16 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerCallback;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.InteractorOutput;
 
+import org.fourthline.cling.model.action.ActionInvocation;
+import org.fourthline.cling.model.message.UpnpResponse;
 import org.fourthline.cling.model.meta.Device;
 
 import java.io.UnsupportedEncodingException;
@@ -25,7 +29,6 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
     private List<Music> assets;
     private int currentIndex;
     private DLNAMediaManager manager;
-    private Device currentCastingDevice;
 
     MediaShareMusicPlayerPanelInteractor(Context context, List<Music> assets, int position, DLNAMediaManager manager) {
         this.context = context;
@@ -84,24 +87,90 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
 
     @Override
     public void setupCurrentDevice(Device device) {
-        currentCastingDevice = device;
+        manager.setCurrentDevice(device);
     }
 
     @Override
-    public void performCast() {
+    public void setupCurrentRemoteAsset() {
         try {
             String path = URLEncoder.encode( assets.get(currentIndex).getFilePath(), "UTF-8");
-            manager.setAVTransportURI(currentCastingDevice,"/music" + path);
-            //TODO-add function callback when set success
+            manager.setAVTransportURI("/music" + path, new DLNAMediaManagerCallback.Common() {
+                @Override
+                public void success(ActionInvocation invocation) {
+                    Log.i("DLNAMediaManager", "SetAVTransportURI success.");
+                    output.didSetRemoteAssetSuccess();
+                }
+
+                @Override
+                public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+                    Log.e("DLNAMediaManager", "SetAVTransportURI failed");
+                    output.didSetRemoteAssetFailure();
+                }
+            });
         } catch (UnsupportedEncodingException e){
             e.printStackTrace();
         }
     }
 
     @Override
-    public void stopCast() {
-        if (currentCastingDevice == null) return;
-        manager.stop(currentCastingDevice);
+    public void performRemotePlay() {
+        manager.play(new DLNAMediaManagerCallback.Common() {
+            @Override
+            public void success(ActionInvocation invocation) {
+                Log.i("DLNAMediaManager", "Play success.");
+                output.didPlayRemoteAssetSuccess();
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+                Log.e("DLNAMediaManager", "Play failed");
+                output.didPlayRemoteAssetFailure();
+            }
+        });
+
+    }
+
+    @Override
+    public void performRemotePause() {
+        manager.pause(new DLNAMediaManagerCallback.Common() {
+            @Override
+            public void success(ActionInvocation invocation) {
+                Log.i("DLNAMediaManager", "Pause success.");
+                output.didPauseRemoteAssetSuccess();
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+                Log.e("DLNAMediaManager", "Pause failed");
+                output.didPauseRemoteAssetFailure();
+            }
+        });
+    }
+
+    @Override
+    public void performRemoteStop() {
+        manager.stop((arg0, arg1, arg2) -> {
+            Log.e("DLNAMediaManager", "Stop failed");
+            output.didStopRemoteAssetFailure();
+        });
+    }
+
+    @Override
+    public void performRemoteSeek(String targetTimeInterval) {
+        manager.seek(targetTimeInterval, new DLNAMediaManagerCallback.Common() {
+            @Override
+            public void success(ActionInvocation invocation) {
+                Log.i("DLNAMediaManager", "seek success.");
+                output.didSeekRemoteAssetSuccess();
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+                Log.e("DLNAMediaManager", "seek failed");
+                output.didSeekRemoteAssetFailure();
+            }
+        });
+
     }
 
     @Override

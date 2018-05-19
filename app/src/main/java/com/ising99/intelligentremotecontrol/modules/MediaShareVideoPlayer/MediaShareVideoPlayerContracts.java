@@ -33,12 +33,13 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
 
     interface Interactor extends BaseContracts.Interactor {
         Video getVideoAsset();
-        void stopCast();
-        void performCast();
-        void performPlay();
-        void performPause();
-        void performSeekAt(String relativeTimeTarget);
+
         void setupCurrentDevice(Device device);
+        void setupCurrentRemoteAsset();
+        void performRemotePlay();
+        void performRemoteStop();
+        void performRemotePause();
+        void performRemoteSeek(String targetTimeInterval);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

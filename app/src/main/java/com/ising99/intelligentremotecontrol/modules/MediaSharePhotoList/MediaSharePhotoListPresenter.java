@@ -89,19 +89,23 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void didSelectedPhotoAt(int position) {
-        interactor.stopCast();
+
         PhotoItem item = photos.get(position);
         item.setSelected(!item.isSelected());
         view.reloadGridView(photos);
     }
 
     private void prepareCasting(){
+        //todo next remote set ats
+        //todo remote play next asset when output ats success
         List<Photo> selectedPhotos = new ArrayList<>();
         for (PhotoItem item : photos) {
             if (item.isSelected()){
                 selectedPhotos.add(item.getPhoto());
             }
         }
-        interactor.performCast(selectedPhotos);
+        interactor.setupCurrentRemoteAsset();
+        //TODO output ats success/failure
+        //TODO remote play when output ats success
     }
 }

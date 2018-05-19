@@ -36,24 +36,43 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
 
     private WebServer server;
     private UpnpService upnpService ;
-
+    private Device currentDevice;
 
     @Override
-    public boolean setAVTransportURI(Device device, String path) {
+    public void setupMediaServer(InetAddress address) {
+        server = new WebServer(address.getHostAddress(),8080);
+    }
+
+    @Override
+    public void startServer() throws IOException {
+        server.start();
+    }
+
+    @Override
+    public void stopServer() {
+        server.stop();
+    }
+
+    @Override
+    public void setCurrentDevice(Device currentDevice) {
+        this.currentDevice = currentDevice;
+    }
+
+    @Override
+    public void setAVTransportURI(String path, DLNAMediaManagerCallback.Common callback) {
         try {
-            Service localService = device.findService(new UDAServiceId("AVTransport"));
+            Service localService = currentDevice.findService(new UDAServiceId("AVTransport"));
             if (localService != null) {
                 Log.e("set url", "set url" + path);
                 upnpService.getControlPoint().execute(new SetAVTransportURI(localService,"http://"+server.getHostname()+ ":"+server.getListeningPort() + path) {
                     @Override
                     public void success(ActionInvocation invocation) {
-                        Log.i("DLNAMediaManager", "SetAVTransportURI success.");
-                        play(device);
+                        callback.success(invocation);
                     }
 
                     @Override
                     public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-                        Log.e("DLNAMediaManager", "SetAVTransportURI failed");
+                        callback.failure(arg0,arg1,arg2);
                     }
                 });
 
@@ -63,25 +82,23 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
         } catch (Exception localException) {
             localException.printStackTrace();
         }
-
-        return false;
     }
 
     @Override
-    public boolean play(Device device) {
+    public void play(DLNAMediaManagerCallback.Common callback) {
 
         try {
-            Service localService = device.findService(new UDAServiceId("AVTransport"));
+            Service localService = currentDevice.findService(new UDAServiceId("AVTransport"));
             if (localService != null) {
                 upnpService.getControlPoint().execute(new Play(localService) {
                     @Override
                     public void success(ActionInvocation invocation) {
-                        Log.i("DLNAMediaManager", "Play success.");
+                        callback.success(invocation);
                     }
 
                     @Override
                     public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-                        Log.e("DLNAMediaManager", "Play failed");
+                        callback.failure(arg0,arg1,arg2);
                     }
                 });
             } else {
@@ -90,10 +107,77 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
         } catch (Exception localException) {
             localException.printStackTrace();
         }
-
-        return false;
     }
 
+    @Override
+    public void pause(DLNAMediaManagerCallback.Common callback) {
+        try {
+            Service localService = currentDevice.findService(new UDAServiceId("AVTransport"));
+            if (localService != null) {
+                upnpService.getControlPoint().execute(new Pause(localService) {
+                    @Override
+                    public void success(ActionInvocation invocation) {
+                        callback.success(invocation);
+                    }
+
+                    @Override
+                    public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+                        callback.failure(arg0,arg1,arg2);
+                    }
+                });
+            } else {
+                Log.e("null", "null");
+            }
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+    }
+
+    @Override
+    public void stop(DLNAMediaManagerCallback.OneWay callback) {
+        try {
+            Service localService = currentDevice.findService(new UDAServiceId("AVTransport"));
+            if (localService != null) {
+                upnpService.getControlPoint().execute(new Stop(localService) {
+                    @Override
+                    public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+                        callback.failure(invocation, operation, defaultMsg);
+                    }
+                });
+
+            } else {
+                Log.e("null", "null");
+            }
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+    }
+
+    @Override
+    public void seek(String targetPosition, DLNAMediaManagerCallback.Common callback) {
+        try {
+            Service localService = currentDevice.findService(new UDAServiceId("AVTransport"));
+            if (localService != null) {
+                upnpService.getControlPoint().execute(new Seek(localService,targetPosition) {
+
+                    @Override
+                    public void success(ActionInvocation invocation) {
+                        callback.success(invocation);
+                    }
+
+                    @Override
+                    public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+                        callback.failure(arg0,arg1,arg2);
+                    }
+
+                });
+            } else {
+                Log.e("null", "null");
+            }
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+    }
     @Override
     public boolean goOn(Device device, String pausePosition) {
         return false;
@@ -114,30 +198,6 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
         return 0;
     }
 
-    @Override
-    public boolean seek(Device device, String targetPosition) {
-        try {
-            Service localService = device.findService(new UDAServiceId("AVTransport"));
-            if (localService != null) {
-                upnpService.getControlPoint().execute(new Seek(localService,targetPosition) {
-                    @Override
-                    public void success(ActionInvocation invocation) {
-                        Log.i("DLNAMediaManager", "seek success.");
-                    }
-
-                    @Override
-                    public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-                        Log.e("DLNAMediaManager", "seek failed");
-                    }
-                });
-            } else {
-                Log.e("null", "null");
-            }
-        } catch (Exception localException) {
-            localException.printStackTrace();
-        }
-        return false;
-    }
 
     @Override
     public String getPositionInfo(Device device) {
@@ -169,52 +229,7 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
         return 0;
     }
 
-    @Override
-    public boolean stop(Device device) {
-        try {
-            Service localService = device.findService(new UDAServiceId("AVTransport"));
-            if (localService != null) {
-                upnpService.getControlPoint().execute(new Stop(localService) {
-                    @Override
-                    public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
-                        Log.e("DLNAMediaManager", "Stop failed");
-                    }
-                });
 
-            } else {
-                Log.e("null", "null");
-            }
-        } catch (Exception localException) {
-            localException.printStackTrace();
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean pause(Device device) { try {
-        Service localService = device.findService(new UDAServiceId("AVTransport"));
-        if (localService != null) {
-            upnpService.getControlPoint().execute(new Pause(localService) {
-                @Override
-                public void success(ActionInvocation invocation) {
-                    Log.i("DLNAMediaManager", "Pause success.");
-                }
-
-                @Override
-                public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-                    Log.e("DLNAMediaManager", "Pause failed");
-                }
-            });
-        } else {
-            Log.e("null", "null");
-        }
-    } catch (Exception localException) {
-        localException.printStackTrace();
-    }
-
-        return false;
-    }
 
     @Override
     public boolean getPauseState(Device device) {
@@ -264,18 +279,6 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
     @Override
     public void afterShutdown() {
 
-    }
-
-    public void setupMediaServer(InetAddress address) {
-        server = new WebServer(address.getHostAddress(),8080);
-    }
-
-    public void startServer() throws IOException {
-        server.start();
-    }
-
-    public void stopServer() {
-        server.stop();
     }
 
 }

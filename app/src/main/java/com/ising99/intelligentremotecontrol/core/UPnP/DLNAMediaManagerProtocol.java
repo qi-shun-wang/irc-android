@@ -2,21 +2,31 @@ package com.ising99.intelligentremotecontrol.core.UPnP;
 
 import org.fourthline.cling.model.meta.Device;
 
+import java.io.IOException;
+import java.net.InetAddress;
+
 /**
  * Created by shun on 2018/5/4.
  */
 
 public interface DLNAMediaManagerProtocol {
 
-    boolean setAVTransportURI(Device device, String path);
-    /**
-     * Play the video with the video path.
-     *
-     * @param device
-     *            The device be controlled.
-     * @return If is success to play the video.
-     */
-    boolean play(Device device);
+    void startServer() throws IOException;
+    void stopServer();
+    void setupMediaServer(InetAddress address);
+
+    void setCurrentDevice(Device currentDevice);
+
+    void setAVTransportURI(String path, DLNAMediaManagerCallback.Common callback);
+
+    void play(DLNAMediaManagerCallback.Common callback);
+
+    void stop(DLNAMediaManagerCallback.OneWay callback);
+
+    void pause(DLNAMediaManagerCallback.Common callback);
+
+    void seek(String targetPosition,DLNAMediaManagerCallback.Common callback);
+
 
     /**
      * Go on playing the video from the position.
@@ -51,17 +61,6 @@ public interface DLNAMediaManagerProtocol {
      * @return The max volume value.
      */
     int getMaxVolumeValue(Device device);
-
-    /**
-     * Seek the playing video to a target position.
-     *
-     * @param device
-     *            The device be controlled.
-     * @param targetPosition
-     *            Target position we want to set.
-     * @return
-     */
-    boolean seek(Device device, String targetPosition);
 
     /**
      * Get the current playing position of the video.
@@ -121,24 +120,6 @@ public interface DLNAMediaManagerProtocol {
      * @return Current voice.
      */
     int getVoice(Device device);
-
-    /**
-     * Stop to play.
-     *
-     * @param device
-     *            The device to controlled.
-     * @return If if success to stop the video.
-     */
-    boolean stop(Device device);
-
-    /**
-     * Pause the playing video.
-     *
-     * @param device
-     *            The device to controlled.
-     * @return If if success to pause the video.
-     */
-    boolean pause(Device device);
 
     /**
      * get the remote device play state add by bhj

@@ -16,6 +16,7 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void setupMusicAssets(List<Music> assets);
         void clearPanelListener();
         void updateMediaPanel(Music asset, int currentTimeInterval, int playbackIconResID);
+        void scrollToTop();
     }
 
     interface Presenter extends BaseContracts.Presenter {

@@ -70,6 +70,7 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
                 presenter.updateScroll(dx,dy);
             }
         };
+
         panel.addOnScrollListener(listener);
         presenter.onCreate();
         return view;
@@ -177,4 +178,9 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
         });
     }
 
+    @Override
+    public void scrollToTop() {
+        getActivity().runOnUiThread(()->panel.getLayoutManager().smoothScrollToPosition(panel,new RecyclerView.State(), 0));
+
+    }
 }

@@ -30,6 +30,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     private Wireframe router;
     private int record = 0;
     private boolean isScrollToTop = true;
+    private boolean hasDismissBlocker = false;
     private MediaPlayer player;
     private Timer worker;
     private boolean isSeeking = false;
@@ -97,12 +98,14 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         switch (state){
             case SCROLL_STATE_DRAGGING:break;
             case SCROLL_STATE_SETTLING:
+                if (hasDismissBlocker) return;
+
                 if (record == 0 && isScrollToTop){
                     view.clearPanelListener();
                     router.dismissPanelWhen(player.isPlaying(), interactor.getCurrentIndex());
                 }
                 break;
-            case SCROLL_STATE_IDLE:record = 0;break;
+            case SCROLL_STATE_IDLE:record = 0;hasDismissBlocker = false; break;
         }
     }
 
@@ -114,6 +117,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void didTapOnItemAt(int position) {
+        hasDismissBlocker = true;
+        view.scrollToTop();
 
         try {
             player.stop();

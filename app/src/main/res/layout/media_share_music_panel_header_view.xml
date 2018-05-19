@@ -96,6 +96,7 @@
             android:progressTint="@color/black"
             />
         <ImageButton
+            android:id="@+id/media_share_music_player_panel_cast_btn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/clear"

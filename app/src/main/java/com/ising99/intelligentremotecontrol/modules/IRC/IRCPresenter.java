@@ -93,6 +93,11 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     }
 
     @Override
+    public void dispatchEnterActionL() {
+        interactor.performL(SendCode.KEYCODE_DPAD_CENTER);
+    }
+
+    @Override
     public void dispatchPowerAction() {
         interactor.perform(SendCode.KEYCODE_POWER);
     }

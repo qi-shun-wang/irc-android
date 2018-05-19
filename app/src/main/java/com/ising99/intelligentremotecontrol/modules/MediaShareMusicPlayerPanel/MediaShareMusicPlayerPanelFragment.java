@@ -117,6 +117,11 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     }
 
     @Override
+    public void didTapOnCast() {
+        presenter.performCast();
+    }
+
+    @Override
     public void didTapOnPlayback() {
         presenter.performPlayback();
     }

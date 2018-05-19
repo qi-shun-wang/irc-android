@@ -12,6 +12,7 @@ public interface IRCActionDelegate {
     void dispatchLeftAction();
     void dispatchRightAction();
     void dispatchEnterAction();
+    void dispatchEnterActionL();
     void dispatchPowerAction();
     void dispatchNumPanelAction();
     void dispatchMediaPanelAction();

@@ -45,6 +45,7 @@ public class IRCDefaultFragment extends Fragment {
                 case left:  delegate.dispatchLeftAction();break;
                 case right: delegate.dispatchRightAction();break;
                 case center:delegate.dispatchEnterAction();break;
+                case centerL:delegate.dispatchEnterActionL();break;
             }
         });
 

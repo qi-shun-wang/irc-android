@@ -181,6 +181,11 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     }
 
     @Override
+    public void performCast() {
+
+    }
+
+    @Override
     public void startMediaSeeking() {
         isSeeking = true;
     }

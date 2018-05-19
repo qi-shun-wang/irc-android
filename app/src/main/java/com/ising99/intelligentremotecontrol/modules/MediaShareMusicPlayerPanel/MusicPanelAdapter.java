@@ -90,6 +90,7 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
         ImageButton playback;
         ImageButton fastForward;
         ImageButton fastBackward;
+        ImageButton cast;
         SeekBar media;
         SeekBar volume;
 
@@ -99,6 +100,7 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
             subtitle = itemView.findViewById(R.id.media_share_music_player_panel_item_subtitle);
             thumbnail = itemView.findViewById(R.id.media_share_music_player_panel_album_icon);
             playback = itemView.findViewById(R.id.media_share_music_player_panel_playback_btn);
+            cast = itemView.findViewById(R.id.media_share_music_player_panel_cast_btn);
             fastForward = itemView.findViewById(R.id.media_share_music_player_panel_fast_forward_btn);
             fastBackward = itemView.findViewById(R.id.media_share_music_player_panel_fast_backward_btn);
             media = itemView.findViewById(R.id.media_share_music_player_panel_media_seek_bar);
@@ -106,6 +108,7 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
             media.setOnSeekBarChangeListener(this);
             volume.setOnSeekBarChangeListener(this);
             playback.setOnClickListener(this);
+            cast.setOnClickListener(this);
             fastForward.setOnClickListener(this);
             fastBackward.setOnClickListener(this);
         }
@@ -116,6 +119,7 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
                 if (playback.equals(view)) mcaDelegate.didTapOnPlayback();
                 if (fastForward.equals(view)) mcaDelegate.didTapOnFastForward();
                 if (fastBackward.equals(view)) mcaDelegate.didTapOnFastBackward();
+                if (cast.equals(view)) mcaDelegate.didTapOnCast();
             }
         }
 

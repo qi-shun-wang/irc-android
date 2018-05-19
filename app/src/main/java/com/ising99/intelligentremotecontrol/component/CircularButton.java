@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,8 @@ public class CircularButton extends ViewGroup {
         down("down"),
         left("left"),
         right("right"),
-        center("center");
+        center("center"),
+        centerL("centerL");
 
         private final String value;
 
@@ -66,6 +68,7 @@ public class CircularButton extends ViewGroup {
     private int centerX = 0;
     private int centerY = 0;
     private ImageView image;
+
     public CircularButton(Context context) {
         this(context, null);
     }
@@ -88,8 +91,8 @@ public class CircularButton extends ViewGroup {
 
             image = new ImageView(context);
             image.setBackgroundResource(dpad_default_resId);
-            addView(image,-1);
 
+            addView(image,-1);
             a.recycle();
         }
     }
@@ -121,47 +124,75 @@ public class CircularButton extends ViewGroup {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent motionEvent) {
 
         Point point = new Point();
-        point.x = (int) event.getX();
-        point.y = (int) event.getY();
-        if(event.getAction() == MotionEvent.ACTION_DOWN && (delegate != null))
+        point.x = (int) motionEvent.getX();
+        point.y = (int) motionEvent.getY();
+        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN && (delegate != null))
         {
+
             if (!outerRegion.contains(point.x, point.y)) return true;
 
             if(centerRegion.contains(point.x, point.y))
             {
                 image.setBackgroundResource(dpad_ok_resId);
-                delegate.didTapOn(Action.center);
             }
             else if(downRegion.contains(point.x, point.y))
             {
                 image.setBackgroundResource(dpad_down_resId);
-                delegate.didTapOn(Action.down);
             }
             else if(upRegion.contains(point.x, point.y))
             {
                 image.setBackgroundResource(dpad_up_resId);
-                delegate.didTapOn(Action.up);
             }
             else if(rightRegion.contains(point.x, point.y))
             {
                 image.setBackgroundResource(dpad_right_resId);
-                delegate.didTapOn(Action.right);
             }
             else if(leftRegion.contains(point.x, point.y))
             {
                 image.setBackgroundResource(dpad_left_resId);
+            }
+        }
+        else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+        {
+
+            if (!outerRegion.contains(point.x, point.y)) return true;
+
+            if(centerRegion.contains(point.x, point.y))
+            {
+                if ((motionEvent.getEventTime()-motionEvent.getDownTime())>2000)
+                {
+                    delegate.didTapOn(Action.centerL);
+                }
+                else
+                {
+                    delegate.didTapOn(Action.center);
+                }
+
+            }
+            else if(downRegion.contains(point.x, point.y))
+            {
+                delegate.didTapOn(Action.down);
+            }
+            else if(upRegion.contains(point.x, point.y))
+            {
+                delegate.didTapOn(Action.up);
+            }
+            else if(rightRegion.contains(point.x, point.y))
+            {
+                delegate.didTapOn(Action.right);
+            }
+            else if(leftRegion.contains(point.x, point.y))
+            {
                 delegate.didTapOn(Action.left);
             }
 
-        }
-        else if(event.getAction() == MotionEvent.ACTION_UP)
-        {
             image.setBackgroundResource(dpad_default_resId);
         }
         performClick();
+
         return true;
     }
 

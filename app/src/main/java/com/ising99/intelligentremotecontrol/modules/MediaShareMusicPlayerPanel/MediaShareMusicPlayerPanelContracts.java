@@ -31,7 +31,7 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void performFastForward();
         void performFastBackward();
         void prepareUpdateHolder();
-
+        void performCast();
         void startMediaSeeking();
         void stopMediaSeeking();
         void didMediaSeekAt(int timeInterval);

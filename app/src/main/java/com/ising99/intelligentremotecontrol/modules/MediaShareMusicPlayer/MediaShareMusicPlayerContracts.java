@@ -24,7 +24,7 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
         void performPlayback();
         boolean performFastForward();
         void performNext();
-        void updatePlaybackIcon(boolean isPlaying, int currentIndex);
+        void updatePlaybackIcon(boolean isPlaying, int currentIndex, int volumeScale);
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -40,6 +40,6 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentMediaPlayerPanelWith(List<Music> assets, int position,MediaPlayer player);
+        void presentMediaPlayerPanelWith(List<Music> assets, int position,MediaPlayer player, int volumeScale);
     }
 }

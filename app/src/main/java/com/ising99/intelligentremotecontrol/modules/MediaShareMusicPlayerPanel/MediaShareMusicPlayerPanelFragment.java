@@ -51,6 +51,7 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
         adapter = new MusicPanelAdapter();
         adapter.setDelegate(this);
         adapter.setMcaDelegate(this);
+        adapter.setMaxVolume(50);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         panel = view.findViewById(R.id.media_share_music_player_panel_recycler_view);
         panel.setHasFixedSize(true);
@@ -106,12 +107,6 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     }
 
     @Override
-    public void setupMusicAssets(List<Music> assets) {
-        adapter.setItems(assets);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
     public void clearPanelListener() {
         panel.clearOnScrollListeners();
     }
@@ -156,31 +151,63 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
 
     @Override
     public void didVolumeOnProgressChanged(int i, boolean b) {
-
+        presenter.didVolumeSeekAt(i);
     }
 
     @Override
     public void didVolumeOnStartTrackingTouch() {
-
+        presenter.startVolumeSeeking();
     }
 
     @Override
     public void didVolumeOnStopTrackingTouch() {
-
+        presenter.stopVolumeSeeking();
     }
 
     @Override
-    public void updateMediaPanel(Music asset, int currentTimeInterval, int playbackIconResID) {
+    public void setupMaxVolume(int value) {
+        adapter.setMaxVolume(value);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setupMusicAssets(List<Music> assets) {
+        adapter.setItems(assets);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateCurrentVolume(int value) {
+        getActivity().runOnUiThread(()-> adapter.updateCurrentVolume(value));
+    }
+
+    @Override
+    public void updateMediaPanel(Music asset) {
         getActivity().runOnUiThread(()->{
-            MusicPanelHeader header = new MusicPanelHeader(asset, currentTimeInterval, playbackIconResID);
+            MusicPanelHeader header = new MusicPanelHeader(asset);
             adapter.setHeader(header);
             adapter.notifyDataSetChanged();
         });
     }
 
     @Override
+    public void updateCurrentMedia(int currentTimeInterval) {
+        getActivity().runOnUiThread(()-> adapter.updateCurrentMedia(currentTimeInterval));
+    }
+
+    @Override
+    public void updateCurrentPlaybackIcon(int resID) {
+        getActivity().runOnUiThread(()->adapter.updateCurrentPlaybackStatus(resID));
+    }
+
+    @Override
     public void scrollToTop() {
         getActivity().runOnUiThread(()->panel.getLayoutManager().smoothScrollToPosition(panel,new RecyclerView.State(), 0));
 
+    }
+
+    @Override
+    public void didLoadHolder() {
+        presenter.prepareUpdateHolder();
     }
 }

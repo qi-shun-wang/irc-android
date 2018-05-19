@@ -3,6 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
+import com.ising99.intelligentremotecontrol.App;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
@@ -25,6 +26,7 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     private Interactor interactor;
     private Wireframe router;
     private MediaPlayer player;
+    private int currentVolume = 25;
 
     MediaShareMusicPlayerPresenter() {
         player = new MediaPlayer();
@@ -62,6 +64,7 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
         try {
             player.setDataSource(interactor.getCurrentAsset().getFilePath());
             player.prepare();
+            prepareVolumeWith(currentVolume, player);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,7 +94,7 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
 
     @Override
     public void prepareMediaPlayerPanel() {
-        router.presentMediaPlayerPanelWith(interactor.getAssets(), interactor.getCurrentIndex(), player);
+        router.presentMediaPlayerPanelWith(interactor.getAssets(), interactor.getCurrentIndex(), player, currentVolume);
     }
 
     @Override
@@ -129,7 +132,8 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     }
 
     @Override
-    public void updatePlaybackIcon(boolean isPlaying, int currentIndex) {
+    public void updatePlaybackIcon(boolean isPlaying, int currentIndex, int volumeScale) {
+        currentVolume = volumeScale;
         interactor.updateCurrentIndex(currentIndex);
         Music asset = interactor.getCurrentAsset();
         view.updateMusicInfo(asset.getTitle(), asset.getArtist(), R.drawable.media_share_default_album_icon);
@@ -139,5 +143,9 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
         } else {
             view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
         }
+    }
+    private void prepareVolumeWith(int scale,MediaPlayer player){
+        float log1 = (float)(Math.log(App.MAX_VOLUME-scale)/Math.log(App.MAX_VOLUME));
+        player.setVolume(1-log1,1-log1);
     }
 }

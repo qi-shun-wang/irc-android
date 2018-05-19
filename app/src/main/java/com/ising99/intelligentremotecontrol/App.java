@@ -14,6 +14,7 @@ import org.greenrobot.greendao.database.Database;
 
 public class App extends Application {
     public static final boolean ENCRYPTED = true;
+    public static final int MAX_VOLUME = 50;
     private DaoSession daoSession;
 
     @Override

@@ -5,24 +5,13 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Mus
 public class MusicPanelHeader {
 
     private Music asset;
-    private int currentTimeInterval;
-    private int playbackResID;
 
-    public MusicPanelHeader(Music asset, int currentTimeInterval, int playbackResID) {
+    MusicPanelHeader(Music asset) {
         this.asset = asset;
-        this.currentTimeInterval = currentTimeInterval;
-        this.playbackResID = playbackResID;
     }
 
     public Music getAsset() {
         return asset;
     }
 
-    public int getCurrentTimeInterval() {
-        return currentTimeInterval;
-    }
-
-    public int getPlaybackResID() {
-        return playbackResID;
-    }
 }

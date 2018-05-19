@@ -2,6 +2,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel;
 
 import android.media.MediaPlayer;
 
+import com.ising99.intelligentremotecontrol.App;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
@@ -35,9 +36,12 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     private Timer worker;
     private boolean isSeeking = false;
     private int seekTimeInterval = 0;
+    private int currentVolume ;
+    private boolean isVolumeFirstResponse = true;
 
-    MediaShareMusicPlayerPanelPresenter(MediaPlayer player) {
+    MediaShareMusicPlayerPanelPresenter(MediaPlayer player, int volumeScale) {
         this.player = player;
+        currentVolume = volumeScale;
     }
 
     @Override
@@ -66,27 +70,27 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void onCreate() {
-
+        view.setupMaxVolume(App.MAX_VOLUME);
+        view.setupMusicAssets(interactor.getMusicAssets());
+        view.updateMediaPanel(interactor.getCurrentMusicAsset());
     }
 
     @Override
     public void onResume() {
 
-        view.setupMusicAssets(interactor.getMusicAssets());
         if(player.isPlaying())
         {
-            view.updateMediaPanel(interactor.getCurrentMusicAsset(),player.getCurrentPosition(),R.drawable.media_share_pause_icon);
+            view.updateCurrentPlaybackIcon(R.drawable.media_share_pause_icon);
         }
         else
         {
-            view.updateMediaPanel(interactor.getCurrentMusicAsset(),player.getCurrentPosition(),R.drawable.media_share_play_icon);
+            view.updateCurrentPlaybackIcon(R.drawable.media_share_play_icon);
         }
         prepareWorker();
     }
 
     @Override
     public void onPause() {
-        worker.cancel();
     }
 
     @Override
@@ -102,10 +106,11 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
                 if (record == 0 && isScrollToTop){
                     view.clearPanelListener();
-                    router.dismissPanelWhen(player.isPlaying(), interactor.getCurrentIndex());
+                    worker.cancel();
+                    router.dismissPanelWhen(player.isPlaying(), interactor.getCurrentIndex(), currentVolume);
                 }
                 break;
-            case SCROLL_STATE_IDLE:record = 0;hasDismissBlocker = false; break;
+            case SCROLL_STATE_IDLE:record = 0; hasDismissBlocker = false; break;
         }
     }
 
@@ -127,7 +132,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
             player.setDataSource(asset.getFilePath());
             player.prepare();
             player.start();
-            view.updateMediaPanel(asset,player.getCurrentPosition(),R.drawable.media_share_pause_icon);
+            view.updateMediaPanel(interactor.getCurrentMusicAsset());
+            view.updateCurrentPlaybackIcon(R.drawable.media_share_pause_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,13 +141,12 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void performPlayback() {
-
         if (player.isPlaying()) {
             player.pause();
-            view.updateMediaPanel(interactor.getCurrentMusicAsset(),player.getCurrentPosition(),R.drawable.media_share_play_icon);
+            view.updateCurrentPlaybackIcon(R.drawable.media_share_play_icon);
         } else {
             player.start();
-            view.updateMediaPanel(interactor.getCurrentMusicAsset(),player.getCurrentPosition(),R.drawable.media_share_pause_icon);
+            view.updateCurrentPlaybackIcon(R.drawable.media_share_pause_icon);
         }
     }
 
@@ -154,7 +159,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
             player.setDataSource(asset.getFilePath());
             player.prepare();
             player.start();
-            view.updateMediaPanel(asset,player.getCurrentPosition(),R.drawable.media_share_pause_icon);
+            view.updateMediaPanel(asset);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,7 +174,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
             player.setDataSource(asset.getFilePath());
             player.prepare();
             player.start();
-            view.updateMediaPanel(asset,player.getCurrentPosition(),R.drawable.media_share_pause_icon);
+            view.updateMediaPanel(asset);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -194,6 +199,41 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     }
 
+    @Override
+    public void startVolumeSeeking() {
+
+
+    }
+
+    @Override
+    public void stopVolumeSeeking() {
+
+    }
+
+    @Override
+    public void didVolumeSeekAt(int scale) {
+        if(isVolumeFirstResponse) {
+            isVolumeFirstResponse = false;
+            return;
+        }
+        currentVolume = scale;
+        prepareVolumeWith(currentVolume, player);
+    }
+
+    @Override
+    public void prepareUpdateHolder() {
+        view.updateCurrentVolume(currentVolume);
+        view.updateCurrentMedia(player.getCurrentPosition());
+        if(player.isPlaying())
+        {
+            view.updateCurrentPlaybackIcon(R.drawable.media_share_pause_icon);
+        }
+        else
+        {
+            view.updateCurrentPlaybackIcon(R.drawable.media_share_play_icon);
+        }
+    }
+
     private void prepareWorker(){
         worker = new Timer();
         worker.schedule(new TimerTask() {
@@ -204,15 +244,20 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
                     int duration = (int)asset.getDuration();
                     int timeInterval = player.getCurrentPosition();
                     if (player.isPlaying() && !isSeeking) {
-                        view.updateMediaPanel(asset, timeInterval, R.drawable.media_share_pause_icon);
+                        view.updateCurrentMedia(timeInterval);
                     }
 
-                    if (timeInterval>=duration) view.updateMediaPanel(asset, 0, R.drawable.media_share_play_icon);
+                    if (timeInterval>=duration)view.updateCurrentPlaybackIcon(R.drawable.media_share_play_icon);
 
                 } catch (IllegalStateException e){
                     e.printStackTrace();
                 }
             }
         },0,1000);
+    }
+
+    private void prepareVolumeWith(int scale,MediaPlayer player){
+        float log1 = (float)(Math.log(App.MAX_VOLUME-scale)/Math.log(App.MAX_VOLUME));
+        player.setVolume(1-log1,1-log1);
     }
 }

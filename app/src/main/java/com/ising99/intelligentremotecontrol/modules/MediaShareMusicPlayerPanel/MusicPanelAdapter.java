@@ -15,8 +15,11 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Mus
 import com.karumi.headerrecyclerview.HeaderRecyclerViewAdapter;
 
 public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.ViewHolder,MusicPanelHeader,Music,MusicPanelHeader> {
+
     private MediaControlActionDelegate mcaDelegate;
     private BaseCollectionAdapterDelegate delegate;
+    private int maxVolume = 0;
+    private HeaderViewHolder headerViewHolder;
 
     @Override
     protected void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -28,13 +31,13 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
 
     @Override
     protected void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-        HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+        headerViewHolder = (HeaderViewHolder) holder;
 
         headerViewHolder.title.setText(getHeader().getAsset().getTitle());
         headerViewHolder.subtitle.setText(getHeader().getAsset().getArtist());
-        headerViewHolder.playback.setImageResource(getHeader().getPlaybackResID());
         headerViewHolder.media.setMax((int)getHeader().getAsset().getDuration()/1000);
-        headerViewHolder.media.setProgress(getHeader().getCurrentTimeInterval()/1000);
+        headerViewHolder.volume.setMax(maxVolume);
+        mcaDelegate.didLoadHolder();
 
     }
 
@@ -61,6 +64,22 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
 
     public void setMcaDelegate(MediaControlActionDelegate mcaDelegate) {
         this.mcaDelegate = mcaDelegate;
+    }
+
+    public void setMaxVolume(int maxVolume) {
+        this.maxVolume = maxVolume;
+    }
+
+    public void updateCurrentPlaybackStatus(int resID){
+        if (headerViewHolder != null) headerViewHolder.playback.setImageResource(resID);
+    }
+
+    public void updateCurrentVolume(int currentVolume) {
+        if (headerViewHolder != null) headerViewHolder.volume.setProgress(currentVolume);
+    }
+
+    public void updateCurrentMedia(int timeInterval){
+        if (headerViewHolder != null) headerViewHolder.media.setProgress(timeInterval/1000);
     }
 
     public class HeaderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener , SeekBar.OnSeekBarChangeListener {
@@ -103,7 +122,9 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
             if (media.equals(seekBar)) mcaDelegate.didMediaOnProgressChanged(i, b);
-            if (volume.equals(seekBar)) mcaDelegate.didVolumeOnProgressChanged(i, b);
+            if (volume.equals(seekBar)) {
+                mcaDelegate.didVolumeOnProgressChanged(i, b);
+            }
         }
 
         @Override

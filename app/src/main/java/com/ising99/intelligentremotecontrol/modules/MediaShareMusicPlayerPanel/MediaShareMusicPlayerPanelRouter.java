@@ -22,11 +22,11 @@ public class MediaShareMusicPlayerPanelRouter implements Wireframe {
         this.context = context;
     }
 
-    public static MediaShareMusicPlayerPanelFragment setupModule(Context context, List<Music> assets, int position, MediaPlayer player, MediaShareMusicPlayerRouterDelegate delegate) {
+    public static MediaShareMusicPlayerPanelFragment setupModule(Context context, List<Music> assets, int position, int volumeScale, MediaPlayer player, MediaShareMusicPlayerRouterDelegate delegate) {
 
         MediaShareMusicPlayerPanelFragment view = new MediaShareMusicPlayerPanelFragment();
         MediaShareMusicPlayerPanelInteractor interactor = new MediaShareMusicPlayerPanelInteractor(context, assets, position);
-        MediaShareMusicPlayerPanelPresenter presenter = new MediaShareMusicPlayerPanelPresenter(player);
+        MediaShareMusicPlayerPanelPresenter presenter = new MediaShareMusicPlayerPanelPresenter(player, volumeScale);
         MediaShareMusicPlayerPanelRouter router = new MediaShareMusicPlayerPanelRouter(context);
 
         view.setupPresenter(presenter);
@@ -45,8 +45,9 @@ public class MediaShareMusicPlayerPanelRouter implements Wireframe {
     }
 
     @Override
-    public void dismissPanelWhen(boolean isPlaying, int currentIndex) {
-        delegate.dismissWithPlayerStatus(isPlaying, currentIndex);
+    public void dismissPanelWhen(boolean isPlaying, int currentIndex, int volumeScale) {
+        delegate.dismissWithPlayerStatus(isPlaying, currentIndex, volumeScale);
     }
+
 }
 

@@ -14,8 +14,12 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void setupMusicAssets(List<Music> assets);
+        void setupMaxVolume(int value);
+        void updateCurrentVolume(int value);
+        void updateCurrentPlaybackIcon(int resID);
+        void updateCurrentMedia(int currentTimeInterval);
         void clearPanelListener();
-        void updateMediaPanel(Music asset, int currentTimeInterval, int playbackIconResID);
+        void updateMediaPanel(Music asset);
         void scrollToTop();
     }
 
@@ -26,9 +30,15 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void performPlayback();
         void performFastForward();
         void performFastBackward();
+        void prepareUpdateHolder();
+
         void startMediaSeeking();
         void stopMediaSeeking();
         void didMediaSeekAt(int timeInterval);
+
+        void startVolumeSeeking();
+        void stopVolumeSeeking();
+        void didVolumeSeekAt(int scale);
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -45,6 +55,6 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void dismissPanelWhen(boolean isPlaying, int currentIndex);
+        void dismissPanelWhen(boolean isPlaying, int currentIndex, int volumeScale);
     }
 }

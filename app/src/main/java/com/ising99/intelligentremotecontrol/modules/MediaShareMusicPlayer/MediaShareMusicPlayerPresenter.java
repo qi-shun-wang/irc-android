@@ -89,7 +89,6 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     public void onDestroy() {
         player.stop();
         player.reset();
-        player.release();
     }
 
     @Override

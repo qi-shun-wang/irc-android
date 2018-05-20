@@ -28,12 +28,20 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
         List<Photo> getPhotos();
 
         void setupCurrentDevice(Device device);
-        void setupCurrentRemoteAsset();
+        void setupSelectedPhotos(List<Photo> assets);
+        void setupCurrentRemoteAsset(int index);
         void performRemotePlay();
         void performRemoteStop();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
+        void didSetRemoteAssetSuccess();
+        void didSetRemoteAssetFailure();
+
+        void didPlayRemoteAssetSuccess();
+        void didPlayRemoteAssetFailure();
+
+        void didStopRemoteAssetFailure();
 
     }
 

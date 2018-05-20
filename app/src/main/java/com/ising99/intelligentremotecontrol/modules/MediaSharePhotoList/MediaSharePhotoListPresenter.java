@@ -12,6 +12,8 @@ import org.fourthline.cling.model.meta.Device;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by shun on 2018/5/3 下午 04:22:46.
@@ -24,7 +26,10 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     private Interactor interactor;
     private Wireframe router;
     private List<PhotoItem> photos = new ArrayList<>();
+    private List<Photo> selectedPhotos;
     private boolean isFirstPerformedCasting = true;
+    private int selectedIndex = 0;
+    private Timer worker;
 
     MediaSharePhotoListPresenter() {
     }
@@ -96,16 +101,62 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     }
 
     private void prepareCasting(){
-        //todo next remote set ats
-        //todo remote play next asset when output ats success
-        List<Photo> selectedPhotos = new ArrayList<>();
+
+        selectedPhotos = new ArrayList<>();
         for (PhotoItem item : photos) {
             if (item.isSelected()){
                 selectedPhotos.add(item.getPhoto());
             }
         }
-        interactor.setupCurrentRemoteAsset();
-        //TODO output ats success/failure
-        //TODO remote play when output ats success
+        interactor.setupSelectedPhotos(selectedPhotos);
+        selectedIndex = 0;
+        interactor.setupCurrentRemoteAsset(selectedIndex);
+    }
+
+    @Override
+    public void didSetRemoteAssetSuccess() {
+        selectedIndex++;
+        interactor.performRemotePlay();
+    }
+
+    @Override
+    public void didSetRemoteAssetFailure() {
+        //todo show set asset failure badge
+    }
+
+    @Override
+    public void didPlayRemoteAssetSuccess() {
+        //todo show play asset success badge
+        if (selectedPhotos.size() -1 < selectedIndex) {
+            return;
+        }
+        prepareNextPlay();
+    }
+
+    private void prepareNextPlay() {
+        worker = new Timer();
+        worker.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                interactor.setupCurrentRemoteAsset(selectedIndex);
+            }
+        },3000);
+    }
+
+    @Override
+    public void didPlayRemoteAssetFailure() {
+        //todo show play asset failure badge
+        prepareStop();
+
+    }
+
+    private void prepareStop() {
+        if (worker!= null) worker.cancel();
+        interactor.performRemoteStop();
+    }
+
+    @Override
+    public void didStopRemoteAssetFailure() {
+        //todo show Stop asset failure badge
     }
 }

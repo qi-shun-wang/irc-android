@@ -15,8 +15,6 @@ import org.fourthline.cling.model.meta.Device;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by shun on 2018/5/3 下午 04:22:46.
@@ -29,8 +27,7 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     private Context context;
     private List<Photo> collection;
     private DLNAMediaManager manager;
-    private Timer worker;
-    private int cursor = 0;
+    private List<Photo> selectedPhotos;
 
     MediaSharePhotoListInteractor(Context context,List<Photo> collection ,DLNAMediaManager manager) {
         this.context = context;
@@ -45,7 +42,6 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
 
     @Override
     public void decompose() {
-        worker.cancel();
         output = null;
         context = null;
     }
@@ -58,22 +54,26 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     @Override
     public void setupCurrentDevice(Device device) {
         manager.setCurrentDevice(device);
-
     }
 
     @Override
-    public void setupCurrentRemoteAsset() {
+    public void setupSelectedPhotos(List<Photo> assets) {
+        this.selectedPhotos = assets;
+    }
+
+    @Override
+    public void setupCurrentRemoteAsset(int index) {
         try {
-            String path = URLEncoder.encode( collection.get(cursor).getFilePath(), "UTF-8");
+            String path = URLEncoder.encode( selectedPhotos.get(index).getFilePath(), "UTF-8");
             manager.setAVTransportURI("/image" + path, new DLNAMediaManagerCallback.Common() {
                 @Override
                 public void success(ActionInvocation invocation) {
-
+                    output.didSetRemoteAssetSuccess();
                 }
 
                 @Override
                 public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-
+                    output.didSetRemoteAssetFailure();
                 }
             });
         } catch (UnsupportedEncodingException e){
@@ -87,12 +87,12 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
         manager.play(new DLNAMediaManagerCallback.Common() {
             @Override
             public void success(ActionInvocation invocation) {
-
+                output.didPlayRemoteAssetSuccess();
             }
 
             @Override
             public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-
+                output.didPlayRemoteAssetFailure();
             }
         });
     }
@@ -100,41 +100,8 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     @Override
     public void performRemoteStop() {
         manager.stop((invocation, operation, defaultMsg) -> {
-
+            output.didStopRemoteAssetFailure();
         });
     }
-
-    //TODO move worker into presenter
-//    @Override
-//    public void performCast(List<Photo> assets) {
-//        worker = new Timer();
-//        cursor = 0;
-//
-//
-//        worker.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                if (cursor >= assets.size()) return;
-//                try {
-//                    String path = URLEncoder.encode( assets.get(cursor).getFilePath(), "UTF-8");
-//                    manager.setAVTransportURI("/image" + path, new DLNAMediaManagerCallback.Common() {
-//                        @Override
-//                        public void success(ActionInvocation invocation) {
-//
-//                        }
-//
-//                        @Override
-//                        public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-//
-//                        }
-//                    });
-//                } catch (UnsupportedEncodingException e){
-//                    e.printStackTrace();
-//                }
-//                cursor ++;
-//            }
-//        },1000,5000);
-//    }
-
 }
 

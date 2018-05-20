@@ -35,6 +35,7 @@ public class MusicPanelAdapter extends HeaderRecyclerViewAdapter<RecyclerView.Vi
 
         headerViewHolder.title.setText(getHeader().getAsset().getTitle());
         headerViewHolder.subtitle.setText(getHeader().getAsset().getArtist());
+        headerViewHolder.media.setProgress(0);
         headerViewHolder.media.setMax((int)getHeader().getAsset().getDuration()/1000);
         headerViewHolder.volume.setMax(maxVolume);
         mcaDelegate.didLoadHolder();

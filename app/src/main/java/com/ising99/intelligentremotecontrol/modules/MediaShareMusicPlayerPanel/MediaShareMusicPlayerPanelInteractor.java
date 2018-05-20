@@ -156,8 +156,8 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
     }
 
     @Override
-    public void performRemoteSeek(String targetTimeInterval) {
-        manager.seek(targetTimeInterval, new DLNAMediaManagerCallback.Common() {
+    public void performRemoteSeek(long timeInterval) {
+        manager.seek(timeInterval, new DLNAMediaManagerCallback.Common() {
             @Override
             public void success(ActionInvocation invocation) {
                 Log.i("DLNAMediaManager", "seek success.");
@@ -170,7 +170,6 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
                 output.didSeekRemoteAssetFailure();
             }
         });
-
     }
 
     @Override

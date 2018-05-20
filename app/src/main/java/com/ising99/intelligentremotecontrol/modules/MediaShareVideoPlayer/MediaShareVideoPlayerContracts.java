@@ -39,7 +39,7 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
         void performRemotePlay();
         void performRemoteStop();
         void performRemotePause();
-        void performRemoteSeek(String targetTimeInterval);
+        void performRemoteSeek(long timeInterval);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

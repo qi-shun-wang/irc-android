@@ -143,7 +143,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         currentSec = secScale;
         if (isRemoteMode)
         {
-            interactor.performRemoteSeek(transformedFrom(secScale*1000));
+            interactor.performRemoteSeek(secScale*1000);
         }
         else
         {

@@ -25,7 +25,7 @@ public interface DLNAMediaManagerProtocol {
 
     void pause(DLNAMediaManagerCallback.Common callback);
 
-    void seek(String targetPosition,DLNAMediaManagerCallback.Common callback);
+    void seek(long timeInterval ,DLNAMediaManagerCallback.Common callback);
 
 
     /**

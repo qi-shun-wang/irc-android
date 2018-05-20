@@ -22,6 +22,7 @@ import org.fourthline.cling.support.avtransport.callback.Stop;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Formatter;
 
 /**
  * Created by shun on 2018/5/4.
@@ -154,11 +155,11 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
     }
 
     @Override
-    public void seek(String targetPosition, DLNAMediaManagerCallback.Common callback) {
+    public void seek(long timeInterval, DLNAMediaManagerCallback.Common callback) {
         try {
             Service localService = currentDevice.findService(new UDAServiceId("AVTransport"));
             if (localService != null) {
-                upnpService.getControlPoint().execute(new Seek(localService,targetPosition) {
+                upnpService.getControlPoint().execute(new Seek(localService,transformedFrom(timeInterval)) {
 
                     @Override
                     public void success(ActionInvocation invocation) {
@@ -280,5 +281,13 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
     public void afterShutdown() {
 
     }
-
+    private String transformedFrom(long millis) {
+        long second = (millis / 1000) % 60;
+        long minute = (millis / (1000 * 60)) % 60;
+        long hour = (millis / (1000 * 60 * 60)) % 24;
+        StringBuilder stringBuilder = new StringBuilder();
+        Formatter fmt = new Formatter(stringBuilder);
+        fmt.format("%02d:%02d:%02d", hour, minute, second);
+        return stringBuilder.toString();
+    }
 }

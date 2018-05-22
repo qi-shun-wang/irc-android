@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ising99.intelligentremotecontrol.App;
+import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
+import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPServiceCallback;
 import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryTask;
 import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryDelegate;
@@ -28,10 +30,12 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
     private DeviceDiscoveryTask task;
     private InteractorOutput output;
     private Context context;
+    private RemoteControlCoAPService service;
 
     DeviceDiscoveryInteractor(Context context, InteractorOutput output){
         this.output = output;
         this.context = context;
+        this.service = new RemoteControlCoAPService();
     }
 
     @Override
@@ -119,5 +123,23 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
     @Override
     public boolean checkWiFiStatus() {
         return checkWiFiConnectionStatus(context);
+    }
+
+
+    @Override
+    public void startWireChecker() {
+        service.checkWireConnection(new RemoteControlCoAPServiceCallback.Common() {
+            @Override
+            public void didSuccessWith(String payload) {
+
+                Device device = new Gson().fromJson(payload, Device.class);
+                output.didReceived(device);
+            }
+
+            @Override
+            public void didFailure() {
+
+            }
+        });
     }
 }

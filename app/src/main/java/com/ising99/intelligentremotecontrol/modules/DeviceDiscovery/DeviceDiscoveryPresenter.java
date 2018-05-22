@@ -75,6 +75,7 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
     @Override
     public void onResume() {
         searchDevice();
+        interactor.startWireChecker();
     }
 
     @Override

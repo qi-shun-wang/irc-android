@@ -1,16 +1,13 @@
 package com.ising99.intelligentremotecontrol.core.CoapClient;
 
+import android.util.Log;
+
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 
 import java.io.UnsupportedEncodingException;
-
-/**
- * Created by shun on 2018/3/27.
- *
- */
 
 public final class RemoteControlCoAPService {
 
@@ -33,7 +30,24 @@ public final class RemoteControlCoAPService {
     }
 
     public RemoteControlCoAPService() {
-        this("192.168.1.74",5683);
+        this("192.168.34.1",5683);
+    }
+
+    public void checkWireConnection(RemoteControlCoAPServiceCallback.Common callback){
+        client.setURI("coap://"+address+":"+port+"/wireCheck");
+        client.useCONs().get(new CoapHandler() {
+            @Override
+            public void onLoad(CoapResponse response) {
+                Log.d("CoapResponse","====>"+response.getResponseText());
+                callback.didSuccessWith(response.getResponseText());
+            }
+
+            @Override
+            public void onError() {
+                callback.didFailure();
+                Log.d("CoapResponse","====>error????");
+            }
+        });
     }
 
     public void send(SendCode code){

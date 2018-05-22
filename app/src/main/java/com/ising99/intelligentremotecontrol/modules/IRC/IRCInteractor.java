@@ -25,10 +25,9 @@ public class IRCInteractor implements IRCContracts.Interactor {
     private InteractorOutput output;
     private RemoteControlCoAPService service;
 
-    IRCInteractor(Context context,RemoteControlCoAPService service){
+    IRCInteractor(Context context, RemoteControlCoAPService service){
         this(context);
         this.service = service;
-
     }
 
     private IRCInteractor(Context context){

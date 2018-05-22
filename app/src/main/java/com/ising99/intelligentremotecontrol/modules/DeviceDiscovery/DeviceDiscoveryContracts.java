@@ -44,6 +44,7 @@ public interface DeviceDiscoveryContracts extends BaseContracts {
         void persistReceived(Device device);
         void startDeviceDiscoveryTask();
         void stopDeviceDiscoveryTask();
+        void startWireChecker();
         boolean checkWiFiStatus();
     }
 

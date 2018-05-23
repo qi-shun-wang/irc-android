@@ -132,15 +132,16 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-        presenter.performingSeekAt(i);
+        presenter.progressChangedAt(i);
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
+        presenter.startTrackingTouch();
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        presenter.performedSeekAt(seekBar.getProgress());
+        presenter.stopTrackingTouch();
     }
 }

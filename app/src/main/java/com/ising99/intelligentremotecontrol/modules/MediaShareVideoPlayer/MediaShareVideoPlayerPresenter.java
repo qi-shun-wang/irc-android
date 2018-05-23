@@ -31,12 +31,16 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     private View view;
     private Interactor interactor;
     private Wireframe router;
+
+    private MediaPlayer player;
     private boolean isRemoteMode = false;
     private boolean isRemotePlaying = false;
-    private MediaPlayer player;
-
-    private int currentSec = 0;
+    private int currentTimeInterval = 0;
+    private int seekTimeInterval = 0;
+    private boolean isSeeking = false;
     private Timer worker;
+    private boolean shouldPlayRemoteWithSeek = true;
+    private boolean isRemoteSeeking = false;
 
     MediaShareVideoPlayerPresenter() {
     }
@@ -73,9 +77,9 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     @Override
     public void onResume() {
         long duration = interactor.getVideoAsset().getDuration();
-        view.setupSeekBarMaxScale( (int)duration/1000 );
-        view.updateEndTimeLabel("-" + transformedFrom((duration - currentSec*1000)));
-        view.updateCurrentTimeLabel(transformedFrom(currentSec*1000));
+        view.setupSeekBarMaxScale( (int)duration/1000 - 1 );
+        view.updateEndTimeLabel("-" + transformedFrom((duration - currentTimeInterval)));
+        view.updateCurrentTimeLabel(transformedFrom(currentTimeInterval));
         view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
         if (player == null)return;
         prepareWorker();
@@ -139,21 +143,37 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     }
 
     @Override
-    public void performedSeekAt(int secScale) {
-        currentSec = secScale;
-        if (isRemoteMode)
+    public void startTrackingTouch() {
+        if(isRemoteMode)
         {
-            interactor.performRemoteSeek(secScale*1000);
+            isRemoteSeeking = true;
         }
         else
         {
-            player.seekTo(currentSec * 1000);
+            isSeeking = true;
         }
     }
 
     @Override
-    public void performingSeekAt(int secScale) {
-        updateLabels(secScale);
+    public void progressChangedAt(int secScale) {
+        seekTimeInterval = secScale*1000;
+    }
+
+    @Override
+    public void stopTrackingTouch() {
+        currentTimeInterval = seekTimeInterval;
+        updateLabels(currentTimeInterval);
+        if(isRemoteMode)
+        {
+            shouldPlayRemoteWithSeek = false;
+            interactor.performRemoteSeek(currentTimeInterval);
+        }
+        else
+        {
+            player.seekTo(currentTimeInterval);
+        }
+
+        isSeeking = false;
     }
 
     @Override
@@ -161,14 +181,10 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         isRemoteMode = device instanceof RemoteDevice;
         if (isRemoteMode)
         {
-            isRemotePlaying = true;
-            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            player.pause();
+            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
             interactor.setupCurrentDevice(device);
             interactor.setupCurrentRemoteAsset();
-            //todo output success/failure from the callback
-            //todo perform remote play when output success
-            interactor.performRemotePlay();
-            //todo output success/failure from the callback
         }
     }
 
@@ -177,13 +193,13 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         router.presentDMRList();
     }
 
-    private void updateLabels(int secScale){
+    private void updateLabels(int currentTimeInterval){
 
         long duration = interactor.getVideoAsset().getDuration();
-        if (secScale>=duration/1000) return;
+        if (currentTimeInterval>=duration) return;
 
-        view.updateEndTimeLabel("-" + transformedFrom((duration - secScale*1000)));
-        view.updateCurrentTimeLabel(transformedFrom(secScale*1000));
+        view.updateEndTimeLabel("-" + transformedFrom((duration - currentTimeInterval)));
+        view.updateCurrentTimeLabel(transformedFrom(currentTimeInterval));
     }
 
     private String transformedFrom(long millis) {
@@ -201,24 +217,121 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         worker.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (player.isPlaying()||isRemotePlaying) {
-                    currentSec++;
-                    long duration = interactor.getVideoAsset().getDuration();
-                    if (currentSec>=duration/1000){
-                        currentSec = 0;
-                        view.updateSeekBarLocation(0);
-                        view.updateEndTimeLabel("-"+transformedFrom(duration));
-                        view.updateCurrentTimeLabel("00:00:00");
-                        view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
-                        return;
+                int duration = (int) interactor.getVideoAsset().getDuration();
+                int timeInterval;
+                if (isRemoteMode){
+                    timeInterval = currentTimeInterval;
+                    if ((isRemotePlaying) && (!isRemoteSeeking)) {
+                        view.updateEndTimeLabel("-" + transformedFrom((duration - timeInterval)));
+                        view.updateCurrentTimeLabel(transformedFrom(timeInterval));
+                        view.updateSeekBarLocation(timeInterval/1000);
+                        currentTimeInterval+=1000;
                     }
-                    view.updateEndTimeLabel("-" + transformedFrom((duration - currentSec*1000)));
-                    view.updateCurrentTimeLabel(transformedFrom(currentSec*1000));
-                    view.updateSeekBarLocation(currentSec);
-                    Log.v("==currentSec==>","currentSec:"+currentSec);
+                }
+                else
+                {
+                    timeInterval = player.getCurrentPosition();
+                    if (player.isPlaying()){
+                        view.updateEndTimeLabel("-" + transformedFrom((duration - timeInterval)));
+                        view.updateCurrentTimeLabel(transformedFrom(timeInterval));
+                        view.updateSeekBarLocation(timeInterval/1000);
+                        Log.d("prepareWorker","===>"+timeInterval/1000+"<---->"+timeInterval+"<---->"+duration);
+                    }
+                }
+
+
+                if (timeInterval>=duration)
+                {
+                    isRemotePlaying = false;
+                    currentTimeInterval = 0;
+                    view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
                 }
 
             }
         },0,1000);
+    }
+
+    @Override
+    public void didSetRemoteAssetSuccess() {
+
+        interactor.performRemotePlay();
+    }
+
+    @Override
+    public void didSetRemoteAssetFailure() {
+
+    }
+
+    @Override
+    public void didPlayRemoteAssetSuccess() {
+        if (shouldPlayRemoteWithSeek)
+        {
+            try {
+                Thread.sleep(1000);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            interactor.performRemoteSeek(currentTimeInterval);
+        }
+        else
+        {
+            Log.d("PlayRemoteAssetSuccess2","===>"+currentTimeInterval);
+
+            isRemotePlaying = true;
+
+        }
+        view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+    }
+
+    @Override
+    public void didPlayRemoteAssetFailure() {
+        if (isRemotePlaying)
+        {
+            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+        }
+        else
+        {
+            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+        }
+    }
+
+    @Override
+    public void didStopRemoteAssetFailure() {
+
+    }
+
+    @Override
+    public void didPauseRemoteAssetSuccess() {
+        isRemotePlaying = false;
+        view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+    }
+
+    @Override
+    public void didPauseRemoteAssetFailure() {
+        if (isRemotePlaying)
+        {
+            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+        }
+        else
+        {
+            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+        }
+    }
+
+    @Override
+    public void didSeekRemoteAssetSuccess() {
+        if (shouldPlayRemoteWithSeek){
+            Log.d("SeekRemoteAssetSuccess","===>"+currentTimeInterval);
+            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            shouldPlayRemoteWithSeek = false;
+            isRemotePlaying = true;
+        }
+        isRemoteSeeking = false;
+    }
+
+    @Override
+    public void didSeekRemoteAssetFailure() {
+        isRemoteSeeking = false;
+
     }
 }

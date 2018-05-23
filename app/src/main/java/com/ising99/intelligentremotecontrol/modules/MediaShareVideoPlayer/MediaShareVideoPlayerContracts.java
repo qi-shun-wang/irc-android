@@ -25,8 +25,9 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
     interface Presenter extends BaseContracts.Presenter {
         void prepareMediaPlayer(SurfaceHolder surfaceHolder);
         void performPlayBack();
-        void performedSeekAt(int secScale);
-        void performingSeekAt(int secScale);
+        void startTrackingTouch();
+        void progressChangedAt(int secScale);
+        void stopTrackingTouch();
         void didSelected(Device device);
         void didTapOnCast();
     }
@@ -43,7 +44,19 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
+        void didSetRemoteAssetSuccess();
+        void didSetRemoteAssetFailure();
 
+        void didPlayRemoteAssetSuccess();
+        void didPlayRemoteAssetFailure();
+
+        void didStopRemoteAssetFailure();
+
+        void didPauseRemoteAssetSuccess();
+        void didPauseRemoteAssetFailure();
+
+        void didSeekRemoteAssetSuccess();
+        void didSeekRemoteAssetFailure();
     }
 
     interface Wireframe extends BaseContracts.Wireframe {

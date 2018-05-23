@@ -61,12 +61,12 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
             manager.setAVTransportURI("/video" + path, new DLNAMediaManagerCallback.Common() {
                 @Override
                 public void success(ActionInvocation invocation) {
-
+                    output.didSetRemoteAssetSuccess();
                 }
 
                 @Override
                 public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-
+                    output.didSetRemoteAssetFailure();
                 }
             });
         } catch (UnsupportedEncodingException e){
@@ -80,12 +80,12 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
         manager.play(new DLNAMediaManagerCallback.Common() {
             @Override
             public void success(ActionInvocation invocation) {
-
+                output.didPlayRemoteAssetSuccess();
             }
 
             @Override
             public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-
+                output.didPlayRemoteAssetFailure();
             }
         });
     }
@@ -93,7 +93,7 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
     @Override
     public void performRemoteStop() {
         manager.stop((invocation, operation, defaultMsg) -> {
-
+            output.didStopRemoteAssetFailure();
         });
     }
 
@@ -102,12 +102,12 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
         manager.pause(new DLNAMediaManagerCallback.Common() {
             @Override
             public void success(ActionInvocation invocation) {
-
+                output.didPauseRemoteAssetSuccess();
             }
 
             @Override
             public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-
+                output.didPauseRemoteAssetFailure();
             }
         });
     }
@@ -117,12 +117,12 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
         manager.seek(timeInterval, new DLNAMediaManagerCallback.Common() {
             @Override
             public void success(ActionInvocation invocation) {
-
+                output.didSeekRemoteAssetSuccess();
             }
 
             @Override
             public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
-
+                output.didStopRemoteAssetFailure();
             }
         });
     }

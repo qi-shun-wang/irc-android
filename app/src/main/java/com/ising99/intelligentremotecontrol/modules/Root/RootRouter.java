@@ -3,26 +3,16 @@ package com.ising99.intelligentremotecontrol.modules.Root;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.view.View;
 
 import com.ising99.intelligentremotecontrol.R;
-import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeFragment;
-import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeRouter;
+import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryActivity;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareRouter;
-import com.ising99.intelligentremotecontrol.modules.More.MoreFragment;
-import com.ising99.intelligentremotecontrol.modules.More.MoreRouter;
-import com.ising99.intelligentremotecontrol.modules.Movie.MovieFragment;
-import com.ising99.intelligentremotecontrol.modules.Movie.MovieRouter;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
-import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryActivity;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCRouter;
-import com.ising99.intelligentremotecontrol.modules.WebBrowser.WebBrowserFragment;
-import com.ising99.intelligentremotecontrol.modules.WebBrowser.WebBrowserRouter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -37,7 +37,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         return new ViewHolder(view);
 
     }
-    
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -84,10 +84,10 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         }
     }
 
-    void setupDelegate(BaseCollectionAdapterDelegate delegate) {
+    public void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
     }
-    void setDevices(List<Device> devices) {
+    public void setDevices(List<Device> devices) {
         this.devices = devices;
     }
 }

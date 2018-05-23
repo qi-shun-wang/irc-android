@@ -10,45 +10,41 @@ import com.ising99.intelligentremotecontrol.App;
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPServiceCallback;
 import com.ising99.intelligentremotecontrol.core.Device;
-import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryTask;
 import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryDelegate;
+import com.ising99.intelligentremotecontrol.core.DeviceDiscovery.DeviceDiscoveryTask;
 import com.ising99.intelligentremotecontrol.db.DeviceEntity;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.InteractorOutput;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by shun on 2018/3/27.
- *
+ * Created by shun on 2018/5/23 下午 02:25:33.
+ * .
  */
 
-public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDelegate {
+public class DeviceDiscoveryInteractor implements DeviceDiscoveryContracts.Interactor ,DeviceDiscoveryDelegate {
 
-    private DeviceDiscoveryTask task;
     private InteractorOutput output;
     private Context context;
+    private DeviceDiscoveryTask task;
     private RemoteControlCoAPService service;
 
-    DeviceDiscoveryInteractor(Context context, InteractorOutput output){
-        this.output = output;
+    DeviceDiscoveryInteractor(Context context, RemoteControlCoAPService service) {
         this.context = context;
-        this.service = new RemoteControlCoAPService();
+        this.service = service;
     }
 
     @Override
     public void setupPresenter(BaseContracts.InteractorOutput output) {
-
+        this.output = (InteractorOutput) output;
     }
 
     @Override
     public void decompose() {
         output = null;
         context = null;
-        task.cancel(true);
-        task = null;
     }
 
     @Override
@@ -76,7 +72,6 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
             ((App)context).getDaoSession().getDeviceEntityDao().insert(entity);
         }
         output.didPersisted(device);
-
     }
 
     @Override
@@ -94,13 +89,25 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
     }
 
     @Override
-    public void didReceived(String message) {
-        try {
-            Device device = new Gson().fromJson(message,Device.class);
-            output.didReceived(device);
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
+    public void startWireChecker() {
+        service.checkWireConnection(new RemoteControlCoAPServiceCallback.Common() {
+            @Override
+            public void didSuccessWith(String payload) {
+
+                Device device = new Gson().fromJson(payload, Device.class);
+                output.didReceived(device);
+            }
+
+            @Override
+            public void didFailure() {
+
+            }
+        });
+    }
+
+    @Override
+    public boolean checkWiFiStatus() {
+        return checkWiFiConnectionStatus(context);
     }
 
     private boolean checkWiFiConnectionStatus(Context context){
@@ -121,25 +128,13 @@ public class DeviceDiscoveryInteractor implements Interactor, DeviceDiscoveryDel
     }
 
     @Override
-    public boolean checkWiFiStatus() {
-        return checkWiFiConnectionStatus(context);
-    }
-
-
-    @Override
-    public void startWireChecker() {
-        service.checkWireConnection(new RemoteControlCoAPServiceCallback.Common() {
-            @Override
-            public void didSuccessWith(String payload) {
-
-                Device device = new Gson().fromJson(payload, Device.class);
-                output.didReceived(device);
-            }
-
-            @Override
-            public void didFailure() {
-
-            }
-        });
+    public void didReceived(String message) {
+        try {
+            Device device = new Gson().fromJson(message,Device.class);
+            output.didReceived(device);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 }
+

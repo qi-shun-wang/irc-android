@@ -1,15 +1,14 @@
 package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.View;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Interactor;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.InteractorOutput;
+import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryContracts.Wireframe;
 
 import java.util.ArrayList;
@@ -18,16 +17,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by shun on 2018/3/27.
- *
+ * Created by shun on 2018/5/23 下午 02:25:33.
+ * .
  */
 
-public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
+public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
 
     private View view;
     private Interactor interactor;
     private Wireframe router;
     private ArrayList<Device> devices = new ArrayList<>();
+    private Timer worker;
 
     private int[] res_scan_id = {
             R.drawable.scan1,
@@ -57,10 +57,31 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
             R.drawable.line10
     };
 
-    DeviceDiscoveryPresenter(Context context, View view) {
-        this.view = view;
-        interactor = new DeviceDiscoveryInteractor(context,this);
-        router = new DeviceDiscoveryRouter(context);
+    DeviceDiscoveryPresenter() {
+    }
+
+    @Override
+    public void setupView(BaseContracts.View view) {
+        this.view = (View) view;
+    }
+
+    @Override
+    public void setupInteractor(BaseContracts.Interactor interactor) {
+        this.interactor = (Interactor) interactor;
+    }
+
+    @Override
+    public void setupWireframe(BaseContracts.Wireframe router) {
+        this.router = (Wireframe) router;
+    }
+
+    @Override
+    public void decompose() {
+        interactor.decompose();
+        view.decompose();
+        interactor = null;
+        view = null;
+        router = null;
     }
 
     @Override
@@ -80,6 +101,7 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
 
     @Override
     public void onPause() {
+        view.stopLineAnimation();
         view.stopScanAnimation();
         view.stopKODAnimation();
         interactor.stopDeviceDiscoveryTask();
@@ -90,31 +112,31 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
     }
 
     @Override
-    public void setupView(BaseContracts.View view) {
-
+    public void selectDeviceAt(int index, float x, float y, int width, int height) {
+        view.updateKODImagePosition(x,y,width,height);
+        interactor.persistReceived(devices.get(index));
     }
 
     @Override
-    public void setupInteractor(BaseContracts.Interactor interactor) {
-
+    public void searchAgain() {
+        view.hideDeviceNotFound();
+        searchDevice();
     }
 
     @Override
-    public void setupWireframe(BaseContracts.Wireframe router) {
-
+    public void openSetting() {
+        router.openWifiSetting();
     }
 
     @Override
-    public void decompose() {
-        interactor.decompose();
-        view = null;
-        router = null;
-        interactor = null;
+    public void didTapOnClose() {
+        interactor.stopDeviceDiscoveryTask();
+        worker.cancel();
+        router.dismissDeviceDiscovery();
     }
 
     @Override
-    public synchronized void didReceived(Device device) {
-
+    public void didReceived(Device device) {
         Log.d("devices.contains","=====>"+devices.contains(device));
         if (devices.contains(device)) {
             return;
@@ -130,27 +152,21 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         }
         devices.add(device);
         Log.d("Device HashSet", "====>" + devices.size());
-
-    }
-
-    @Override
-    public void selectDeviceAt(int index,float x, float y, int width, int height) {
-        view.updateKODImagePosition(x,y,width,height);
-        interactor.persistReceived(devices.get(index));
     }
 
     @Override
     public void didPersisted(Device device) {
         view.setupKodName(device.getName());
         view.startKODAnimation();
-        new Timer().schedule(new TimerTask() {
+
+        worker.schedule(new TimerTask() {
             @Override
             public void run() {
                 view.startLineAnimation();
             }
         }, 2000);
 
-        new Timer().schedule(new TimerTask() {
+        worker.schedule(new TimerTask() {
             @Override
             public void run() {
                 view.stopKODAnimation();
@@ -159,32 +175,24 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
             }
         }, 5000);
 
-        new Timer().schedule(new TimerTask() {
+        worker.schedule(new TimerTask() {
             @Override
             public void run() {
-                view.finishActivity();
+                router.dismissDeviceDiscovery();
             }
         }, 8000);
     }
 
-    @Override
-    public void searchAgain() {
-        view.hideDeviceNotFound();
-        searchDevice();
-    }
-
     private void searchDevice(){
+        worker = new Timer();
         view.hideConnectionFailed();
         view.hideDeviceNotFound();
         view.startScanAnimation();
         interactor.startDeviceDiscoveryTask();
-        new Timer().schedule(new TimerTask() {
+        worker.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (view != null && interactor != null ){
-                    check();
-                }
-
+                check();
             }
         }, 5000);
     }
@@ -202,10 +210,5 @@ public class DeviceDiscoveryPresenter implements Presenter ,InteractorOutput {
         } else {
             view.showConnectionFailed();
         }
-    }
-
-    @Override
-    public void openSetting() {
-        router.openWifiSetting();
     }
 }

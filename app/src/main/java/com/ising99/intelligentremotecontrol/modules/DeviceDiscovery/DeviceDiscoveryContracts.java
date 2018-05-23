@@ -1,13 +1,13 @@
 package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 
-import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.core.Device;
+import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
 import java.util.List;
 
 /**
- * Created by shun on 2018/3/27.
- *
+ * Created by shun on 2018/5/23 下午 02:25:33.
+ * .
  */
 
 public interface DeviceDiscoveryContracts extends BaseContracts {
@@ -27,17 +27,17 @@ public interface DeviceDiscoveryContracts extends BaseContracts {
         void stopLineAnimation();
         void setupKodName(String text);
         void showConnectionSuccess();
-        void finishActivity();
         void showDeviceNotFound();
         void hideDeviceNotFound();
         void showConnectionFailed();
         void hideConnectionFailed();
     }
 
-    interface Presenter extends BaseContracts.Presenter  {
+    interface Presenter extends BaseContracts.Presenter {
         void selectDeviceAt(int index,float x, float y, int width, int height);
         void searchAgain();
         void openSetting();
+        void didTapOnClose();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -48,14 +48,13 @@ public interface DeviceDiscoveryContracts extends BaseContracts {
         boolean checkWiFiStatus();
     }
 
-    interface InteractorOutput extends BaseContracts.InteractorOutput{
+    interface InteractorOutput extends BaseContracts.InteractorOutput {
         void didReceived(Device device);
         void didPersisted(Device device);
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
         void openWifiSetting();
+        void dismissDeviceDiscovery();
     }
-
 }
-

@@ -55,6 +55,17 @@ public final class RemoteControlCoAPService {
         client.useNONs().post(handler,String.valueOf(code.getCode()), MediaTypeRegistry.TEXT_PLAIN);
     }
 
+    public void sendBegan(SendCode code){
+        client.setURI("coap://"+address+":"+port+"/sendEventBegan");
+        client.useNONs().post(handler,String.valueOf(code.getCode()), MediaTypeRegistry.TEXT_PLAIN);
+    }
+
+    public void sendEnd(SendCode code){
+        client.setURI("coap://"+address+":"+port+"/sendEventEnd");
+        client.useNONs().post(handler,String.valueOf(code.getCode()), MediaTypeRegistry.TEXT_PLAIN);
+    }
+
+
     public void sendL(SendCode code){
         client.setURI("coap://"+address+":"+port+"/sendLongPressedEvent");
         client.useNONs().post(handler,String.valueOf(code.getCode()), MediaTypeRegistry.TEXT_PLAIN);

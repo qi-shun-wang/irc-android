@@ -1,5 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.IRC;
 
+import com.ising99.intelligentremotecontrol.component.Action;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.View;
@@ -68,33 +69,36 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     }
 
     @Override
-    public void dispatchUpAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_UP);
+    public void dispatchDirection(Action action) {
+        switch (action){
+            case up:interactor.perform(SendCode.KEYCODE_DPAD_UP);break;
+            case down:interactor.perform(SendCode.KEYCODE_DPAD_DOWN);break;
+            case right:interactor.perform(SendCode.KEYCODE_DPAD_RIGHT);break;
+            case left:interactor.perform(SendCode.KEYCODE_DPAD_LEFT);break;
+            case center:interactor.perform(SendCode.KEYCODE_DPAD_CENTER);break;
+        }
     }
 
     @Override
-    public void dispatchDownAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_DOWN);
+    public void dispatchDirectionBegan(Action action) {
+        switch (action){
+            case up:interactor.performBegan(SendCode.KEYCODE_DPAD_UP);break;
+            case down:interactor.performBegan(SendCode.KEYCODE_DPAD_DOWN);break;
+            case right:interactor.performBegan(SendCode.KEYCODE_DPAD_RIGHT);break;
+            case left:interactor.performBegan(SendCode.KEYCODE_DPAD_LEFT);break;
+            case center:interactor.performBegan(SendCode.KEYCODE_DPAD_CENTER);break;
+        }
     }
 
     @Override
-    public void dispatchLeftAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_LEFT);
-    }
-
-    @Override
-    public void dispatchRightAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_RIGHT);
-    }
-
-    @Override
-    public void dispatchEnterAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_CENTER);
-    }
-
-    @Override
-    public void dispatchEnterActionL() {
-        interactor.performL(SendCode.KEYCODE_DPAD_CENTER);
+    public void dispatchDirectionEnd(Action action) {
+        switch (action){
+            case up:interactor.performEnd(SendCode.KEYCODE_DPAD_UP);break;
+            case down:interactor.performEnd(SendCode.KEYCODE_DPAD_DOWN);break;
+            case right:interactor.performEnd(SendCode.KEYCODE_DPAD_RIGHT);break;
+            case left:interactor.performEnd(SendCode.KEYCODE_DPAD_LEFT);break;
+            case center:interactor.performEnd(SendCode.KEYCODE_DPAD_CENTER);break;
+        }
     }
 
     @Override

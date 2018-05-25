@@ -20,6 +20,8 @@ public interface IRCContracts extends BaseContracts {
 
     interface Interactor extends BaseContracts.Interactor {
         void perform(SendCode code);
+        void performBegan(SendCode code);
+        void performEnd(SendCode code);
         void performL(SendCode code);
         void perform(String  text);
         String getAddress();

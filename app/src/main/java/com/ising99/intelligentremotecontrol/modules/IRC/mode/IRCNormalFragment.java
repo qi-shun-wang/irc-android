@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.component.Action;
 import com.ising99.intelligentremotecontrol.component.CircularButton;
+import com.ising99.intelligentremotecontrol.component.CircularButtonDelegate;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCActionDelegate;
 
 /**
@@ -32,17 +34,20 @@ public class IRCNormalFragment extends Fragment {
         v.findViewById(R.id.irc_normal_menu_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchMenuAction();});
         v.findViewById(R.id.irc_normal_back_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchBackAction();});
 
-        ((CircularButton)v.findViewById(R.id.irc_normal_dpad)).setDelegate((action) ->
-        {
-            if (delegate == null) return;
+        ((CircularButton)v.findViewById(R.id.irc_normal_dpad)).setDelegate(new CircularButtonDelegate() {
+            @Override
+            public void didTouchOn(Action action) {
+                if(delegate != null) delegate.dispatchDirection(action);
+            }
 
-            switch (action)
-            {
-                case up:    delegate.dispatchUpAction();break;
-                case down:  delegate.dispatchDownAction();break;
-                case left:  delegate.dispatchLeftAction();break;
-                case right: delegate.dispatchRightAction();break;
-                case center:delegate.dispatchEnterAction();break;
+            @Override
+            public void didTouchOnBegan(Action action) {
+                if(delegate != null) delegate.dispatchDirectionBegan(action);
+            }
+
+            @Override
+            public void didTouchOnEnd(Action action) {
+                if(delegate != null) delegate.dispatchDirectionEnd(action);
             }
         });
 

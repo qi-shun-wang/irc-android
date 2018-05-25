@@ -1,18 +1,17 @@
 package com.ising99.intelligentremotecontrol.modules.IRC;
 
+import com.ising99.intelligentremotecontrol.component.Action;
+
 /**
  * Created by Shun on 2018/4/12 下午 02:16:54.
  * .
  */
 
 public interface IRCActionDelegate {
+    void dispatchDirection(Action action);
+    void dispatchDirectionBegan(Action action);
+    void dispatchDirectionEnd(Action action);
     void dispatchTextAction(String message);
-    void dispatchUpAction();
-    void dispatchDownAction();
-    void dispatchLeftAction();
-    void dispatchRightAction();
-    void dispatchEnterAction();
-    void dispatchEnterActionL();
     void dispatchPowerAction();
     void dispatchNumPanelAction();
     void dispatchMediaPanelAction();

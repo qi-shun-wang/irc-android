@@ -106,6 +106,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void onPause() {
+
     }
 
     @Override

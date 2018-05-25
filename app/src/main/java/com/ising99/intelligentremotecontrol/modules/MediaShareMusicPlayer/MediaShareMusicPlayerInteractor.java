@@ -2,9 +2,14 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer;
 
 import android.content.Context;
 
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerCallback;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerContracts.InteractorOutput;
+
+import org.fourthline.cling.model.action.ActionInvocation;
+import org.fourthline.cling.model.message.UpnpResponse;
 
 import java.util.List;
 
@@ -19,11 +24,13 @@ public class MediaShareMusicPlayerInteractor implements MediaShareMusicPlayerCon
     private Context context;
     private List<Music> assets;
     private int currentIndex;
+    private DLNAMediaManager manager;
 
-    MediaShareMusicPlayerInteractor(Context context, List<Music> assets, int position) {
+    MediaShareMusicPlayerInteractor(Context context, List<Music> assets, int position, DLNAMediaManager manager) {
         this.context = context;
         this.assets = assets;
         this.currentIndex = position;
+        this.manager = manager;
     }
 
     @Override
@@ -66,6 +73,13 @@ public class MediaShareMusicPlayerInteractor implements MediaShareMusicPlayerCon
         }
 
         return assets.get(currentIndex);
+    }
+
+    @Override
+    public void performRemoteStop() {
+        manager.stop((invocation, operation, defaultMsg) -> {
+            output.didStopRemoteAssetFailure();
+        });
     }
 }
 

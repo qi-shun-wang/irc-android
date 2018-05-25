@@ -12,11 +12,6 @@ import android.widget.ImageView;
 
 import com.ising99.intelligentremotecontrol.R;
 
-/**
- * Created by shun on 2018/4/16.
- *
- */
-
 public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGestureListener{
 
     private static final float SWIPE_THRESHOLD = 50;
@@ -25,9 +20,7 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
     private int dX = 0;
     private int dY = 0;
 
-    public interface DirectionTouchPadDelegate {
-        void didActOn(Action action);
-    }
+
 
     private DirectionTouchPadDelegate delegate;
     private GestureDetector gesture;
@@ -54,7 +47,7 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
     public boolean onSingleTapUp(MotionEvent motionEvent) {
         Log.i("====>", "onSingleTapUp: ");
         if (delegate == null) return false;
-        delegate.didActOn(Action.center);
+        delegate.didTouchOn(Action.center);
         image.setAlpha(1f);
         image.setX(motionEvent.getX() - image.getWidth()/2 - dX);
         image.setY(motionEvent.getY() - image.getHeight()/2 - dY);
@@ -89,18 +82,18 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(v) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffX > 0) {
-                        delegate.didActOn(Action.right);
+                        delegate.didTouchOn(Action.right);
                     } else {
-                        delegate.didActOn(Action.left);
+                        delegate.didTouchOn(Action.left);
                     }
                     result = true;
                 }
             }
             else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(v1) > SWIPE_VELOCITY_THRESHOLD) {
                 if (diffY > 0) {
-                    delegate.didActOn(Action.down);
+                    delegate.didTouchOn(Action.down);
                 } else {
-                    delegate.didActOn(Action.up);
+                    delegate.didTouchOn(Action.up);
                 }
                 result = true;
             }
@@ -109,26 +102,6 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
         }
         return result;
     }
-
-
-    public enum Action {
-        up("up"),
-        down("down"),
-        left("left"),
-        right("right"),
-        center("center");
-
-        private final String value;
-
-        Action(String s) {
-            value = s;
-        }
-        @Override
-        public String toString() {
-            return value;
-        }
-    }
-
 
     public DirectionTouchPad(Context context) {
         this(context, null);

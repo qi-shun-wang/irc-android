@@ -72,7 +72,7 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void onPause() {
-
+        interactor.performRemoteStop();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.Game;
 
+import com.ising99.intelligentremotecontrol.component.Action;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Game.GameContracts.View;
@@ -66,23 +67,36 @@ public class GamePresenter implements Presenter, InteractorOutput {
     }
 
     @Override
-    public void performUpAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_UP);
+    public void performTouchOn(Action action) {
+        switch (action){
+            case up:interactor.perform(SendCode.KEYCODE_DPAD_UP);break;
+            case down:interactor.perform(SendCode.KEYCODE_DPAD_DOWN);break;
+            case right:interactor.perform(SendCode.KEYCODE_DPAD_RIGHT);break;
+            case left:interactor.perform(SendCode.KEYCODE_DPAD_LEFT);break;
+            case center:interactor.perform(SendCode.KEYCODE_DPAD_CENTER);break;
+        }
     }
 
     @Override
-    public void performDownAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_DOWN);
+    public void performTouchOnBegan(Action action) {
+        switch (action){
+            case up:interactor.performBegan(SendCode.KEYCODE_DPAD_UP);break;
+            case down:interactor.performBegan(SendCode.KEYCODE_DPAD_DOWN);break;
+            case right:interactor.performBegan(SendCode.KEYCODE_DPAD_RIGHT);break;
+            case left:interactor.performBegan(SendCode.KEYCODE_DPAD_LEFT);break;
+            case center:interactor.performBegan(SendCode.KEYCODE_DPAD_CENTER);break;
+        }
     }
 
     @Override
-    public void performLeftAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_LEFT);
-    }
-
-    @Override
-    public void performRightAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_RIGHT);
+    public void performTouchOnEnd(Action action) {
+        switch (action){
+            case up:interactor.performEnd(SendCode.KEYCODE_DPAD_UP);break;
+            case down:interactor.performEnd(SendCode.KEYCODE_DPAD_DOWN);break;
+            case right:interactor.performEnd(SendCode.KEYCODE_DPAD_RIGHT);break;
+            case left:interactor.performEnd(SendCode.KEYCODE_DPAD_LEFT);break;
+            case center:interactor.performEnd(SendCode.KEYCODE_DPAD_CENTER);break;
+        }
     }
 
     @Override

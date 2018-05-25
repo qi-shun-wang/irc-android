@@ -37,7 +37,7 @@ public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicP
     public static MediaShareMusicPlayerFragment setupModule(Context context, List<Music> assets, int position, DLNAMediaManager manager) {
 
         MediaShareMusicPlayerFragment view = new MediaShareMusicPlayerFragment();
-        MediaShareMusicPlayerInteractor interactor = new MediaShareMusicPlayerInteractor(context, assets, position);
+        MediaShareMusicPlayerInteractor interactor = new MediaShareMusicPlayerInteractor(context, assets, position ,manager);
         MediaShareMusicPlayerPresenter presenter = new MediaShareMusicPlayerPresenter();
         MediaShareMusicPlayerRouter router = new MediaShareMusicPlayerRouter(context);
 

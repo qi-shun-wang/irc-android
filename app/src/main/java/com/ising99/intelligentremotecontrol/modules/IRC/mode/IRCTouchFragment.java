@@ -54,30 +54,27 @@ public class IRCTouchFragment extends Fragment {
         ((DirectionTouchPad)v.findViewById(R.id.irc_touch_dpad)).setDelegate((action ->
         {
             if (delegate == null) return;
+            delegate.dispatchDirection(action);
+
             switch (action)
             {
                 case up:
                     image.setImageResource(R.drawable.irc_touch_arrow_up_icon);
-                    delegate.dispatchUpAction();
                     performAnimation();
                     break;
                 case down:
                     image.setImageResource(R.drawable.irc_touch_arrow_down_icon);
-                    delegate.dispatchDownAction();
                     performAnimation();
                     break;
                 case left:
                     image.setImageResource(R.drawable.irc_touch_arrow_left_icon);
-                    delegate.dispatchLeftAction();
                     performAnimation();
                     break;
                 case right:
                     image.setImageResource(R.drawable.irc_touch_arrow_right_icon);
-                    delegate.dispatchRightAction();
                     performAnimation();
                     break;
                 case center:
-                    delegate.dispatchEnterAction();
                     break;
             }
         }));

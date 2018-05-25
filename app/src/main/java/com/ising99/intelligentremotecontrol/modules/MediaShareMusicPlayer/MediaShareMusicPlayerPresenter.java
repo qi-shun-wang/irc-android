@@ -87,6 +87,7 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
 
     @Override
     public void onDestroy() {
+        interactor.performRemoteStop();
         player.stop();
         player.reset();
     }
@@ -146,5 +147,10 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     private void prepareVolumeWith(int scale,MediaPlayer player){
         float log1 = (float)(Math.log(App.MAX_VOLUME-scale)/Math.log(App.MAX_VOLUME));
         player.setVolume(1-log1,1-log1);
+    }
+
+    @Override
+    public void didStopRemoteAssetFailure() {
+
     }
 }

@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.component.Action;
 import com.ising99.intelligentremotecontrol.component.CircularButton;
+import com.ising99.intelligentremotecontrol.component.CircularButtonDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Game.GameContracts.Presenter;
 
@@ -42,14 +44,20 @@ public class GameFragment extends Fragment implements GameContracts.View {
         View view = inflater.inflate(R.layout.fragment_irc_game, container, false);
         view.findViewById(R.id.irc_game_back_btn).setOnClickListener((v)->getActivity().finish());
 
-        ((CircularButton)view.findViewById(R.id.irc_game_dpad)).setDelegate((action) ->
-        {
-            switch (action)
-            {
-                case up:    presenter.performUpAction();break;
-                case down:  presenter.performDownAction();break;
-                case left:  presenter.performLeftAction();break;
-                case right: presenter.performRightAction();break;
+        ((CircularButton)view.findViewById(R.id.irc_game_dpad)).setDelegate(new CircularButtonDelegate() {
+            @Override
+            public void didTouchOn(Action action) {
+                presenter.performTouchOn(action);
+            }
+
+            @Override
+            public void didTouchOnBegan(Action action) {
+                presenter.performTouchOnBegan(action);
+            }
+
+            @Override
+            public void didTouchOnEnd(Action action) {
+                presenter.performTouchOnEnd(action);
             }
         });
         presenter.onCreate();

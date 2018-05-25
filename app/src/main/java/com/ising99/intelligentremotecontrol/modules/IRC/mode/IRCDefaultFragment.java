@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.component.Action;
 import com.ising99.intelligentremotecontrol.component.CircularButton;
+import com.ising99.intelligentremotecontrol.component.CircularButtonDelegate;
 import com.ising99.intelligentremotecontrol.component.DoubleSideButton;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCActionDelegate;
 
@@ -34,18 +36,20 @@ public class IRCDefaultFragment extends Fragment {
         v.findViewById(R.id.irc_default_media_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchMediaPanelAction();});
         v.findViewById(R.id.irc_default_mode_btn).setOnClickListener((view) -> {if(delegate != null) delegate.dispatchModeAction();});
 
-        ((CircularButton)v.findViewById(R.id.irc_default_dpad)).setDelegate((action) ->
-        {
-            if (delegate == null) return;
+        ((CircularButton)v.findViewById(R.id.irc_default_dpad)).setDelegate(new CircularButtonDelegate() {
+            @Override
+            public void didTouchOn(Action action) {
+                if(delegate != null) delegate.dispatchDirection(action);
+            }
 
-            switch (action)
-            {
-                case up:    delegate.dispatchUpAction();break;
-                case down:  delegate.dispatchDownAction();break;
-                case left:  delegate.dispatchLeftAction();break;
-                case right: delegate.dispatchRightAction();break;
-                case center:delegate.dispatchEnterAction();break;
-                case centerL:delegate.dispatchEnterActionL();break;
+            @Override
+            public void didTouchOnBegan(Action action) {
+                if(delegate != null) delegate.dispatchDirectionBegan(action);
+            }
+
+            @Override
+            public void didTouchOnEnd(Action action) {
+                if(delegate != null) delegate.dispatchDirectionEnd(action);
             }
         });
 

@@ -99,9 +99,7 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
 
     @Override
     public void performRemoteStop() {
-        manager.stop((invocation, operation, defaultMsg) -> {
-            output.didStopRemoteAssetFailure();
-        });
+        manager.stop((invocation, operation, defaultMsg) -> output.didStopRemoteAssetFailure());
     }
 }
 

@@ -109,7 +109,7 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
 
     @Override
     public void startSearchIconRotation() {
-        getActivity().runOnUiThread(()-> view.findViewById(R.id.media_share_dmr_list_refresh_btn).animate().rotation(3600).setDuration(20000).setInterpolator(new LinearInterpolator()).start());
+        getActivity().runOnUiThread(()-> view.findViewById(R.id.media_share_dmr_list_refresh_btn).animate().rotation(-3600).setDuration(20000).setInterpolator(new LinearInterpolator()).start());
     }
 
     @Override

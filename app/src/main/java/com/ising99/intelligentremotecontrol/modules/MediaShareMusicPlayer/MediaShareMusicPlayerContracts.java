@@ -25,6 +25,7 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
         boolean performFastForward();
         void performNext();
         void updatePlaybackIcon(boolean isPlaying, int currentIndex, int volumeScale);
+
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -33,10 +34,12 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
         int getCurrentIndex();
         List<Music> getAssets();
         Music playNext();
+        void performRemoteStop();
+
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
-
+        void didStopRemoteAssetFailure();
     }
 
     interface Wireframe extends BaseContracts.Wireframe {

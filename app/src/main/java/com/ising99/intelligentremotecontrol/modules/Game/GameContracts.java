@@ -1,5 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.Game;
 
+import com.ising99.intelligentremotecontrol.component.Action;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
@@ -14,20 +15,22 @@ public interface GameContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        void performUpAction();
-        void performDownAction();
-        void performLeftAction();
-        void performRightAction();
+        void performTouchOn(Action action);
+        void performTouchOnBegan(Action action);
+        void performTouchOnEnd(Action action);
         void performStartAction();
         void performSelectAction();
         void performXAction();
         void performYAction();
         void performAAction();
         void performBAction();
+
     }
 
     interface Interactor extends BaseContracts.Interactor {
         void perform(SendCode code);
+        void performBegan(SendCode code);
+        void performEnd(SendCode code);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

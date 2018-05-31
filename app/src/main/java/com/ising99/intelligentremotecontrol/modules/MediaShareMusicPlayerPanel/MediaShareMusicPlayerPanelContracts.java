@@ -59,6 +59,7 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void performRemoteStop();
         void performRemotePause();
         void performRemoteSeek(long timeInterval);
+        void fetchRemotePosition();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
@@ -75,10 +76,13 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
 
         void didSeekRemoteAssetSuccess();
         void didSeekRemoteAssetFailure();
+
+        void didFetchRemotePositionSuccess(int timeInterval);
+        void didFetchRemotePositionFailure();
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void dismissPanelWhen(boolean isPlaying, int currentIndex, int volumeScale);
+        void dismissPanelWhen(boolean isPlaying, boolean isRemoteMode, int currentIndex, int volumeScale);
         void presentDMRList();
     }
 }

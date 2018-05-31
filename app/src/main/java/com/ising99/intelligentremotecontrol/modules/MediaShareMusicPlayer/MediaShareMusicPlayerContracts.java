@@ -24,7 +24,7 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
         void performPlayback();
         boolean performFastForward();
         void performNext();
-        void updatePlaybackIcon(boolean isPlaying, int currentIndex, int volumeScale);
+        void updatePlaybackIcon(boolean isPlaying, boolean isRemoteMode, int currentIndex, int volumeScale);
 
     }
 
@@ -34,15 +34,28 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
         int getCurrentIndex();
         List<Music> getAssets();
         Music playNext();
+        void setupCurrentRemoteAsset();
         void performRemoteStop();
+        void performRemotePlay();
+        void performRemotePause();
 
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
+
+        void didSetRemoteAssetSuccess();
+        void didSetRemoteAssetFailure();
+
+        void didPlayRemoteAssetSuccess();
+        void didPlayRemoteAssetFailure();
+
         void didStopRemoteAssetFailure();
+
+        void didPauseRemoteAssetSuccess();
+        void didPauseRemoteAssetFailure();
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentMediaPlayerPanelWith(List<Music> assets, int position,MediaPlayer player, int volumeScale);
+        void presentMediaPlayerPanelWith(List<Music> assets, int position, MediaPlayer player, int volumeScale, boolean isRemoteMode, boolean isRemotePlaying, boolean shouldPlayRemoteWithSeek);
     }
 }

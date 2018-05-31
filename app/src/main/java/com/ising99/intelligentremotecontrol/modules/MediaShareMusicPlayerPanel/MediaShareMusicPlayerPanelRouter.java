@@ -33,11 +33,11 @@ public class MediaShareMusicPlayerPanelRouter implements Wireframe ,MediaShareDM
         this.context = context;
     }
 
-    public static MediaShareMusicPlayerPanelFragment setupModule(Context context, List<Music> assets, int position, int volumeScale, MediaPlayer player, MediaShareMusicPlayerRouterDelegate delegate, DLNAMediaManager manager) {
+    public static MediaShareMusicPlayerPanelFragment setupModule(Context context, List<Music> assets, int position, int volumeScale, MediaPlayer player, MediaShareMusicPlayerRouterDelegate delegate, DLNAMediaManager manager, boolean isRemoteMode, boolean isRemotePlaying, boolean shouldPlayRemoteWithSeek) {
 
         MediaShareMusicPlayerPanelFragment view = new MediaShareMusicPlayerPanelFragment();
         MediaShareMusicPlayerPanelInteractor interactor = new MediaShareMusicPlayerPanelInteractor(context, assets, position, manager);
-        MediaShareMusicPlayerPanelPresenter presenter = new MediaShareMusicPlayerPanelPresenter(player, volumeScale);
+        MediaShareMusicPlayerPanelPresenter presenter = new MediaShareMusicPlayerPanelPresenter(player, volumeScale, isRemoteMode, isRemotePlaying, shouldPlayRemoteWithSeek);
         MediaShareMusicPlayerPanelRouter router = new MediaShareMusicPlayerPanelRouter(context);
 
         view.setupPresenter(presenter);
@@ -56,8 +56,8 @@ public class MediaShareMusicPlayerPanelRouter implements Wireframe ,MediaShareDM
     }
 
     @Override
-    public void dismissPanelWhen(boolean isPlaying, int currentIndex, int volumeScale) {
-        delegate.dismissWithPlayerStatus(isPlaying, currentIndex, volumeScale);
+    public void dismissPanelWhen(boolean isPlaying, boolean isRemoteMode, int currentIndex, int volumeScale) {
+        delegate.dismissWithPlayerStatus(isPlaying, isRemoteMode, currentIndex, volumeScale);
     }
 
     @Override

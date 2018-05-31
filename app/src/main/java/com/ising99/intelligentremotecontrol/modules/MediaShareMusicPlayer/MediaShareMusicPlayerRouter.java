@@ -57,10 +57,10 @@ public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicP
     }
 
     @Override
-    public void presentMediaPlayerPanelWith(List<Music> assets, int position, MediaPlayer player, int volumeScale) {
+    public void presentMediaPlayerPanelWith(List<Music> assets, int position, MediaPlayer player, int volumeScale, boolean isRemoteMode, boolean isRemotePlaying, boolean shouldPlayRemoteWithSeek) {
         MediaShareMusicPlayerFragment ref = (MediaShareMusicPlayerFragment) view;
 
-        MediaShareMusicPlayerPanelFragment panel = MediaShareMusicPlayerPanelRouter.setupModule(context, assets, position, volumeScale, player, this, manager);
+        MediaShareMusicPlayerPanelFragment panel = MediaShareMusicPlayerPanelRouter.setupModule(context, assets, position, volumeScale, player, this, manager, isRemoteMode, isRemotePlaying, shouldPlayRemoteWithSeek);
 
         FragmentTransaction transaction = ref.getFragmentManager().beginTransaction();
         transaction.replace(R.id.media_share_music_player_panel_container, panel).commit();
@@ -83,12 +83,11 @@ public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicP
             }
         });
         ref.getActivity().findViewById(R.id.media_share_music_player_panel_container).startAnimation(move);
-
     }
 
     @Override
-    public void dismissWithPlayerStatus(boolean isPlaying, int currentIndex, int volumeScale) {
-        presenter.updatePlaybackIcon(isPlaying, currentIndex, volumeScale);
+    public void dismissWithPlayerStatus(boolean isPlaying, boolean isRemoteMode, int currentIndex, int volumeScale) {
+        presenter.updatePlaybackIcon(isPlaying, isRemoteMode, currentIndex, volumeScale);
         MediaShareMusicPlayerFragment ref = (MediaShareMusicPlayerFragment) view;
         TranslateAnimation move = (TranslateAnimation) AnimationUtils.loadAnimation(ref.getActivity(), R.anim.translate_top_to_bottom);
 

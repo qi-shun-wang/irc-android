@@ -173,6 +173,21 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
     }
 
     @Override
+    public void fetchRemotePosition() {
+        manager.getPositionInfo(new DLNAMediaManagerCallback.Value() {
+            @Override
+            public void received(ActionInvocation invocation, long timeInterval) {
+                output.didFetchRemotePositionSuccess((int)timeInterval);
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+                output.didFetchRemotePositionFailure();
+            }
+        });
+    }
+
+    @Override
     public Music updateCurrentIndex(int index) {
         currentIndex = index;
         return assets.get(currentIndex);

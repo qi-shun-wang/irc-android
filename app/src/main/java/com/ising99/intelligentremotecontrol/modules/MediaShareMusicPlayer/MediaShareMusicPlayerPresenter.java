@@ -14,6 +14,8 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaS
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerContracts.Wireframe;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by shun on 2018/5/15 下午 06:17:37.
@@ -27,10 +29,15 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     private Wireframe router;
     private MediaPlayer player;
     private int currentVolume = 25;
+    private boolean isRemoteMode = false;
+    private boolean isRemotePlaying = false;
+    private int remoteTimeInterval = 0;
+    private Timer worker;
 
     MediaShareMusicPlayerPresenter() {
         player = new MediaPlayer();
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        worker = new Timer();
     }
 
     @Override
@@ -87,25 +94,49 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
 
     @Override
     public void onDestroy() {
-        interactor.performRemoteStop();
+        if (isRemoteMode) {
+            worker.cancel();
+            interactor.performRemoteStop();
+        }
+
         player.stop();
         player.reset();
     }
 
     @Override
     public void prepareMediaPlayerPanel() {
-        router.presentMediaPlayerPanelWith(interactor.getAssets(), interactor.getCurrentIndex(), player, currentVolume);
+        if (isRemoteMode){
+            worker.cancel();
+            player.seekTo(remoteTimeInterval);
+        }
+
+        router.presentMediaPlayerPanelWith(interactor.getAssets(), interactor.getCurrentIndex(), player, currentVolume, isRemoteMode, isRemotePlaying, !isRemoteMode);
     }
 
     @Override
     public void performPlayback() {
-        if (player.isPlaying()) {
-            player.pause();
-            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
-        } else {
-            player.start();
-            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+        if (isRemoteMode)
+        {
+            if (isRemotePlaying)
+            {
+                interactor.performRemotePause();
+            }
+            else
+            {
+                interactor.performRemotePlay();
+            }
         }
+        else
+        {
+            if (player.isPlaying()) {
+                player.pause();
+                view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+            } else {
+                player.start();
+                view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            }
+        }
+
     }
 
     @Override
@@ -123,22 +154,45 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
             player.reset();
             player.setDataSource(asset.getFilePath());
             player.prepare();
-            player.start();
             view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        if(isRemoteMode)
+        {
+            interactor.setupCurrentRemoteAsset();
+        }
+        else
+        {
+            player.start();
+        }
+
+
     }
 
     @Override
-    public void updatePlaybackIcon(boolean isPlaying, int currentIndex, int volumeScale) {
+    public void updatePlaybackIcon(boolean isPlaying, boolean isRemoteMode, int currentIndex, int volumeScale) {
+        this.isRemoteMode = isRemoteMode;
+
+        if (isRemoteMode) {
+            isRemotePlaying = isPlaying;
+            remoteTimeInterval = player.getCurrentPosition();
+            worker = new Timer();
+            worker.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (isRemotePlaying) remoteTimeInterval+=1000;
+                }
+            },0,1000);
+        }
         currentVolume = volumeScale;
         interactor.updateCurrentIndex(currentIndex);
+
         Music asset = interactor.getCurrentAsset();
         view.updateMusicInfo(asset.getTitle(), asset.getArtist(), R.drawable.media_share_default_album_icon);
 
-        if (isPlaying) {
+        if (player.isPlaying()||isRemotePlaying) {
             view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
         } else {
             view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
@@ -150,7 +204,39 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     }
 
     @Override
+    public void didSetRemoteAssetSuccess() {
+        interactor.performRemotePlay();
+    }
+
+    @Override
+    public void didSetRemoteAssetFailure() {
+
+    }
+
+    @Override
+    public void didPlayRemoteAssetSuccess() {
+        isRemotePlaying = true;
+        view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+    }
+
+    @Override
+    public void didPlayRemoteAssetFailure() {
+
+    }
+
+    @Override
     public void didStopRemoteAssetFailure() {
+
+    }
+
+    @Override
+    public void didPauseRemoteAssetSuccess() {
+        isRemotePlaying = false;
+        view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+    }
+
+    @Override
+    public void didPauseRemoteAssetFailure() {
 
     }
 }

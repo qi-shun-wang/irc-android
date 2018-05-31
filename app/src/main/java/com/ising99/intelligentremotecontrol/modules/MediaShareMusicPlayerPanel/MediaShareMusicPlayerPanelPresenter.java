@@ -41,16 +41,19 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     private int seekTimeInterval = 0;
     private int currentVolume ;
     private boolean isVolumeFirstResponse = true;
-    private boolean isFirstPerformedCasting = true;
-    private boolean isRemoteCasting = false;
-    private boolean isRemotePlaying = false;
-    private boolean isRemoteSeeking = false;
-    private int remoteTimeInterval = 0;
-    private boolean shouldPlayRemoteWithSeek = true;
 
-    MediaShareMusicPlayerPanelPresenter(MediaPlayer player, int volumeScale) {
+    private boolean isRemoteMode;
+    private boolean isRemotePlaying;
+    private boolean isRemoteSeeking = false;
+    private int currentTimeInterval = 0;
+    private boolean shouldPlayRemoteWithSeek;
+
+    MediaShareMusicPlayerPanelPresenter(MediaPlayer player, int volumeScale, boolean isRemoteMode, boolean isRemotePlaying, boolean shouldPlayRemoteWithSeek) {
         this.player = player;
         currentVolume = volumeScale;
+        this.isRemoteMode = isRemoteMode;
+        this.isRemotePlaying = isRemotePlaying;
+        this.shouldPlayRemoteWithSeek = shouldPlayRemoteWithSeek;
     }
 
     @Override
@@ -86,11 +89,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void onResume() {
-        if (isRemoteCasting){
-
-        }
-        else
-        {
+        if (!isRemoteMode){
             if(player.isPlaying())
             {
                 view.updateCurrentPlaybackIcon(R.drawable.media_share_pause_icon);
@@ -99,19 +98,19 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
             {
                 view.updateCurrentPlaybackIcon(R.drawable.media_share_play_icon);
             }
-            prepareWorker();
         }
-
+        prepareWorker();
     }
 
     @Override
     public void onPause() {
+        worker.cancel();
 
     }
 
     @Override
     public void onDestroy() {
-        worker.cancel();
+
     }
 
     @Override
@@ -124,8 +123,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
                 if (record == 0 && isScrollToTop)
                 {
                     view.clearPanelListener();
-                    worker.cancel();
-                    router.dismissPanelWhen(player.isPlaying(), interactor.getCurrentIndex(), currentVolume);
+                    if (isRemoteMode) player.seekTo(currentTimeInterval);
+                    router.dismissPanelWhen(player.isPlaying()||isRemotePlaying, isRemoteMode, interactor.getCurrentIndex(), currentVolume);
                 }
                 break;
             case SCROLL_STATE_IDLE:record = 0; hasDismissBlocker = false; break;
@@ -147,9 +146,9 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         view.updateCurrentPlaybackIcon(R.drawable.media_share_pause_icon);
         player.stop();
 
-        if (isRemoteCasting)
+        if (isRemoteMode)
         {
-            remoteTimeInterval = 0;
+            currentTimeInterval = 0;
             interactor.setupCurrentRemoteAsset();
         }
         else
@@ -173,18 +172,17 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void didSelected(Device device) {
-        isFirstPerformedCasting = false;
-        isRemoteCasting = true;
+        isRemoteMode = true;
         player.pause();
-        remoteTimeInterval = player.getCurrentPosition();
-        Log.d("getCurrentPosition","===>"+remoteTimeInterval);
+        currentTimeInterval = player.getCurrentPosition();
+        Log.d("getCurrentPosition","===>"+ currentTimeInterval);
         interactor.setupCurrentDevice(device);
         interactor.setupCurrentRemoteAsset();
     }
 
     @Override
     public void performPlayback() {
-        if (isRemoteCasting)
+        if (isRemoteMode)
         {
             //todo lock playback button
             if (isRemotePlaying)
@@ -197,10 +195,13 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         }
         else
         {
-            if (player.isPlaying()) {
+            if (player.isPlaying())
+            {
                 player.pause();
                 view.updateCurrentPlaybackIcon(R.drawable.media_share_play_icon);
-            } else {
+            }
+            else
+            {
                 player.start();
                 view.updateCurrentPlaybackIcon(R.drawable.media_share_pause_icon);
             }
@@ -214,7 +215,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         isRemotePlaying = false;
         view.updateCurrentMedia(0);
         view.updateMediaPanel(asset);
-        if (isRemoteCasting)
+        currentTimeInterval = 0;
+        if (isRemoteMode)
         {
 
             interactor.setupCurrentRemoteAsset();
@@ -240,9 +242,11 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         Music asset = interactor.playLast();
         view.updateCurrentMedia(0);
         view.updateMediaPanel(asset);
+        currentTimeInterval = 0;
         isRemotePlaying = false;
-        if (isRemoteCasting)
+        if (isRemoteMode)
         {
+
             interactor.setupCurrentRemoteAsset();
         }
         else
@@ -263,7 +267,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void startMediaSeeking() {
-        if (isRemoteCasting)
+        if (isRemoteMode)
         {
             isRemoteSeeking = true;
         }
@@ -275,11 +279,11 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     @Override
     public void stopMediaSeeking() {
 
-        if (isRemoteCasting)
+        if (isRemoteMode)
         {
-            remoteTimeInterval = seekTimeInterval*1000;
-            Log.d("stopMediaSeeking","===>"+remoteTimeInterval);
-            interactor.performRemoteSeek(remoteTimeInterval);
+            currentTimeInterval = seekTimeInterval*1000;
+            Log.d("stopMediaSeeking","===>"+ currentTimeInterval);
+            interactor.performRemoteSeek(currentTimeInterval);
         }
         else
         {
@@ -338,27 +342,34 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
             @Override
             public void run() {
                 try {
+
                     Music asset = interactor.getCurrentMusicAsset();
                     int duration = (int)asset.getDuration();
-                    int timeInterval ;
-                    if (isRemoteCasting)
+                    if (currentTimeInterval >= duration){
+                        currentTimeInterval = 0;
+                        isRemotePlaying = false;
+                        view.updateCurrentMedia(currentTimeInterval);
+                        view.updateCurrentPlaybackIcon(R.drawable.media_share_play_icon);
+                        return;
+                    }
+                    if (isRemoteMode)
                     {
-                        timeInterval = remoteTimeInterval;
+                        interactor.fetchRemotePosition();
+
                         if ((isRemotePlaying) && (!isRemoteSeeking)) {
-                            view.updateCurrentMedia(timeInterval);
-                            remoteTimeInterval+=1000;
+                            view.updateCurrentMedia(currentTimeInterval);
                         }
-                        Log.d("prepareWorker","===>"+remoteTimeInterval);
+                        Log.d("prepareWorker","===>"+ currentTimeInterval);
                     }
                     else
                     {
-                        timeInterval = player.getCurrentPosition();
                         if ((player.isPlaying()) && (!isSeeking)) {
-                            view.updateCurrentMedia(timeInterval);
+                            currentTimeInterval = player.getCurrentPosition();
+                            view.updateCurrentMedia(currentTimeInterval);
                         }
                     }
 
-                    if (timeInterval>=duration)view.updateCurrentPlaybackIcon(R.drawable.media_share_play_icon);
+
 
                 } catch (IllegalStateException e){
                     e.printStackTrace();
@@ -375,11 +386,9 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     @Override
     public void didSetRemoteAssetSuccess() {
         //TODO show set Success warning badge
-        Log.d("SetRemoteAssetSuccess","===>"+remoteTimeInterval);
+        Log.d("SetRemoteAssetSuccess","===>"+ currentTimeInterval);
 
         interactor.performRemotePlay();
-
-
     }
 
     @Override
@@ -394,17 +403,17 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
         if (shouldPlayRemoteWithSeek)
         {
-            try {
-                Thread.sleep(1000);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            interactor.performRemoteSeek(remoteTimeInterval);
+            worker.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    interactor.performRemoteSeek(currentTimeInterval);
+                }
+            },2000);
+
         }
         else
         {
-            Log.d("PlayRemoteAssetSuccess2","===>"+remoteTimeInterval);
-            remoteTimeInterval = 0;
+            Log.d("PlayRemoteAssetSuccess2","===>"+ currentTimeInterval);
             isRemotePlaying = true;
 
         }
@@ -454,11 +463,11 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         //TODO show warning badge
 
         if (shouldPlayRemoteWithSeek){
-            Log.d("SeekRemoteAssetSuccess","===>"+remoteTimeInterval);
+            Log.d("SeekRemoteAssetSuccess","===>"+ currentTimeInterval);
             view.updateCurrentPlaybackIcon(R.drawable.media_share_pause_icon);
             shouldPlayRemoteWithSeek = false;
-            isRemotePlaying = true;
         }
+        isRemotePlaying = true;
         isRemoteSeeking = false;
 
     }
@@ -466,5 +475,16 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     @Override
     public void didSeekRemoteAssetFailure() {
         //TODO show warning badge
+    }
+
+    @Override
+    public void didFetchRemotePositionSuccess(int timeInterval) {
+        if ( currentTimeInterval <= timeInterval*1000)
+            currentTimeInterval = timeInterval*1000;
+    }
+
+    @Override
+    public void didFetchRemotePositionFailure() {
+
     }
 }

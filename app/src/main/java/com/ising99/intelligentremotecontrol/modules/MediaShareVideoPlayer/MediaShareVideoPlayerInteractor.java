@@ -127,5 +127,20 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
         });
     }
 
+    @Override
+    public void fetchRemoteTimeInterval() {
+        manager.getPositionInfo(new DLNAMediaManagerCallback.Value() {
+            @Override
+            public void received(ActionInvocation invocation, long timeInterval) {
+                output.didFetchRemoteTimeIntervalSuccess((int)timeInterval*1000);
+            }
+
+            @Override
+            public void failure(ActionInvocation arg0, UpnpResponse arg1, String arg2) {
+                output.didFetchRemoteTimeIntervalFailure();
+            }
+        });
+    }
+
 }
 

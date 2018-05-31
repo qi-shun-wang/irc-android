@@ -27,6 +27,7 @@ public interface DLNAMediaManagerProtocol {
 
     void seek(long timeInterval ,DLNAMediaManagerCallback.Common callback);
 
+    void getPositionInfo(DLNAMediaManagerCallback.Value callback);
 
     /**
      * Go on playing the video from the position.
@@ -62,14 +63,6 @@ public interface DLNAMediaManagerProtocol {
      */
     int getMaxVolumeValue(Device device);
 
-    /**
-     * Get the current playing position of the video.
-     *
-     * @param device
-     *            The device be controlled.
-     * @return Current playing position is 00:00:00
-     */
-    String getPositionInfo(Device device);
 
     /**
      * Get the duration of the video playing.

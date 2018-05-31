@@ -117,15 +117,12 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         {
             if(isRemotePlaying)
             {
-                view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
                 interactor.performRemotePause();
             }
             else
             {
-                view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
                 interactor.performRemotePlay();
             }
-            isRemotePlaying = !isRemotePlaying;
         }
         else
         {
@@ -218,42 +215,45 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
             @Override
             public void run() {
                 int duration = (int) interactor.getVideoAsset().getDuration();
-                int timeInterval;
-                if (isRemoteMode){
-                    timeInterval = currentTimeInterval;
+                if ( currentTimeInterval>=duration || currentTimeInterval >= duration-1000 )
+                {
+                    isRemotePlaying = false;
+
+                    view.updateEndTimeLabel("-" + transformedFrom((duration)));
+                    view.updateCurrentTimeLabel(transformedFrom(0));
+                    view.updateSeekBarLocation(0);
+                    view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+                    currentTimeInterval = 0;
+                    Log.d("prepareWorkerEnd","===>"+currentTimeInterval/1000+"<---->"+currentTimeInterval+"<---->"+duration);
+                    return;
+                }
+
+                if (isRemoteMode)
+                {
                     if ((isRemotePlaying) && (!isRemoteSeeking)) {
-                        view.updateEndTimeLabel("-" + transformedFrom((duration - timeInterval)));
-                        view.updateCurrentTimeLabel(transformedFrom(timeInterval));
-                        view.updateSeekBarLocation(timeInterval/1000);
-                        currentTimeInterval+=1000;
+                        interactor.fetchRemoteTimeInterval();
+                        view.updateEndTimeLabel("-" + transformedFrom((duration - currentTimeInterval)));
+                        view.updateCurrentTimeLabel(transformedFrom(currentTimeInterval));
+                        view.updateSeekBarLocation(currentTimeInterval/1000);
+                        Log.d("prepareWorker","===>"+currentTimeInterval/1000+"<---->"+currentTimeInterval+"<---->"+duration);
                     }
                 }
                 else
                 {
-                    timeInterval = player.getCurrentPosition();
-                    if (player.isPlaying()){
-                        view.updateEndTimeLabel("-" + transformedFrom((duration - timeInterval)));
-                        view.updateCurrentTimeLabel(transformedFrom(timeInterval));
-                        view.updateSeekBarLocation(timeInterval/1000);
-                        Log.d("prepareWorker","===>"+timeInterval/1000+"<---->"+timeInterval+"<---->"+duration);
+                    if (player.isPlaying() && (!isSeeking)){
+                        currentTimeInterval = player.getCurrentPosition();
+                        view.updateEndTimeLabel("-" + transformedFrom((duration - currentTimeInterval)));
+                        view.updateCurrentTimeLabel(transformedFrom(currentTimeInterval));
+                        view.updateSeekBarLocation(currentTimeInterval/1000);
+                        Log.d("prepareWorker","===>"+currentTimeInterval/1000+"<---->"+currentTimeInterval+"<---->"+duration);
                     }
                 }
-
-
-                if (timeInterval>=duration)
-                {
-                    isRemotePlaying = false;
-                    currentTimeInterval = 0;
-                    view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
-                }
-
             }
-        },0,1000);
+        },0,500);
     }
 
     @Override
     public void didSetRemoteAssetSuccess() {
-
         interactor.performRemotePlay();
     }
 
@@ -266,21 +266,27 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     public void didPlayRemoteAssetSuccess() {
         if (shouldPlayRemoteWithSeek)
         {
-            try {
-                Thread.sleep(1000);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            interactor.performRemoteSeek(currentTimeInterval);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    interactor.performRemoteSeek(currentTimeInterval);
+                    view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+                }
+            }, 1000);
+
         }
         else
         {
             Log.d("PlayRemoteAssetSuccess2","===>"+currentTimeInterval);
-
-            isRemotePlaying = true;
+           new Timer().schedule(new TimerTask() {
+               @Override
+               public void run() {
+                   isRemotePlaying = true;
+                   view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+               }
+           }, 500);
 
         }
-        view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
     }
 
     @Override
@@ -289,8 +295,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         {
             view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
         }
-        else
-        {
+        else {
             view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
         }
     }
@@ -332,6 +337,16 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     @Override
     public void didSeekRemoteAssetFailure() {
         isRemoteSeeking = false;
+    }
+
+    @Override
+    public void didFetchRemoteTimeIntervalSuccess(int timeInterval) {
+        if ( currentTimeInterval <= timeInterval)
+            currentTimeInterval = timeInterval;
+    }
+
+    @Override
+    public void didFetchRemoteTimeIntervalFailure() {
 
     }
 }

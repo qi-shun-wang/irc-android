@@ -41,6 +41,7 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
         void performRemoteStop();
         void performRemotePause();
         void performRemoteSeek(long timeInterval);
+        void fetchRemoteTimeInterval();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
@@ -57,6 +58,9 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
 
         void didSeekRemoteAssetSuccess();
         void didSeekRemoteAssetFailure();
+
+        void didFetchRemoteTimeIntervalSuccess(int timeInterval);
+        void didFetchRemoteTimeIntervalFailure();
     }
 
     interface Wireframe extends BaseContracts.Wireframe {

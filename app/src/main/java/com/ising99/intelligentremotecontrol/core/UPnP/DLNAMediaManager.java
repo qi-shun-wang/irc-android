@@ -14,11 +14,13 @@ import org.fourthline.cling.model.meta.Service;
 import org.fourthline.cling.model.types.UDAServiceId;
 import org.fourthline.cling.registry.Registry;
 import org.fourthline.cling.registry.RegistryListener;
+import org.fourthline.cling.support.avtransport.callback.GetPositionInfo;
 import org.fourthline.cling.support.avtransport.callback.Pause;
 import org.fourthline.cling.support.avtransport.callback.Play;
 import org.fourthline.cling.support.avtransport.callback.Seek;
 import org.fourthline.cling.support.avtransport.callback.SetAVTransportURI;
 import org.fourthline.cling.support.avtransport.callback.Stop;
+import org.fourthline.cling.support.model.PositionInfo;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -179,6 +181,32 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
             localException.printStackTrace();
         }
     }
+
+    @Override
+    public void getPositionInfo(DLNAMediaManagerCallback.Value callback) {
+        try {
+            Service localService = currentDevice.findService(new UDAServiceId("AVTransport"));
+            if (localService != null) {
+                upnpService.getControlPoint().execute(new GetPositionInfo(localService) {
+                    @Override
+                    public void received(ActionInvocation invocation, PositionInfo positionInfo) {
+                        callback.received(invocation, transformedFrom(positionInfo.getAbsTime()));
+                    }
+
+                    @Override
+                    public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+                        callback.failure(invocation, operation, defaultMsg);
+                    }
+                });
+            } else {
+                Log.e("null", "null");
+            }
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+
+    }
+
     @Override
     public boolean goOn(Device device, String pausePosition) {
         return false;
@@ -197,12 +225,6 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
     @Override
     public int getMaxVolumeValue(Device device) {
         return 0;
-    }
-
-
-    @Override
-    public String getPositionInfo(Device device) {
-        return null;
     }
 
     @Override
@@ -289,5 +311,19 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
         Formatter fmt = new Formatter(stringBuilder);
         fmt.format("%02d:%02d:%02d", hour, minute, second);
         return stringBuilder.toString();
+    }
+    private long transformedFrom(String timeInterval){
+        String [] timeComponent = timeInterval.split(":");
+        if (timeComponent.length == 3) {
+            int hour = Integer.valueOf(timeComponent[0]);
+            int minute = Integer.valueOf(timeComponent[1]);
+            int second = Integer.valueOf(timeComponent[2]);
+            return (long) (hour*60*60 + minute*60 + second);
+        }
+        else
+        {
+            return 0;
+        }
+
     }
 }

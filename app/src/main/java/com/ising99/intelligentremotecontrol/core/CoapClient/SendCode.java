@@ -25,9 +25,9 @@ public enum SendCode {
 
     KEYCODE_BACK(158),
 
-    KEYCODE_CHANNEL_DOWN(109),
+    KEYCODE_CHANNEL_DOWN(403),
 
-    KEYCODE_CHANNEL_UP(104),
+    KEYCODE_CHANNEL_UP(402),
 
     KEYCODE_DEL(399),
 
@@ -45,7 +45,7 @@ public enum SendCode {
 
     KEYCODE_ECHOUP(569),
 
-//    KEYCODE_EPG(X),
+    KEYCODE_EPG(365),
 
     KEYCODE_FORWARD_DEL(398),
 
@@ -81,9 +81,9 @@ public enum SendCode {
 
     KEYCODE_MUSICUP(565),
 
-//    KEYCODE_PAGE_DOWN(X),
+    KEYCODE_PAGE_DOWN(109),
 
-//    KEYCODE_PAGE_UP(X),
+    KEYCODE_PAGE_UP(104),
 
     KEYCODE_PAIRING(632),
 
@@ -94,10 +94,6 @@ public enum SendCode {
     KEYCODE_POWER(116),
 
     KEYCODE_PROG_BLUE(401),
-
-//    KEYCODE_PROG_GREEN(X),
-
-//    KEYCODE_PROG_RED(X),
 
     KEYCODE_PROG_YELLOW(400),
 
@@ -147,4 +143,3 @@ public enum SendCode {
         return code;
     }
 }
-

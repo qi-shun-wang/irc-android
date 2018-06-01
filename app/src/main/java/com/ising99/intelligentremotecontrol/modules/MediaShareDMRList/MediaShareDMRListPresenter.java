@@ -31,8 +31,10 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
     private MediaShareDMRListFragmentDelegate delegate;
     private Timer startSearchTask;
     private Timer stopSearchTask ;
-    private boolean prependedLocalDevice = false;
-    private  Device localDevice;
+    private boolean prependedLocalDevice;
+    private Device localDevice;
+    private boolean isSearching = false;
+
     MediaShareDMRListPresenter(MediaShareDMRListFragmentDelegate delegate, boolean prependedLocalDevice) {
         this.delegate = delegate;
         this.prependedLocalDevice = prependedLocalDevice;
@@ -46,6 +48,8 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
     }
 
     private void performTasks(){
+        if (isSearching) return;
+        isSearching = true;
         startSearchTask = new Timer();
         stopSearchTask = new Timer();
         view.startSearchIconRotation();
@@ -60,6 +64,7 @@ public class MediaShareDMRListPresenter implements Presenter, InteractorOutput {
         stopSearchTask.schedule(new TimerTask() {
             @Override
             public void run() {
+                isSearching = false;
                 if (prependedLocalDevice)
                 {
                     List<Device> devices = new ArrayList<>();

@@ -90,6 +90,7 @@ public class DeviceDiscoveryInteractor implements DeviceDiscoveryContracts.Inter
 
     @Override
     public void startWireChecker() {
+
         service.checkWireConnection(new RemoteControlCoAPServiceCallback.Common() {
             @Override
             public void didSuccessWith(String payload) {

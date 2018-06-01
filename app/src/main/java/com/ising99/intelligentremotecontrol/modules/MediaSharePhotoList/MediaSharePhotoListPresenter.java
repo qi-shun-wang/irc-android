@@ -140,7 +140,7 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
             public void run() {
                 interactor.setupCurrentRemoteAsset(selectedIndex);
             }
-        },3000);
+        },10000);
     }
 
     @Override

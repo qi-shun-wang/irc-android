@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
 
 
 /**
@@ -15,13 +16,15 @@ import com.ising99.intelligentremotecontrol.R;
 
 public class RootActivity extends Activity {
 
-    Fragment root;
+    private Fragment root;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
-        root = RootRouter.setupModule(getApplicationContext());
+        RemoteControlCoAPService service = new RemoteControlCoAPService();
+        root = RootRouter.setupModule(getApplicationContext(), service);
         getFragmentManager().beginTransaction().add(R.id.fragment_root_container,root).commit();
 
     }
@@ -43,5 +46,4 @@ public class RootActivity extends Activity {
             e.printStackTrace();
         }
     }
-
 }

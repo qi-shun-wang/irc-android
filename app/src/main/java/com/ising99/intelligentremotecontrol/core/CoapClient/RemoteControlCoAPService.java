@@ -33,6 +33,23 @@ public final class RemoteControlCoAPService {
         this("192.168.34.1",5683);
     }
 
+    public void ping(RemoteControlCoAPServiceCallback.Common callback){
+        client.setURI("coap://"+address+":"+port+"/ping");
+        client.useCONs().get(new CoapHandler() {
+            @Override
+            public void onLoad(CoapResponse response) {
+                Log.d("CoapResponse","====>"+response.getResponseText());
+                callback.didSuccessWith(response.getResponseText());
+            }
+
+            @Override
+            public void onError() {
+                callback.didFailure();
+                Log.d("CoapResponse","====>error????");
+            }
+        });
+    }
+
     public void checkWireConnection(RemoteControlCoAPServiceCallback.Common callback){
         client.setURI("coap://"+address+":"+port+"/wireCheck");
         client.useCONs().get(new CoapHandler() {

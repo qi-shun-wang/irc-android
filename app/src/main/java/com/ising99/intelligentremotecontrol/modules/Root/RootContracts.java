@@ -13,7 +13,6 @@ public interface RootContracts extends BaseContracts {
     interface View extends BaseContracts.View {
         void prepareTabBar();
         void setupActionBinding();
-        void updateNetworkStatus(String text);
         void updateConnectedDeviceStatus(String text);
         void setupConnectedDeviceImage();
         void setupDisconnectedDeviceImage();
@@ -28,6 +27,7 @@ public interface RootContracts extends BaseContracts {
     interface Presenter extends BaseContracts.Presenter {
         void didTapOnDeviceDiscovery();
         boolean didSelectedTabAt(int position);
+        void onWindowFocusChanged(boolean isFocus);
         void openFullScreenMode();
         void closeFullScreenMode();
 
@@ -43,6 +43,7 @@ public interface RootContracts extends BaseContracts {
         void didConnectedToWiFi(String name);
         void didNotConnectedToWiFi();
         void didConnectedToDevice(Device device);
+        void didLastConnectionInvalid();
 
     }
 

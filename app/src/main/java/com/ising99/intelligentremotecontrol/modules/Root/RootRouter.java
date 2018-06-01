@@ -34,10 +34,10 @@ public class RootRouter implements Wireframe {
         this.context = context;
     }
 
-    static RootFragment setupModule(Context context){
+    static RootFragment setupModule(Context context, RemoteControlCoAPService service){
 
         RootFragment view = new RootFragment();
-        RootInteractor interactor = new RootInteractor(context);
+        RootInteractor interactor = new RootInteractor(context, service);
         RootPresenter presenter = new RootPresenter();
         RootRouter router = new RootRouter(context);
 
@@ -51,8 +51,6 @@ public class RootRouter implements Wireframe {
         router.presenter = presenter;
 
         interactor.setupPresenter(presenter);
-
-        RemoteControlCoAPService service = new RemoteControlCoAPService();
 
         IRCFragment irc = IRCRouter.setupModule(context, service);
 //        KaraokeFragment karaoke = KaraokeRouter.setupModule(context);

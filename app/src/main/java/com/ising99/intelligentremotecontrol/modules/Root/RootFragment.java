@@ -45,6 +45,7 @@ public class RootFragment extends Fragment implements RootContracts.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = (ViewGroup)inflater.inflate(R.layout.fragment_root, container, false);
+        view.getViewTreeObserver().addOnWindowFocusChangeListener(b -> presenter.onWindowFocusChanged(b));
         presenter.onCreate();
         return view;
     }
@@ -99,32 +100,27 @@ public class RootFragment extends Fragment implements RootContracts.View {
 
     @Override
     public void updateConnectedDeviceStatus(String text) {
-        ((AppCompatTextView)view.findViewById(R.id.root_wifi_btn)).setText(text);
-    }
-
-    @Override
-    public void updateNetworkStatus(String text) {
-//        ((AppCompatTextView)view.findViewById(R.id.root_wifi_btn)).setText(text);
+        getActivity().runOnUiThread(()->((AppCompatTextView)view.findViewById(R.id.root_wifi_btn)).setText(text));
     }
 
     @Override
     public void setupConnectedDeviceImage() {
-        ((ImageView)view.findViewById(R.id.root_wifi_icon)).setImageResource(R.drawable.device_connect_icon);
+        getActivity().runOnUiThread(() -> ((ImageView)view.findViewById(R.id.root_wifi_icon)).setImageResource(R.drawable.device_connect_icon));
     }
 
     @Override
     public void setupDisconnectedDeviceImage() {
-        ((ImageView)view.findViewById(R.id.root_wifi_icon)).setImageResource(R.drawable.device_disconnect_icon);
+        getActivity().runOnUiThread(() -> ((ImageView)view.findViewById(R.id.root_wifi_icon)).setImageResource(R.drawable.device_disconnect_icon));
     }
 
     @Override
     public void showWarningBadge() {
-        view.findViewById(R.id.root_warning_text).animate().setDuration(1000).alpha(1).start();
+        getActivity().runOnUiThread(() -> view.findViewById(R.id.root_warning_text).animate().setDuration(1000).alpha(1).start());
     }
 
     @Override
     public void hideWarningBadge() {
-        view.findViewById(R.id.root_warning_text).animate().setDuration(1000).alpha(0).start();
+        getActivity().runOnUiThread(() -> view.findViewById(R.id.root_warning_text).animate().setDuration(1000).alpha(0).start());
     }
 
 }

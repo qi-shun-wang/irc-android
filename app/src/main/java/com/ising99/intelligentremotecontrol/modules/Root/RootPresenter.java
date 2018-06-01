@@ -22,6 +22,8 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     private View view;
     private Interactor interactor;
     private Wireframe router;
+    private Timer worker;
+    private boolean isDeviceConnected = false;
 
     RootPresenter(){}
 
@@ -64,8 +66,6 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     @Override
     public void onResume() {
 
-        interactor.checkWiFiStatus();
-
     }
 
     @Override
@@ -89,20 +89,48 @@ public class RootPresenter implements Presenter ,InteractorOutput{
     }
 
     @Override
+    public void onWindowFocusChanged(boolean isFocus) {
+        if (isFocus)
+        {
+            worker = new Timer();
+            worker .schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    interactor.checkWiFiStatus();
+                }
+            },1000,2000);
+
+        }
+        else
+        {
+            isDeviceConnected = false;
+            worker.cancel();
+        }
+    }
+
+    @Override
+    public void didLastConnectionInvalid() {
+        view.updateConnectedDeviceStatus("尚未連接到設備");
+    }
+
+    @Override
     public void didConnectedToWiFi(String name) {
+        if (isDeviceConnected) {return;}
         view.hideWarningBadge();
         interactor.checkLastConnectedDevice();
-//        view.updateNetworkStatus("目前連到Wifi " + name);
+        view.updateConnectedDeviceStatus("目前連到Wifi " + name);
     }
 
     @Override
     public void didNotConnectedToWiFi() {
+        isDeviceConnected = false;
         view.showWarningBadge();
         view.updateConnectedDeviceStatus("等待連接WiFi...");
     }
 
     @Override
     public void didConnectedToDevice(Device device) {
+        isDeviceConnected = true;
         view.updateConnectedDeviceStatus("目前已連到設備：" + device.getName());
         view.setupConnectedDeviceImage();
     }

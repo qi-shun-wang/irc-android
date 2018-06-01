@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.ising99.intelligentremotecontrol.App;
+import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
+import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPServiceCallback;
 import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.db.DeviceEntity;
 import com.ising99.intelligentremotecontrol.db.DeviceEntityDao;
@@ -14,6 +16,7 @@ import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Interacto
 
 import org.greenrobot.greendao.query.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,9 +28,11 @@ public class RootInteractor implements RootContracts.Interactor {
 
     private InteractorOutput output;
     private Context context;
+    private RemoteControlCoAPService service;
 
-    RootInteractor(Context context){
+    RootInteractor(Context context, RemoteControlCoAPService service){
         this.context = context;
+        this.service = service;
     }
 
     @Override
@@ -65,10 +70,32 @@ public class RootInteractor implements RootContracts.Interactor {
                 .where(DeviceEntityDao.Properties.IsConnected.ge(true))
                 .build();
         List devices = query.list();
-        for (Object entity:devices) {
-            DeviceEntity device = (DeviceEntity) entity;
+        if(devices.size() > 0) {
+            DeviceEntity device = (DeviceEntity) devices.get(0);
             Log.d("Device is Connected",device.getName());
-            output.didConnectedToDevice(new Device(device.getAddress(),device.getAddress(),device.getName(),device.getSettings()));
+            service.setAddress(device.getAddress());
+            service.ping(new RemoteControlCoAPServiceCallback.Common() {
+                @Override
+                public void didSuccessWith(String payload) {
+                    output.didConnectedToDevice(new Device(device.getAddress(),device.getAddress(),device.getName(),device.getSettings()));
+                }
+
+                @Override
+                public void didFailure() {
+                    List<DeviceEntity> devices = ((App)context).getDaoSession().getDeviceEntityDao().loadAll();
+
+                    for (DeviceEntity entity:devices) {
+                        entity.setIsConnected(false);
+                        entity.setUpdate_at(new Date());
+                        ((App)context).getDaoSession().getDeviceEntityDao().update(entity);
+                    }
+                    output.didLastConnectionInvalid();
+                }
+            });
+
+            return;
         }
+        output.didLastConnectionInvalid();
     }
+
 }

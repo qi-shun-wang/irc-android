@@ -180,6 +180,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         {
             player.pause();
             view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+            view.showWarningBadge("媒體準備播放...");
             interactor.setupCurrentDevice(device);
             interactor.setupCurrentRemoteAsset();
         }
@@ -264,6 +265,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
 
     @Override
     public void didPlayRemoteAssetSuccess() {
+        view.hideWarningBadge("媒體開始播放");
         if (shouldPlayRemoteWithSeek)
         {
             new Timer().schedule(new TimerTask() {

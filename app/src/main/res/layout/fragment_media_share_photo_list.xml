@@ -50,5 +50,15 @@
         >
 
     </FrameLayout>
-
+    <TextView
+        android:id="@+id/media_share_photo_list_warning_text"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:background="@color/blue"
+        android:alpha="0"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="@+id/media_share_photo_list_container"
+        />
 </android.support.constraint.ConstraintLayout>

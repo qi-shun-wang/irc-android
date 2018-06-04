@@ -1,6 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
@@ -99,5 +101,28 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
     public void reloadGridView(List<PhotoItem> collection) {
         adapter.setPhotos(collection);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showWarningBadge(String text) {
+        getActivity().runOnUiThread(()->{
+            //todo
+            TextView warningText = view.findViewById(R.id.media_share_photo_list_warning_text);
+            warningText.setBackgroundColor(Color.RED);
+            warningText.setText(text);
+            warningText.setAlpha(1);
+        });
+
+    }
+
+    @Override
+    public void hideWarningBadge(String text) {
+        getActivity().runOnUiThread(()->{
+            //todo
+            TextView warningText = view.findViewById(R.id.media_share_photo_list_warning_text);
+            warningText.setText(text);
+            warningText.setBackgroundColor(Color.GREEN);
+            warningText.animate().setDuration(5000).alpha(0).start();
+        });
     }
 }

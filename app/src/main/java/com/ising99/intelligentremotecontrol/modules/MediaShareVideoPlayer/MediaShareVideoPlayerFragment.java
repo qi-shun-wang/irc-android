@@ -1,9 +1,10 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -26,9 +27,6 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
 
     private Presenter presenter;
     private ViewGroup view;
-    private SurfaceView mediaContainer;
-    private SurfaceHolder mediaContainerHolder;
-
 
     public MediaShareVideoPlayerFragment() {
         // Required empty public constructor
@@ -48,13 +46,11 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_video_player, container, false);
-        mediaContainer = view.findViewById(R.id.media_share_video_player_view);
-        mediaContainerHolder = mediaContainer.getHolder();
+        SurfaceView mediaContainer = view.findViewById(R.id.media_share_video_player_view);
+        SurfaceHolder mediaContainerHolder = mediaContainer.getHolder();
         mediaContainerHolder.addCallback(this);
         view.findViewById(R.id.media_share_video_player_cast_btn).setOnClickListener((v)->presenter.didTapOnCast());
-        view.findViewById(R.id.media_share_video_player_playback_btn).setOnClickListener((v)->{
-            presenter.performPlayBack();
-        });
+        view.findViewById(R.id.media_share_video_player_playback_btn).setOnClickListener((v)-> presenter.performPlayBack());
         ((SeekBar)view.findViewById(R.id.seekBar)).setOnSeekBarChangeListener(this);
         presenter.onCreate();
         return view;
@@ -128,6 +124,29 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
     @Override
     public void updateSeekBarLocation(int scale) {
         getActivity().runOnUiThread(()->((SeekBar)view.findViewById(R.id.seekBar)).setProgress(scale));
+    }
+
+    @Override
+    public void showWarningBadge(String text) {
+        getActivity().runOnUiThread(()->{
+            //todo
+            TextView warningText = view.findViewById(R.id.media_share_video_player_warning_text);
+            warningText.setBackgroundColor(Color.RED);
+            warningText.setText(text);
+            warningText.setAlpha(1);
+        });
+
+    }
+
+    @Override
+    public void hideWarningBadge(String text) {
+        getActivity().runOnUiThread(()->{
+            //todo
+            TextView warningText = view.findViewById(R.id.media_share_video_player_warning_text);
+            warningText.setText(text);
+            warningText.setBackgroundColor(Color.GREEN);
+            warningText.animate().setDuration(5000).alpha(0).start();
+        });
     }
 
     @Override

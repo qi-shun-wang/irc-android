@@ -20,6 +20,8 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
         void updateCurrentTimeLabel(String text);
         void updateEndTimeLabel(String text);
         void updateSeekBarLocation(int scale);
+        void showWarningBadge(String text);
+        void hideWarningBadge(String text);
     }
 
     interface Presenter extends BaseContracts.Presenter {

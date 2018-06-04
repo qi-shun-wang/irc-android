@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListContracts.InteractorOutput;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,8 +70,7 @@ public class MediaSharePhotoGroupListInteractor implements MediaSharePhotoGroupL
                 String filePath = imgCursor.getString(imgCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
                 String mimeType = imgCursor.getString(imgCursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE));
                 long size = imgCursor.getLong(imgCursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
-
-//                String parentName = new File(filePath).getParentFile().getName();
+                String directoryName = new File(filePath).getParentFile().getName();
 
                 Photo photo = new Photo
                         (
@@ -83,26 +83,18 @@ public class MediaSharePhotoGroupListInteractor implements MediaSharePhotoGroupL
                                 title,
                                 id
                         );
-
+                if (photoGroup.containsKey(directoryName)) {
+                    photoGroup.get(directoryName).add(photo);
+                }else{
+                    photoGroup.put(directoryName,new ArrayList<>());
+                    photoGroup.get(directoryName).add(photo);
+                }
                 photos.add(photo);
-//                photoGroup.put(parentName,photos);
-
-//                if (!photoGroup.containsKey(parentName)) {
-//
-//                    List<Photo> photos = new ArrayList<>();
-//                    Photo photo = new Photo(imageItem.getId(), filePath, imageItem.getParentID(), imageItem.isRestricted(), imageItem.getFirstResource().getProtocolInfo().toString(), res.getSize(), imageItem.getTitle(), res.getValue());
-//                    photos.add(photo);
-//                    photoGroup.put(parentName,photos);
-//
-//                } else {
-//                    Photo photo = new Photo(imageItem.getId(), filePath, imageItem.getParentID(), imageItem.isRestricted(), imageItem.getFirstResource().getProtocolInfo().toString(), res.getSize(), imageItem.getTitle(), res.getValue());
-//                    photoGroup.get(parentName).add(photo);
-//                }
 
             } while (imgCursor.moveToNext());
 
             imgCursor.close();
-            photoGroup.put("Total",photos);
+            photoGroup.put("全部",photos);
             output.didPreparedPhotoAssets(photoGroup);
 
         }

@@ -148,6 +148,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
         if (isRemoteMode)
         {
+            view.showWarningBadge("媒體準備播放...");
             currentTimeInterval = 0;
             interactor.setupCurrentRemoteAsset();
         }
@@ -178,6 +179,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         Log.d("getCurrentPosition","===>"+ currentTimeInterval);
         interactor.setupCurrentDevice(device);
         interactor.setupCurrentRemoteAsset();
+        view.showWarningBadge("媒體準備播放...");
     }
 
     @Override
@@ -220,6 +222,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         {
 
             interactor.setupCurrentRemoteAsset();
+            view.showWarningBadge("媒體準備播放...");
         }
         else
         {
@@ -246,7 +249,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         isRemotePlaying = false;
         if (isRemoteMode)
         {
-
+            view.showWarningBadge("媒體準備播放...");
             interactor.setupCurrentRemoteAsset();
         }
         else
@@ -400,7 +403,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     @Override
     public void didPlayRemoteAssetSuccess() {
         //TODO show Play Success warning badge
-
+        view.hideWarningBadge("媒體播放中...");
         if (shouldPlayRemoteWithSeek)
         {
             worker.schedule(new TimerTask() {

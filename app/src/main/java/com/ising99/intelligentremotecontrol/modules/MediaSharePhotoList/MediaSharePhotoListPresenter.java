@@ -108,9 +108,15 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
                 selectedPhotos.add(item.getPhoto());
             }
         }
+        if (selectedPhotos.size() == 0) {
+            view.showWarningBadge("最少選一張！");
+            return;
+        }
+        view.showWarningBadge("媒體準備播放...");
         interactor.setupSelectedPhotos(selectedPhotos);
         selectedIndex = 0;
         interactor.setupCurrentRemoteAsset(selectedIndex);
+
     }
 
     @Override
@@ -127,6 +133,7 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     @Override
     public void didPlayRemoteAssetSuccess() {
         //todo show play asset success badge
+        view.hideWarningBadge("媒體播放中...");
         if (selectedPhotos.size() -1 < selectedIndex) {
             return;
         }

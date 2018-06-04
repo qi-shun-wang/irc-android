@@ -16,6 +16,8 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void reloadGridView(List<PhotoItem> collection);
+        void showWarningBadge(String text);
+        void hideWarningBadge(String text);
     }
 
     interface Presenter extends BaseContracts.Presenter {

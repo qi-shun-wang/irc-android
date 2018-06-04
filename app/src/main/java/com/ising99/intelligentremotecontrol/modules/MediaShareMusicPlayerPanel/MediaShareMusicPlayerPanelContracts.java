@@ -23,6 +23,8 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void clearPanelListener();
         void updateMediaPanel(Music asset);
         void scrollToTop();
+        void showWarningBadge(String text);
+        void hideWarningBadge(String text);
     }
 
     interface Presenter extends BaseContracts.Presenter {

@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.InteractorOutput;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,10 +63,8 @@ public class MediaShareMusicGroupListInteractor implements MediaShareMusicGroupL
                 long size = audioCursor.getLong(audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE));
                 long duration = audioCursor.getLong(audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
                 String album = audioCursor.getString(audioCursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
+                String directoryName = new File(filePath).getParentFile().getName();
 
-                //                if (artist != null && artist.contains("?")|| artist.equals("<unknown>")) {
-                //                    artist = getString(R.string.unknown_artist);
-                //                }
                 Music music = new Music
                         (
                                 id,
@@ -78,13 +77,19 @@ public class MediaShareMusicGroupListInteractor implements MediaShareMusicGroupL
                                 id,
                                 duration,
                                 artist);
+                if (musicGroup.containsKey(directoryName)) {
+                    musicGroup.get(directoryName).add(music);
+                }else{
+                    musicGroup.put(directoryName,new ArrayList<>());
+                    musicGroup.get(directoryName).add(music);
+                }
                 musicList.add(music);
 
 
             } while (audioCursor.moveToNext());
 
             audioCursor.close();
-            musicGroup.put("Total",musicList);
+            musicGroup.put("全部",musicList);
             output.didPreparedMusicAssets(musicGroup);
         }
 

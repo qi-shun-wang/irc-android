@@ -89,7 +89,7 @@ public class MediaShareVideoGroupListInteractor implements MediaShareVideoGroupL
             } while (videoCursor.moveToNext());
 
             videoCursor.close();
-            videoGroup.put("Total",videoList);
+            videoGroup.put("全部",videoList);
             output.didPreparedVideoAssets(videoGroup);
         }
 

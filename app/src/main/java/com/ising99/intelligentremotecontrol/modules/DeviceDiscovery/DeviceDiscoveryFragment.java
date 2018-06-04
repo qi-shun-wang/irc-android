@@ -74,6 +74,7 @@ public class DeviceDiscoveryFragment extends Fragment implements DeviceDiscovery
         //todo close device discovery
         view.findViewById(R.id.cancel_btn).setOnClickListener((v) -> presenter.didTapOnClose());
         view.findViewById(R.id.search_btn).setOnClickListener((v -> presenter.searchAgain()));
+        view.getViewTreeObserver().addOnWindowFocusChangeListener(b -> presenter.onWindowFocusChanged(b));
         image_kod.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.kodpluswhite));
 
         image_scan.post(() -> {

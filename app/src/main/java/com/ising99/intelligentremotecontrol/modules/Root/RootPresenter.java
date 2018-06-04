@@ -118,7 +118,7 @@ public class RootPresenter implements Presenter ,InteractorOutput{
         if (isDeviceConnected) {return;}
         view.hideWarningBadge();
         interactor.checkLastConnectedDevice();
-        view.updateConnectedDeviceStatus("目前連到Wifi " + name);
+        view.updateConnectedDeviceStatus("尚未連接到設備");
     }
 
     @Override

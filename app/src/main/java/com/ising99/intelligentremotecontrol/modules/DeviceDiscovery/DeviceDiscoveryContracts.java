@@ -38,6 +38,7 @@ public interface DeviceDiscoveryContracts extends BaseContracts {
         void searchAgain();
         void openSetting();
         void didTapOnClose();
+        void onWindowFocusChanged(boolean isFocus);
     }
 
     interface Interactor extends BaseContracts.Interactor {

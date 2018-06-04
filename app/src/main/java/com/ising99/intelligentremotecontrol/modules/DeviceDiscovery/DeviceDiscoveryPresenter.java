@@ -95,16 +95,12 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onResume() {
-        searchDevice();
-        interactor.startWireChecker();
+
     }
 
     @Override
     public void onPause() {
-        view.stopLineAnimation();
-        view.stopScanAnimation();
-        view.stopKODAnimation();
-        interactor.stopDeviceDiscoveryTask();
+
     }
 
     @Override
@@ -133,6 +129,25 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
         interactor.stopDeviceDiscoveryTask();
         worker.cancel();
         router.dismissDeviceDiscovery();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean isFocus) {
+        if(isFocus)
+        {
+            searchDevice();
+            interactor.startWireChecker();
+        }
+        else
+        {
+            interactor.stopDeviceDiscoveryTask();
+            worker.cancel();
+            view.stopLineAnimation();
+            view.stopScanAnimation();
+            view.stopKODAnimation();
+            devices.clear();
+            view.reloadDeviceCollection(devices);
+        }
     }
 
     @Override

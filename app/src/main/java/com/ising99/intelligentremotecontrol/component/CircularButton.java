@@ -57,7 +57,7 @@ public class CircularButton extends ViewGroup {
         Log.i("ACTION_DOWN", "Long press action down!");
 
         firstResponseLongPressed = true;
-        delegate.didTouchOnBegan(currentAction);
+        if (currentAction!=null) delegate.didTouchOnBegan(currentAction);
     };
 
     private Runnable onTap = () -> handler.postDelayed(onLongPressed, LONG_PRESS_DELAY - ViewConfiguration.getTapTimeout());
@@ -162,81 +162,15 @@ public class CircularButton extends ViewGroup {
             if (firstResponseLongPressed){
                 firstResponseLongPressed = false;
                 Log.i("ACTION_UP", "Long press action up!");
-                delegate.didTouchOnEnd(currentAction);
+                if (currentAction!=null) delegate.didTouchOnEnd(currentAction);
             } else {
-                delegate.didTouchOn(currentAction);
+                if (currentAction!=null) delegate.didTouchOn(currentAction);
                 Log.i("ACTION_UP", "Tap press!");
             }
             image.setBackgroundResource(dpad_default_resId);
         }
 
         return true;
-
-//        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN && (delegate != null))
-//        {
-//
-//            if (!outerRegion.contains(point.x, point.y)) return true;
-//
-//            if(centerRegion.contains(point.x, point.y))
-//            {
-//                image.setBackgroundResource(dpad_ok_resId);
-//            }
-//            else if(downRegion.contains(point.x, point.y))
-//            {
-//                image.setBackgroundResource(dpad_down_resId);
-//            }
-//            else if(upRegion.contains(point.x, point.y))
-//            {
-//                image.setBackgroundResource(dpad_up_resId);
-//            }
-//            else if(rightRegion.contains(point.x, point.y))
-//            {
-//                image.setBackgroundResource(dpad_right_resId);
-//            }
-//            else if(leftRegion.contains(point.x, point.y))
-//            {
-//                image.setBackgroundResource(dpad_left_resId);
-//            }
-//        }
-//        else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
-//        {
-//
-//            if (!outerRegion.contains(point.x, point.y)) return true;
-//
-//            if(centerRegion.contains(point.x, point.y))
-//            {
-//                if ((motionEvent.getEventTime()-motionEvent.getDownTime())>2000)
-//                {
-//                    delegate.didTapOn(Action.centerL);
-//                }
-//                else
-//                {
-//                    delegate.didTapOn(Action.center);
-//                }
-//
-//            }
-//            else if(downRegion.contains(point.x, point.y))
-//            {
-//                delegate.didTapOn(Action.down);
-//            }
-//            else if(upRegion.contains(point.x, point.y))
-//            {
-//                delegate.didTapOn(Action.up);
-//            }
-//            else if(rightRegion.contains(point.x, point.y))
-//            {
-//                delegate.didTapOn(Action.right);
-//            }
-//            else if(leftRegion.contains(point.x, point.y))
-//            {
-//                delegate.didTapOn(Action.left);
-//            }
-//
-//            image.setBackgroundResource(dpad_default_resId);
-//        }
-//        performClick();
-//
-//        return true;
     }
 
     private Region createCenterRegion() {

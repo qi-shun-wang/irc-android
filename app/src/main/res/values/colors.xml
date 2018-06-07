@@ -4,10 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
     <color name="blue">#00abea</color>
+    <color name="yellow">#FFD758</color>
     <color name="white">#ffffff</color>
     <color name="orange">#e67e4a</color>
     <color name="clear">#00ffffff</color>
-    <color name="purple">#eba8f5</color>
+    <color name="purple">#8272f7</color>
     <color name="light_purple">#f8c6ff</color>
     <color name="spaceGray">#5a5a5a</color>
     <color name="black">#000000</color>
@@ -25,4 +26,7 @@
     <color name="bluePurple">#8272F7</color>
     <color name="white_transparent">#27d2d4d5</color>
     <color name="space_gray_trasparent">#70cbcaca</color>
+    <color name="light_yellow">#9effd758</color>
+    <color name="lightGray3">#9b9b9b</color>
+    <color name="light_white">#b4ffffff</color>
 </resources>

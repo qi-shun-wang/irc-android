@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        ising99 {
+            keyAlias 'ising99-irc'
+            keyPassword '23800399'
+            storeFile file('/Users/shun/Desktop/IntelligentRemoteControl/ising99_irc')
+            storePassword '23800399'
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.ising99.intelligentremotecontrol"
@@ -15,6 +23,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.ising99
         }
     }
     compileOptions {
@@ -36,16 +45,16 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //used for text view auto size
-    implementation "com.android.support:support-core-ui:27.1.1"
-    implementation "com.android.support:support-core-utils:27.1.1"
+    implementation 'com.android.support:support-core-ui:27.1.1'
+    implementation 'com.android.support:support-core-utils:27.1.1'
     //used for bottom navi
     implementation 'com.github.ittianyu:BottomNavigationViewEx:1.2.4'
     //used for music player panel
     implementation 'com.karumi:headerrecyclerview:1.1.0'
-    implementation "com.android.support:design:27.1.1"
+    implementation 'com.android.support:design:27.1.1'
     implementation 'io.github.controlwear:virtualjoystick:1.8.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     //used for coap protocol
@@ -56,7 +65,7 @@ dependencies {
     //used for read storage
     implementation 'com.snatik:storage:2.1.0'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation("com.github.bumptech.glide:glide:4.6.1") {
+    implementation('com.github.bumptech.glide:glide:4.6.1') {
         exclude group: "com.android.support"
     }
     implementation 'com.android.support:support-v4:27.1.1'
@@ -64,13 +73,13 @@ dependencies {
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'jp.wasabeef:blurry:2.1.1'
-    implementation group: 'org.fourthline.cling', name: 'cling-core', version: '2.1.1'
-    implementation group: 'org.fourthline.cling', name: 'cling-support', version: '2.1.1'
-    implementation group: 'org.eclipse.jetty', name: 'jetty-server', version: '8.1.12.v20130726'
-    implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '8.1.12.v20130726'
-    implementation group: 'org.eclipse.jetty', name: 'jetty-client', version: '8.1.12.v20130726'
-    implementation group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.21'
-    implementation group: 'org.nanohttpd', name: 'nanohttpd-webserver', version: '2.2.0'
+    implementation 'org.fourthline.cling:cling-core:2.1.1'
+    implementation 'org.fourthline.cling:cling-support:2.1.1'
+    implementation 'org.eclipse.jetty:jetty-server:8.1.12.v20130726'
+    implementation 'org.eclipse.jetty:jetty-servlet:8.1.12.v20130726'
+    implementation 'org.eclipse.jetty:jetty-client:8.1.12.v20130726'
+    implementation 'org.slf4j:slf4j-jdk14:1.7.21'
+    implementation 'org.nanohttpd:nanohttpd-webserver:2.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

@@ -12,13 +12,13 @@
         android:orderInCategory="0"
         app:showAsAction="ifRoom" />
 
-    <!--<item-->
-        <!--android:id="@+id/action_kod"-->
-        <!--android:enabled="true"-->
-        <!--android:icon="@drawable/root_tab_kod_icon"-->
-        <!--android:title="@string/root_tab_kod_text"-->
-        <!--android:orderInCategory="1"-->
-        <!--app:showAsAction="ifRoom" />-->
+    <item
+        android:id="@+id/action_kod"
+        android:enabled="true"
+        android:icon="@drawable/root_tab_kod_icon"
+        android:title="@string/root_tab_kod_text"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom" />
 
     <!--<item-->
         <!--android:id="@+id/action_mod"-->

@@ -52,6 +52,9 @@ public class MediaShareMusicListActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        manager.stop((invocation, operation, defaultMsg) -> {
+
+        });
         manager.stopServer();
     }
 

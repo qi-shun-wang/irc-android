@@ -28,7 +28,7 @@ public class KaraokeFinderFragment extends Fragment implements KaraokeFinderCont
 
     private Presenter presenter;
     private ViewGroup view;
-    private RecyclerView artistList;
+    private RecyclerView karaokeList;
     private ListViewAdapter adapter;
     private KaraokeControlPanelFragment panel;
 
@@ -51,13 +51,13 @@ public class KaraokeFinderFragment extends Fragment implements KaraokeFinderCont
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_karaoke_finder, container, false);
 
-        artistList = view.findViewById(R.id.karaoke_finder_list_view);
+        karaokeList = view.findViewById(R.id.karaoke_finder_list_view);
         adapter = new ListViewAdapter();
         adapter.setupDelegate(this);
         LinearLayoutManager vertical = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
-        artistList.setHasFixedSize(true);
-        artistList.setLayoutManager(vertical);
-        artistList.setAdapter(adapter);
+        karaokeList.setHasFixedSize(true);
+        karaokeList.setLayoutManager(vertical);
+        karaokeList.setAdapter(adapter);
         presenter.onCreate();
         return view;
     }

@@ -2,6 +2,7 @@ package com.ising99.intelligentremotecontrol.modules.IRC;
 
 import com.ising99.intelligentremotecontrol.component.Action;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
+import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.View;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Interactor;
@@ -9,6 +10,9 @@ import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.InteractorO
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.IRC.mode.IRCSelectModeDelegate;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by shun on 2018/4/12 下午 02:16:54.
@@ -20,6 +24,9 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     private View view;
     private Interactor interactor;
     private Wireframe router;
+    private Timer worker;
+    private boolean isDeviceConnected = false;
+    private boolean isViewDetach = false;
 
     IRCPresenter(){}
 
@@ -46,15 +53,21 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     @Override
     public void onCreate() {
         router.composingModes();
+        view.setupActionBinding();
+//        view.updateNetworkStatus("尚未連接WiFi");
+        view.setupDisconnectedDeviceImage();
+        view.updateConnectedDeviceStatus("尚未連接設備");
+        interactor.checkWiFiStatus();
     }
 
     @Override
     public void onResume() {
-
+        isViewDetach = false;
     }
 
     @Override
     public void onPause() {
+        isViewDetach = true;
 
     }
 
@@ -279,5 +292,60 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     @Override
     public String getAddress() {
         return interactor.getAddress();
+    }
+
+    @Override
+    public void didTapOnDeviceDiscovery() {
+        router.openDeviceDiscovery();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean isFocus) {
+        if (isFocus) {
+            worker = new Timer();
+            worker.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    interactor.checkWiFiStatus();
+                }
+            }, 1000, 2000);
+
+        } else {
+            isDeviceConnected = false;
+            worker.cancel();
+        }
+    }
+
+    @Override
+    public void didLastConnectionInvalid() {
+        if (isViewDetach) return;
+        view.updateConnectedDeviceStatus("尚未連接到設備");
+    }
+
+    @Override
+    public void didConnectedToWiFi(String name) {
+        if (isViewDetach) return;
+        if (isDeviceConnected) {
+            return;
+        }
+        view.hideWarningBadge();
+        interactor.checkLastConnectedDevice();
+        view.updateConnectedDeviceStatus("尚未連接到設備");
+    }
+
+    @Override
+    public void didNotConnectedToWiFi() {
+        if (isViewDetach) return;
+        isDeviceConnected = false;
+        view.showWarningBadge();
+        view.updateConnectedDeviceStatus("等待連接WiFi...");
+    }
+
+    @Override
+    public void didConnectedToDevice(Device device) {
+        if (isViewDetach) return;
+        isDeviceConnected = true;
+        view.updateConnectedDeviceStatus("目前已連到設備：" + device.getName());
+        view.setupConnectedDeviceImage();
     }
 }

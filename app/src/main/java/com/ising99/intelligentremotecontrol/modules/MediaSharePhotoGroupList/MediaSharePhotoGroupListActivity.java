@@ -20,8 +20,8 @@ public class MediaSharePhotoGroupListActivity extends Activity {
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
         {
 
-            MediaSharePhotoGroupListFragment mediaSharePhotoGroupList = MediaSharePhotoGroupListRouter.setupModule(getApplicationContext());
-            getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_photo_group_list_container, mediaSharePhotoGroupList).commit();
+//            MediaSharePhotoGroupListFragment mediaSharePhotoGroupList = MediaSharePhotoGroupListRouter.setupModule(getApplicationContext());
+//            getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_photo_group_list_container, mediaSharePhotoGroupList).commit();
             findViewById(R.id.activity_media_share_photo_group_list_back_btn).setOnClickListener((v)->finish());
         }
         else

@@ -80,6 +80,11 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     }
 
     @Override
+    public void performBack() {
+        router.navigateBack();
+    }
+
+    @Override
     public void didTapOnCast() {
         if (isFirstPerformedCasting) router.presentDMRList();
         else prepareCasting();

@@ -17,7 +17,7 @@ public class MediaShareVideoListInteractor implements MediaShareVideoListContrac
 
     private InteractorOutput output;
     private Context context;
-    private List<Video> collection;
+    private List<Video> collection ;
 
     MediaShareVideoListInteractor(Context context, List<Video> collection) {
         this.context = context;

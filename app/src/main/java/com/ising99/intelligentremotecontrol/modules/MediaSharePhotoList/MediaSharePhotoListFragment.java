@@ -48,6 +48,7 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_photo_list, container, false);
+        view.findViewById(R.id.navigation_back_btn).setOnClickListener((v)->presenter.performBack());
         RecyclerView listView = view.findViewById(R.id.media_share_photo_list_view);
 
         adapter = new GridViewAdapter();

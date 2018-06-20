@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
+import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryActivity;
 import com.ising99.intelligentremotecontrol.modules.Game.GameActivity;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCContracts.Presenter;
@@ -164,6 +165,13 @@ public class IRCRouter implements Wireframe {
     @Override
     public void dismissModePanel() {
         view.getFragmentManager().beginTransaction().hide(modePanel).commit();
+    }
+
+    @Override
+    public void openDeviceDiscovery() {
+        Intent intentToDeviceDiscoveryActivity = new Intent(context, DeviceDiscoveryActivity.class);
+        intentToDeviceDiscoveryActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intentToDeviceDiscoveryActivity);
     }
 }
 

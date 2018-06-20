@@ -18,6 +18,7 @@ public interface MediaShareVideoListContracts extends BaseContracts {
 
     interface Presenter extends BaseContracts.Presenter {
         void didSelectedVideoAt(int position);
+        void performBack();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -30,5 +31,6 @@ public interface MediaShareVideoListContracts extends BaseContracts {
 
     interface Wireframe extends BaseContracts.Wireframe {
         void presentVideoPlayer(Video asset,String backTitle);
+        void navigateBack();
     }
 }

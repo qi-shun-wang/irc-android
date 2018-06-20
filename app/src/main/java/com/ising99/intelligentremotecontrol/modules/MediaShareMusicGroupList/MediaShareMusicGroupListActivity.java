@@ -18,8 +18,8 @@ public class MediaShareMusicGroupListActivity extends Activity {
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
         {
 
-            MediaShareMusicGroupListFragment mediaSharePhotoGroupList = MediaShareMusicGroupListRouter.setupModule(getApplicationContext());
-            getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_music_group_list_container, mediaSharePhotoGroupList).commit();
+//            MediaShareMusicGroupListFragment mediaSharePhotoGroupList = MediaShareMusicGroupListRouter.setupModule(getApplicationContext());
+//            getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_music_group_list_container, mediaSharePhotoGroupList).commit();
             findViewById(R.id.activity_media_share_music_group_list_back_btn).setOnClickListener((v)->finish());
         }
         else

@@ -41,7 +41,8 @@ public class MediaShareVideoGroupListInteractor implements MediaShareVideoGroupL
 
     @Override
     public void prepareVideoAssets() {
-
+        videoGroup.clear();
+        videoList.clear();
         Cursor videoCursor = context
                 .getContentResolver()
                 .query

@@ -70,7 +70,8 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
     }
     public void setGroups(List<String> groups)
     {
-        this.groups = groups;
+        this.groups.clear();
+        this.groups.addAll(groups);
     }
 }
 

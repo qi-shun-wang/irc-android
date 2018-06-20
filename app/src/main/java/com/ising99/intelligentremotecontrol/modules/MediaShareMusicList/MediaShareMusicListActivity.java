@@ -34,8 +34,8 @@ public class MediaShareMusicListActivity extends Activity {
         List<Music> collection = getIntent().getParcelableArrayListExtra("ASSETS");
         ((TextView)findViewById(R.id.activity_media_share_music_list_title)).setText(title);
 
-        MediaShareMusicListFragment mediaSharePhotoList = MediaShareMusicListRouter.setupModule(getApplicationContext(), collection, manager);
-        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_music_list_container, mediaSharePhotoList).commit();
+//        MediaShareMusicListFragment mediaSharePhotoList = MediaShareMusicListRouter.setupModule(getApplicationContext(), collection, manager);
+//        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_music_list_container, mediaSharePhotoList).commit();
         findViewById(R.id.activity_media_share_music_list_back_btn).setOnClickListener((v)->finish());
     }
 

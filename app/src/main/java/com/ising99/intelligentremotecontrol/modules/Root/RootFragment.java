@@ -22,8 +22,6 @@ public class RootFragment extends Fragment implements RootContracts.View {
     private Presenter presenter;
     private ViewGroup view;
 
-    private View.OnClickListener showDeviceDiscoveryAction = (v) -> presenter.didTapOnDeviceDiscovery();
-
     public RootFragment() {
         // Required empty public constructor
     }
@@ -37,7 +35,6 @@ public class RootFragment extends Fragment implements RootContracts.View {
     public void decompose() {
         presenter = null;
         view = null;
-        showDeviceDiscoveryAction = null;
     }
 
     @Override
@@ -45,7 +42,6 @@ public class RootFragment extends Fragment implements RootContracts.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = (ViewGroup)inflater.inflate(R.layout.fragment_root, container, false);
-        view.getViewTreeObserver().addOnWindowFocusChangeListener(b -> presenter.onWindowFocusChanged(b));
         presenter.onCreate();
         return view;
     }
@@ -66,24 +62,8 @@ public class RootFragment extends Fragment implements RootContracts.View {
     }
 
     @Override
-    public void hideNavigationBar() {
-        view.findViewById(R.id.root_header_container).setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void showNavigationBar() {
-        view.findViewById(R.id.root_header_container).setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void showTabBar() {
         view.findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void setupActionBinding() {
-
-        view.findViewById(R.id.root_wifi_container).setOnClickListener(showDeviceDiscoveryAction);
     }
 
     @Override
@@ -97,30 +77,4 @@ public class RootFragment extends Fragment implements RootContracts.View {
         super.onDestroy();
         presenter.onDestroy();
     }
-
-    @Override
-    public void updateConnectedDeviceStatus(String text) {
-        getActivity().runOnUiThread(()->((AppCompatTextView)view.findViewById(R.id.root_wifi_btn)).setText(text));
-    }
-
-    @Override
-    public void setupConnectedDeviceImage() {
-        getActivity().runOnUiThread(() -> ((ImageView)view.findViewById(R.id.root_wifi_icon)).setImageResource(R.drawable.device_connect_icon));
-    }
-
-    @Override
-    public void setupDisconnectedDeviceImage() {
-        getActivity().runOnUiThread(() -> ((ImageView)view.findViewById(R.id.root_wifi_icon)).setImageResource(R.drawable.device_disconnect_icon));
-    }
-
-    @Override
-    public void showWarningBadge() {
-        getActivity().runOnUiThread(() -> view.findViewById(R.id.root_warning_text).animate().setDuration(1000).alpha(1).start());
-    }
-
-    @Override
-    public void hideWarningBadge() {
-        getActivity().runOnUiThread(() -> view.findViewById(R.id.root_warning_text).animate().setDuration(1000).alpha(0).start());
-    }
-
 }

@@ -3,6 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareVideoList;
 import android.content.Context;
 import android.content.Intent;
 
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Presenter;
@@ -21,16 +22,17 @@ public class MediaShareVideoListRouter implements Wireframe {
     private Context context;
     private Presenter presenter;
     private View view;
+    private Navigator navigator;
 
 
     private MediaShareVideoListRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareVideoListFragment setupModule(Context context, List<Video> collection, String title) {
+    public static MediaShareVideoListFragment setupModule(Context context, List<Video> collection, String title, Navigator navigator) {
 
         MediaShareVideoListFragment view = new MediaShareVideoListFragment();
-        MediaShareVideoListInteractor interactor = new MediaShareVideoListInteractor(context,collection);
+        MediaShareVideoListInteractor interactor = new MediaShareVideoListInteractor(context, collection);
         MediaShareVideoListPresenter presenter = new MediaShareVideoListPresenter(title);
         MediaShareVideoListRouter router = new MediaShareVideoListRouter(context);
 
@@ -42,6 +44,7 @@ public class MediaShareVideoListRouter implements Wireframe {
 
         router.view = view;
         router.presenter = presenter;
+        router.navigator = navigator;
 
         interactor.setupPresenter(presenter);
 
@@ -55,6 +58,11 @@ public class MediaShareVideoListRouter implements Wireframe {
         i.putExtra("ASSET", asset);
         i.putExtra("BACK_TITLE", backTitle);
         context.startActivity(i);
+    }
+
+    @Override
+    public void navigateBack() {
+        navigator.pop();
     }
 
 }

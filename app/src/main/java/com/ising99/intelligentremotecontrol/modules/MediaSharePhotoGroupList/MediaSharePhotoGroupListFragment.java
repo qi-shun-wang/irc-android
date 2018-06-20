@@ -47,6 +47,7 @@ public class MediaSharePhotoGroupListFragment extends Fragment implements MediaS
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_photo_group_list, container, false);
         RecyclerView listView = view.findViewById(R.id.media_share_photo_group_list_view);
+        view.findViewById(R.id.navigation_back_btn).setOnClickListener((v)->presenter.performBack());
         listView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         listView.setLayoutManager(layoutManager);

@@ -67,7 +67,7 @@ public class KaraokeFavoriteCollectionPresenter implements Presenter, Interactor
         bookmarks.add(new KaraokeBookmark("金曲",true));
         bookmarks.add(new KaraokeBookmark("練唱"));
         bookmarks.add(new KaraokeBookmark("派對"));
-
+        view.updateBookmarkToolBar(bookmarks.get(0).getName());
         view.reloadBookmarkList(bookmarks);
 
     }
@@ -99,6 +99,7 @@ public class KaraokeFavoriteCollectionPresenter implements Presenter, Interactor
             }
         }
         view.reloadBookmarkList(bookmarks);
+        view.updateBookmarkToolBar(bookmarks.get(position).getName());
     }
 
     @Override
@@ -107,6 +108,7 @@ public class KaraokeFavoriteCollectionPresenter implements Presenter, Interactor
                 bookmarks.get(i).setSelected(false);
         }
         bookmarks.add(new KaraokeBookmark(name ,true));
+        view.updateBookmarkToolBar(bookmarks.get(bookmarks.size()-1).getName());
         view.reloadBookmarkList(bookmarks);
     }
 }

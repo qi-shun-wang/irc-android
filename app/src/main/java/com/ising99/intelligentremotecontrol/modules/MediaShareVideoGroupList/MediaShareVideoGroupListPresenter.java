@@ -54,6 +54,9 @@ public class MediaShareVideoGroupListPresenter implements Presenter, InteractorO
 
     @Override
     public void onCreate() {
+        assets.clear();
+        keys.clear();
+        groups.clear();
         interactor.prepareVideoAssets();
     }
 
@@ -69,6 +72,11 @@ public class MediaShareVideoGroupListPresenter implements Presenter, InteractorO
 
     @Override
     public void onDestroy() {
+    }
+
+    @Override
+    public void performBack() {
+        router.navigateBack();
     }
 
     @Override

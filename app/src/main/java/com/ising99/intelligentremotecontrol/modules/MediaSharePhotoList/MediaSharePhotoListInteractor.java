@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerCallback;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.InteractorOutput;
@@ -29,10 +30,10 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     private DLNAMediaManager manager;
     private List<Photo> selectedPhotos;
 
-    MediaSharePhotoListInteractor(Context context,List<Photo> collection ,DLNAMediaManager manager) {
+    MediaSharePhotoListInteractor(Context context,List<Photo> collection ,DLNAMediaManagerProtocol manager) {
         this.context = context;
         this.collection = collection;
-        this.manager = manager;
+        this.manager = (DLNAMediaManager) manager;
     }
 
     @Override

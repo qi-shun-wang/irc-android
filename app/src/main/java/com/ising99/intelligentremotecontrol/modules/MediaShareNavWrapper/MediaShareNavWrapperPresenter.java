@@ -1,30 +1,24 @@
-package com.ising99.intelligentremotecontrol.modules.Root;
+package com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper;
 
-import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
-import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.View;
-import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Interactor;
-import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.InteractorOutput;
-import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter;
-import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperContracts.View;
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperContracts.Interactor;
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperContracts.InteractorOutput;
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperContracts.Presenter;
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperContracts.Wireframe;
 
 /**
- * Created by shun on 2018/3/27.
- *
+ * Created by shun on 2018/6/20 下午 02:35:23.
+ * .
  */
 
-public class RootPresenter implements Presenter ,InteractorOutput {
+public class MediaShareNavWrapperPresenter implements Presenter, InteractorOutput {
 
     private View view;
     private Interactor interactor;
     private Wireframe router;
 
-
-    RootPresenter() {
+    MediaShareNavWrapperPresenter() {
     }
 
     @Override
@@ -53,8 +47,7 @@ public class RootPresenter implements Presenter ,InteractorOutput {
 
     @Override
     public void onCreate() {
-        view.prepareTabBar();
-        router.presentTabAt(0);
+        router.createRootFragment();
     }
 
     @Override
@@ -69,12 +62,6 @@ public class RootPresenter implements Presenter ,InteractorOutput {
 
     @Override
     public void onDestroy() {
-    }
-
-    @Override
-    public boolean didSelectedTabAt(int position) {
-        router.presentTabAt(position);
-        return true;
     }
 
 }

@@ -73,4 +73,9 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
         router.presentMediaPlayerWith(interactor.getMusicAssets(), position);
     }
 
+    @Override
+    public void performBack() {
+        router.navigateBack();
+    }
+
 }

@@ -16,6 +16,7 @@ public interface KaraokeFavoriteCollectionContracts extends BaseContracts {
     interface View extends BaseContracts.View {
         void reloadKaraokeList(List<Karaoke> karaokes);
         void reloadBookmarkList(List<KaraokeBookmark>bookmarks);
+        void updateBookmarkToolBar(String name);
     }
 
     interface Presenter extends BaseContracts.Presenter {

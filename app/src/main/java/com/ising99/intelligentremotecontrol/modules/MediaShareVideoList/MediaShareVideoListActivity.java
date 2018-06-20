@@ -21,8 +21,8 @@ public class MediaShareVideoListActivity extends Activity {
         List<Video> assets = getIntent().getParcelableArrayListExtra("ASSETS");
         ((TextView) findViewById(R.id.activity_media_share_video_list_title)).setText(title);
 
-        MediaShareVideoListFragment mediaSharePhotoList = MediaShareVideoListRouter.setupModule(getApplicationContext(), assets, title);
-        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_video_list_container, mediaSharePhotoList).commit();
+//        MediaShareVideoListFragment mediaSharePhotoList = MediaShareVideoListRouter.setupModule(getApplicationContext(), assets, title);
+//        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_video_list_container, mediaSharePhotoList).commit();
         findViewById(R.id.activity_media_share_video_list_back_btn).setOnClickListener((v) -> finish());
     }
 }

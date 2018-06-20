@@ -73,7 +73,8 @@ public class ListViewAdapter extends RecyclerView.Adapter <ListViewAdapter.ViewH
     }
 
     public void setVideoAssets(List<Video> assets) {
-        this.assets = assets;
+        this.assets.clear();
+        this.assets.addAll(assets);
     }
 
 }

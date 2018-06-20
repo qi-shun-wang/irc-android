@@ -18,6 +18,7 @@ public interface MediaSharePhotoGroupListContracts extends BaseContracts {
 
     interface Presenter extends BaseContracts.Presenter {
         void didSelectedAt(int position);
+        void performBack();
 
     }
 
@@ -31,5 +32,6 @@ public interface MediaSharePhotoGroupListContracts extends BaseContracts {
 
     interface Wireframe extends BaseContracts.Wireframe {
         void presentPhotoCollectionWith(String title, List<Photo> assets);
+        void navigateBack();
     }
 }

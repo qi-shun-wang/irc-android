@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerCallback;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayerPanel.MediaShareMusicPlayerPanelContracts.InteractorOutput;
@@ -30,11 +31,11 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
     private int currentIndex;
     private DLNAMediaManager manager;
 
-    MediaShareMusicPlayerPanelInteractor(Context context, List<Music> assets, int position, DLNAMediaManager manager) {
+    MediaShareMusicPlayerPanelInteractor(Context context, List<Music> assets, int position, DLNAMediaManagerProtocol manager) {
         this.context = context;
         this.currentIndex = position;
         this.assets = assets;
-        this.manager = manager;
+        this.manager = (DLNAMediaManager) manager;
     }
 
     @Override

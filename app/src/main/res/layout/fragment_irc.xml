@@ -1,35 +1,109 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
-    <FrameLayout
-        android:id="@+id/fragment_mode_content_container"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:id="@+id/irc_header_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/main_black">
-    </FrameLayout>
+        android:layout_height="60dp"
+        android:background="@color/spaceGray"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <FrameLayout
-        android:id="@+id/fragment_mode_list_content_container"
+        <LinearLayout
+            android:id="@+id/root_wifi_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/root_wifi_icon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/device_disconnect_icon" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/root_wifi_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:text="@string/root_wifi_text"
+                android:gravity="start|center"
+                android:textSize="18sp"
+                android:maxLines="1"
+                android:lines="1"
+
+                app:autoSizeTextType="uniform"
+                app:autoSizeMaxTextSize="18sp"
+                app:autoSizeMinTextSize="6sp"
+                app:autoSizeStepGranularity="1sp"
+                android:background="@color/clear"
+                android:textColor="@color/white"
+                />
+            <!--<ImageButton-->
+            <!--android:id="@+id/root_scan_qrcode_btn"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="2"-->
+            <!--android:layout_margin="8dp"-->
+            <!--android:background="@color/clear"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/root_scan_qrcode_icon" />-->
+        </LinearLayout>
+
+    </RelativeLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/irc_header_container"
+        >
+        <FrameLayout
+            android:id="@+id/fragment_mode_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_black">
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_mode_list_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/clear">
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_num_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/lightGray">
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragment_media_content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/lightGray">
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/root_warning_text"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/clear">
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_num_content_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/lightGray">
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_media_content_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/lightGray">
-    </FrameLayout>
-
-</RelativeLayout>
+        android:layout_height="30dp"
+        android:text="尚未連接WiFi"
+        android:gravity="center"
+        android:background="@color/red"
+        android:alpha="0.1"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/irc_header_container"
+        />
+</android.support.constraint.ConstraintLayout>
 

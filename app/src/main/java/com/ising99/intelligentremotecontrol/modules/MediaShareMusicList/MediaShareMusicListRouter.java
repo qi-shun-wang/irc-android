@@ -7,12 +7,14 @@ import android.view.animation.TranslateAnimation;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerRouter;
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 
 import java.util.List;
 
@@ -26,13 +28,14 @@ public class MediaShareMusicListRouter implements Wireframe   {
     private Context context;
     private Presenter presenter;
     private View view;
-    private DLNAMediaManager manager;
+    private Navigator navigator;
+    private DLNAMediaManagerProtocol manager;
 
     private MediaShareMusicListRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareMusicListFragment setupModule(Context context, List<Music> collection, DLNAMediaManager manager) {
+    public static MediaShareMusicListFragment setupModule(Context context, List<Music> collection, DLNAMediaManagerProtocol manager, Navigator navigator) {
 
         MediaShareMusicListFragment view = new MediaShareMusicListFragment();
         MediaShareMusicListInteractor interactor = new MediaShareMusicListInteractor(context, collection);
@@ -48,6 +51,7 @@ public class MediaShareMusicListRouter implements Wireframe   {
         router.view = view;
         router.presenter = presenter;
         router.manager = manager;
+        router.navigator = navigator;
 
         interactor.setupPresenter(presenter);
 
@@ -65,6 +69,11 @@ public class MediaShareMusicListRouter implements Wireframe   {
 
         TranslateAnimation move = (TranslateAnimation) AnimationUtils.loadAnimation(ref.getActivity(), R.anim.translate_bottom_to_top);
         ref.getActivity().findViewById(R.id.media_share_media_player_container).startAnimation(move);
+    }
+
+    @Override
+    public void navigateBack() {
+        navigator.pop();
     }
 
 }

@@ -21,11 +21,13 @@ public class MediaShareMusicGroupListInteractor implements MediaShareMusicGroupL
 
     private InteractorOutput output;
     private Context context;
-    private HashMap<String, List<Music>> musicGroup = new HashMap<>();
-    private List<Music> musicList = new ArrayList<>();
+    private HashMap<String, List<Music>> musicGroup ;
+    private List<Music> musicList;
 
     MediaShareMusicGroupListInteractor(Context context) {
         this.context = context;
+        this.musicGroup = new HashMap<>();
+        this.musicList = new ArrayList<>();
     }
 
     @Override
@@ -41,6 +43,8 @@ public class MediaShareMusicGroupListInteractor implements MediaShareMusicGroupL
 
     @Override
     public void prepareMusicAssets() {
+        musicGroup.clear();
+        musicList.clear();
         Cursor audioCursor = context
                 .getContentResolver()
                 .query

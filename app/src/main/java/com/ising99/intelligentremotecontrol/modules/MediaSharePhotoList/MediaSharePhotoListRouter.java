@@ -5,9 +5,11 @@ import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListRouter;
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.Presenter;
@@ -29,6 +31,7 @@ public class MediaSharePhotoListRouter implements Wireframe , MediaShareDMRListF
     private Context context;
     private Presenter presenter;
     private View view;
+    private Navigator navigator;
 
     private MediaShareDMRListFragment dmrList;
 
@@ -36,7 +39,7 @@ public class MediaSharePhotoListRouter implements Wireframe , MediaShareDMRListF
         this.context = context;
     }
 
-    public static MediaSharePhotoListFragment setupModule(Context context, List<Photo> collection, DLNAMediaManager manager) {
+    public static MediaSharePhotoListFragment setupModule(Context context, List<Photo> collection, DLNAMediaManagerProtocol manager , Navigator navigator) {
 
         MediaSharePhotoListFragment view = new MediaSharePhotoListFragment();
         MediaSharePhotoListInteractor interactor = new MediaSharePhotoListInteractor(context,collection,manager);
@@ -51,10 +54,16 @@ public class MediaSharePhotoListRouter implements Wireframe , MediaShareDMRListF
 
         router.view = view;
         router.presenter = presenter;
+        router.navigator = navigator;
 
         interactor.setupPresenter(presenter);
 
         return view;
+    }
+
+    @Override
+    public void navigateBack() {
+        navigator.pop();
     }
 
     @Override

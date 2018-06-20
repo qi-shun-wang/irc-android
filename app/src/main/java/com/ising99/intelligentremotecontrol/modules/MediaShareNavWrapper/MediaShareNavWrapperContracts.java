@@ -1,24 +1,19 @@
-package com.ising99.intelligentremotecontrol.modules.Root;
+package com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper;
 
-import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 
 /**
- * Created by shun on 2018/3/27.
- *
+ * Created by shun on 2018/6/20 下午 02:35:22.
+ * .
  */
 
-public interface RootContracts extends BaseContracts {
+public interface MediaShareNavWrapperContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
-        void prepareTabBar();
-        void hideTabBar();
-        void showTabBar();
-
     }
 
     interface Presenter extends BaseContracts.Presenter {
-        boolean didSelectedTabAt(int position);
+
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -27,11 +22,9 @@ public interface RootContracts extends BaseContracts {
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
 
-
-
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-        void presentTabAt(int index);
+        void createRootFragment();
     }
 }

@@ -21,6 +21,7 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
+        void performBack();
         void didTapOnCast();
         void didSelected(Device device);
         void didSelectedPhotoAt(int position);
@@ -48,7 +49,7 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-
+        void navigateBack();
         void presentDMRList();
     }
 }

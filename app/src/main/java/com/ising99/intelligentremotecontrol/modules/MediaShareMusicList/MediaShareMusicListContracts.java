@@ -19,6 +19,7 @@ public interface MediaShareMusicListContracts extends BaseContracts {
 
     interface Presenter extends BaseContracts.Presenter {
         void didSelectedMusicAt(int position);
+        void performBack();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -31,5 +32,6 @@ public interface MediaShareMusicListContracts extends BaseContracts {
 
     interface Wireframe extends BaseContracts.Wireframe {
         void presentMediaPlayerWith(List<Music> assets, int position);
+        void navigateBack();
     }
 }

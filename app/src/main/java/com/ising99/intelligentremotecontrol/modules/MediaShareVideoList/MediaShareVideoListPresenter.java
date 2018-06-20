@@ -8,6 +8,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Wireframe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,7 +55,8 @@ public class MediaShareVideoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void onCreate() {
-        assets = interactor.getVideoAssets();
+        assets = new ArrayList<>();
+        assets.addAll(interactor.getVideoAssets());
     }
 
     @Override
@@ -74,6 +76,11 @@ public class MediaShareVideoListPresenter implements Presenter, InteractorOutput
     @Override
     public void didSelectedVideoAt(int position) {
         router.presentVideoPlayer(assets.get(position), title);
+    }
+
+    @Override
+    public void performBack() {
+        router.navigateBack();
     }
 
 }

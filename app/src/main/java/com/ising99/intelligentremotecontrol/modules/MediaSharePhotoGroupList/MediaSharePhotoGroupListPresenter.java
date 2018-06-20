@@ -54,6 +54,9 @@ public class MediaSharePhotoGroupListPresenter implements Presenter, InteractorO
 
     @Override
     public void onCreate() {
+        this.assets.clear();
+        groups.clear();
+        keys.clear();
         interactor.preparePhotoAssets();
     }
 
@@ -87,5 +90,10 @@ public class MediaSharePhotoGroupListPresenter implements Presenter, InteractorO
         String title = keys.get(position);
         List<Photo> collection = assets.get(title);
         router.presentPhotoCollectionWith(title,collection);
+    }
+
+    @Override
+    public void performBack() {
+        router.navigateBack();
     }
 }

@@ -41,7 +41,8 @@ public class MediaSharePhotoGroupListInteractor implements MediaSharePhotoGroupL
 
     @Override
     public void preparePhotoAssets() {
-
+        photoGroup.clear();
+        photos.clear();
         String[] imageColumns =
                 {
                         MediaStore.Images.Media._ID,

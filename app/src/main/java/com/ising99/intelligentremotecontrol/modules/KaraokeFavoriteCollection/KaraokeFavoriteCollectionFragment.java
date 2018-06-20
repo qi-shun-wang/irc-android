@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.model.Karaoke;
@@ -69,6 +70,13 @@ public class KaraokeFavoriteCollectionFragment extends Fragment implements Karao
         karaokeList.setHasFixedSize(true);
         karaokeList.setLayoutManager(vertical);
         karaokeList.setAdapter(adapter);
+
+        view.findViewById(R.id.karaoke_bookmark_edit_btn).setOnClickListener((btn -> {
+            view.findViewById(R.id.karaoke_bookmark_name_text).setVisibility(View.GONE);
+            view.findViewById(R.id.karaoke_bookmark_name_edit_text).setVisibility(View.VISIBLE);
+        }));
+
+
         presenter.onCreate();
         return view;
     }
@@ -110,6 +118,8 @@ public class KaraokeFavoriteCollectionFragment extends Fragment implements Karao
         }
     }
 
+
+
     @Override
     public void didClickOnAddition() {
         view.findViewById(R.id.karaoke_favorite_collection_bookmark_container).setClickable(false);
@@ -128,6 +138,11 @@ public class KaraokeFavoriteCollectionFragment extends Fragment implements Karao
     public void reloadBookmarkList(List<KaraokeBookmark> bookmarks) {
         bookmarkAdapter.setBookmarks(bookmarks);
         bookmarkAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateBookmarkToolBar(String name) {
+        ((TextView)view.findViewById(R.id.karaoke_bookmark_name_text)).setText(name);
     }
 
 

@@ -54,6 +54,9 @@ public class MediaShareMusicGroupListPresenter implements Presenter, InteractorO
 
     @Override
     public void onCreate() {
+        assets.clear();
+        keys.clear();
+        groups.clear();
         interactor.prepareMusicAssets();
     }
 
@@ -69,6 +72,11 @@ public class MediaShareMusicGroupListPresenter implements Presenter, InteractorO
 
     @Override
     public void onDestroy() {
+    }
+
+    @Override
+    public void performBack() {
+        router.navigateBack();
     }
 
     @Override

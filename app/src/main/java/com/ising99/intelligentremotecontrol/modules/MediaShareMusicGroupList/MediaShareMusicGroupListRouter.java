@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListActivity;
+import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListFragment;
+import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListRouter;
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +26,14 @@ public class MediaShareMusicGroupListRouter implements Wireframe {
     private Context context;
     private Presenter presenter;
     private View view;
+    private Navigator navigator;
+    private DLNAMediaManagerProtocol manager;
 
     public MediaShareMusicGroupListRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareMusicGroupListFragment setupModule(Context context) {
+    public static MediaShareMusicGroupListFragment setupModule(Context context, DLNAMediaManagerProtocol manager, Navigator navigator) {
 
         MediaShareMusicGroupListFragment view = new MediaShareMusicGroupListFragment();
         MediaShareMusicGroupListInteractor interactor = new MediaShareMusicGroupListInteractor(context);
@@ -42,6 +48,8 @@ public class MediaShareMusicGroupListRouter implements Wireframe {
 
         router.view = view;
         router.presenter = presenter;
+        router.navigator = navigator;
+        router.manager = manager;
 
         interactor.setupPresenter(presenter);
 
@@ -50,11 +58,13 @@ public class MediaShareMusicGroupListRouter implements Wireframe {
 
     @Override
     public void presentMusicAssetsWith(String title, List<Music> assets) {
-        Intent i = new Intent(context, MediaShareMusicListActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("TITLE",title);
-        i.putParcelableArrayListExtra("ASSETS", (ArrayList<? extends Parcelable>) assets);
-        context.startActivity(i);
+        MediaShareMusicListFragment mediaSharePhotoList = MediaShareMusicListRouter.setupModule(context, assets, manager, navigator);
+        navigator.push(mediaSharePhotoList);
+    }
+
+    @Override
+    public void navigateBack() {
+        navigator.pop();
     }
 }
 

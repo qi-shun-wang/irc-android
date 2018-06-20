@@ -9,6 +9,7 @@ import android.view.animation.TranslateAnimation;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerContracts.Presenter;
@@ -28,13 +29,13 @@ public class MediaShareMusicPlayerRouter implements Wireframe , MediaShareMusicP
     private Context context;
     private Presenter presenter;
     private View view;
-    private DLNAMediaManager manager;
+    private DLNAMediaManagerProtocol manager;
 
     private MediaShareMusicPlayerRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareMusicPlayerFragment setupModule(Context context, List<Music> assets, int position, DLNAMediaManager manager) {
+    public static MediaShareMusicPlayerFragment setupModule(Context context, List<Music> assets, int position, DLNAMediaManagerProtocol manager) {
 
         MediaShareMusicPlayerFragment view = new MediaShareMusicPlayerFragment();
         MediaShareMusicPlayerInteractor interactor = new MediaShareMusicPlayerInteractor(context, assets, position ,manager);

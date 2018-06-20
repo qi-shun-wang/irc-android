@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListRouter;
@@ -33,7 +34,7 @@ public class MediaShareMusicPlayerPanelRouter implements Wireframe ,MediaShareDM
         this.context = context;
     }
 
-    public static MediaShareMusicPlayerPanelFragment setupModule(Context context, List<Music> assets, int position, int volumeScale, MediaPlayer player, MediaShareMusicPlayerRouterDelegate delegate, DLNAMediaManager manager, boolean isRemoteMode, boolean isRemotePlaying, boolean shouldPlayRemoteWithSeek) {
+    public static MediaShareMusicPlayerPanelFragment setupModule(Context context, List<Music> assets, int position, int volumeScale, MediaPlayer player, MediaShareMusicPlayerRouterDelegate delegate, DLNAMediaManagerProtocol manager, boolean isRemoteMode, boolean isRemotePlaying, boolean shouldPlayRemoteWithSeek) {
 
         MediaShareMusicPlayerPanelFragment view = new MediaShareMusicPlayerPanelFragment();
         MediaShareMusicPlayerPanelInteractor interactor = new MediaShareMusicPlayerPanelInteractor(context, assets, position, manager);

@@ -54,7 +54,7 @@ public class MediaShareMusicGroupListRouter implements Wireframe {
 
     @Override
     public void presentMusicAssetsWith(String title, List<Music> assets) {
-        MediaShareMusicListFragment mediaSharePhotoList = MediaShareMusicListRouter.setupModule(context, assets, manager, navigator);
+        MediaShareMusicListFragment mediaSharePhotoList = MediaShareMusicListRouter.setupModule(context, title, assets, manager, navigator);
         navigator.push(mediaSharePhotoList);
     }
 

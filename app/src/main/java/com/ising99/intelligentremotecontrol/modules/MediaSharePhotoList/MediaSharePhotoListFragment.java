@@ -126,4 +126,9 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
             warningText.animate().setDuration(5000).alpha(0).start();
         });
     }
+
+    @Override
+    public void setupNavigationTitle(String title) {
+        ((TextView)view.findViewById(R.id.navigation_title)).setText(title);
+    }
 }

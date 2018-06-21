@@ -54,7 +54,7 @@ public class MediaSharePhotoGroupListRouter implements Wireframe {
 
     @Override
     public void presentPhotoCollectionWith(String title, List<Photo> photos) {
-        MediaSharePhotoListFragment mediaSharePhotoList = MediaSharePhotoListRouter.setupModule(context, photos, manager, navigator);
+        MediaSharePhotoListFragment mediaSharePhotoList = MediaSharePhotoListRouter.setupModule(context, title, photos, manager, navigator);
         navigator.push(mediaSharePhotoList);
     }
 

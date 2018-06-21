@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
@@ -97,5 +98,10 @@ public class MediaShareVideoListFragment extends Fragment implements MediaShareV
     @Override
     public void onItemClick(View view, int position) {
         presenter.didSelectedVideoAt(position);
+    }
+
+    @Override
+    public void setupNavigationTitle(String title) {
+        ((TextView)view.findViewById(R.id.navigation_title)).setText(title);
     }
 }

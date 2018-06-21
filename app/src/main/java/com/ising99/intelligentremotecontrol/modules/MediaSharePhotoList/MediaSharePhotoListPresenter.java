@@ -30,8 +30,10 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     private boolean isFirstPerformedCasting = true;
     private int selectedIndex = 0;
     private Timer worker;
+    private String title;
 
-    MediaSharePhotoListPresenter() {
+    MediaSharePhotoListPresenter(String title) {
+        this.title = title;
     }
 
     @Override
@@ -63,6 +65,7 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
         for (Photo photo: interactor.getPhotos()){
             photos.add(new PhotoItem(photo,false));
         }
+        view.setupNavigationTitle(title);
     }
 
     @Override

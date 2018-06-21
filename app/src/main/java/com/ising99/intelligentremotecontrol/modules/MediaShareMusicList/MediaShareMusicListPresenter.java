@@ -21,8 +21,10 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
     private Interactor interactor;
     private Wireframe router;
     private List<Music> assets;
+    private String title;
 
-    MediaShareMusicListPresenter() {
+    MediaShareMusicListPresenter(String title) {
+        this.title = title;
     }
 
     @Override
@@ -51,6 +53,7 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void onCreate() {
+        view.setupNavigationTitle(title);
         assets = interactor.getMusicAssets();
     }
 

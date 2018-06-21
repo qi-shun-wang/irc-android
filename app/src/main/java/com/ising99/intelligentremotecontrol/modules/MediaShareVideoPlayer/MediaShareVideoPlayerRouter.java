@@ -36,11 +36,11 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
         this.context = context;
     }
 
-    public static MediaShareVideoPlayerFragment setupModule(Context context, Video asset, DLNAMediaManagerProtocol manager, Navigator navigator) {
+    public static MediaShareVideoPlayerFragment setupModule(Context context, String backTitle, Video asset, DLNAMediaManagerProtocol manager, Navigator navigator) {
 
         MediaShareVideoPlayerFragment view = new MediaShareVideoPlayerFragment();
         MediaShareVideoPlayerInteractor interactor = new MediaShareVideoPlayerInteractor(context, asset, manager);
-        MediaShareVideoPlayerPresenter presenter = new MediaShareVideoPlayerPresenter();
+        MediaShareVideoPlayerPresenter presenter = new MediaShareVideoPlayerPresenter(backTitle);
         MediaShareVideoPlayerRouter router = new MediaShareVideoPlayerRouter(context);
 
         view.setupPresenter(presenter);

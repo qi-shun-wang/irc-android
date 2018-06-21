@@ -41,8 +41,10 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     private Timer worker;
     private boolean shouldPlayRemoteWithSeek = true;
     private boolean isRemoteSeeking = false;
+    private String backTitle;
 
-    MediaShareVideoPlayerPresenter() {
+    MediaShareVideoPlayerPresenter( String backTitle) {
+        this.backTitle = backTitle;
     }
 
     @Override
@@ -71,7 +73,8 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
 
     @Override
     public void onCreate() {
-
+        view.setupNavigationLeftItem(backTitle);
+        view.setupNavigationTitle(interactor.getVideoAsset().getTitle());
     }
 
     @Override

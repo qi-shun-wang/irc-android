@@ -37,7 +37,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_media_share_photo_list_title"
+            android:id="@+id/navigation_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"

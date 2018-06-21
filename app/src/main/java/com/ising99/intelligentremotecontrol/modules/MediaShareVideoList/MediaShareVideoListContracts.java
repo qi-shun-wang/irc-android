@@ -14,6 +14,7 @@ public interface MediaShareVideoListContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void reloadGridView(List<Video> assets);
+        void setupNavigationTitle(String title);
     }
 
     interface Presenter extends BaseContracts.Presenter {

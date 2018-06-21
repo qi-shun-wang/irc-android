@@ -34,11 +34,11 @@ public class MediaShareMusicListRouter implements Wireframe   {
         this.context = context;
     }
 
-    public static MediaShareMusicListFragment setupModule(Context context, List<Music> collection, DLNAMediaManagerProtocol manager, Navigator navigator) {
+    public static MediaShareMusicListFragment setupModule(Context context, String title, List<Music> collection, DLNAMediaManagerProtocol manager, Navigator navigator) {
 
         MediaShareMusicListFragment view = new MediaShareMusicListFragment();
         MediaShareMusicListInteractor interactor = new MediaShareMusicListInteractor(context, collection);
-        MediaShareMusicListPresenter presenter = new MediaShareMusicListPresenter();
+        MediaShareMusicListPresenter presenter = new MediaShareMusicListPresenter(title);
         MediaShareMusicListRouter router = new MediaShareMusicListRouter(context);
 
         view.setupPresenter(presenter);

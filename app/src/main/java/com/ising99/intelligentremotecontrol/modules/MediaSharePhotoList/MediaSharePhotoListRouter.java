@@ -38,11 +38,11 @@ public class MediaSharePhotoListRouter implements Wireframe , MediaShareDMRListF
         this.context = context;
     }
 
-    public static MediaSharePhotoListFragment setupModule(Context context, List<Photo> collection, DLNAMediaManagerProtocol manager , Navigator navigator) {
+    public static MediaSharePhotoListFragment setupModule(Context context, String title, List<Photo> collection, DLNAMediaManagerProtocol manager , Navigator navigator) {
 
         MediaSharePhotoListFragment view = new MediaSharePhotoListFragment();
         MediaSharePhotoListInteractor interactor = new MediaSharePhotoListInteractor(context,collection,manager);
-        MediaSharePhotoListPresenter presenter = new MediaSharePhotoListPresenter();
+        MediaSharePhotoListPresenter presenter = new MediaSharePhotoListPresenter(title);
         MediaSharePhotoListRouter router = new MediaSharePhotoListRouter(context);
 
         view.setupPresenter(presenter);

@@ -22,6 +22,8 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
         void updateSeekBarLocation(int scale);
         void showWarningBadge(String text);
         void hideWarningBadge(String text);
+        void setupNavigationLeftItem(String title);
+        void setupNavigationTitle(String title);
     }
 
     interface Presenter extends BaseContracts.Presenter {

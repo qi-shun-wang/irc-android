@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -147,6 +148,16 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
             warningText.setBackgroundColor(Color.GREEN);
             warningText.animate().setDuration(5000).alpha(0).start();
         });
+    }
+
+    @Override
+    public void setupNavigationLeftItem(String title) {
+        ((Button)view.findViewById(R.id.navigation_back_btn)).setText(title);
+    }
+
+    @Override
+    public void setupNavigationTitle(String title) {
+        ((TextView)view.findViewById(R.id.navigation_title)).setText(title);
     }
 
     @Override

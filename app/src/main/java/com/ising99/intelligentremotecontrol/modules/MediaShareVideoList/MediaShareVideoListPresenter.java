@@ -57,6 +57,7 @@ public class MediaShareVideoListPresenter implements Presenter, InteractorOutput
     public void onCreate() {
         assets = new ArrayList<>();
         assets.addAll(interactor.getVideoAssets());
+        view.setupNavigationTitle(title);
     }
 
     @Override

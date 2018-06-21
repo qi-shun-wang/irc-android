@@ -93,9 +93,7 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
 
     @Override
     public void performRemoteStop() {
-        manager.stop((invocation, operation, defaultMsg) -> {
-            output.didStopRemoteAssetFailure();
-        });
+        manager.stop((invocation, operation, defaultMsg) -> output.didStopRemoteAssetFailure());
     }
 
     @Override

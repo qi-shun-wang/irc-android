@@ -1,6 +1,5 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoList;
 
-import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;

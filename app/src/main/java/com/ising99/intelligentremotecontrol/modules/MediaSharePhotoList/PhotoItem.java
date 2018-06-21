@@ -12,7 +12,7 @@ public class PhotoItem {
     private Photo photo;
     private boolean isSelected;
 
-    public PhotoItem(Photo photo, boolean isSelected) {
+    PhotoItem(Photo photo, boolean isSelected) {
         this.photo = photo;
         this.isSelected = isSelected;
     }

@@ -56,7 +56,7 @@ public class MediaShareVideoListRouter implements Wireframe {
     @Override
     public void presentVideoPlayer(Video asset,String backTitle) {
         MediaShareVideoPlayerFragment mediaSharePhotoList = MediaShareVideoPlayerRouter.setupModule(context, asset, manager, navigator);
-        navigator.push(mediaSharePhotoList); 
+        navigator.push(mediaSharePhotoList);
     }
 
     @Override

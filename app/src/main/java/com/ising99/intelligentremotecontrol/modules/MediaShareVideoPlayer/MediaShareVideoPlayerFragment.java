@@ -1,6 +1,5 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;

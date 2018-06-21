@@ -285,13 +285,13 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         else
         {
             Log.d("PlayRemoteAssetSuccess2","===>"+currentTimeInterval);
-           new Timer().schedule(new TimerTask() {
-               @Override
-               public void run() {
-                   isRemotePlaying = true;
-                   view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
-               }
-           }, 500);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isRemotePlaying = true;
+                    view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+                }
+            }, 500);
 
         }
     }

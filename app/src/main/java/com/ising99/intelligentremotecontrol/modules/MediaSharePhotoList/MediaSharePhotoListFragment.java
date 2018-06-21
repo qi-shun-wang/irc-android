@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
@@ -130,5 +131,10 @@ public class MediaSharePhotoListFragment extends Fragment implements MediaShareP
     @Override
     public void setupNavigationTitle(String title) {
         ((TextView)view.findViewById(R.id.navigation_title)).setText(title);
+    }
+
+    @Override
+    public void updateCastButtonWith(int resID) {
+        getActivity().runOnUiThread(()-> ((ImageButton)view.findViewById(R.id.media_share_photo_list_cast_btn)).setImageResource(resID));
     }
 }

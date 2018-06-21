@@ -34,6 +34,8 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     private int remoteTimeInterval = 0;
     private Timer worker;
 
+//    private boolean needSetAssetFirst = false;
+
     MediaShareMusicPlayerPresenter() {
         player = new MediaPlayer();
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -68,6 +70,7 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
     public void onCreate() {
         Music asset = interactor.getCurrentAsset();
         view.updateMusicInfo(asset.getTitle(), asset.getArtist(), R.drawable.media_share_default_album_icon);
+
         try {
             player.setDataSource(interactor.getCurrentAsset().getFilePath());
             player.prepare();
@@ -75,21 +78,46 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (interactor.isDeviceConnected()) {
+//            needSetAssetFirst = true;
+
+            isRemoteMode = true;
+            interactor.setupCurrentRemoteAsset();
+        }else {
+            isRemoteMode = false;
+        }
+
     }
 
     @Override
     public void onResume() {
-        if (!player.isPlaying()) {
-            player.start();
-            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+        if (isRemoteMode)
+        {
+
         }
+        else
+        {
+            if (!player.isPlaying()) {
+                player.start();
+                view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
+            }
+        }
+
     }
 
     @Override
     public void onPause() {
-        if (player.isPlaying()) {
-            player.pause();
+        if (isRemoteMode)
+        {
+
         }
+        else
+        {
+            if (player.isPlaying()) {
+                player.pause();
+            }
+        }
+
     }
 
     @Override
@@ -123,7 +151,16 @@ public class MediaShareMusicPlayerPresenter implements Presenter, InteractorOutp
             }
             else
             {
+//                if (needSetAssetFirst)
+//                {
+//                    needSetAssetFirst = false;
+//                    interactor.setupCurrentRemoteAsset();
+//                }
+//                else
+//                {
                 interactor.performRemotePlay();
+//                }
+
             }
         }
         else

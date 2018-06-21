@@ -16,6 +16,7 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
 
     interface View extends BaseContracts.View {
         void updatePlaybackIconWith(int resID);
+        void updateCastButtonWith(int resId);
         void setupSeekBarMaxScale(int scale);
         void updateCurrentTimeLabel(String text);
         void updateEndTimeLabel(String text);
@@ -39,7 +40,8 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
 
     interface Interactor extends BaseContracts.Interactor {
         Video getVideoAsset();
-
+        boolean isDeviceConnected();
+        void clearConnectedDevice();
         void setupCurrentDevice(Device device);
         void setupCurrentRemoteAsset();
         void performRemotePlay();

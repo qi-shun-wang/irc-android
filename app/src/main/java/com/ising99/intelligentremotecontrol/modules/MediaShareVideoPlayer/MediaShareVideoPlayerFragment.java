@@ -107,6 +107,11 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
     }
 
     @Override
+    public void updateCastButtonWith(int resID) {
+        getActivity().runOnUiThread(()-> ((ImageButton)view.findViewById(R.id.media_share_video_player_cast_btn)).setImageResource(resID));
+    }
+
+    @Override
     public void setupSeekBarMaxScale(int scale) {
         ((SeekBar)view.findViewById(R.id.seekBar)).setMax(scale);
     }

@@ -51,6 +51,16 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
     }
 
     @Override
+    public boolean isDeviceConnected() {
+        return manager.getCurrentDevice() != null;
+    }
+
+    @Override
+    public void clearConnectedDevice() {
+        manager.stop((invocation, operation, defaultMsg) -> manager.setCurrentDevice(null));
+    }
+
+    @Override
     public void setupCurrentDevice(Device device) {
         manager.setCurrentDevice(device);
     }

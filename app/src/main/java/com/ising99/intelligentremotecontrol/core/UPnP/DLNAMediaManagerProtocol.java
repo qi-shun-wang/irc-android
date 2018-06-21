@@ -16,6 +16,7 @@ public interface DLNAMediaManagerProtocol {
     void setupMediaServer(InetAddress address);
 
     void setCurrentDevice(Device currentDevice);
+    Device getCurrentDevice();
 
     void setAVTransportURI(String path, DLNAMediaManagerCallback.Common callback);
 

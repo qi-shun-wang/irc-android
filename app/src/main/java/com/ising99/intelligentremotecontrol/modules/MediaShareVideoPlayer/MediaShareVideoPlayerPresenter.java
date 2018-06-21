@@ -42,6 +42,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     private boolean shouldPlayRemoteWithSeek = true;
     private boolean isRemoteSeeking = false;
     private String backTitle;
+    private boolean needSetAssetFirst = false;
 
     MediaShareVideoPlayerPresenter( String backTitle) {
         this.backTitle = backTitle;
@@ -75,6 +76,14 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     public void onCreate() {
         view.setupNavigationLeftItem(backTitle);
         view.setupNavigationTitle(interactor.getVideoAsset().getTitle());
+        if (interactor.isDeviceConnected()){
+            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
+            isRemoteMode = true;
+            needSetAssetFirst = true;
+        }else{
+            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+            isRemoteMode = false;
+        }
     }
 
     @Override
@@ -129,7 +138,12 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
             }
             else
             {
-                interactor.performRemotePlay();
+                if (needSetAssetFirst) {
+                    needSetAssetFirst = false;
+                    interactor.setupCurrentRemoteAsset();
+                } else {
+                    interactor.performRemotePlay();
+                }
             }
         }
         else
@@ -188,15 +202,30 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
         {
             player.pause();
             view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
             view.showWarningBadge("媒體準備播放...");
             interactor.setupCurrentDevice(device);
             interactor.setupCurrentRemoteAsset();
+        }
+        else
+        {
+            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
         }
     }
 
     @Override
     public void didTapOnCast() {
-        router.presentDMRList();
+        if (isRemoteMode)
+        {
+            isRemoteMode = false;
+            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+            interactor.clearConnectedDevice();
+        }
+        else
+        {
+            router.presentDMRList();
+        }
+
     }
 
     private void updateLabels(int currentTimeInterval){

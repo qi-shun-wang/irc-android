@@ -25,6 +25,7 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void scrollToTop();
         void showWarningBadge(String text);
         void hideWarningBadge(String text);
+        void updateCastButtonWith(int resId);
     }
 
     interface Presenter extends BaseContracts.Presenter {
@@ -62,6 +63,8 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void performRemotePause();
         void performRemoteSeek(long timeInterval);
         void fetchRemotePosition();
+        boolean isDeviceConnected();
+        void clearConnectedDevice();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

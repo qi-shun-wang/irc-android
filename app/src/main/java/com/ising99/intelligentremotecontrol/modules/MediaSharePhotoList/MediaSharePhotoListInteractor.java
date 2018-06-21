@@ -53,6 +53,11 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     }
 
     @Override
+    public boolean isDeviceConnected() {
+        return manager.getCurrentDevice() != null;
+    }
+
+    @Override
     public void setupCurrentDevice(Device device) {
         manager.setCurrentDevice(device);
     }

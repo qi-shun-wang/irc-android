@@ -48,6 +48,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     private int currentTimeInterval = 0;
     private boolean shouldPlayRemoteWithSeek;
 
+//    private boolean needSetAsset = false;
+
     MediaShareMusicPlayerPanelPresenter(MediaPlayer player, int volumeScale, boolean isRemoteMode, boolean isRemotePlaying, boolean shouldPlayRemoteWithSeek) {
         this.player = player;
         currentVolume = volumeScale;
@@ -85,10 +87,23 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         view.setupMaxVolume(App.MAX_VOLUME);
         view.setupMusicAssets(interactor.getMusicAssets());
         view.updateMediaPanel(interactor.getCurrentMusicAsset());
+        if (interactor.isDeviceConnected())
+        {
+            isRemoteMode = true;
+//            needSetAsset = true;
+            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
+        }
+        else
+        {
+            isRemoteMode = false;
+            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+        }
     }
 
     @Override
     public void onResume() {
+
+
         if (!isRemoteMode){
             if(player.isPlaying())
             {
@@ -168,7 +183,16 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 
     @Override
     public void performCast() {
-        router.presentDMRList();
+        if (isRemoteMode)
+        {
+            isRemoteMode = false;
+            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+            interactor.clearConnectedDevice();
+        }
+        else
+        {
+            router.presentDMRList();
+        }
     }
 
     @Override
@@ -179,6 +203,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         Log.d("getCurrentPosition","===>"+ currentTimeInterval);
         interactor.setupCurrentDevice(device);
         interactor.setupCurrentRemoteAsset();
+        view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
         view.showWarningBadge("媒體準備播放...");
     }
 
@@ -192,7 +217,15 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
                 interactor.performRemotePause();
             }
             else {
-                interactor.performRemotePlay();
+//                if (needSetAsset){
+//                    needSetAsset = false;
+//                    interactor.setupCurrentRemoteAsset();
+//                }
+//                else
+//                {
+                    interactor.performRemotePlay();
+//                }
+
             }
         }
         else

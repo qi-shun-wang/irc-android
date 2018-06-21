@@ -135,5 +135,17 @@ public class MediaShareMusicPlayerInteractor implements MediaShareMusicPlayerCon
             }
         });
     }
+
+    @Override
+    public boolean isDeviceConnected() {
+        return manager.getCurrentDevice() != null;
+    }
+
+    @Override
+    public void clearConnectedDevice() {
+        manager.stop((invocation, operation, defaultMsg) -> {
+            manager.setCurrentDevice(null);
+        });
+    }
 }
 

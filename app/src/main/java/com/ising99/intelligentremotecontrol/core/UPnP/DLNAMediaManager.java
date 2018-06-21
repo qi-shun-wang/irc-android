@@ -61,6 +61,10 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
         this.currentDevice = currentDevice;
     }
 
+    public Device getCurrentDevice() {
+        return currentDevice;
+    }
+
     @Override
     public void setAVTransportURI(String path, DLNAMediaManagerCallback.Common callback) {
         try {

@@ -38,6 +38,8 @@ public interface MediaShareMusicPlayerContracts extends BaseContracts {
         void performRemoteStop();
         void performRemotePlay();
         void performRemotePause();
+        boolean isDeviceConnected();
+        void clearConnectedDevice();
 
     }
 

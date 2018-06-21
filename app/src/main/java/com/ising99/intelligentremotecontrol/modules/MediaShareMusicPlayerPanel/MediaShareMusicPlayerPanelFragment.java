@@ -228,12 +228,16 @@ public class MediaShareMusicPlayerPanelFragment extends Fragment implements Medi
     @Override
     public void hideWarningBadge(String text) {
         getActivity().runOnUiThread(()->{
-            //todo
             TextView warningText = view.findViewById(R.id.media_share_music_player_panel_warning_text);
             warningText.setText(text);
             warningText.setBackgroundColor(Color.GREEN);
             warningText.animate().setDuration(5000).alpha(0).start();
         });
+    }
+
+    @Override
+    public void updateCastButtonWith(int resID) {
+        getActivity().runOnUiThread(()-> adapter.updateCastButtonIcon(resID));
     }
 
     @Override

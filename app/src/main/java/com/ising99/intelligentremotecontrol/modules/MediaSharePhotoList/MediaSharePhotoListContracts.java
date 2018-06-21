@@ -19,6 +19,7 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
         void showWarningBadge(String text);
         void hideWarningBadge(String text);
         void setupNavigationTitle(String title);
+        void updateCastButtonWith(int resId);
     }
 
     interface Presenter extends BaseContracts.Presenter {
@@ -30,7 +31,7 @@ public interface MediaSharePhotoListContracts extends BaseContracts {
 
     interface Interactor extends BaseContracts.Interactor {
         List<Photo> getPhotos();
-
+        boolean isDeviceConnected();
         void setupCurrentDevice(Device device);
         void setupSelectedPhotos(List<Photo> assets);
         void setupCurrentRemoteAsset(int index);

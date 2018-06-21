@@ -89,8 +89,9 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void didTapOnCast() {
-        if (isFirstPerformedCasting) router.presentDMRList();
-        else prepareCasting();
+        if (interactor.isDeviceConnected()) prepareCasting();
+        else router.presentDMRList();
+
     }
 
     @Override

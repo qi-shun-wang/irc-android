@@ -189,6 +189,16 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
     }
 
     @Override
+    public boolean isDeviceConnected() {
+        return manager.getCurrentDevice() != null;
+    }
+
+    @Override
+    public void clearConnectedDevice() {
+        manager.stop((invocation, operation, defaultMsg) -> manager.setCurrentDevice(null));
+    }
+
+    @Override
     public Music updateCurrentIndex(int index) {
         currentIndex = index;
         return assets.get(currentIndex);

@@ -97,6 +97,11 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     }
 
     @Override
+    public void performBack() {
+        router.navigateBack();
+    }
+
+    @Override
     public void prepareMediaPlayer(SurfaceHolder surfaceHolder) {
         player = new MediaPlayer();
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);

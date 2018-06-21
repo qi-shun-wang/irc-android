@@ -3,7 +3,6 @@ package com.ising99.intelligentremotecontrol.modules.MediaShare;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.ActivityCompat;
@@ -28,7 +27,6 @@ public class MediaShareFragment extends Fragment implements MediaShareContracts.
 
     private Presenter presenter;
     private ViewGroup view;
-    private SectionedRecyclerViewAdapter adapter;
 
     public MediaShareFragment() {
         // Required empty public constructor
@@ -50,7 +48,7 @@ public class MediaShareFragment extends Fragment implements MediaShareContracts.
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share, container, false);
-        adapter = new SectionedRecyclerViewAdapter();
+        SectionedRecyclerViewAdapter adapter = new SectionedRecyclerViewAdapter();
         MediaShareSection section = new MediaShareSection("我的媒體庫",presenter.prepareSectionItems());
         section.setDelegate(this);
         adapter.addSection(section);
@@ -102,14 +100,9 @@ public class MediaShareFragment extends Fragment implements MediaShareContracts.
         alertBuilder.setCancelable(true);
         alertBuilder.setTitle("請求檔案存取權限");
         alertBuilder.setMessage("媒體分享功能需要檔案存取的權限!");
-        alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        200);
-            }
-        });
+        alertBuilder.setPositiveButton(android.R.string.yes, (dialog, which) -> ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                200));
 
         AlertDialog alert = alertBuilder.create();
         alert.show();

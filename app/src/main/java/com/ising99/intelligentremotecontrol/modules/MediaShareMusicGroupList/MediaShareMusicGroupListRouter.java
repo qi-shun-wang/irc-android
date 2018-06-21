@@ -1,19 +1,15 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Parcelable;
 
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.View;
-import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListActivity;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListRouter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +25,7 @@ public class MediaShareMusicGroupListRouter implements Wireframe {
     private Navigator navigator;
     private DLNAMediaManagerProtocol manager;
 
-    public MediaShareMusicGroupListRouter(Context context) {
+    private MediaShareMusicGroupListRouter(Context context) {
         this.context = context;
     }
 

@@ -4,10 +4,11 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.R;
-import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListRouter;
+import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.Presenter;
@@ -28,13 +29,14 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
     private Context context;
     private Presenter presenter;
     private View view;
+    private Navigator navigator;
     private MediaShareDMRListFragment dmrList;
 
     private MediaShareVideoPlayerRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareVideoPlayerFragment setupModule(Context context, Video asset, DLNAMediaManager manager) {
+    public static MediaShareVideoPlayerFragment setupModule(Context context, Video asset, DLNAMediaManagerProtocol manager, Navigator navigator) {
 
         MediaShareVideoPlayerFragment view = new MediaShareVideoPlayerFragment();
         MediaShareVideoPlayerInteractor interactor = new MediaShareVideoPlayerInteractor(context, asset, manager);
@@ -49,6 +51,7 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
 
         router.view = view;
         router.presenter = presenter;
+        router.navigator = navigator;
 
         interactor.setupPresenter(presenter);
 
@@ -65,6 +68,11 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
         fragmentTransaction.setCustomAnimations(R.animator.slide_in_up,R.animator.slide_out_down,R.animator.slide_in_up,R.animator.slide_out_down);
         fragmentTransaction.replace(R.id.media_share_list_dmr_container, dmrList, "MediaShareDMRListFragment");
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void navigateBack() {
+        navigator.pop();
     }
 
     @Override

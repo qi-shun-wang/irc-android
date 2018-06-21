@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerCallback;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.InteractorOutput;
@@ -27,10 +28,10 @@ public class MediaShareVideoPlayerInteractor implements MediaShareVideoPlayerCon
     private Video asset;
     private DLNAMediaManager manager;
 
-    MediaShareVideoPlayerInteractor(Context context, Video asset, DLNAMediaManager manager) {
+    MediaShareVideoPlayerInteractor(Context context, Video asset, DLNAMediaManagerProtocol manager) {
         this.context = context;
         this.asset = asset;
-        this.manager = manager;
+        this.manager = (DLNAMediaManager) manager;
     }
 
     @Override

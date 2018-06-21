@@ -11,7 +11,7 @@ public class DeviceDiscoveryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_device_discovery1);
+        setContentView(R.layout.activity_device_discovery);
 
         RemoteControlCoAPService service = new RemoteControlCoAPService();
         DeviceDiscoveryFragment deviceDiscovery = DeviceDiscoveryRouter.setupModule(getApplicationContext(), service);

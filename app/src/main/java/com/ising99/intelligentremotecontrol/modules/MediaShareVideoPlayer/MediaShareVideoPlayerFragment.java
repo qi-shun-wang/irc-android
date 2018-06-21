@@ -46,6 +46,7 @@ public class MediaShareVideoPlayerFragment extends Fragment implements MediaShar
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_video_player, container, false);
+        view.findViewById(R.id.navigation_back_btn).setOnClickListener((v)->presenter.performBack());
         SurfaceView mediaContainer = view.findViewById(R.id.media_share_video_player_view);
         SurfaceHolder mediaContainerHolder = mediaContainer.getHolder();
         mediaContainerHolder.addCallback(this);

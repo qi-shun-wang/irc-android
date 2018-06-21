@@ -1,22 +1,18 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShare;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
-import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.View;
-import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListActivity;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListRouter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListRouter;
-import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.MediaShareVideoGroupListActivity;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.MediaShareVideoGroupListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.MediaShareVideoGroupListRouter;
 
@@ -82,7 +78,7 @@ public class MediaShareRouter implements Wireframe {
 
     @Override
     public void presentVideoList() {
-        MediaShareVideoGroupListFragment mediaSharePhotoGroupList = MediaShareVideoGroupListRouter.setupModule(context, navigator);
+        MediaShareVideoGroupListFragment mediaSharePhotoGroupList = MediaShareVideoGroupListRouter.setupModule(context, manager, navigator);
         navigator.push(mediaSharePhotoGroupList);
     }
 

@@ -6,7 +6,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 
 import com.ising99.intelligentremotecontrol.R;
-import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Wireframe;

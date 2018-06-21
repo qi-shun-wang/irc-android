@@ -1,25 +1,15 @@
 package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Parcelable;
 
-import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManager;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListContracts.View;
-import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListActivity;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListRouter;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +25,7 @@ public class MediaSharePhotoGroupListRouter implements Wireframe {
     private Navigator navigator;
     private DLNAMediaManagerProtocol manager;
 
-    public MediaSharePhotoGroupListRouter(Context context) {
+    private MediaSharePhotoGroupListRouter(Context context) {
         this.context = context;
     }
 

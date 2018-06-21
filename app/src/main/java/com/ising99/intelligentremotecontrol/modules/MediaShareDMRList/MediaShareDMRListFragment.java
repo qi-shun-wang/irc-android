@@ -17,7 +17,6 @@ import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListContracts.Presenter;
 
 import org.fourthline.cling.model.meta.Device;
-import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.util.List;
 

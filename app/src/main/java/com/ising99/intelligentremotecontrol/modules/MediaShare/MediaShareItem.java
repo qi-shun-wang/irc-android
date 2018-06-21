@@ -9,7 +9,7 @@ public class MediaShareItem {
     private int imageResID;
     private MediaShareType type;
 
-    public MediaShareItem(String title, int imageResID, MediaShareType type) {
+     MediaShareItem(String title, int imageResID, MediaShareType type) {
         this.title = title;
         this.imageResID = imageResID;
         this.type = type;

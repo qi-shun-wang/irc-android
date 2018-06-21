@@ -2,7 +2,6 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.widget.FrameLayout;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareFragment;
@@ -21,7 +20,7 @@ public class MediaShareNavWrapperRouter implements Wireframe ,Navigator {
     private View view;
     private List<Fragment> stack = new ArrayList<>();
 
-    public MediaShareNavWrapperRouter(Context context) {
+    private MediaShareNavWrapperRouter(Context context) {
         this.context = context;
     }
 

@@ -32,22 +32,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".modules.DeviceDiscovery.DeviceDiscoveryActivity" />
         <activity
             android:name=".modules.Game.GameActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".modules.MediaShare.MediaShareActivity" />
+        <activity android:name=".modules.DeviceDiscovery.DeviceDiscoveryActivity" />
 
         <service android:name="org.fourthline.cling.android.AndroidUpnpServiceImpl" />
 
-        <activity android:name=".modules.MediaShare.MediaShareActivity" />
-        <activity android:name=".modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListActivity" />
-        <activity android:name=".modules.MediaSharePhotoList.MediaSharePhotoListActivity" />
-        <activity android:name=".modules.MediaShareMusicGroupList.MediaShareMusicGroupListActivity" />
-        <activity android:name=".modules.MediaShareMusicList.MediaShareMusicListActivity" />
-        <activity android:name=".modules.MediaShareVideoGroupList.MediaShareVideoGroupListActivity" />
-        <activity android:name=".modules.MediaShareVideoList.MediaShareVideoListActivity" />
-        <activity android:name=".modules.MediaShareVideoPlayer.MediaShareVideoPlayerActivity" />
-        <activity android:name=".modules.DeviceDiscovery.DeviceDiscoveryActivity" />
+
     </application>
 
 </manifest>

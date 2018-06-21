@@ -1,14 +1,15 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareVideoList;
 
 import android.content.Context;
-import android.content.Intent;
 
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.View;
-import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerActivity;
+import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerFragment;
+import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerRouter;
 
 import java.util.List;
 
@@ -23,13 +24,13 @@ public class MediaShareVideoListRouter implements Wireframe {
     private Presenter presenter;
     private View view;
     private Navigator navigator;
-
+    private DLNAMediaManagerProtocol manager;
 
     private MediaShareVideoListRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareVideoListFragment setupModule(Context context, List<Video> collection, String title, Navigator navigator) {
+    public static MediaShareVideoListFragment setupModule(Context context, DLNAMediaManagerProtocol manager, List<Video> collection, String title, Navigator navigator) {
 
         MediaShareVideoListFragment view = new MediaShareVideoListFragment();
         MediaShareVideoListInteractor interactor = new MediaShareVideoListInteractor(context, collection);
@@ -45,6 +46,7 @@ public class MediaShareVideoListRouter implements Wireframe {
         router.view = view;
         router.presenter = presenter;
         router.navigator = navigator;
+        router.manager = manager;
 
         interactor.setupPresenter(presenter);
 
@@ -53,11 +55,8 @@ public class MediaShareVideoListRouter implements Wireframe {
 
     @Override
     public void presentVideoPlayer(Video asset,String backTitle) {
-        Intent i = new Intent(context, MediaShareVideoPlayerActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.putExtra("ASSET", asset);
-        i.putExtra("BACK_TITLE", backTitle);
-        context.startActivity(i);
+        MediaShareVideoPlayerFragment mediaSharePhotoList = MediaShareVideoPlayerRouter.setupModule(context, asset, manager, navigator);
+        navigator.push(mediaSharePhotoList); 
     }
 
     @Override

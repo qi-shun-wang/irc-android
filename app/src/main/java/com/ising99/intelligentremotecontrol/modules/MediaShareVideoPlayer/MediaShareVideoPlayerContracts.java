@@ -25,6 +25,7 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
+        void performBack();
         void prepareMediaPlayer(SurfaceHolder surfaceHolder);
         void performPlayBack();
         void startTrackingTouch();
@@ -67,5 +68,6 @@ public interface MediaShareVideoPlayerContracts extends BaseContracts {
 
     interface Wireframe extends BaseContracts.Wireframe {
         void presentDMRList();
+        void navigateBack();
     }
 }

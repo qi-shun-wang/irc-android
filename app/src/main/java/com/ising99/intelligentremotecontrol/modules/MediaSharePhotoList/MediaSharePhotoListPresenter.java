@@ -1,5 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList;
 
+import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.Photo;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoList.MediaSharePhotoListContracts.View;
@@ -66,6 +67,8 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
             photos.add(new PhotoItem(photo,false));
         }
         view.setupNavigationTitle(title);
+        if (interactor.isDeviceConnected()) view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+        else view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
     }
 
     @Override
@@ -91,7 +94,6 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     public void didTapOnCast() {
         if (interactor.isDeviceConnected()) prepareCasting();
         else router.presentDMRList();
-
     }
 
     @Override

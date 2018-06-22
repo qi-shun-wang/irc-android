@@ -143,9 +143,8 @@ public class MediaShareMusicPlayerInteractor implements MediaShareMusicPlayerCon
 
     @Override
     public void clearConnectedDevice() {
-        manager.stop((invocation, operation, defaultMsg) -> {
-            manager.setCurrentDevice(null);
-        });
+        manager.stop((invocation, operation, defaultMsg) -> {});
+        manager.setCurrentDevice(null);
     }
 }
 

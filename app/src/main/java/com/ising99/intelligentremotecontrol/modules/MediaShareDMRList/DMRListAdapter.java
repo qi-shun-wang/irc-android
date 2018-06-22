@@ -17,7 +17,7 @@ import org.fourthline.cling.model.meta.LocalDevice;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHolder> implements View.OnClickListener {
+public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHolder> {
 
     private List<Device> devices = new ArrayList<>();
     private BaseCollectionAdapterDelegate delegate ;
@@ -28,25 +28,25 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
         ViewGroup view = (ViewGroup) LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.list_item_dmr, parent, false);
-        view.setOnClickListener(this);
-        return new ViewHolder(view);
+        return new DMRListAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String title;
-        if(devices.get(position) instanceof LocalDevice)
+        Device device = devices.get(position);
+        if(device instanceof LocalDevice)
         {
             title = "Android Phone";
         }
         else
         {
-            title = devices.get(position).getDetails().getFriendlyName();
+            title = device.getDetails().getFriendlyName();
         }
 
         holder.title.setText(title);
-        holder.icon.setImageResource(R.drawable.kodpluswhite);
-        holder.itemView.setTag(position);
+//        holder.icon.setImageResource(R.drawable.kodpluswhite);
+
     }
 
     @Override
@@ -54,12 +54,7 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
         return devices.size();
     }
 
-    @Override
-    public void onClick(View view) {
-        if(delegate!=null){
-            delegate.onItemClick(view,(int)view.getTag());
-        }
-    }
+
 
     public void setupDelegate(BaseCollectionAdapterDelegate delegate) {
         this.delegate = delegate;
@@ -68,7 +63,7 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
         this.devices = devices;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         public TextView title;
         public ImageView icon;
@@ -77,7 +72,11 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
             super(v);
             this.title = v.findViewById(R.id.textView_dmr_title);
             this.icon = v.findViewById(R.id.imageView_dmr_icon);
-
+            v.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view) {
+            if (delegate != null) delegate.onItemClick(view, getAdapterPosition());
         }
     }
 

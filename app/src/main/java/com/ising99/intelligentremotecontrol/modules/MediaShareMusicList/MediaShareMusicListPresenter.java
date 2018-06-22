@@ -1,5 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareMusicList;
 
+import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Music;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.View;
@@ -7,6 +8,9 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.InteractorOutput;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.Wireframe;
+
+import org.fourthline.cling.model.meta.Device;
+import org.fourthline.cling.model.meta.RemoteDevice;
 
 import java.util.List;
 
@@ -54,6 +58,14 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
     @Override
     public void onCreate() {
         view.setupNavigationTitle(title);
+        if (interactor.isDeviceConnected())
+        {
+            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+        }
+        else
+        {
+            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
+        }
         assets = interactor.getMusicAssets();
     }
 
@@ -79,6 +91,33 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
     @Override
     public void performBack() {
         router.navigateBack();
+    }
+
+    @Override
+    public void performDeviceSearch() {
+        if (interactor.isDeviceConnected())
+        {
+            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
+            interactor.clearCurrentDevice();
+        }
+        else
+        {
+            router.presentDMRList();
+        }
+        router.dismissCurrentPlayer();
+    }
+
+    @Override
+    public void didSelected(Device device) {
+        if (device instanceof RemoteDevice)
+        {
+            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+            interactor.setupCurrentDevice(device);
+        }
+        else
+        {
+            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
+        }
     }
 
 }

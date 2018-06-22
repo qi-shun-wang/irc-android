@@ -93,6 +93,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/clear"
                 android:src="@drawable/media_share_cast_red_icon"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
                 />
         </RelativeLayout>
 

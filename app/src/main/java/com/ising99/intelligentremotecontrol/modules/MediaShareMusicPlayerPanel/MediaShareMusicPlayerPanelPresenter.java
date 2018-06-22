@@ -91,12 +91,13 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         {
             isRemoteMode = true;
 //            needSetAsset = true;
-            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
+            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+
         }
         else
         {
             isRemoteMode = false;
-            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
         }
     }
 
@@ -186,7 +187,8 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         if (isRemoteMode)
         {
             isRemoteMode = false;
-            view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+            isRemotePlaying= false;
+            view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
             interactor.clearConnectedDevice();
         }
         else
@@ -203,7 +205,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
         Log.d("getCurrentPosition","===>"+ currentTimeInterval);
         interactor.setupCurrentDevice(device);
         interactor.setupCurrentRemoteAsset();
-        view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
+        view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
         view.showWarningBadge("媒體準備播放...");
     }
 
@@ -223,7 +225,7 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
 //                }
 //                else
 //                {
-                    interactor.performRemotePlay();
+                interactor.performRemotePlay();
 //                }
 
             }

@@ -54,6 +54,9 @@ public class MediaShareDMRListFragment extends Fragment implements MediaShareDMR
         view.findViewById(R.id.media_share_dmr_list_refresh_btn).setOnClickListener((v -> presenter.performRefreshTask()));
         RecyclerView recyclerView = view.findViewById(R.id.media_share_dmr_list);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 

@@ -25,4 +25,9 @@
         android:textAlignment="center"
         app:layout_constraintTop_toTopOf="@+id/media_share_music_player_panel_recycler_view"
         />
+    <FrameLayout
+        android:id="@+id/media_share_list_dmr_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </android.support.constraint.ConstraintLayout>

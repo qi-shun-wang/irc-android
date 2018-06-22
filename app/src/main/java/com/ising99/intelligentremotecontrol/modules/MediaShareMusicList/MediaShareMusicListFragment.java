@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.ising99.intelligentremotecontrol.R;
@@ -48,6 +49,7 @@ public class MediaShareMusicListFragment extends Fragment implements MediaShareM
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_media_share_music_list, container, false);
         view.findViewById(R.id.navigation_back_btn).setOnClickListener((v)->presenter.performBack());
+        view.findViewById(R.id.media_share_music_player_cast_btn).setOnClickListener((view1 -> presenter.performDeviceSearch()));
         RecyclerView listView = view.findViewById(R.id.media_share_music_list_view);
         adapter = new ListViewAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);
@@ -102,5 +104,10 @@ public class MediaShareMusicListFragment extends Fragment implements MediaShareM
     @Override
     public void setupNavigationTitle(String title) {
         ((TextView)view.findViewById(R.id.navigation_title)).setText(title);
+    }
+
+    @Override
+    public void updateCastButtonWith(int resID) {
+        getActivity().runOnUiThread(()-> ((ImageButton)view.findViewById(R.id.media_share_music_player_cast_btn)).setImageResource(resID));
     }
 }

@@ -195,7 +195,8 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
 
     @Override
     public void clearConnectedDevice() {
-        manager.stop((invocation, operation, defaultMsg) -> manager.setCurrentDevice(null));
+        manager.stop((invocation, operation, defaultMsg) -> {});
+        manager.setCurrentDevice(null);
     }
 
     @Override

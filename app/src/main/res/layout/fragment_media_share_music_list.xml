@@ -47,12 +47,16 @@
             android:textColor="@color/black"
             android:text="Photo Group Title"
             />
-
-        <View
+        <ImageButton
+            android:id="@+id/media_share_music_player_cast_btn"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:background="@color/clear"
+
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/media_share_cast_gray_icon"
             />
     </LinearLayout>
 
@@ -89,5 +93,10 @@
         >
 
     </FrameLayout>
-
+    <FrameLayout
+        android:id="@+id/media_share_list_dmr_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

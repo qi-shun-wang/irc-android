@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareRouter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperContracts.Wireframe;
@@ -19,12 +20,13 @@ public class MediaShareNavWrapperRouter implements Wireframe ,Navigator {
     private Presenter presenter;
     private View view;
     private List<Fragment> stack = new ArrayList<>();
+    private DLNAMediaManagerProtocol manager;
 
     private MediaShareNavWrapperRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareNavWrapperFragment setupModule(Context context) {
+    public static MediaShareNavWrapperFragment setupModule(Context context, DLNAMediaManagerProtocol manager) {
 
         MediaShareNavWrapperFragment view = new MediaShareNavWrapperFragment();
         MediaShareNavWrapperInteractor interactor = new MediaShareNavWrapperInteractor(context);
@@ -39,6 +41,7 @@ public class MediaShareNavWrapperRouter implements Wireframe ,Navigator {
 
         router.view = view;
         router.presenter = presenter;
+        router.manager = manager;
 
         interactor.setupPresenter(presenter);
 
@@ -48,12 +51,11 @@ public class MediaShareNavWrapperRouter implements Wireframe ,Navigator {
 
     @Override
     public void createRootFragment() {
-        MediaShareFragment mediaShare = MediaShareRouter.setupModule(context,this);
+        MediaShareFragment mediaShare = MediaShareRouter.setupModule(context,this, manager);
         stack.clear();
         stack.add(mediaShare);
         ((MediaShareNavWrapperFragment) view).getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_container,mediaShare).commit();
     }
-
 
     @Override
     public void push(Fragment fragment) {

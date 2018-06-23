@@ -2,20 +2,11 @@ package com.ising99.intelligentremotecontrol.modules.Root;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 
 import com.ising99.intelligentremotecontrol.R;
-import com.ising99.intelligentremotecontrol.modules.DeviceDiscovery.DeviceDiscoveryActivity;
-import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeFragment;
-import com.ising99.intelligentremotecontrol.modules.Karaoke.KaraokeRouter;
-import com.ising99.intelligentremotecontrol.modules.KaraokeArtistFinder.KaraokeArtistFinderFragment;
-import com.ising99.intelligentremotecontrol.modules.KaraokeArtistFinder.KaraokeArtistFinderRouter;
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.KaraokeFavoriteCollection.KaraokeFavoriteCollectionFragment;
 import com.ising99.intelligentremotecontrol.modules.KaraokeFavoriteCollection.KaraokeFavoriteCollectionRouter;
-import com.ising99.intelligentremotecontrol.modules.KaraokeFinder.KaraokeFinderFragment;
-import com.ising99.intelligentremotecontrol.modules.KaraokeFinder.KaraokeFinderRouter;
-import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareFragment;
-import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareRouter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperRouter;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
@@ -37,14 +28,14 @@ public class RootRouter implements Wireframe {
     private Context context;
     private Presenter presenter;
     private Fragment view ;
-
     private List<Fragment> fragments = new ArrayList<>();
+    private DLNAMediaManagerProtocol manager;
 
     private RootRouter(Context context) {
         this.context = context;
     }
 
-    static RootFragment setupModule(Context context, RemoteControlCoAPService service){
+    static RootFragment setupModule(Context context, RemoteControlCoAPService service, DLNAMediaManagerProtocol manager){
 
         RootFragment view = new RootFragment();
         RootInteractor interactor = new RootInteractor(context);
@@ -59,6 +50,7 @@ public class RootRouter implements Wireframe {
 
         router.view = view;
         router.presenter = presenter;
+        router.manager = manager;
 
         interactor.setupPresenter(presenter);
 
@@ -72,7 +64,8 @@ public class RootRouter implements Wireframe {
 //        WebBrowserFragment web = WebBrowserRouter.setupModule(context);
 //        MovieFragment movie = MovieRouter.setupModule(context);
 //        MediaShareFragment mediaShare = MediaShareRouter.setupModule(context);
-        MediaShareNavWrapperFragment mediaShare = MediaShareNavWrapperRouter.setupModule(context);
+
+        MediaShareNavWrapperFragment mediaShare = MediaShareNavWrapperRouter.setupModule(context, manager);
         router.fragments.add(irc);
 
 //        router.fragments.add(web);
@@ -87,6 +80,5 @@ public class RootRouter implements Wireframe {
     public void presentTabAt(int index) {
         view.getFragmentManager().beginTransaction().replace(R.id.root_content_container,fragments.get(index)).commit();
     }
-
 
 }

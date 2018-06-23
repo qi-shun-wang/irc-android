@@ -101,7 +101,7 @@
         android:text="尚未連接WiFi"
         android:gravity="center"
         android:background="@color/red"
-        android:alpha="0.1"
+        android:alpha="0"
         android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@+id/irc_header_container"
         />

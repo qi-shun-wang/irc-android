@@ -8,7 +8,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.Med
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListRouter;
-import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
+import com.ising99.intelligentremotecontrol.modules.BaseNavigator;
 
 import java.util.List;
 
@@ -22,14 +22,14 @@ public class MediaShareMusicGroupListRouter implements Wireframe {
     private Context context;
     private Presenter presenter;
     private View view;
-    private Navigator navigator;
+    private BaseNavigator navigator;
     private DLNAMediaManagerProtocol manager;
 
     private MediaShareMusicGroupListRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareMusicGroupListFragment setupModule(Context context, DLNAMediaManagerProtocol manager, Navigator navigator) {
+    public static MediaShareMusicGroupListFragment setupModule(Context context, DLNAMediaManagerProtocol manager, BaseNavigator navigator) {
 
         MediaShareMusicGroupListFragment view = new MediaShareMusicGroupListFragment();
         MediaShareMusicGroupListInteractor interactor = new MediaShareMusicGroupListInteractor(context);

@@ -82,4 +82,13 @@ public class KaraokePresenter implements Presenter, InteractorOutput {
     public void onDestroy() {
     }
 
+    @Override
+    public void navigateToFinder() {
+        router.presentKaraokeArtistFinder();
+    }
+
+    @Override
+    public void navigateToFavorite() {
+        router.presentKaraokeFavoriteCollection();
+    }
 }

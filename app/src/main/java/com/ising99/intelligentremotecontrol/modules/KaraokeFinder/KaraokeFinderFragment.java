@@ -50,7 +50,7 @@ public class KaraokeFinderFragment extends Fragment implements KaraokeFinderCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_karaoke_finder, container, false);
-
+        view.findViewById(R.id.navigation_back_btn).setOnClickListener(view1 -> presenter.performBack());
         karaokeList = view.findViewById(R.id.karaoke_finder_list_view);
         adapter = new ListViewAdapter();
         adapter.setupDelegate(this);

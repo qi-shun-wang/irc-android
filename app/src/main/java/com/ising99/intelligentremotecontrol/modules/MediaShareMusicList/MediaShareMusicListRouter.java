@@ -16,8 +16,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaSha
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicList.MediaShareMusicListContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicPlayer.MediaShareMusicPlayerRouter;
-import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
-import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerFragment;
+import com.ising99.intelligentremotecontrol.modules.BaseNavigator;
 
 import org.fourthline.cling.model.meta.Device;
 
@@ -35,7 +34,7 @@ public class MediaShareMusicListRouter implements Wireframe, MediaShareDMRListFr
     private Context context;
     private Presenter presenter;
     private View view;
-    private Navigator navigator;
+    private BaseNavigator navigator;
     private DLNAMediaManagerProtocol manager;
     private MediaShareDMRListFragment dmrList;
 
@@ -43,7 +42,7 @@ public class MediaShareMusicListRouter implements Wireframe, MediaShareDMRListFr
         this.context = context;
     }
 
-    public static MediaShareMusicListFragment setupModule(Context context, String title, List<Music> collection, DLNAMediaManagerProtocol manager, Navigator navigator) {
+    public static MediaShareMusicListFragment setupModule(Context context, String title, List<Music> collection, DLNAMediaManagerProtocol manager, BaseNavigator navigator) {
 
         MediaShareMusicListFragment view = new MediaShareMusicListFragment();
         MediaShareMusicListInteractor interactor = new MediaShareMusicListInteractor(context, collection, manager);

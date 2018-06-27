@@ -4,6 +4,7 @@
     <string name="root_tab_kod_text">愛唱點歌</string>
     <string name="root_tab_web_text">網址導航</string>
     <string name="root_tab_mod_text">Hami影視</string>
+    <string name="root_tab_screen_sharing_text">螢幕分享</string>
     <string name="root_tab_more_text">更多</string>
     <string name="root_tab_share_text">媒體分享</string>
     <string name="root_wifi_text">尚未連接設備</string>
@@ -25,6 +26,9 @@
 
 
     <string name="media_share">媒體分享</string>
+    <string name="karaoke">愛唱點歌</string>
+    <string name="karaoke_favorite">愛唱收藏</string>
+    <string name="karaoke_artist_finder">找歌趣</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

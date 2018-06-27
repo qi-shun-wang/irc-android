@@ -111,4 +111,9 @@ public class KaraokeFavoriteCollectionPresenter implements Presenter, Interactor
         view.updateBookmarkToolBar(bookmarks.get(bookmarks.size()-1).getName());
         view.reloadBookmarkList(bookmarks);
     }
+
+    @Override
+    public void performBack() {
+        router.navigateBack();
+    }
 }

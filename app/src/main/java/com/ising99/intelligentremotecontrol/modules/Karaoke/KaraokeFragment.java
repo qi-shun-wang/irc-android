@@ -48,6 +48,8 @@ public class KaraokeFragment extends Fragment implements KaraokeContracts.View ,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_karaoke, container, false);
+        view.findViewById(R.id.karaoke_finder_btn).setOnClickListener((v)->presenter.navigateToFinder());
+        view.findViewById(R.id.karaoke_favorite_btn).setOnClickListener((v)->presenter.navigateToFavorite());
         listView = view.findViewById(R.id.karaoke_recycler_view);
         adapter = new ListViewAdapter();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL,false);

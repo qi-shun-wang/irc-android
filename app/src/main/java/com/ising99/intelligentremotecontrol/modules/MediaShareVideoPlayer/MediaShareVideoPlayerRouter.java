@@ -8,7 +8,7 @@ import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListFragmentDelegate;
 import com.ising99.intelligentremotecontrol.modules.MediaShareDMRList.MediaShareDMRListRouter;
-import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
+import com.ising99.intelligentremotecontrol.modules.BaseNavigator;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoPlayer.MediaShareVideoPlayerContracts.Presenter;
@@ -29,14 +29,14 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
     private Context context;
     private Presenter presenter;
     private View view;
-    private Navigator navigator;
+    private BaseNavigator navigator;
     private MediaShareDMRListFragment dmrList;
 
     private MediaShareVideoPlayerRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareVideoPlayerFragment setupModule(Context context, String backTitle, Video asset, DLNAMediaManagerProtocol manager, Navigator navigator) {
+    public static MediaShareVideoPlayerFragment setupModule(Context context, String backTitle, Video asset, DLNAMediaManagerProtocol manager, BaseNavigator navigator) {
 
         MediaShareVideoPlayerFragment view = new MediaShareVideoPlayerFragment();
         MediaShareVideoPlayerInteractor interactor = new MediaShareVideoPlayerInteractor(context, asset, manager);

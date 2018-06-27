@@ -23,6 +23,7 @@ public interface KaraokeArtistFinderContracts extends BaseContracts {
         void performTypeSelectAt(int tag);
         void performAreaSelectAt(int position);
         void performArtistSelectAt(int position);
+        void performBack();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -34,6 +35,7 @@ public interface KaraokeArtistFinderContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-
+        void navigateBack();
+        void presentKaraokeFinder();
     }
 }

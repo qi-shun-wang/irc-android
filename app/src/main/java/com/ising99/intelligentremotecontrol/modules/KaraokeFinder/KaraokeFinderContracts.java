@@ -22,6 +22,7 @@ public interface KaraokeFinderContracts extends BaseContracts {
 
     interface Presenter extends BaseContracts.Presenter {
         void didSelectedAt(int position, int height);
+        void performBack();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -33,6 +34,6 @@ public interface KaraokeFinderContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-
+        void navigateBack();
     }
 }

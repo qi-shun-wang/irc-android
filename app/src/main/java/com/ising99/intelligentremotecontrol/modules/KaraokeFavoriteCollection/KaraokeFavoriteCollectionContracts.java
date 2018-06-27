@@ -22,6 +22,7 @@ public interface KaraokeFavoriteCollectionContracts extends BaseContracts {
     interface Presenter extends BaseContracts.Presenter {
         void didSelectedAt(int position);
         void performBookmarkCreation(String name);
+        void performBack();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -33,6 +34,6 @@ public interface KaraokeFavoriteCollectionContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-
+        void navigateBack();
     }
 }

@@ -3,7 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.MediaShareVideoList;
 import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
-import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
+import com.ising99.intelligentremotecontrol.modules.BaseNavigator;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.Video;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoList.MediaShareVideoListContracts.Presenter;
@@ -23,14 +23,14 @@ public class MediaShareVideoListRouter implements Wireframe {
     private Context context;
     private Presenter presenter;
     private View view;
-    private Navigator navigator;
+    private BaseNavigator navigator;
     private DLNAMediaManagerProtocol manager;
 
     private MediaShareVideoListRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareVideoListFragment setupModule(Context context, DLNAMediaManagerProtocol manager, List<Video> collection, String title, Navigator navigator) {
+    public static MediaShareVideoListFragment setupModule(Context context, DLNAMediaManagerProtocol manager, List<Video> collection, String title, BaseNavigator navigator) {
 
         MediaShareVideoListFragment view = new MediaShareVideoListFragment();
         MediaShareVideoListInteractor interactor = new MediaShareVideoListInteractor(context, collection);

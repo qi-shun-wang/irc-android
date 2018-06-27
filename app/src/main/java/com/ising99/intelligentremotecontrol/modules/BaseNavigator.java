@@ -1,4 +1,4 @@
-package com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper;
+package com.ising99.intelligentremotecontrol.modules;
 
 import android.app.Fragment;
 
@@ -7,7 +7,7 @@ import android.app.Fragment;
  * .
  */
 
-public interface Navigator {
+public interface BaseNavigator {
     void push(Fragment fragment);
     Fragment pop();
 }

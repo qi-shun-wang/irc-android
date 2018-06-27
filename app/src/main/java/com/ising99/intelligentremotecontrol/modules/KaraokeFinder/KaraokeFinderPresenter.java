@@ -87,4 +87,9 @@ public class KaraokeFinderPresenter implements Presenter, InteractorOutput {
     public void didSelectedAt(int position, int height) {
         view.showControlPanelAt(position*height, height);
     }
+
+    @Override
+    public void performBack() {
+        router.navigateBack();
+    }
 }

@@ -57,12 +57,13 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
 //        view.updateNetworkStatus("尚未連接WiFi");
         view.setupDisconnectedDeviceImage();
         view.updateConnectedDeviceStatus("尚未連接到設備");
-        interactor.checkWiFiStatus();
     }
 
     @Override
     public void onResume() {
         isViewDetach = false;
+        isDeviceConnected = false;
+        interactor.checkWiFiStatus();
     }
 
     @Override

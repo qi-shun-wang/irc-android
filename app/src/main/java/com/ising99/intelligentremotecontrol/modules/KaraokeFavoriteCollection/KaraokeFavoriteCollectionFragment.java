@@ -54,6 +54,7 @@ public class KaraokeFavoriteCollectionFragment extends Fragment implements Karao
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_karaoke_favorite_collection, container, false);
+        view.findViewById(R.id.navigation_back_btn).setOnClickListener((view1 -> presenter.performBack()));
         bookmarkList = view.findViewById(R.id.karaoke_favorite_collection_bookmark_list_view);
         bookmarkAdapter = new BookmarkListViewAdapter();
         bookmarkAdapter.setupDelegate(this);

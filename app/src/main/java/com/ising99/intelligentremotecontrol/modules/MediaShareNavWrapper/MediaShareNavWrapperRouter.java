@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
+import com.ising99.intelligentremotecontrol.modules.BaseNavigator;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareRouter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperContracts.Wireframe;
@@ -14,7 +15,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaSh
 import java.util.ArrayList;
 import java.util.List;
 
-public class MediaShareNavWrapperRouter implements Wireframe ,Navigator {
+public class MediaShareNavWrapperRouter implements Wireframe, BaseNavigator {
 
     private Context context;
     private Presenter presenter;

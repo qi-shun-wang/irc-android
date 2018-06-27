@@ -104,6 +104,11 @@ public class KaraokeArtistFinderPresenter implements Presenter, InteractorOutput
 
     @Override
     public void performArtistSelectAt(int position) {
+        router.presentKaraokeFinder();
+    }
 
+    @Override
+    public void performBack() {
+        router.navigateBack();
     }
 }

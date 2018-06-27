@@ -20,7 +20,8 @@ public interface KaraokeContracts extends BaseContracts {
     }
 
     interface Presenter extends BaseContracts.Presenter {
-
+        void navigateToFinder();
+        void navigateToFavorite();
     }
 
     interface Interactor extends BaseContracts.Interactor {
@@ -32,6 +33,7 @@ public interface KaraokeContracts extends BaseContracts {
     }
 
     interface Wireframe extends BaseContracts.Wireframe {
-
+        void presentKaraokeFavoriteCollection();
+        void presentKaraokeArtistFinder();
     }
 }

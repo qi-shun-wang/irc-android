@@ -8,7 +8,7 @@ import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContrac
 import com.ising99.intelligentremotecontrol.modules.MediaShare.MediaShareContracts.View;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListRouter;
-import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.Navigator;
+import com.ising99.intelligentremotecontrol.modules.BaseNavigator;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaSharePhotoGroupList.MediaSharePhotoGroupListRouter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareVideoGroupList.MediaShareVideoGroupListFragment;
@@ -24,13 +24,13 @@ public class MediaShareRouter implements Wireframe {
     private Context context;
     private Presenter presenter;
     private View view;
-    private Navigator navigator;
+    private BaseNavigator navigator;
     private DLNAMediaManagerProtocol manager;
     private MediaShareRouter(Context context) {
         this.context = context;
     }
 
-    public static MediaShareFragment setupModule(Context context, Navigator navigator, DLNAMediaManagerProtocol manager) {
+    public static MediaShareFragment setupModule(Context context, BaseNavigator navigator, DLNAMediaManagerProtocol manager) {
 
         MediaShareFragment view = new MediaShareFragment();
         MediaShareInteractor interactor = new MediaShareInteractor(context);

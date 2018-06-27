@@ -55,6 +55,7 @@ public class KaraokeArtistFinderFragment extends Fragment implements KaraokeArti
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (ViewGroup) inflater.inflate(R.layout.fragment_karaoke_artist_finder, container, false);
+        view.findViewById(R.id.navigation_back_btn).setOnClickListener(view1 -> presenter.performBack());
         types = new ArrayList<>();
         types.add(view.findViewById(R.id.karaoke_artist_type_0));
         types.add(view.findViewById(R.id.karaoke_artist_type_1));

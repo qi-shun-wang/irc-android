@@ -3,6 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.KaraokeFavoriteCollection;
 import android.content.Context;
 import android.app.Fragment;
 
+import com.ising99.intelligentremotecontrol.modules.BaseNavigator;
 import com.ising99.intelligentremotecontrol.modules.KaraokeFavoriteCollection.KaraokeFavoriteCollectionContracts.Wireframe;
 import com.ising99.intelligentremotecontrol.modules.KaraokeFavoriteCollection.KaraokeFavoriteCollectionContracts.Presenter;
 import com.ising99.intelligentremotecontrol.modules.KaraokeFavoriteCollection.KaraokeFavoriteCollectionContracts.View;
@@ -17,12 +18,13 @@ public class KaraokeFavoriteCollectionRouter implements Wireframe {
     private Context context;
     private Presenter presenter;
     private View view;
+    private BaseNavigator navigator;
 
-    public KaraokeFavoriteCollectionRouter(Context context) {
+    private KaraokeFavoriteCollectionRouter(Context context) {
         this.context = context;
     }
 
-    public static KaraokeFavoriteCollectionFragment setupModule(Context context) {
+    public static KaraokeFavoriteCollectionFragment setupModule(Context context, BaseNavigator navigator) {
 
         KaraokeFavoriteCollectionFragment view = new KaraokeFavoriteCollectionFragment();
         KaraokeFavoriteCollectionInteractor interactor = new KaraokeFavoriteCollectionInteractor(context);
@@ -37,10 +39,15 @@ public class KaraokeFavoriteCollectionRouter implements Wireframe {
 
         router.view = view;
         router.presenter = presenter;
-
+        router.navigator = navigator;
         interactor.setupPresenter(presenter);
 
         return view;
+    }
+
+    @Override
+    public void navigateBack() {
+        navigator.pop();
     }
 }
 

@@ -69,6 +69,7 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
 
     @Override
     public void setupCurrentRemoteAsset(int index) {
+        if (index >= selectedPhotos.size()) return;
         try {
             String path = URLEncoder.encode( selectedPhotos.get(index).getFilePath(), "UTF-8");
             manager.setAVTransportURI("/image" + path, new DLNAMediaManagerCallback.Common() {
@@ -106,6 +107,7 @@ public class MediaSharePhotoListInteractor implements MediaSharePhotoListContrac
     @Override
     public void performRemoteStop() {
         manager.stop((invocation, operation, defaultMsg) -> output.didStopRemoteAssetFailure());
+
     }
 }
 

@@ -126,7 +126,7 @@ public class CircularButton extends ViewGroup {
 
         if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
         {
-            if (!outerRegion.contains(point.x, point.y)) return true;
+            if (!outerRegion.contains(point.x, point.y)) return false;
 
             if(centerRegion.contains(point.x, point.y))
             {

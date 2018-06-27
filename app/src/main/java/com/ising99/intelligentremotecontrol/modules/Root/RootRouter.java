@@ -7,6 +7,8 @@ import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.KaraokeFavoriteCollection.KaraokeFavoriteCollectionFragment;
 import com.ising99.intelligentremotecontrol.modules.KaraokeFavoriteCollection.KaraokeFavoriteCollectionRouter;
+import com.ising99.intelligentremotecontrol.modules.KaraokeNavWrapper.KaraokeNavWrapperFragment;
+import com.ising99.intelligentremotecontrol.modules.KaraokeNavWrapper.KaraokeNavWrapperRouter;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperFragment;
 import com.ising99.intelligentremotecontrol.modules.MediaShareNavWrapper.MediaShareNavWrapperRouter;
 import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Wireframe;
@@ -14,6 +16,8 @@ import com.ising99.intelligentremotecontrol.modules.Root.RootContracts.Presenter
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCFragment;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCRouter;
+import com.ising99.intelligentremotecontrol.modules.ScreenSharing.ScreenSharingFragment;
+import com.ising99.intelligentremotecontrol.modules.ScreenSharing.ScreenSharingRouter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,20 +62,22 @@ public class RootRouter implements Wireframe {
 //        KaraokeFragment karaoke = KaraokeRouter.setupModule(context);
 //        KaraokeArtistFinderFragment karaoke = KaraokeArtistFinderRouter.setupModule(context);
 //        KaraokeFinderFragment karaokeFinder = KaraokeFinderRouter.setupModule(context);
-        KaraokeFavoriteCollectionFragment karaokeFavoriteCollectionFragment = KaraokeFavoriteCollectionRouter.setupModule(context);
+//        KaraokeFavoriteCollectionFragment karaokeFavoriteCollectionFragment = KaraokeFavoriteCollectionRouter.setupModule(context);
 
 //        MoreFragment more = MoreRouter.setupModule(context);
 //        WebBrowserFragment web = WebBrowserRouter.setupModule(context);
 //        MovieFragment movie = MovieRouter.setupModule(context);
 //        MediaShareFragment mediaShare = MediaShareRouter.setupModule(context);
-
         MediaShareNavWrapperFragment mediaShare = MediaShareNavWrapperRouter.setupModule(context, manager);
+//        KaraokeNavWrapperFragment karaoke = KaraokeNavWrapperRouter.setupModule(context);
+//        ScreenSharingFragment screenSharing = ScreenSharingRouter.setupModule(context);
         router.fragments.add(irc);
 
 //        router.fragments.add(web);
 //        router.fragments.add(more);
         router.fragments.add(mediaShare);
-        router.fragments.add(karaokeFavoriteCollectionFragment);
+//        router.fragments.add(karaoke);
+//        router.fragments.add(screenSharing);
 //        router.fragments.add(movie);
         return view;
     }

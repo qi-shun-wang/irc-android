@@ -62,7 +62,7 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
     public void presentDMRList() {
         dmrList =  MediaShareDMRListRouter.setupModule(context,this,true);
 
-        Blurry.with(((MediaShareVideoPlayerFragment)view).getActivity().getApplicationContext()).radius(10).sampling(2).onto(((MediaShareVideoPlayerFragment)view).getActivity().findViewById(R.id.media_share_video_player_container));
+//        Blurry.with(((MediaShareVideoPlayerFragment)view).getActivity().getApplicationContext()).radius(10).sampling(2).onto(((MediaShareVideoPlayerFragment)view).getActivity().findViewById(R.id.media_share_video_player_container));
         FragmentTransaction fragmentTransaction = ((MediaShareVideoPlayerFragment)view).getFragmentManager().beginTransaction();
 
         fragmentTransaction.setCustomAnimations(R.animator.slide_in_up,R.animator.slide_out_down,R.animator.slide_in_up,R.animator.slide_out_down);
@@ -77,7 +77,7 @@ public class MediaShareVideoPlayerRouter implements Wireframe, MediaShareDMRList
 
     @Override
     public void didClosed() {
-        Blurry.delete(((MediaShareVideoPlayerFragment)view).getActivity().findViewById(R.id.media_share_video_player_container));
+//        Blurry.delete(((MediaShareVideoPlayerFragment)view).getActivity().findViewById(R.id.media_share_video_player_container));
         ((MediaShareVideoPlayerFragment) view).getFragmentManager().beginTransaction().detach(dmrList).commit();
         dmrList = null;
     }

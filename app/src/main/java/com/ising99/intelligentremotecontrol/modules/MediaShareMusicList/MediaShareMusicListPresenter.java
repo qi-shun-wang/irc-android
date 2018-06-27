@@ -98,6 +98,7 @@ public class MediaShareMusicListPresenter implements Presenter, InteractorOutput
         if (interactor.isDeviceConnected())
         {
             view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
+
             interactor.clearCurrentDevice();
         }
         else

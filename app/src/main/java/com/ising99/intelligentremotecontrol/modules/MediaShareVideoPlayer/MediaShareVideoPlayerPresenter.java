@@ -122,6 +122,8 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
             player.setDataSource(interactor.getVideoAsset().getFilePath());
             player.prepare();
             player.seekTo(0);
+            player.start();
+            view.updatePlaybackIconWith(R.drawable.media_share_pause_icon);
             prepareWorker();
         } catch (IOException e){
             e.printStackTrace();
@@ -206,6 +208,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
             view.showWarningBadge("媒體準備播放...");
             interactor.setupCurrentDevice(device);
             interactor.setupCurrentRemoteAsset();
+            currentTimeInterval = 0;
         }
         else
         {
@@ -217,9 +220,17 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
     public void didTapOnCast() {
         if (isRemoteMode)
         {
+            interactor.clearConnectedDevice();
             isRemoteMode = false;
             view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
-            interactor.clearConnectedDevice();
+            currentTimeInterval = 0;
+            player.seekTo(0);
+            int duration = (int) interactor.getVideoAsset().getDuration();
+            view.updateEndTimeLabel("-" + transformedFrom((duration)));
+            view.updateCurrentTimeLabel(transformedFrom(0));
+            view.updateSeekBarLocation(0);
+            view.updatePlaybackIconWith(R.drawable.media_share_play_icon);
+
         }
         else
         {
@@ -287,7 +298,7 @@ public class MediaShareVideoPlayerPresenter implements Presenter, InteractorOutp
                     }
                 }
             }
-        },0,500);
+        },0,1000);
     }
 
     @Override

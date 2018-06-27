@@ -1,5 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.MediaShareMusicList;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.view.animation.AnimationUtils;
@@ -37,6 +38,7 @@ public class MediaShareMusicListRouter implements Wireframe, MediaShareDMRListFr
     private BaseNavigator navigator;
     private DLNAMediaManagerProtocol manager;
     private MediaShareDMRListFragment dmrList;
+    private MediaShareMusicPlayerFragment mediaShareMusicPlayerFragment;
 
     private MediaShareMusicListRouter(Context context) {
         this.context = context;
@@ -64,7 +66,7 @@ public class MediaShareMusicListRouter implements Wireframe, MediaShareDMRListFr
 
         return view;
     }
-    MediaShareMusicPlayerFragment mediaShareMusicPlayerFragment;
+
     @Override
     public void presentMediaPlayerWith(List<Music> assets, int position) {
 
@@ -87,7 +89,7 @@ public class MediaShareMusicListRouter implements Wireframe, MediaShareDMRListFr
     public void presentDMRList() {
         dmrList =  MediaShareDMRListRouter.setupModule(context,this,true);
         MediaShareMusicListFragment ref = (MediaShareMusicListFragment)view;
-        Blurry.with(ref.getActivity().getApplicationContext()).radius(10).sampling(2).onto(ref.getActivity().findViewById(R.id.media_share_media_player_container));
+//        Blurry.with(ref.getActivity().getApplicationContext()).radius(10).sampling(2).onto(ref.getActivity().findViewById(R.id.media_share_media_player_container));
         FragmentTransaction fragmentTransaction = ((MediaShareMusicListFragment)view).getFragmentManager().beginTransaction();
 
         fragmentTransaction.setCustomAnimations(R.animator.slide_in_up,R.animator.slide_out_down,R.animator.slide_in_up,R.animator.slide_out_down);
@@ -98,14 +100,14 @@ public class MediaShareMusicListRouter implements Wireframe, MediaShareDMRListFr
     @Override
     public void dismissCurrentPlayer() {
             if (mediaShareMusicPlayerFragment!=null){
-                FragmentTransaction fragmentTransaction = mediaShareMusicPlayerFragment.getFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = ((Fragment)view).getFragmentManager().beginTransaction();
                 fragmentTransaction.remove(mediaShareMusicPlayerFragment).commit();
             }
     }
 
     @Override
     public void didClosed() {
-        Blurry.delete(((MediaShareMusicListFragment)view).getActivity().findViewById(R.id.media_share_media_player_container));
+//        Blurry.delete(((MediaShareMusicListFragment)view).getActivity().findViewById(R.id.media_share_media_player_container));
         ((MediaShareMusicListFragment) view).getFragmentManager().beginTransaction().detach(dmrList).commit();
         dmrList = null;
     }

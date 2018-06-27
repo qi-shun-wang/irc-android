@@ -92,7 +92,10 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void didTapOnCast() {
-        if (interactor.isDeviceConnected()) prepareCasting();
+        if (interactor.isDeviceConnected()) {
+            if (worker!= null) worker.cancel();
+            prepareCasting();
+        }
         else router.presentDMRList();
     }
 
@@ -100,6 +103,8 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
     public void didSelected(Device device) {
         isFirstPerformedCasting = false;
         interactor.setupCurrentDevice(device);
+        if (interactor.isDeviceConnected()) view.updateCastButtonWith(R.drawable.media_share_cast_red_icon);
+        else view.updateCastButtonWith(R.drawable.media_share_cast_gray_icon);
         prepareCasting();
     }
 
@@ -124,8 +129,8 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
             return;
         }
         view.showWarningBadge("媒體準備播放...");
-        interactor.setupSelectedPhotos(selectedPhotos);
         selectedIndex = 0;
+        interactor.setupSelectedPhotos(selectedPhotos);
         interactor.setupCurrentRemoteAsset(selectedIndex);
 
     }

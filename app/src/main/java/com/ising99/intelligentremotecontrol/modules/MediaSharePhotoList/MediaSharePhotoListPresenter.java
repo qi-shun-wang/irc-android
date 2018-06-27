@@ -87,6 +87,8 @@ public class MediaSharePhotoListPresenter implements Presenter, InteractorOutput
 
     @Override
     public void performBack() {
+        interactor.setupSelectedPhotos(new ArrayList<>());
+        interactor.setupCurrentRemoteAsset(0);
         router.navigateBack();
     }
 

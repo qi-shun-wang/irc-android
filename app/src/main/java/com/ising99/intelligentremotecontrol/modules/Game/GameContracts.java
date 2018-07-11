@@ -25,19 +25,22 @@ public interface GameContracts extends BaseContracts {
         void performYAction();
         void performAAction();
         void performBAction();
+        void performL1Action();
+        void performL2Action();
+        void performR1Action();
+        void performR2Action();
         void performThumbLeft(int angle,int strength);
+        void performThumbRight(int angle,int strength);
 
     }
 
     interface Interactor extends BaseContracts.Interactor {
-        void perform(SendCode code);
-        void performBegan(SendCode code);
-        void performEnd(SendCode code);
         void fetchGameEventNumber();
         void dispatchGameEvent(GameCode code);
         void dispatchDPad(GameCode code);
         void dispatchDPadBegan(GameCode code);
         void dispatchDPadEnd(GameCode code);
+        void dispatchAxis(GameCode code, String value);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {

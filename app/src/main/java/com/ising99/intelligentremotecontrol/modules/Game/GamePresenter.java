@@ -132,11 +132,41 @@ public class GamePresenter implements Presenter, InteractorOutput {
     }
 
     @Override
-    public void performThumbLeft(int angle, int strength) {
-        //x=rcos(angle)
-        //y=rcos(angle)
+    public void performL1Action() {
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_L1);
+    }
 
-        Log.d("Joystick",angle + " degree," + strength + " dl" + ",x=" +strength*Math.cos(angle) + ",y=" +strength*Math.sin(angle));
+    @Override
+    public void performL2Action() {
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_L2);
+    }
+
+    @Override
+    public void performR1Action() {
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_R1);
+    }
+
+    @Override
+    public void performR2Action() {
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_R2);
+    }
+
+    @Override
+    public void performThumbLeft(int angle, int strength) {
+        double x = strength*1000*Math.cos(Math.PI*angle/180);
+        double y = -strength*1000*Math.sin(Math.PI*angle/180);
+        interactor.dispatchAxis(GameCode.THUMB_L_AXIS_X,""+x);
+        interactor.dispatchAxis(GameCode.THUMB_L_AXIS_Y,""+y);
+        Log.d("Joystick",angle + " degree," + strength + " dl" + ",x=" +x+ ",y=" +y);
+    }
+
+    @Override
+    public void performThumbRight(int angle, int strength) {
+        double x = strength*1000*Math.cos(Math.PI*angle/180);
+        double y = -strength*1000*Math.sin(Math.PI*angle/180);
+        interactor.dispatchAxis(GameCode.THUMB_R_AXIS_X,""+x);
+        interactor.dispatchAxis(GameCode.THUMB_R_AXIS_Y,""+y);
+        Log.d("Joystick",angle + " degree," + strength + " dl" + ",x=" +x+ ",y=" +y);
     }
 
     @Override

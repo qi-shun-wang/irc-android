@@ -3,7 +3,6 @@ package com.ising99.intelligentremotecontrol.modules.Game;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +72,13 @@ public class GameFragment extends Fragment implements GameContracts.View {
             presenter.performThumbLeft(angle, strength);
         });
 
+        ((JoystickView)view.findViewById(R.id.irc_game_joystick_component2)).setOnMoveListener((angle, strength) -> {
+            presenter.performThumbRight(angle, strength);
+        });
+        view.findViewById(R.id.irc_game_l1_btn).setOnClickListener(view1 -> presenter.performL1Action());
+        view.findViewById(R.id.irc_game_l2_btn).setOnClickListener(view1 -> presenter.performL2Action());
+        view.findViewById(R.id.irc_game_r1_btn).setOnClickListener(view1 -> presenter.performR1Action());
+        view.findViewById(R.id.irc_game_r2_btn).setOnClickListener(view1 -> presenter.performR2Action());
         presenter.onCreate();
         return view;
     }

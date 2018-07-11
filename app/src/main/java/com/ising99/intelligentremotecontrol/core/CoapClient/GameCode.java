@@ -55,15 +55,10 @@ public enum GameCode {
 
     DPAD_RIGHT(16),
 
-    THUMB_L_AXIS_UP(-1),
-    THUMB_L_AXIS_DOWN(1),
-    THUMB_L_AXIS_LEFT(-0),
-    THUMB_L_AXIS_RIGHT(0),
-
-    THUMB_R_AXIS_UP(-4),
-    THUMB_R_AXIS_DOWN(4),
-    THUMB_R_AXIS_LEFT(-3),
-    THUMB_R_AXIS_RIGHT(3),
+    THUMB_L_AXIS_Y(1),
+    THUMB_L_AXIS_X(0),
+    THUMB_R_AXIS_Y(4),
+    THUMB_R_AXIS_X(3),
 
     ;
 

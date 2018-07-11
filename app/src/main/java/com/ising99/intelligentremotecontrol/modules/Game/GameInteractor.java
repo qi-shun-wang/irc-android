@@ -42,21 +42,6 @@ public class GameInteractor implements GameContracts.Interactor {
     }
 
     @Override
-    public void perform(SendCode code) {
-        service.send(code);
-    }
-
-    @Override
-    public void performBegan(SendCode code) {
-        service.sendBegan(code);
-    }
-
-    @Override
-    public void performEnd(SendCode code) {
-        service.sendEnd(code);
-    }
-
-    @Override
     public void fetchGameEventNumber() {
         service.detectGameEventNumber(new RemoteControlCoAPServiceCallback.Common() {
             @Override
@@ -90,6 +75,11 @@ public class GameInteractor implements GameContracts.Interactor {
     @Override
     public void dispatchDPadEnd(GameCode code) {
         service.sendGameDPadEventEnd(eventNumber, code);
+    }
+
+    @Override
+    public void dispatchAxis(GameCode code, String  value) {
+        service.sendGameAxisEvent(eventNumber,code,value);
     }
 
 

@@ -168,7 +168,9 @@ public final class RemoteControlCoAPService {
         client.setURI("coap://" + address + ":" + port + "/gameAxisEvent");
         String payload = eventNum
                 + ";"
-                + String.valueOf(Math.abs(code.getCode()))
+                + String.valueOf(code.getCode())
+                + ";"
+                + value
                 + ";";
         client.useNONs().post(handler, payload, MediaTypeRegistry.TEXT_PLAIN);
     }

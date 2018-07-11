@@ -1,10 +1,9 @@
-
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -143,18 +142,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="2"
-                                android:padding="8dp"
                                 android:background="@color/clear">
 
                                 <io.github.controlwear.virtual.joystick.android.JoystickView
                                     android:id="@+id/irc_game_joystick_component"
-                                    android:layout_width="115dp"
-                                    android:layout_height="115dp"
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
                                     android:layout_alignParentBottom="true"
                                     android:layout_alignParentStart="true"
                                     android:background="@drawable/irc_game_joystick_pad_icon"
                                     app:JV_borderWidth="4dp"
                                     app:JV_backgroundSizeRatio="50%"
+                                    app:JV_buttonColor="@color/white_transparent"
+                                    app:JV_buttonSizeRatio="40%"
+                                    app:JV_fixedCenter="false" />
+
+                                <io.github.controlwear.virtual.joystick.android.JoystickView
+                                    android:id="@+id/irc_game_joystick_component2"
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:background="@drawable/irc_game_joystick_pad_icon"
+                                    app:JV_backgroundSizeRatio="50%"
+                                    app:JV_borderWidth="4dp"
                                     app:JV_buttonColor="@color/white_transparent"
                                     app:JV_buttonSizeRatio="40%"
                                     app:JV_fixedCenter="false" />
@@ -173,7 +184,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:padding="8dp"
             android:background="@color/clear">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -252,4 +262,35 @@
         android:text="離開"
         />
 
+    <Button
+        android:id="@+id/irc_game_l1_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="L1" />
+
+    <Button
+        android:id="@+id/irc_game_l2_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/irc_game_l1_btn"
+        android:text="L2" />
+
+    <Button
+        android:id="@+id/irc_game_r1_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="R1" />
+
+    <Button
+        android:id="@+id/irc_game_r2_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/irc_game_r1_btn"
+        android:text="R2" />
 </RelativeLayout>

@@ -111,6 +111,7 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
     public void selectDeviceAt(int index, float x, float y, int width, int height) {
         view.updateKODImagePosition(x,y,width,height);
         interactor.persistReceived(devices.get(index));
+        view.stopScanAnimation();
     }
 
     @Override
@@ -162,10 +163,17 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
         if (device.getName() == null || device.getAddress() == null || device.getBackupAddress() == null){
             return;
         }
-        if (Objects.equals(device.getName(), "") || Objects.equals(device.getBackupAddress(), "")){
+        if (Objects.equals(device.getName(), "")){
             return;
         }
+        if (Objects.equals(device.getAddress(), "")){
+            return;
+        }
+        if (Objects.equals(device.getBackupAddress(), "")){
+            device.setBackupAddress(device.getAddress());
+        }
         devices.add(device);
+        view.reloadDeviceCollection(devices);
         Log.d("Device HashSet", "====>" + devices.size());
     }
 
@@ -173,7 +181,6 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
     public void didPersisted(Device device) {
         view.setupKodName(device.getName());
         view.startKODAnimation();
-
         worker.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -194,9 +201,11 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
             @Override
             public void run() {
                 router.dismissDeviceDiscovery();
+                worker.cancel();
             }
         }, 8000);
     }
+
 
     private void searchDevice(){
         worker = new Timer();
@@ -209,7 +218,8 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
             public void run() {
                 check();
             }
-        }, 5000);
+        }, 15000);
+
     }
 
     private void check() {
@@ -217,11 +227,12 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
         interactor.stopDeviceDiscoveryTask();
         boolean isWiFiConnected = interactor.checkWiFiStatus();
         if (isWiFiConnected){
-            if (devices.size()>0){
-                view.reloadDeviceCollection(devices);
-            } else {
+            if (devices.size() == 0){
                 view.showDeviceNotFound();
             }
+//            else {
+//                view.reloadDeviceCollection(devices);
+//            }
         } else {
             view.showConnectionFailed();
         }

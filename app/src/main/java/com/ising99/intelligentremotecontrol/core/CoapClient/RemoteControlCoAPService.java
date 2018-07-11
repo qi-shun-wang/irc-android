@@ -97,6 +97,82 @@ public final class RemoteControlCoAPService {
         }
     }
 
+    public void detectGameEventNumber(RemoteControlCoAPServiceCallback.Common callback) {
+        client.setURI("coap://"+address+":"+port+"/detectEvent");
+        client.useCONs().get(new CoapHandler() {
+            @Override
+            public void onLoad(CoapResponse response) {
+                Log.d("CoapResponse","====>"+response.getResponseText());
+                callback.didSuccessWith(response.getResponseText());
+            }
+
+            @Override
+            public void onError() {
+                callback.didFailure();
+                Log.d("CoapResponse","====>error????");
+            }
+        });
+    }
+
+    public void sendGameEvent(String eventNum, GameCode code) {
+        client.setURI("coap://"+address+":"+port+"/gameEvent");
+        String payload = eventNum + ";" + String.valueOf(code.getCode()) + ";";
+        client.useNONs().post(handler, payload, MediaTypeRegistry.TEXT_PLAIN);
+    }
+
+    public void sendGameEventBegan(String eventNum, GameCode code) {
+        client.setURI("coap://"+address+":"+port+"/gameEventBegan");
+        String payload = eventNum + ";" + String.valueOf(code.getCode()) + ";";
+        client.useNONs().post(handler, payload, MediaTypeRegistry.TEXT_PLAIN);
+    }
+
+    public void sendGameEventEnd(String eventNum, GameCode code) {
+        client.setURI("coap://"+address+":"+port+"/gameEventEnd");
+        String payload = eventNum + ";" + String.valueOf(code.getCode()) + ";";
+        client.useNONs().post(handler, payload, MediaTypeRegistry.TEXT_PLAIN);
+    }
+
+    public void sendGameDPadEvent(String eventNum, GameCode code) {
+        client.setURI("coap://"+address+":"+port+"/gameDPadEvent");
+        String payload = eventNum
+                + ";"
+                + String.valueOf(Math.abs(code.getCode()))
+                + ";"
+                + (code.getCode()>0? "1":"-1")
+                + ";";
+        client.useNONs().post(handler, payload, MediaTypeRegistry.TEXT_PLAIN);
+    }
+
+
+    public void sendGameDPadEventBegan(String eventNum, GameCode code) {
+        client.setURI("coap://"+address+":"+port+"/gameDPadBegan");
+        String payload = eventNum
+                + ";"
+                + String.valueOf(Math.abs(code.getCode()))
+                + ";"
+                + (code.getCode()>0? "1":"-1")
+                + ";";
+        client.useNONs().post(handler, payload, MediaTypeRegistry.TEXT_PLAIN);
+    }
+
+    public void sendGameDPadEventEnd(String eventNum, GameCode code) {
+        client.setURI("coap://"+address+":"+port+"/gameDPadEnd");
+        String payload = eventNum
+                + ";"
+                + String.valueOf(Math.abs(code.getCode()))
+                + ";";
+        client.useNONs().post(handler, payload, MediaTypeRegistry.TEXT_PLAIN);
+    }
+
+    public void sendGameAxisEvent(String eventNum, GameCode code, String value) {
+        client.setURI("coap://" + address + ":" + port + "/gameAxisEvent");
+        String payload = eventNum
+                + ";"
+                + String.valueOf(Math.abs(code.getCode()))
+                + ";";
+        client.useNONs().post(handler, payload, MediaTypeRegistry.TEXT_PLAIN);
+    }
+
     public String getAddress() {
         return address;
     }

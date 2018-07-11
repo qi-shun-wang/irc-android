@@ -32,6 +32,10 @@ public class Device {
         return Settings;
     }
 
+    public void setBackupAddress(String backupAddress) {
+        BackupAddress = backupAddress;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

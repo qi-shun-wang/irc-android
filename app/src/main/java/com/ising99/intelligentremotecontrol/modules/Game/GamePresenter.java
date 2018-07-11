@@ -1,7 +1,9 @@
 package com.ising99.intelligentremotecontrol.modules.Game;
 
+import android.util.Log;
+
 import com.ising99.intelligentremotecontrol.component.Action;
-import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
+import com.ising99.intelligentremotecontrol.core.CoapClient.GameCode;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Game.GameContracts.View;
 import com.ising99.intelligentremotecontrol.modules.Game.GameContracts.Interactor;
@@ -49,7 +51,7 @@ public class GamePresenter implements Presenter, InteractorOutput {
 
     @Override
     public void onCreate() {
-
+        interactor.fetchGameEventNumber();
     }
 
     @Override
@@ -69,63 +71,81 @@ public class GamePresenter implements Presenter, InteractorOutput {
     @Override
     public void performTouchOn(Action action) {
         switch (action){
-            case up:interactor.perform(SendCode.KEYCODE_DPAD_UP);break;
-            case down:interactor.perform(SendCode.KEYCODE_DPAD_DOWN);break;
-            case right:interactor.perform(SendCode.KEYCODE_DPAD_RIGHT);break;
-            case left:interactor.perform(SendCode.KEYCODE_DPAD_LEFT);break;
-            case center:interactor.perform(SendCode.KEYCODE_DPAD_CENTER);break;
+            case up:interactor.dispatchDPad(GameCode.DPAD_UP);break;
+            case down:interactor.dispatchDPad(GameCode.DPAD_DOWN);break;
+            case right:interactor.dispatchDPad(GameCode.DPAD_RIGHT);break;
+            case left:interactor.dispatchDPad(GameCode.DPAD_LEFT);break;
+            case center:break;
         }
     }
 
     @Override
     public void performTouchOnBegan(Action action) {
         switch (action){
-            case up:interactor.performBegan(SendCode.KEYCODE_DPAD_UP);break;
-            case down:interactor.performBegan(SendCode.KEYCODE_DPAD_DOWN);break;
-            case right:interactor.performBegan(SendCode.KEYCODE_DPAD_RIGHT);break;
-            case left:interactor.performBegan(SendCode.KEYCODE_DPAD_LEFT);break;
-            case center:interactor.performBegan(SendCode.KEYCODE_DPAD_CENTER);break;
+            case up:interactor.dispatchDPadBegan(GameCode.DPAD_UP);break;
+            case down:interactor.dispatchDPadBegan(GameCode.DPAD_DOWN);break;
+            case right:interactor.dispatchDPadBegan(GameCode.DPAD_RIGHT);break;
+            case left:interactor.dispatchDPadBegan(GameCode.DPAD_LEFT);break;
+            case center:break;
         }
     }
 
     @Override
     public void performTouchOnEnd(Action action) {
         switch (action){
-            case up:interactor.performEnd(SendCode.KEYCODE_DPAD_UP);break;
-            case down:interactor.performEnd(SendCode.KEYCODE_DPAD_DOWN);break;
-            case right:interactor.performEnd(SendCode.KEYCODE_DPAD_RIGHT);break;
-            case left:interactor.performEnd(SendCode.KEYCODE_DPAD_LEFT);break;
-            case center:interactor.performEnd(SendCode.KEYCODE_DPAD_CENTER);break;
+            case up:interactor.dispatchDPadEnd(GameCode.DPAD_UP);break;
+            case down:interactor.dispatchDPadEnd(GameCode.DPAD_DOWN);break;
+            case right:interactor.dispatchDPadEnd(GameCode.DPAD_RIGHT);break;
+            case left:interactor.dispatchDPadEnd(GameCode.DPAD_LEFT);break;
+            case center:break;
         }
     }
 
     @Override
     public void performStartAction() {
-
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_START);
     }
 
     @Override
     public void performSelectAction() {
-        interactor.perform(SendCode.KEYCODE_DPAD_CENTER);
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_SELECT);
     }
 
     @Override
     public void performXAction() {
-
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_X);
     }
 
     @Override
     public void performYAction() {
-
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_Y);
     }
 
     @Override
     public void performAAction() {
-
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_A);
     }
 
     @Override
     public void performBAction() {
+        interactor.dispatchGameEvent(GameCode.KEYCODE_BUTTON_B);
+    }
+
+    @Override
+    public void performThumbLeft(int angle, int strength) {
+        //x=rcos(angle)
+        //y=rcos(angle)
+
+        Log.d("Joystick",angle + " degree," + strength + " dl" + ",x=" +strength*Math.cos(angle) + ",y=" +strength*Math.sin(angle));
+    }
+
+    @Override
+    public void didFetchGameEventNumberFailure() {
+
+    }
+
+    @Override
+    public void didFetchGameEventNumberSuccess() {
 
     }
 }

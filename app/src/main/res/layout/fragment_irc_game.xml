@@ -95,7 +95,7 @@
                                     android:orientation="vertical"
                                     android:layout_weight="1">
                                     <ImageButton
-                                        android:id="@+id/irc_game_start_btn"
+                                        android:id="@+id/irc_game_select_btn"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="1"
@@ -109,7 +109,7 @@
                                         android:layout_weight="1"
                                         android:textStyle="italic"
                                         android:textColor="@color/white"
-                                        android:text="START"
+                                        android:text="SELECT"
                                         android:textSize="11sp"
                                         android:textAlignment="center"
                                         />
@@ -120,7 +120,7 @@
                                     android:orientation="vertical"
                                     android:layout_weight="1">
                                     <ImageButton
-                                        android:id="@+id/irc_game_select_btn"
+                                        android:id="@+id/irc_game_start_btn"
                                         android:layout_width="match_parent"
                                         android:layout_height="0dp"
                                         android:layout_weight="1"
@@ -135,7 +135,7 @@
                                         android:textAlignment="center"
                                         android:textStyle="italic"
                                         android:textSize="11sp"
-                                        android:text="SELECT"/>
+                                        android:text="START"/>
                                 </LinearLayout>
                             </LinearLayout>
 

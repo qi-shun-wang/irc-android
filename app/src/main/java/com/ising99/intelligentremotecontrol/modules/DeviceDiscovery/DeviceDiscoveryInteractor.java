@@ -50,6 +50,7 @@ public class DeviceDiscoveryInteractor implements DeviceDiscoveryContracts.Inter
     @Override
     public void persistReceived(Device device) {
         Log.v("Device model",device.toString());
+        ((App)context).getDaoSession().getDeviceEntityDao().deleteAll();
         List<DeviceEntity> devices = ((App)context).getDaoSession().getDeviceEntityDao().loadAll();
 
         boolean isExist = false;
@@ -58,7 +59,7 @@ public class DeviceDiscoveryInteractor implements DeviceDiscoveryContracts.Inter
             {
                 entity.setIsConnected(false);
             }
-            if (entity.getAddress().equals(device.getBackupAddress())) {
+            if (entity.getAddress().equals(device.getAddress())) {
                 isExist = true;
                 entity.setIsConnected(true);
                 entity.setName(device.getName());
@@ -68,7 +69,7 @@ public class DeviceDiscoveryInteractor implements DeviceDiscoveryContracts.Inter
             ((App)context).getDaoSession().getDeviceEntityDao().update(entity);
         }
         if (!isExist) {
-            DeviceEntity entity = new DeviceEntity(device.getBackupAddress(), device.getName(), device.getSettings(),true, new Date(), new Date());
+            DeviceEntity entity = new DeviceEntity(device.getAddress(), device.getName(), device.getSettings(),true, new Date(), new Date());
             ((App)context).getDaoSession().getDeviceEntityDao().insert(entity);
         }
         output.didPersisted(device);
@@ -91,19 +92,19 @@ public class DeviceDiscoveryInteractor implements DeviceDiscoveryContracts.Inter
     @Override
     public void startWireChecker() {
 
-        service.checkWireConnection(new RemoteControlCoAPServiceCallback.Common() {
-            @Override
-            public void didSuccessWith(String payload) {
-
-                Device device = new Gson().fromJson(payload, Device.class);
-                output.didReceived(device);
-            }
-
-            @Override
-            public void didFailure() {
-
-            }
-        });
+//        service.checkWireConnection(new RemoteControlCoAPServiceCallback.Common() {
+//            @Override
+//            public void didSuccessWith(String payload) {
+//
+//                Device device = new Gson().fromJson(payload, Device.class);
+//                output.didReceived(device);
+//            }
+//
+//            @Override
+//            public void didFailure() {
+//
+//            }
+//        });
     }
 
     @Override

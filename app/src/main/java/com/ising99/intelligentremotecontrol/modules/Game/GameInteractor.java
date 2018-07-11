@@ -1,19 +1,13 @@
 package com.ising99.intelligentremotecontrol.modules.Game;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.ising99.intelligentremotecontrol.App;
+import com.ising99.intelligentremotecontrol.core.CoapClient.GameCode;
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
+import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPServiceCallback;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
-import com.ising99.intelligentremotecontrol.db.DeviceEntity;
-import com.ising99.intelligentremotecontrol.db.DeviceEntityDao;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Game.GameContracts.InteractorOutput;
-
-import org.greenrobot.greendao.query.Query;
-
-import java.util.List;
 
 /**
  * Created by shun on 2018/4/20 上午 10:50:03.
@@ -34,6 +28,7 @@ public class GameInteractor implements GameContracts.Interactor {
         this(context);
         this.service = service;
     }
+    private String eventNumber = "2";
 
     @Override
     public void setupPresenter(BaseContracts.InteractorOutput output) {
@@ -48,50 +43,55 @@ public class GameInteractor implements GameContracts.Interactor {
 
     @Override
     public void perform(SendCode code) {
-        Query query = ((App)context).getDaoSession().getDeviceEntityDao().queryBuilder()
-                .where(DeviceEntityDao.Properties.IsConnected.ge(true))
-                .build();
-        List devices = query.list();
-        for (Object entity:devices) {
-            DeviceEntity device = (DeviceEntity) entity;
-            Log.d("Device is Connected",device.getName());
-            service.setAddress(device.getAddress());
-
-//            output.didConnectedToDevice(new Device(device.getAddress(),device.getName(),device.getSettings()));
-        }
         service.send(code);
     }
 
     @Override
     public void performBegan(SendCode code) {
-        Query query = ((App)context).getDaoSession().getDeviceEntityDao().queryBuilder()
-                .where(DeviceEntityDao.Properties.IsConnected.ge(true))
-                .build();
-        List devices = query.list();
-        for (Object entity:devices) {
-            DeviceEntity device = (DeviceEntity) entity;
-            Log.d("Device is Connected",device.getName());
-            service.setAddress(device.getAddress());
-
-//            output.didConnectedToDevice(new Device(device.getAddress(),device.getName(),device.getSettings()));
-        }
         service.sendBegan(code);
     }
 
     @Override
     public void performEnd(SendCode code) {
-        Query query = ((App)context).getDaoSession().getDeviceEntityDao().queryBuilder()
-                .where(DeviceEntityDao.Properties.IsConnected.ge(true))
-                .build();
-        List devices = query.list();
-        for (Object entity:devices) {
-            DeviceEntity device = (DeviceEntity) entity;
-            Log.d("Device is Connected",device.getName());
-            service.setAddress(device.getAddress());
-
-//            output.didConnectedToDevice(new Device(device.getAddress(),device.getName(),device.getSettings()));
-        }
         service.sendEnd(code);
     }
+
+    @Override
+    public void fetchGameEventNumber() {
+        service.detectGameEventNumber(new RemoteControlCoAPServiceCallback.Common() {
+            @Override
+            public void didSuccessWith(String payload) {
+                eventNumber = payload;
+                output.didFetchGameEventNumberSuccess();
+            }
+
+            @Override
+            public void didFailure() {
+                output.didFetchGameEventNumberFailure();
+            }
+        });
+    }
+
+    @Override
+    public void dispatchGameEvent(GameCode code) {
+        service.sendGameEvent(eventNumber, code);
+    }
+
+    @Override
+    public void dispatchDPad(GameCode code) {
+        service.sendGameDPadEvent(eventNumber, code);
+    }
+
+    @Override
+    public void dispatchDPadBegan(GameCode code) {
+        service.sendGameDPadEventBegan(eventNumber, code);
+    }
+
+    @Override
+    public void dispatchDPadEnd(GameCode code) {
+        service.sendGameDPadEventEnd(eventNumber, code);
+    }
+
+
 }
 

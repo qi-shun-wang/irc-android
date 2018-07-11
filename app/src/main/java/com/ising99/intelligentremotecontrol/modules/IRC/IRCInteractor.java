@@ -109,30 +109,33 @@ public class IRCInteractor implements IRCContracts.Interactor {
         List devices = query.list();
         if(devices.size() > 0) {
             DeviceEntity device = (DeviceEntity) devices.get(0);
-            Log.d("Device is Connected",device.getName());
             service.setAddress(device.getAddress());
-            service.ping(new RemoteControlCoAPServiceCallback.Common() {
-                @Override
-                public void didSuccessWith(String payload) {
-                    output.didConnectedToDevice(new Device(device.getAddress(),device.getAddress(),device.getName(),device.getSettings()));
-                }
-
-                @Override
-                public void didFailure() {
-                    List<DeviceEntity> devices = ((App)context).getDaoSession().getDeviceEntityDao().loadAll();
-
-                    for (DeviceEntity entity:devices) {
-                        entity.setIsConnected(false);
-                        entity.setUpdate_at(new Date());
-                        ((App)context).getDaoSession().getDeviceEntityDao().update(entity);
-                    }
-                    output.didLastConnectionInvalid();
-                }
-            });
-
-            return;
+            output.didConnectedToDevice(new Device(device.getAddress(),device.getAddress(),device.getName(),device.getSettings()));
+            Log.d("Device is Connected", device.getName());
+//            service.ping(new RemoteControlCoAPServiceCallback.Common() {
+//                @Override
+//                public void didSuccessWith(String payload) {
+//                    output.didConnectedToDevice(new Device(device.getAddress(),device.getAddress(),device.getName(),device.getSettings()));
+//                }
+//
+//                @Override
+//                public void didFailure() {
+//                    List<DeviceEntity> devices = ((App)context).getDaoSession().getDeviceEntityDao().loadAll();
+//
+//                    for (DeviceEntity entity:devices) {
+//                        entity.setIsConnected(false);
+//                        entity.setUpdate_at(new Date());
+//                        ((App)context).getDaoSession().getDeviceEntityDao().update(entity);
+//                    }
+//                    output.didLastConnectionInvalid();
+//                }
+//            });
+//
+//        }
+        }else{
+            output.didLastConnectionInvalid();
         }
-        output.didLastConnectionInvalid();
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.ising99.intelligentremotecontrol.modules.Game;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.ising99.intelligentremotecontrol.component.CircularButton;
 import com.ising99.intelligentremotecontrol.component.CircularButtonDelegate;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.Game.GameContracts.Presenter;
+
+import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 /**
  * Created by Shun on 2018/4/20 上午 10:50:03.
@@ -60,6 +63,16 @@ public class GameFragment extends Fragment implements GameContracts.View {
                 presenter.performTouchOnEnd(action);
             }
         });
+        view.findViewById(R.id.irc_game_y_btn).setOnClickListener(view1 -> presenter.performYAction());
+        view.findViewById(R.id.irc_game_x_btn).setOnClickListener(view1 -> presenter.performXAction());
+        view.findViewById(R.id.irc_game_a_btn).setOnClickListener(view1 -> presenter.performAAction());
+        view.findViewById(R.id.irc_game_b_btn).setOnClickListener(view1 -> presenter.performBAction());
+        view.findViewById(R.id.irc_game_select_btn).setOnClickListener(view1 -> presenter.performSelectAction());
+        view.findViewById(R.id.irc_game_start_btn).setOnClickListener(view1 -> presenter.performStartAction());
+        ((JoystickView)view.findViewById(R.id.irc_game_joystick_component)).setOnMoveListener((angle, strength) -> {
+            presenter.performThumbLeft(angle, strength);
+        });
+
         presenter.onCreate();
         return view;
     }

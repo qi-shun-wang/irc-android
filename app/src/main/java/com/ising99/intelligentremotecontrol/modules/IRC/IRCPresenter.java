@@ -331,7 +331,7 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
         }
         view.hideWarningBadge();
         interactor.checkLastConnectedDevice();
-        view.updateConnectedDeviceStatus("尚未連接到設備");
+//        view.updateConnectedDeviceStatus("尚未連接到設備");
     }
 
     @Override

@@ -62,6 +62,7 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
         void performRemoteStop();
         void performRemotePause();
         void performRemoteSeek(long timeInterval);
+        void performRemoteVolume(long value);
         void fetchRemotePosition();
         boolean isDeviceConnected();
         void clearConnectedDevice();
@@ -81,6 +82,8 @@ public interface MediaShareMusicPlayerPanelContracts extends BaseContracts {
 
         void didSeekRemoteAssetSuccess();
         void didSeekRemoteAssetFailure();
+
+        void didVolumeRemoteAssetFailure();
 
         void didFetchRemotePositionSuccess(int timeInterval);
         void didFetchRemotePositionFailure();

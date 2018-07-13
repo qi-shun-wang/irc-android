@@ -30,6 +30,10 @@ public interface DLNAMediaManagerProtocol {
 
     void getPositionInfo(DLNAMediaManagerCallback.Value callback);
 
+    void getVolume(DLNAMediaManagerCallback.Value callback);
+
+    void setVolume(long value, DLNAMediaManagerCallback.OneWay callback);
+
     /**
      * Go on playing the video from the position.
      *

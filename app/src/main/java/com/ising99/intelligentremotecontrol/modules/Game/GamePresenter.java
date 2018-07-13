@@ -153,8 +153,8 @@ public class GamePresenter implements Presenter, InteractorOutput {
 
     @Override
     public void performThumbLeft(int angle, int strength) {
-        double x = strength*1000*Math.cos(Math.PI*angle/180);
-        double y = -strength*1000*Math.sin(Math.PI*angle/180);
+        double x = strength*800*Math.cos(Math.PI*angle/180);
+        double y = -strength*800*Math.sin(Math.PI*angle/180);
         interactor.dispatchAxis(GameCode.THUMB_L_AXIS_X,""+x);
         interactor.dispatchAxis(GameCode.THUMB_L_AXIS_Y,""+y);
         Log.d("Joystick",angle + " degree," + strength + " dl" + ",x=" +x+ ",y=" +y);
@@ -162,8 +162,8 @@ public class GamePresenter implements Presenter, InteractorOutput {
 
     @Override
     public void performThumbRight(int angle, int strength) {
-        double x = strength*1000*Math.cos(Math.PI*angle/180);
-        double y = -strength*1000*Math.sin(Math.PI*angle/180);
+        double x = strength*800*Math.cos(Math.PI*angle/180);
+        double y = -strength*800*Math.sin(Math.PI*angle/180);
         interactor.dispatchAxis(GameCode.THUMB_R_AXIS_X,""+x);
         interactor.dispatchAxis(GameCode.THUMB_R_AXIS_Y,""+y);
         Log.d("Joystick",angle + " degree," + strength + " dl" + ",x=" +x+ ",y=" +y);

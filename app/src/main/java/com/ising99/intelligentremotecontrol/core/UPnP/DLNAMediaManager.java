@@ -21,6 +21,8 @@ import org.fourthline.cling.support.avtransport.callback.Seek;
 import org.fourthline.cling.support.avtransport.callback.SetAVTransportURI;
 import org.fourthline.cling.support.avtransport.callback.Stop;
 import org.fourthline.cling.support.model.PositionInfo;
+import org.fourthline.cling.support.renderingcontrol.callback.GetVolume;
+import org.fourthline.cling.support.renderingcontrol.callback.SetVolume;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -209,6 +211,50 @@ public class DLNAMediaManager implements DLNAMediaManagerProtocol ,RegistryListe
             localException.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void getVolume(DLNAMediaManagerCallback.Value callback) {
+        try {
+            Service localService = currentDevice.findService(new UDAServiceId("RenderingControl"));
+            if (localService != null) {
+                upnpService.getControlPoint().execute(new GetVolume(localService) {
+                    @Override
+                    public void received(ActionInvocation actionInvocation, int currentVolume) {
+                        callback.received(actionInvocation, currentVolume);
+                    }
+
+                    @Override
+                    public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+                        callback.failure(invocation, operation, defaultMsg);
+                    }
+                });
+            } else {
+                Log.e("null", "null");
+            }
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void setVolume(long value, DLNAMediaManagerCallback.OneWay callback) {
+        try {
+            Service localService = currentDevice.findService(new UDAServiceId("RenderingControl"));
+            if (localService != null) {
+                upnpService.getControlPoint().execute(new SetVolume(localService, value) {
+                    @Override
+                    public void failure(ActionInvocation invocation, UpnpResponse operation, String defaultMsg) {
+                        callback.failure(invocation, operation, defaultMsg);
+                    }
+                });
+            } else {
+                Log.e("null", "null");
+            }
+        } catch (Exception localException) {
+            localException.printStackTrace();
+        }
     }
 
     @Override

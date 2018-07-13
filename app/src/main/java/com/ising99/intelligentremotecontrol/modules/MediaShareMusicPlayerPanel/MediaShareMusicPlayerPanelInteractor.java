@@ -174,6 +174,13 @@ public class MediaShareMusicPlayerPanelInteractor implements MediaShareMusicPlay
     }
 
     @Override
+    public void performRemoteVolume(long value) {
+        manager.setVolume(value, (invocation, operation, defaultMsg) -> {
+            output.didVolumeRemoteAssetFailure();
+        });
+    }
+
+    @Override
     public void fetchRemotePosition() {
         manager.getPositionInfo(new DLNAMediaManagerCallback.Value() {
             @Override

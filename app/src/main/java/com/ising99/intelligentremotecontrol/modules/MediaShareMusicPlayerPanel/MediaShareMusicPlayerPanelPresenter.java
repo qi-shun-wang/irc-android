@@ -357,7 +357,11 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
             return;
         }
         currentVolume = scale;
+        if (isRemoteMode) {
+            interactor.performRemoteVolume(currentVolume*2);
+        }
         prepareVolumeWith(currentVolume, player);
+
     }
 
     @Override
@@ -513,6 +517,11 @@ public class MediaShareMusicPlayerPanelPresenter implements Presenter, Interacto
     @Override
     public void didSeekRemoteAssetFailure() {
         //TODO show warning badge
+    }
+
+    @Override
+    public void didVolumeRemoteAssetFailure() {
+
     }
 
     @Override

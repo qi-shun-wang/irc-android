@@ -16,7 +16,7 @@ public class MediaShareActivity extends Activity {
         setContentView(R.layout.activity_media_share);
 //        mediaShare = MediaShareRouter.setupModule(getApplicationContext());
 //        getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_container, mediaShare).commit();
-        findViewById(R.id.activity_media_share_close_btn).setOnClickListener((v)->finish());
+//        findViewById(R.id.activity_media_share_close_btn).setOnClickListener((v)->finish());
 
     }
 

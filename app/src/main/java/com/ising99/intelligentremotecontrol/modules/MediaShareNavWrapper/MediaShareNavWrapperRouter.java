@@ -55,22 +55,19 @@ public class MediaShareNavWrapperRouter implements Wireframe, BaseNavigator {
         MediaShareFragment mediaShare = MediaShareRouter.setupModule(context,this, manager);
         stack.clear();
         stack.add(mediaShare);
-        ((MediaShareNavWrapperFragment) view).getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_container,mediaShare).commit();
+        ((MediaShareNavWrapperFragment) view).getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_container,mediaShare).addToBackStack(mediaShare.getClass().getName()).commit();
     }
 
     @Override
     public void push(Fragment fragment) {
-        ((MediaShareNavWrapperFragment) view).getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_container,fragment).addToBackStack(null).commit();
+        ((MediaShareNavWrapperFragment) view).getFragmentManager().beginTransaction().replace(R.id.fragment_media_share_container,fragment).addToBackStack(fragment.getClass().getName()).commit();
         stack.add(fragment);
     }
 
     @Override
     public Fragment pop() {
         Fragment item = stack.remove(stack.size()-1);
-        ((MediaShareNavWrapperFragment) view).getFragmentManager().beginTransaction()
-                .replace(R.id.fragment_media_share_container,stack.get(stack.size()-1))
-                .remove(item)
-                .commit();
+        ((MediaShareNavWrapperFragment) view).getFragmentManager().popBackStack();
         return item;
     }
 }

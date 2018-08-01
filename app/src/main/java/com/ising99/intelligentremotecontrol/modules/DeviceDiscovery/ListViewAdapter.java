@@ -1,7 +1,5 @@
 package com.ising99.intelligentremotecontrol.modules.DeviceDiscovery;
 
-import android.graphics.drawable.AnimationDrawable;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
@@ -26,7 +25,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
     private BaseCollectionAdapterDelegate delegate;
     private List<Device> devices = new ArrayList<>();
-    private Handler handler = new Handler();
+//    private Handler handler = new Handler();
 
     @NonNull
     @Override
@@ -44,15 +43,15 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
         Device device = devices.get(position);
 
         holder.imageTitle.setText(device.getName());
+        Glide.with(holder.itemView.getContext()).load(R.drawable.kodpluswhite).into(holder.image);
+//        holder.image.setImageResource(R.drawable.kodpluswhite);
+//        holder.ring.setBackgroundResource(R.drawable.anim_ring);
+//        holder.finger.setBackgroundResource(R.drawable.anim_finger);
 
-        holder.image.setImageResource(R.drawable.kodpluswhite);
-        holder.ring.setBackgroundResource(R.drawable.anim_ring);
-        holder.finger.setBackgroundResource(R.drawable.anim_finger);
-
-        handler.post(() -> {
-            ((AnimationDrawable)holder.finger.getBackground()).start();
-            ((AnimationDrawable)holder.ring.getBackground()).start();
-        });
+//        handler.post(() -> {
+//            ((AnimationDrawable)holder.finger.getBackground()).start();
+//            ((AnimationDrawable)holder.ring.getBackground()).start();
+//        });
     }
 
     @Override
@@ -64,16 +63,16 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ViewHo
 
         AppCompatTextView imageTitle;
         ImageView image;
-        ImageView finger;
-        ImageView ring;
+//        ImageView finger;
+//        ImageView ring;
 
         ViewHolder(View itemView) {
             super(itemView);
 
             imageTitle = itemView.findViewById(R.id.text);
             image = itemView.findViewById(R.id.image);
-            finger = itemView.findViewById(R.id.finger);
-            ring = itemView.findViewById(R.id.ring);
+//            finger = itemView.findViewById(R.id.finger);
+//            ring = itemView.findViewById(R.id.ring);
 
             itemView.setOnClickListener(this);
         }

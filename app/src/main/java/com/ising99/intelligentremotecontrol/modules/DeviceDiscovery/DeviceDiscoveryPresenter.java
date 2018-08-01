@@ -110,8 +110,9 @@ public class DeviceDiscoveryPresenter implements Presenter, InteractorOutput {
     @Override
     public void selectDeviceAt(int index, float x, float y, int width, int height) {
         view.updateKODImagePosition(x,y,width,height);
-        interactor.persistReceived(devices.get(index));
         view.stopScanAnimation();
+        if (index == -1) return;
+        interactor.persistReceived(devices.get(index));
     }
 
     @Override

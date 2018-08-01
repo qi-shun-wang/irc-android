@@ -18,6 +18,7 @@
 
     <declare-styleable name="DirectionTouchPad">
         <attr name="dot_icon" format="reference" />
+        <attr name="scroll_icon" format="reference" />
     </declare-styleable>
 
 </resources>

@@ -14,12 +14,13 @@ import com.ising99.intelligentremotecontrol.R;
 
 public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGestureListener{
 
-    private static final float SWIPE_THRESHOLD = 50;
-    private static final float SWIPE_VELOCITY_THRESHOLD = 50;
-    private ImageView image;
+    private static final float SWIPE_THRESHOLD = 30;
+    private static final float SWIPE_VELOCITY_THRESHOLD = 10;
+    private ImageView dot;
+    private ImageView arrow;
     private int dX = 0;
     private int dY = 0;
-
+    private int eventPointer = 0;
 
 
     private DirectionTouchPadDelegate delegate;
@@ -31,35 +32,31 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
 
     @Override
     public boolean onDown(MotionEvent motionEvent) {
-        Log.i("TAG", "onDown: ");
         return true;
     }
 
     @Override
     public void onShowPress(MotionEvent motionEvent) {
-        image.setAlpha(1f);
-        image.setX(motionEvent.getX() - image.getWidth()/2 - dX);
-        image.setY(motionEvent.getY() - image.getHeight()/2 - dY);
-        Log.i("====>", "onShowPress: ");
+        dot.setAlpha(1f);
+        dot.setX(motionEvent.getX() - dot.getWidth()/2 - dX);
+        dot.setY(motionEvent.getY() - dot.getHeight()/2 - dY);
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent motionEvent) {
-        Log.i("====>", "onSingleTapUp: ");
         if (delegate == null) return false;
         delegate.didTouchOn(Action.center);
-        image.setAlpha(1f);
-        image.setX(motionEvent.getX() - image.getWidth()/2 - dX);
-        image.setY(motionEvent.getY() - image.getHeight()/2 - dY);
-        image.animate().alpha(0).setDuration(500).start();
+        dot.setX(motionEvent.getX() - dot.getWidth()/2 - dX);
+        dot.setY(motionEvent.getY() - dot.getHeight()/2 - dY);
+        dot.setAlpha(1f);
+        dot.animate().alpha(0).setDuration(500).start();
         return true;
     }
 
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        image.setX(image.getX() - v);
-        image.setY(image.getY() - v1);
-        Log.i("====>", "onScroll: "+v+"-"+v1+"-"+motionEvent.getAction());
+        dot.setX(dot.getX() - v);
+        dot.setY(dot.getY() - v1);
         return true;
     }
 
@@ -72,15 +69,23 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
 
         if (delegate == null) return false;
+        float diffY = motionEvent1.getY() - motionEvent.getY();
+        float diffX = motionEvent1.getX() - motionEvent.getX();
 
         boolean result = false;
 
         try {
-            float diffY = motionEvent1.getY() - motionEvent.getY();
-            float diffX = motionEvent1.getX() - motionEvent.getX();
-            image.setAlpha(0f);
-            if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(v) > SWIPE_VELOCITY_THRESHOLD) {
+            float absDX = Math.abs(diffX);
+            float absDY = Math.abs(diffY);
+            dot.setAlpha(0f);
+            if (absDX > absDY) {
+                if (eventPointer == 2)
+                {
+                    delegate.didTouchOn(Action.horizontal, diffX);
+                    eventPointer = 0;
+                    return  true;
+                }
+                if (absDX > SWIPE_THRESHOLD && Math.abs(v) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffX > 0) {
                         delegate.didTouchOn(Action.right);
                     } else {
@@ -89,7 +94,13 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
                     result = true;
                 }
             }
-            else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(v1) > SWIPE_VELOCITY_THRESHOLD) {
+            else if (absDY > SWIPE_THRESHOLD && Math.abs(v1) > SWIPE_VELOCITY_THRESHOLD) {
+                if (eventPointer == 2)
+                {
+                    delegate.didTouchOn(Action.vertical, diffY);
+                    eventPointer = 0;
+                    return  true;
+                }
                 if (diffY > 0) {
                     delegate.didTouchOn(Action.down);
                 } else {
@@ -117,11 +128,18 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
         if (attrs!=null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DirectionTouchPad);
             int touch_dot_resId = a.getResourceId(R.styleable.DirectionTouchPad_dot_icon, R.color.white);
-            image = new ImageView(context);
-            image.setBackgroundResource(touch_dot_resId);
-            image.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            image.setAlpha(0f);
-            addView(image,-1);
+            int touch_scroll_resId = a.getResourceId(R.styleable.DirectionTouchPad_scroll_icon, R.color.white);
+            dot = new ImageView(context);
+            dot.setBackgroundResource(touch_dot_resId);
+            dot.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            dot.setAlpha(0f);
+            arrow = new ImageView(context);
+            arrow.setBackgroundResource(touch_scroll_resId);
+            arrow.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            arrow.setAlpha(0f);
+
+            addView(dot);
+            addView(arrow);
             a.recycle();
         }
     }
@@ -133,11 +151,17 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
 
     @Override
     protected void onLayout(boolean b, int i, int i1, int i2, int i3) {
+
         View v = getChildAt(0);
         int length = Math.min(i2-i,i3-i1);
         dX = i;
         dY = i1;
         v.layout(i, i1,length/3, length/3);
+
+        View va = getChildAt(1);
+        va.layout(i, i1,length, length);
+
+
     }
 
     @Override
@@ -147,6 +171,17 @@ public class DirectionTouchPad extends ViewGroup implements GestureDetector.OnGe
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        if (event.getAction() == MotionEvent.ACTION_POINTER_2_DOWN) {
+            eventPointer = event.getPointerCount();
+            arrow.setAlpha(1f);
+            Log.i("MotionEvent", "ACTION_POINTER_D: " +"pointer:"+event.getPointerCount());
+        }
+
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            arrow.setAlpha(0f);
+        }
+
         performClick();
         return gesture.onTouchEvent(event);
     }

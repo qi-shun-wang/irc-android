@@ -2,13 +2,16 @@ package com.ising99.intelligentremotecontrol.modules.IRC.mode;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ising99.intelligentremotecontrol.R;
+import com.ising99.intelligentremotecontrol.component.Action;
 import com.ising99.intelligentremotecontrol.component.DirectionTouchPad;
+import com.ising99.intelligentremotecontrol.component.DirectionTouchPadDelegate;
 import com.ising99.intelligentremotecontrol.modules.IRC.IRCActionDelegate;
 
 /**
@@ -51,33 +54,43 @@ public class IRCTouchFragment extends Fragment {
             performAnimation();
         });
 
-        ((DirectionTouchPad)v.findViewById(R.id.irc_touch_dpad)).setDelegate((action ->
-        {
-            if (delegate == null) return;
-            delegate.dispatchDirection(action);
+        ((DirectionTouchPad)v.findViewById(R.id.irc_touch_dpad)).setDelegate(new DirectionTouchPadDelegate() {
+            @Override
+            public void didTouchOn(Action action) {
+                if (delegate == null) return;
+                delegate.dispatchDirection(action);
 
-            switch (action)
-            {
-                case up:
-                    image.setImageResource(R.drawable.irc_touch_arrow_up_icon);
-                    performAnimation();
-                    break;
-                case down:
-                    image.setImageResource(R.drawable.irc_touch_arrow_down_icon);
-                    performAnimation();
-                    break;
-                case left:
-                    image.setImageResource(R.drawable.irc_touch_arrow_left_icon);
-                    performAnimation();
-                    break;
-                case right:
-                    image.setImageResource(R.drawable.irc_touch_arrow_right_icon);
-                    performAnimation();
-                    break;
-                case center:
-                    break;
+                switch (action)
+                {
+                    case up:
+                        image.setImageResource(R.drawable.irc_touch_arrow_up_icon);
+                        performAnimation();
+                        break;
+                    case down:
+                        image.setImageResource(R.drawable.irc_touch_arrow_down_icon);
+                        performAnimation();
+                        break;
+                    case left:
+                        image.setImageResource(R.drawable.irc_touch_arrow_left_icon);
+                        performAnimation();
+                        break;
+                    case right:
+                        image.setImageResource(R.drawable.irc_touch_arrow_right_icon);
+                        performAnimation();
+                        break;
+                    case center:
+                        break;
+                }
             }
-        }));
+
+            @Override
+            public void didTouchOn(Action action, float shiftValue) {
+                delegate.dispatchDirection(action, shiftValue);
+//                image.setImageResource(R.drawable.irc_touch_arrow_vertical_icon);
+//                performAnimation();
+                Log.d("didTouchOn", "didTouchOn: "+action.toString()+":"+shiftValue);
+            }
+        });
 
         return v;
     }

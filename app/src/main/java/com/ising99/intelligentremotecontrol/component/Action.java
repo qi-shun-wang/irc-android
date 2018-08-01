@@ -10,7 +10,9 @@ public enum Action {
     down("down"),
     left("left"),
     right("right"),
-    center("center")
+    center("center"),
+    horizontal("horizontal"),
+    vertical("vertical")
     ;
 
     private final String value;
@@ -18,6 +20,7 @@ public enum Action {
     Action(String s) {
         value = s;
     }
+
     @Override
     public String toString() {
         return value;

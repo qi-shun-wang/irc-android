@@ -8,6 +8,7 @@ import com.ising99.intelligentremotecontrol.component.Action;
  */
 
 public interface IRCActionDelegate {
+    void dispatchDirection(Action action,float shiftValue);
     void dispatchDirection(Action action);
     void dispatchDirectionBegan(Action action);
     void dispatchDirectionEnd(Action action);

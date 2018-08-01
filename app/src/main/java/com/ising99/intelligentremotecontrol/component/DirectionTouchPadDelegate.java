@@ -7,4 +7,5 @@ package com.ising99.intelligentremotecontrol.component;
 
 public interface DirectionTouchPadDelegate {
     void didTouchOn(Action action);
+    void didTouchOn(Action action, float shiftValue);
 }

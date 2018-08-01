@@ -1,5 +1,6 @@
 package com.ising99.intelligentremotecontrol.modules.IRC;
 
+import com.ising99.intelligentremotecontrol.core.CoapClient.GameCode;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
@@ -36,6 +37,8 @@ public interface IRCContracts extends BaseContracts {
         String getAddress();
         void checkWiFiStatus();
         void checkLastConnectedDevice();
+        void fetchGameEventNumber();
+        void dispatchAxis(GameCode code, String value);
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
@@ -45,6 +48,8 @@ public interface IRCContracts extends BaseContracts {
         void didNotConnectedToWiFi();
         void didConnectedToDevice(Device device);
         void didLastConnectionInvalid();
+        void didFetchGameEventNumberFailure();
+        void didFetchGameEventNumberSuccess();
     }
 
     interface Wireframe extends BaseContracts.Wireframe {

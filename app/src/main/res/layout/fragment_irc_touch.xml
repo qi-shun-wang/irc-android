@@ -95,6 +95,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/outline"
             app:dot_icon="@drawable/irc_touch_dot_icon"
+            app:scroll_icon="@drawable/irc_touch_arrow_vertical_icon"
             />
     </RelativeLayout>
 

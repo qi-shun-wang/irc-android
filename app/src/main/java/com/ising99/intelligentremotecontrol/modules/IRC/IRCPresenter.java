@@ -1,6 +1,7 @@
 package com.ising99.intelligentremotecontrol.modules.IRC;
 
 import com.ising99.intelligentremotecontrol.component.Action;
+import com.ising99.intelligentremotecontrol.core.CoapClient.GameCode;
 import com.ising99.intelligentremotecontrol.core.CoapClient.SendCode;
 import com.ising99.intelligentremotecontrol.core.Device;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
@@ -83,13 +84,36 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     }
 
     @Override
+    public void dispatchDirection(Action action, float shiftValue) {
+        interactor.fetchGameEventNumber();
+        switch (action){
+            case vertical:
+                interactor.dispatchAxis(GameCode.THUMB_L_AXIS_Y,""+shiftValue*20);
+                break;
+            case horizontal:
+                interactor.dispatchAxis(GameCode.THUMB_L_AXIS_X,"-"+shiftValue*20);
+                break;
+        }
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                interactor.dispatchAxis(GameCode.THUMB_L_AXIS_Y,"-"+0.0);
+                interactor.dispatchAxis(GameCode.THUMB_L_AXIS_X,""+36000);
+            }
+        },500);
+    }
+
+    @Override
     public void dispatchDirection(Action action) {
         switch (action){
             case up:interactor.perform(SendCode.KEYCODE_DPAD_UP);break;
             case down:interactor.perform(SendCode.KEYCODE_DPAD_DOWN);break;
             case right:interactor.perform(SendCode.KEYCODE_DPAD_RIGHT);break;
             case left:interactor.perform(SendCode.KEYCODE_DPAD_LEFT);break;
-            case center:interactor.perform(SendCode.KEYCODE_DPAD_CENTER);break;
+            case center:
+                interactor.perform(SendCode.KEYCODE_DPAD_CENTER);
+                break;
         }
     }
 
@@ -321,6 +345,16 @@ public class IRCPresenter implements Presenter, InteractorOutput ,IRCActionDeleg
     public void didLastConnectionInvalid() {
         if (isViewDetach) return;
         view.updateConnectedDeviceStatus("尚未連接到設備");
+    }
+
+    @Override
+    public void didFetchGameEventNumberFailure() {
+
+    }
+
+    @Override
+    public void didFetchGameEventNumberSuccess() {
+
     }
 
     @Override

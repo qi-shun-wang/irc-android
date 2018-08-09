@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
+import com.ising99.intelligentremotecontrol.core.UPnP.DLNAMediaManagerProtocol;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;
 import com.ising99.intelligentremotecontrol.modules.MediaShareMusicGroupList.MediaShareMusicGroupListContracts.InteractorOutput;
 
@@ -23,11 +24,13 @@ public class MediaShareMusicGroupListInteractor implements MediaShareMusicGroupL
     private Context context;
     private HashMap<String, List<Music>> musicGroup ;
     private List<Music> musicList;
+    private DLNAMediaManagerProtocol manager;
 
-    MediaShareMusicGroupListInteractor(Context context) {
+    MediaShareMusicGroupListInteractor(Context context, DLNAMediaManagerProtocol manager) {
         this.context = context;
         this.musicGroup = new HashMap<>();
         this.musicList = new ArrayList<>();
+        this.manager = manager;
     }
 
     @Override
@@ -39,6 +42,12 @@ public class MediaShareMusicGroupListInteractor implements MediaShareMusicGroupL
     public void decompose() {
         output = null;
         context = null;
+    }
+
+
+    @Override
+    public void performRemoteStop() {
+        manager.stop((invocation, operation, defaultMsg) -> output.didStopRemoteAssetFailure());
     }
 
     @Override

@@ -23,10 +23,12 @@ public interface MediaShareMusicGroupListContracts extends BaseContracts {
 
     interface Interactor extends BaseContracts.Interactor {
         void prepareMusicAssets();
+        void performRemoteStop();
     }
 
     interface InteractorOutput extends BaseContracts.InteractorOutput {
         void didPreparedMusicAssets(HashMap<String, List<Music>> assets);
+        void didStopRemoteAssetFailure();
     }
 
     interface Wireframe extends BaseContracts.Wireframe {

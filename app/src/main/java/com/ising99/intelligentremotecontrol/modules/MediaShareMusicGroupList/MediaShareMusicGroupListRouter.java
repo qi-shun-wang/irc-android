@@ -32,7 +32,7 @@ public class MediaShareMusicGroupListRouter implements Wireframe {
     public static MediaShareMusicGroupListFragment setupModule(Context context, DLNAMediaManagerProtocol manager, BaseNavigator navigator) {
 
         MediaShareMusicGroupListFragment view = new MediaShareMusicGroupListFragment();
-        MediaShareMusicGroupListInteractor interactor = new MediaShareMusicGroupListInteractor(context);
+        MediaShareMusicGroupListInteractor interactor = new MediaShareMusicGroupListInteractor(context, manager);
         MediaShareMusicGroupListPresenter presenter = new MediaShareMusicGroupListPresenter();
         MediaShareMusicGroupListRouter router = new MediaShareMusicGroupListRouter(context);
 

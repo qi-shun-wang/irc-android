@@ -67,7 +67,7 @@ public class MediaShareMusicGroupListPresenter implements Presenter, InteractorO
 
     @Override
     public void onPause() {
-
+        interactor.performRemoteStop();
     }
 
     @Override
@@ -95,5 +95,10 @@ public class MediaShareMusicGroupListPresenter implements Presenter, InteractorO
             groups.add(key + "(" + assets.get(key).size() + ")");
         }
         view.updateListView(groups);
+    }
+
+    @Override
+    public void didStopRemoteAssetFailure() {
+
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseCollectionAdapterDelegate;
 
@@ -45,7 +46,7 @@ public class DMRListAdapter extends RecyclerView.Adapter<DMRListAdapter.ViewHold
         }
 
         holder.title.setText(title);
-//        holder.icon.setImageResource(R.drawable.kodpluswhite);
+        Glide.with(holder.itemView.getContext()).load(R.drawable.kodpluswhite).into(holder.icon);
 
     }
 

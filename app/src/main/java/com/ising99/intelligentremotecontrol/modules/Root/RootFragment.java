@@ -2,11 +2,9 @@ package com.ising99.intelligentremotecontrol.modules.Root;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.modules.BaseContracts;

@@ -7,7 +7,6 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
 
 import com.ising99.intelligentremotecontrol.R;
 import com.ising99.intelligentremotecontrol.core.CoapClient.RemoteControlCoAPService;
@@ -28,13 +27,13 @@ public class RootActivity extends Activity {
 
     private Fragment root;
     private DLNAMediaManagerProtocol manager;
-
+    private RemoteControlCoAPService service;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_root);
-        RemoteControlCoAPService service = new RemoteControlCoAPService();
+        service = new RemoteControlCoAPService();
         manager = new DLNAMediaManager();
         try{
             manager.setupMediaServer(getLocalIpAddress());
@@ -42,14 +41,11 @@ public class RootActivity extends Activity {
         } catch (IOException e){
             e.printStackTrace();
         }
-        root = RootRouter.setupModule(getApplicationContext(), service , manager);
-        getFragmentManager().beginTransaction().add(R.id.fragment_root_container,root).commit();
+        root = RootRouter.setupModule(getApplicationContext(), service, manager);
+        getFragmentManager().beginTransaction().add(R.id.fragment_root_container, root, "root").commit();
 
     }
 
-    protected void onResume() {
-        super.onResume();
-    }
 
     protected void onPause() {
         super.onPause();

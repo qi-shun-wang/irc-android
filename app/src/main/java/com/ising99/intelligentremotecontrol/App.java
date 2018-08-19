@@ -1,6 +1,8 @@
 package com.ising99.intelligentremotecontrol;
 
 import android.app.Application;
+import android.content.res.Configuration;
+import android.net.Uri;
 
 import com.ising99.intelligentremotecontrol.db.DaoMaster;
 import com.ising99.intelligentremotecontrol.db.DaoSession;
